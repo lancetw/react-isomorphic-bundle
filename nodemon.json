@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "lib/",
+    "views/"
+  ],
+  "ext": "js html json jsx css less",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
