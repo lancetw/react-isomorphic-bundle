@@ -3,5 +3,5 @@
     "lib/",
     "views/"
   ],
-  "ext": "js html json jsx css less"
+  "ext": "html css less"
 }

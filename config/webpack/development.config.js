@@ -20,8 +20,6 @@ export default {
       publicPath: PUBLIC_PATH,
       hot: true,
       stats: {
-        watch: true,
-        progress: true,
         assets: true,
         colors: true,
         version: false,

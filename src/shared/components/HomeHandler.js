@@ -7,9 +7,9 @@ class HomeHandler extends React.Component {
   render() {
     return (
       <div>
-        <h1>NICE!!!!</h1>
+        <h1>flummox-isomorphic-example</h1>
         <div className="ui primary button">
-          XD
+          測試 ^^
         </div>
       </div>
     );

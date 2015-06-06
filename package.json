@@ -21,7 +21,7 @@
     "postcss"
   ],
   "scripts": {
-    "prestart": "make fast-build",
+    "prestart": "npm run clean && make fast-build",
     "start": "NODE_ENV=production node --harmony ./lib/server",
     "dev": "make watch",
     "build": "make build",

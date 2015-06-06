@@ -8,31 +8,13 @@ import csswring from 'csswring';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const writeStats = require('webpack/utils/write-stats');
-const PROTOCOL = 'http';
-const PORT = process.env.PORT || 3010;
 const PUBLIC_PATH = `/assets/`;
 
 require('webpack/utils/clean-dist')();
 
 export default {
-  server: {
-    port: PORT,
-    options: {
-      publicPath: PUBLIC_PATH,
-      hot: true,
-      stats: {
-        assets: true,
-        colors: true,
-        version: false,
-        hash: false,
-        timings: true,
-        chunks: false,
-        chunkModules: false
-      }
-    }
-  },
   webpack: {
-    devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
     entry: {
       app: [
         './src/client/index'
