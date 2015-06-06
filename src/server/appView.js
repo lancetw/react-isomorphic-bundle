@@ -16,6 +16,11 @@ nunjucks.configure('views', {
 });
 
 export default function (app) {
+
+  app.use(function *(next) {
+    this.cashed ? yield *this.cashed() : yield *next;
+  });
+
   app.use(function *() {
     const router = Router.create({
       routes: routes,

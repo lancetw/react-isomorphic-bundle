@@ -4,15 +4,15 @@ import {RouteHandler} from 'react-router';
 const {CSSTransitionGroup} = React.addons;
 
 if (process.env.BROWSER) {
-  require('less/ui');
-  require('less/app');
+  require('css/ui');
+  require('css/app');
 }
 
 class AppHandler extends React.Component {
-  displayName: 'App'
+  displayName: 'AppHandler'
 
   static willTransitionTo(transition) {
-    const {path} = transition;
+    const { path } = transition;
 
     if (path !== '/' && path.endsWith('/')) {
       transition.redirect(path.substring(0, path.length - 1));
@@ -31,3 +31,4 @@ class AppHandler extends React.Component {
 }
 
 export default AppHandler;
+

@@ -1,0 +1,27 @@
+body {
+  background: #f5f5f5;
+}
+
+$transition-duration: 180ms;
+
+.RouteTransition-enter, .RouteTransition-leave {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  transition: opacity $transition-duration ease-in;
+}
+
+.RouteTransition-enter {
+  opacity: 0.01;
+  &.RouteTransition-enter-active {
+    opacity: 1;
+  }
+}
+
+.RouteTransition-leave {
+  opacity: 1;
+  &.RouteTransition-leave-active {
+    opacity: 0.01;
+  }
+}
+

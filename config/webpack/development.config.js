@@ -6,6 +6,13 @@ import {isArray} from 'lodash';
 import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
 
+import bemLinter from 'postcss-bem-linter';
+import logWarnings from 'postcss-log-warnings';
+import nested from 'postcss-nested';
+import simpleVars from 'postcss-simple-vars';
+import atImport from 'postcss-import';
+import atInclude from 'postcss-include';
+
 const writeStats = require('webpack/utils/write-stats');
 const LOCAL_IP = require('dev-ip')();
 const PROTOCOL = 'http';
@@ -86,11 +93,11 @@ export default {
       ]
     },
     postcss: {
-        defaults: [autoprefixer, csswring],
+        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, logWarnings, nested, simpleVars],
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
-      extensions: ['', '.js', '.jsx', '.json', '.less', '.css'],
+      extensions: ['', '.js', '.jsx', '.json', '.css', '.less'],
       modulesDirectories: ['node_modules', 'src', 'styles']
     }
   }

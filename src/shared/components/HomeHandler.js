@@ -1,5 +1,6 @@
 import React from 'react';
 import connectToStores from 'flummox/connect';
+import {Link} from 'react-router';
 
 class HomeHandler extends React.Component {
   displayName: 'Home'
@@ -8,9 +9,9 @@ class HomeHandler extends React.Component {
     return (
       <div>
         <h1>flummox-isomorphic-example</h1>
-        <div className="ui primary button">
+        <Link className="ui primary button" to="login">
           測試成功
-        </div>
+        </Link>
       </div>
     );
   }
