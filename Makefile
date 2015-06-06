@@ -15,9 +15,9 @@ watch:
 	@NODE_ENV=development $(MAKE) -j5 dev-server webpack-server watch-js
 
 debug:
-	@NODE_ENV=debug $(MAKE) -j5 dev-debug webpack-dev
+	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
 
-debug-node:
+node-debug:
 	node-inspector --no-preload
 
 clean:
