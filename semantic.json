@@ -1,5 +1,5 @@
 {
-  "base": "../styles/less/semantic/",
+  "base": "styles/less/semantic/",
   "paths": {
     "source": {
       "config": "src/theme.config",

@@ -52,11 +52,10 @@ if (env === 'development') {
   app.use(mount('/assets', require('koa-proxy')({host: 'http://0.0.0.0:3000'})));
 }
 else {
-  console.log(path.join(__dirname, '../../public/assets'));
   app.use(mount('/assets', staticCache(path.join(__dirname, '../../public/assets'), cacheOpts)));
 }
 
-app.keys = ["GOD'S IN HIS HEAVEN, ALL'S RIGHT WITH THE WORLD."];
+app.keys = ['GOD\'S IN HIS HEAVEN, ALL\'S RIGHT WITH THE WORLD.'];
 app.use(session(app));
 
 import appView from './appView';
@@ -65,4 +64,4 @@ appView(app);
 // Start listening
 const port = process.env.PORT || 3000;
 app.listen(port);
-console.log(`App started listening on port ${port}`);
+debug('*')(`App started listening on port ${port}`);

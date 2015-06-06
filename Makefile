@@ -1,10 +1,31 @@
 BIN=node_modules/.bin
+
+MOCHA_CMD = node_modules/.bin/mocha
+ISTANBUL_CMD = node_modules/.bin/istanbul
+ESLINT_CMD = node_modules/.bin/eslint
+
 BABEL_ARGS = --stage 0 --source-maps-inline
+MOCHA_ARGS = --harmony $(TEST_JS)
 
 SRC_JS = $(shell find src -name "*.js")
 LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
+TEST_JS = $(shell find test -name "*-test.js")
 
 build: js webpack
+
+clean:
+	rm -rf public/assets/
+	rm -rf lib/
+
+# Test
+test: lint js
+	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
+
+test-cov: js
+	@NODE_ENV=test $(ISTANBUL_CMD) cover node_modules/.bin/_mocha -- $(MOCHA_ARGS)
+
+lint:
+	$(ESLINT_CMD) $(SRC_JS)
 
 # Build application quickly
 # Faster on first build, but not after that
@@ -14,15 +35,13 @@ fast-build: fast-js build
 watch:
 	@NODE_ENV=development $(MAKE) -j5 dev-server webpack-server browser-sync
 
+
 debug:
 	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
 
 node-debug:
 	node-inspector --no-preload
 
-clean:
-	rm -rf public/assets/
-	rm -rf lib/
 
 # Transpile JavaScript using Babel
 js: $(LIB_JS)
@@ -38,13 +57,13 @@ watch-js:
 	$(BIN)/babel src -d lib $(BABEL_ARGS) -w
 
 dev-server: $(SRC_JS)
-	nodemon --harmony ./src/server
+	$(BIN)/nodemon --harmony ./src/server
 
 dev-debug:
 	node --harmony --debug ./src/server
 
 browser-sync:
-	browser-sync start --proxy="localhost:3000" --port 3002 --ui-port 3003 --files="src" --no-open --reload-delay 1000
+	$(BIN)/browser-sync start --proxy="localhost:3000" --port 3002 --ui-port 3003 --files="src" --no-open
 
 webpack-dev:
 	node ./webpack/server.js

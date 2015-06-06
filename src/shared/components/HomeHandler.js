@@ -9,7 +9,7 @@ class HomeHandler extends React.Component {
       <div>
         <h1>flummox-isomorphic-example</h1>
         <div className="ui primary button">
-          測試 ^^
+          測試成功
         </div>
       </div>
     );

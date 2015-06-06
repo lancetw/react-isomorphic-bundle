@@ -13,12 +13,14 @@
     "reactjs",
     "es6",
     "node-debug",
+    "node-inspector",
     "webpack",
     "semantic-ui",
     "koa",
     "babel",
     "eslint",
-    "postcss"
+    "postcss",
+    "browser-sync"
   ],
   "scripts": {
     "prestart": "npm run clean && make fast-build",
@@ -84,8 +86,7 @@
     "react-style": "^0.5.5",
     "react-suitcss": "^1.1.1",
     "require-dot-file": "^0.4.0",
-    "semantic-ui": "^1.12.3",
-    "webpack": "^1.9.10"
+    "semantic-ui": "^1.12.3"
   },
   "devDependencies": {
     "autoprefixer": "^5.2.0",
@@ -95,6 +96,7 @@
     "babel-eslint": "^3.1.11",
     "babel-loader": "^5.1.3",
     "browser-sync": "^2.7.6",
+    "chai": "^3.0.0",
     "clean-css": "^3.3.1",
     "css-loader": "^0.14.4",
     "csswring": "^3.0.5",
@@ -108,9 +110,11 @@
     "file-loader": "^0.8.4",
     "image-webpack-loader": "^1.4.0",
     "imagemin": "^3.2.0",
+    "istanbul": "^0.3.14",
     "json-loader": "^0.5.2",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
+    "mocha": "^2.2.5",
     "node-watch": "^0.3.4",
     "postcss": "^4.1.11",
     "postcss-cli": "^1.3.1",

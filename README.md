@@ -1,5 +1,13 @@
-# flummox isomorphic example
+# React flummox isomorphic example
 
+```
+$ npm install -g nodemon
+
+$ npm install
+
+```
+
+---
 
 ## DEV MODE
 
@@ -18,3 +26,12 @@
 
 * open `http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=5858`
 * open `http://127.0.0.1:3000`
+
+
+---
+
+[flummox](https://github.com/acdlite/flummox)
+
+[react-router](https://github.com/rackt/react-router)
+
+[isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)

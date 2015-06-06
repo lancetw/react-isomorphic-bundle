@@ -9,12 +9,13 @@ import performRouteHandlerStaticMethod from '../shared/utils/performRouteHandler
 import fs from 'fs';
 import path from 'path';
 import nunjucks from 'nunjucks';
+import debug from 'debug';
 
 nunjucks.configure('views', {
   autoescape: true,
 });
 
-export default function(app) {
+export default function (app) {
   app.use(function *() {
     const router = Router.create({
       routes: routes,
@@ -41,19 +42,21 @@ export default function(app) {
     try {
       const { Handler, state } = yield new Promise((resolve, reject) => {
         router.run((_Handler, _state) =>
-          resolve({ Handler: _Handler, state: _state })
+          resolve({Handler: _Handler, state: _state})
         );
       });
 
-      const routeHandlerInfo = { state, flux };
+      const routeHandlerInfo = {state, flux};
 
       try {
         yield performRouteHandlerStaticMethod(state.routes, 'routerWillRun', routeHandlerInfo);
-      } catch (error) {}
+      }
+      catch (error) {
+        debug('dev')(error);
+      }
 
       const env = process.env.NODE_ENV;
       if (env === 'development') {
-        console.log(path.resolve(__dirname, './webpack-stats.json'));
         assets = fs.readFileSync(path.resolve(__dirname, './webpack-stats.json'));
         assets = JSON.parse(assets);
       }
@@ -66,7 +69,8 @@ export default function(app) {
           <Handler {...state} />
         </FluxComponent>
       );
-    } catch (error) {
+    }
+    catch (error) {
       if (error.redirect) {
         return this.redirect(error.redirect);
       }
@@ -74,10 +78,10 @@ export default function(app) {
       throw error;
     }
 
-   this.body = nunjucks.render('index.html', {
+    this.body = nunjucks.render('index.html', {
       appString,
       assets,
-      env: process.env,
+      env: process.env
     });
 
 
