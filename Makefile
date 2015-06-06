@@ -57,7 +57,7 @@ watch-js:
 	$(BIN)/babel src -d lib $(BABEL_ARGS) -w
 
 dev-server: $(SRC_JS)
-	$(BIN)/nodemon --harmony ./src/server
+	nodemon --harmony ./src/server
 
 dev-debug:
 	node --harmony --debug ./src/server
