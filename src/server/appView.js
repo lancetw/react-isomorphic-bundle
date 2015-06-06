@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import Router from 'react-router';
 import FluxComponent from 'flummox/component';
@@ -6,6 +8,11 @@ import routes from '../shared/routes';
 import performRouteHandlerStaticMethod from '../shared/utils/performRouteHandlerStaticMethod';
 import fs from 'fs';
 import path from 'path';
+import nunjucks from 'nunjucks';
+
+nunjucks.configure('views', {
+  autoescape: true,
+});
 
 export default function(app) {
   app.use(function *() {
@@ -44,7 +51,9 @@ export default function(app) {
         yield performRouteHandlerStaticMethod(state.routes, 'routerWillRun', routeHandlerInfo);
       } catch (error) {}
 
-      if (process.env.NODE_ENV === 'development') {
+      const env = process.env.NODE_ENV;
+      if (env === 'development') {
+        console.log(path.resolve(__dirname, './webpack-stats.json'));
         assets = fs.readFileSync(path.resolve(__dirname, './webpack-stats.json'));
         assets = JSON.parse(assets);
       }
@@ -65,10 +74,12 @@ export default function(app) {
       throw error;
     }
 
-    yield this.render('main', {
+   this.body = nunjucks.render('index.html', {
       appString,
       assets,
       env: process.env,
     });
+
+
   });
 }

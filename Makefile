@@ -4,9 +4,7 @@ BABEL_ARGS = --stage 0 --source-maps-inline
 SRC_JS = $(shell find src -name "*.js")
 LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
 
-build: build-dev
-
-build-dev: js webpack
+build: js webpack
 
 # Build application quickly
 # Faster on first build, but not after that
@@ -15,6 +13,12 @@ fast-build: fast-js build
 # Watch for changes
 watch:
 	@NODE_ENV=development $(MAKE) -j5 dev-server webpack-server watch-js
+
+debug:
+	@NODE_ENV=debug $(MAKE) -j5 dev-debug webpack-dev
+
+debug-node:
+	node-inspector --no-preload
 
 clean:
 	rm -rf public/assets/
@@ -34,8 +38,14 @@ fast-js:
 watch-js:
 	$(BIN)/babel src -d lib $(BABEL_ARGS) -w
 
-dev-server: $(LIB_JS)
-	nodemon --harmony ./lib/server
+dev-server: $(SRC_JS)
+	nodemon --harmony ./src/server
+
+dev-debug:
+	node --harmony --debug ./src/server
+
+webpack-dev:
+	node ./webpack/server.js
 
 webpack-server: $(LIB_JS)
 	node ./webpack/server.js

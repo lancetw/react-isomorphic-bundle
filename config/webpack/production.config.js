@@ -113,7 +113,7 @@ export default {
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
-      extensions: ['', '.js', '.jsx', '.json', 'less', 'css'],
+      extensions: ['', '.js', '.jsx', '.json', '.less', '.css'],
       modulesDirectories: ['node_modules', 'src', 'styles']
     }
   }

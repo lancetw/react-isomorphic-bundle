@@ -1,15 +1,16 @@
+'use strict';
+
 import koa from 'koa';
 import debug from 'debug';
 import mount from 'koa-mount';
-import hbs from 'koa-hbs';
 import helmet from 'koa-helmet';
 import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
+import session from 'koa-session';
 import staticCache from 'koa-static-cache';
 import path from 'path';
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
-console.log(process.env.NODE_ENV);
 export default app;
 
 // add header `X-Response-Time`
@@ -43,12 +44,6 @@ if (env === 'development') {
   require('blocked')((ms) => debug('koa')(`blocked for ${ms}ms`));
 }
 
-app.use(hbs.middleware({
-  defaultLayout: 'index',
-  layoutsPath: path.join(__dirname, '../../views/layouts'),
-  viewPath: path.join(__dirname, '../../views')
-}));
-
 const cacheOpts: Object = {maxAge: 86400000, gzip: true};
 
 // Proxy asset folder to webpack development server in development mode
@@ -57,8 +52,12 @@ if (env === 'development') {
   app.use(mount('/assets', require('koa-proxy')({host: 'http://0.0.0.0:3000'})));
 }
 else {
+  console.log(path.join(__dirname, '../../public/assets'));
   app.use(mount('/assets', staticCache(path.join(__dirname, '../../public/assets'), cacheOpts)));
 }
+
+app.keys = ["GOD'S IN HIS HEAVEN, ALL'S RIGHT WITH THE WORLD."];
+app.use(session(app));
 
 import appView from './appView';
 appView(app);

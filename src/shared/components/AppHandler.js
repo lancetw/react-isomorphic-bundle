@@ -4,8 +4,8 @@ import {RouteHandler} from 'react-router';
 const {CSSTransitionGroup} = React.addons;
 
 if (process.env.BROWSER) {
-  require('less/ui.less');
-  require('less/app.less');
+  require('less/ui');
+  require('less/app');
 }
 
 class AppHandler extends React.Component {

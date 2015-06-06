@@ -41,3 +41,5 @@ meta-*.json
 .sass-cache
 
 public/static
+
+webpack-stats.json

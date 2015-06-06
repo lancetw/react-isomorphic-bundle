@@ -5,7 +5,14 @@ import fs from 'fs';
 import path from 'path';
 import debug from 'debug';
 
-const filepath = path.resolve(__dirname, '../../lib/server/webpack-stats.json');
+const env = process.env.NODE_ENV;
+
+let filepath;
+if (env  === 'development' || env === 'debug') {
+  filepath = path.resolve(__dirname, '../../src/server/webpack-stats.json');
+} else {
+  filepath = path.resolve(__dirname, '../../lib/server/webpack-stats.json');
+}
 
 export default function (stats) {
   const publicPath = this.options.output.publicPath;
@@ -24,7 +31,7 @@ export default function (stats) {
       .filter(chunk => ext.test(path.extname(chunk))) // filter by extension
       .map(chunk => `${publicPath}${chunk}`); // add public path to it
   };
-
+  console.log('@@@@@@@', json.assetsByChunkName);
   const script = getChunks('app', /js/);
   const style = getChunks('app', /css/);
 

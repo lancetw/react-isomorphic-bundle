@@ -9,7 +9,7 @@ class HomeHandler extends React.Component {
       <div>
         <h1>NICE!!!!</h1>
         <div className="ui primary button">
-          @@
+          XD
         </div>
       </div>
     );

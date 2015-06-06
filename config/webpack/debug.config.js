@@ -5,6 +5,7 @@ import path from 'path';
 import {isArray} from 'lodash';
 import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const writeStats = require('webpack/utils/write-stats');
 const LOCAL_IP = require('dev-ip')();
@@ -13,6 +14,8 @@ const HOST = isArray(LOCAL_IP) && LOCAL_IP[0] || LOCAL_IP || 'localhost';
 const PORT = process.env.PORT + 1 || 3001;
 const PUBLIC_PATH = `${PROTOCOL}://${HOST}:${PORT}/assets/`;
 
+require('webpack/utils/clean-dist')();
+
 export default {
   server: {
     port: PORT,
@@ -20,8 +23,6 @@ export default {
       publicPath: PUBLIC_PATH,
       hot: true,
       stats: {
-        watch: true,
-        progress: true,
         assets: true,
         colors: true,
         version: false,
@@ -33,33 +34,52 @@ export default {
     }
   },
   webpack: {
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     entry: {
       app: [
-        `webpack-dev-server/client?http://localhost:${PORT}`,
-        'webpack/hot/only-dev-server',
         './src/client/index'
       ]
     },
-    publicPath: PUBLIC_PATH,
     output: {
-      path: path.join(__dirname, '../../public'),
+      path: path.join(__dirname, '../../public/assets/'),
       filename: '[name]-[chunkhash].js',
       chunkFilename: '[name]-[chunkhash].js',
-      publicPath: PUBLIC_PATH
+      publicPath: PUBLIC_PATH,
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
+      new ExtractTextPlugin('[name]-[chunkhash].css'),
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
-          NODE_ENV: JSON.stringify('development'),
+          NODE_ENV: JSON.stringify('debug'),
           BASE_URL: JSON.stringify(process.env.BASE_URL)
-        }
+        },
       }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false,
+          screw_ie8: true,
+          sequences: true,
+          dead_code: true,
+          drop_debugger: true,
+          comparisons: true,
+          conditionals: true,
+          evaluate: true,
+          booleans: true,
+          loops: true,
+          unused: true,
+          hoist_funs: true,
+          if_return: true,
+          join_vars: true,
+          cascade: true,
+          drop_console: true
+        },
+        output: {
+          comments: false
+        }
+      }),
       function () {
         this.plugin('done', writeStats);
       }
@@ -67,7 +87,7 @@ export default {
     module: {
       preLoaders: [
         {
-          test: /\.js$|.jsx$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
           loader: 'eslint'
         }
@@ -75,16 +95,19 @@ export default {
       loaders: [
         { test: /\.json$/, loaders: ['json'] },
         {
-          test: /\.(jpe?g|png|gif|svg|woff2?|eot|ttf)$/,
+          test: /\.(woff2?|eot|ttf)$/,
           loader: 'url?limit=10000&name=[sha512:hash:base64:7].[ext]'
         },
         {
+          test: /\.(jpe?g|png|gif|svg)$/,
+          loader: 'url?limit=10000&name=[sha512:hash:base64:7].[ext]!image?optimizationLevel=7&progressive&interlaced'
+        },
+        {
           test: /\.jsx?$/,
-          loader: 'react-hot!babel',
+          loader: 'babel',
           exclude: /node_modules/
         },
-        { test: /\.css$/, loader: 'style!css?sourceMap&importLoaders=1!postcss' },
-        { test: /\.less$/, loader: 'style!css?sourceMap&importLoaders=1!postcss!less?noIeCompat' }
+        { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less?noIeCompat') }
       ]
     },
     postcss: {

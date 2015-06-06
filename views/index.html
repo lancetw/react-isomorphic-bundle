@@ -1,0 +1,25 @@
+<!doctype html>
+<html class="no-js" lang="zh-rw">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>OEV</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% if env.NODE_ENV != 'development' %}
+      {% for style in assets.style %}
+        <link rel="stylesheet" href="{{ style }}">
+      {% endfor %}
+    {% endif %}
+  </head>
+  <body>
+    <div id="app">{{ appString | safe }}</div>
+
+    {% if env.NODE_ENV != 'debug' %}
+      {% for script in assets.script %}
+        <script src="{{ script }}" defer></script>
+      {% endfor %}
+    {% endif %}
+  </body>
+</html>
