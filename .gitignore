@@ -40,6 +40,8 @@ meta-*.json
 # SASS
 .sass-cache
 
-public/static
+public/
 
 webpack-stats.json
+
+lib/

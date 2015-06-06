@@ -23,7 +23,6 @@ debug-node:
 clean:
 	rm -rf public/assets/
 	rm -rf lib/
-	rm -rf dist/
 
 # Transpile JavaScript using Babel
 js: $(LIB_JS)

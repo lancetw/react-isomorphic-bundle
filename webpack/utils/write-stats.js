@@ -31,7 +31,7 @@ export default function (stats) {
       .filter(chunk => ext.test(path.extname(chunk))) // filter by extension
       .map(chunk => `${publicPath}${chunk}`); // add public path to it
   };
-  console.log('@@@@@@@', json.assetsByChunkName);
+
   const script = getChunks('app', /js/);
   const style = getChunks('app', /css/);
 

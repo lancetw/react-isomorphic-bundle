@@ -11,6 +11,7 @@
     "build": "make build",
     "debug": "make debug",
     "debug-node": "make debug-node",
+    "clean": "make clean",
     "test": "make fast-js test",
     "prepublish": "npm run test"
   },
