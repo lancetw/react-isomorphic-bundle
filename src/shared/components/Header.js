@@ -1,9 +1,12 @@
 import React from 'react';
-import connectToStores from 'flummox/connect';
 import {Link} from 'react-router';
 
-class HomeHandler extends React.Component {
-  displayName: 'Home'
+class Header extends React.Component{
+  displayName: 'Header'
+
+  constructor(props, context) {
+    super(props);
+  }
 
   render() {
     return (
@@ -21,6 +24,11 @@ class HomeHandler extends React.Component {
       </header>
     );
   }
+
 }
 
-export default HomeHandler;
+Header.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
+
+export default Header;

@@ -1,17 +1,17 @@
-BIN=node_modules/.bin
-
-MOCHA_CMD = node_modules/.bin/mocha
+BIN = node_modules/.bin
+MOCHA_CMD = $(BIN)/mocha
 ISTANBUL_CMD = node --harmony node_modules/istanbul/lib/cli.js
-ESLINT_CMD = node_modules/.bin/eslint
-
-BABEL_ARGS = --stage 0 --source-maps-inline
-MOCHA_ARGS = --harmony --require co-mocha --reporter nyan $(TEST_JS)
-ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --recursive -R spec
-TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha --report lcovonly -- --timeout 500000 --recursive -R spec && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
+ESLINT_CMD = $(BIN)/eslint
 
 SRC_JS = $(shell find src -name "*.js")
 LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
-TEST_JS = $(shell find test -name "*-test.js")
+TEST_JS = $(shell find tests -name "*-test.js")
+
+BABEL_ARGS = --stage 0 --source-maps-inline
+MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan
+ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --recursive -R spec
+TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha --report lcovonly -- --timeout 500000 --recursive -R spec && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
+
 
 build: js webpack
 
@@ -21,7 +21,7 @@ clean:
 
 # Test
 test: lint js
-	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
+	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS) $(TEST_JS)
 
 test-cov: js
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
