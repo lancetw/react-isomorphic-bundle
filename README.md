@@ -1,4 +1,6 @@
-# React flummox isomorphic example
+# React flummox isomorphic bundle [WIP]
+
+Working in process
 
 ```
 $ npm install -g nodemon
@@ -35,3 +37,5 @@ $ npm install
 [react-router](https://github.com/rackt/react-router)
 
 [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)
+
+[Semantic UI](http://semantic-ui.com/)
