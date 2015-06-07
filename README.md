@@ -27,7 +27,7 @@ $ npm install
 
 ## PRODUCTION MODE
 
-`npm run build && npm start`
+`npm start`
 
 ## DEBUG MODE
 
