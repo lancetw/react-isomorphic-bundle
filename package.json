@@ -41,6 +41,8 @@
     "debug": "make debug",
     "clean": "make clean",
     "test": "make fast-js test",
+    "test-cov": "make test-cov",
+    "test-ci": "make test-ci",
     "prepublish": "npm run test"
   },
   "dependencies": {

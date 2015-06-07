@@ -8,9 +8,9 @@ LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
 TEST_JS = $(shell find tests -name "*-test.js")
 
 BABEL_ARGS = --stage 0 --source-maps-inline
-MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan
-ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --recursive -R spec
-TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha --report lcovonly -- --timeout 500000 --recursive -R spec && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
+MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan $(TEST_JS)
+ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
+TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha --report lcovonly -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS) && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
 
 
 build: js webpack
@@ -21,7 +21,7 @@ clean:
 
 # Test
 test: lint js
-	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS) $(TEST_JS)
+	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
 test-cov: js
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
