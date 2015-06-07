@@ -19,6 +19,10 @@ class AppHandler extends React.Component {
     }
   }
 
+  componentDidMount() {
+    require('fastclick').attach(document.body);
+  }
+
   render() {
     return (
       <div>

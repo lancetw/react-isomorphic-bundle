@@ -1,0 +1,65 @@
+{
+  "development": {
+    "storage": "platform/db/db.development.sqlite",
+    "dialect": "sqlite",
+    "omitNull": true,
+    "dialectOptions": {
+      "supportBigNumbers": true,
+      "bigNumberStrings=true": true
+    },
+    "migrationStorage": "json",
+    "migrationStoragePath": "meta-development.json",
+    "define": {
+      "timestamps": true,
+      "freezeTableName": true,
+      "paranoid": true,
+      "underscored" : true,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
+    },
+    "logging": false
+  },
+  "test": {
+    "storage": "platform/db/db.test.sqlite",
+    "dialect": "sqlite",
+    "omitNull": true,
+    "dialectOptions": {
+      "supportBigNumbers": true,
+      "bigNumberStrings=true": true
+    },
+    "migrationStorage": "json",
+    "migrationStoragePath": "meta-test.json",
+    "define": {
+      "timestamps": true,
+      "freezeTableName": true,
+      "paranoid": true,
+      "underscored" : true,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
+    },
+    "logging": false
+  },
+  "production": {
+    "username": "oev",
+    "password": null,
+    "database": "oev",
+    "host": "127.0.0.1",
+    "dialect": "mssql",
+    "omitNull": true,
+    "dialectOptions": {
+      "supportBigNumbers": true,
+      "bigNumberStrings=true": true
+    },
+    "migrationStorage": "json",
+    "migrationStoragePath": "meta-production.json",
+    "define": {
+      "timestamps": true,
+      "freezeTableName": true,
+      "paranoid": true,
+      "underscored" : true,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
+    },
+    "logging": false
+  }
+}

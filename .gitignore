@@ -45,3 +45,6 @@ public/
 webpack-stats.json
 
 lib/
+
+
+*.env

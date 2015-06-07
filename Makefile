@@ -1,11 +1,13 @@
 BIN=node_modules/.bin
 
 MOCHA_CMD = node_modules/.bin/mocha
-ISTANBUL_CMD = node_modules/.bin/istanbul
+ISTANBUL_CMD = node --harmony node_modules/istanbul/lib/cli.js
 ESLINT_CMD = node_modules/.bin/eslint
 
 BABEL_ARGS = --stage 0 --source-maps-inline
-MOCHA_ARGS = --harmony $(TEST_JS)
+MOCHA_ARGS = --harmony --require co-mocha --reporter nyan $(TEST_JS)
+ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --recursive -R spec
+TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha --report lcovonly -- --timeout 500000 --recursive -R spec && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
 
 SRC_JS = $(shell find src -name "*.js")
 LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
@@ -22,7 +24,10 @@ test: lint js
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
 test-cov: js
-	@NODE_ENV=test $(ISTANBUL_CMD) cover node_modules/.bin/_mocha -- $(MOCHA_ARGS)
+	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
+
+test-ci: js
+	@NODE_ENV=test $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
 	$(ESLINT_CMD) $(SRC_JS)
@@ -41,7 +46,6 @@ debug:
 
 node-debug:
 	node-inspector --no-preload
-
 
 # Transpile JavaScript using Babel
 js: $(LIB_JS)

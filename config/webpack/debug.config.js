@@ -6,6 +6,12 @@ import {isArray} from 'lodash';
 import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import bemLinter from 'postcss-bem-linter';
+import logWarnings from 'postcss-log-warnings';
+import nested from 'postcss-nested';
+import simpleVars from 'postcss-simple-vars';
+import atImport from 'postcss-import';
+import atInclude from 'postcss-include';
 
 const writeStats = require('webpack/utils/write-stats');
 const LOCAL_IP = require('dev-ip')();
@@ -107,11 +113,12 @@ export default {
           loader: 'babel',
           exclude: /node_modules/
         },
+        { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss') },
         { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less?noIeCompat') }
       ]
     },
     postcss: {
-        defaults: [autoprefixer, csswring],
+        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, logWarnings, nested, simpleVars],
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
