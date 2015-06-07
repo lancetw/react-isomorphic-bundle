@@ -40,9 +40,9 @@
     "logging": false
   },
   "production": {
-    "username": "oev",
+    "username": null,
     "password": null,
-    "database": "oev",
+    "database": null,
     "host": "127.0.0.1",
     "dialect": "mssql",
     "omitNull": true,

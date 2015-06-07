@@ -1,5 +1,11 @@
 # React flummox isomorphic bundle [WIP]
 
+[![Build Status](https://travis-ci.org/lancetw/react-isomorphic-bundle.svg)](https://travis-ci.org/lancetw/react-isomorphic-bundle)
+[![Dependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle)
+[![devDependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle/dev-status.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle#info=devDependencies)
+[![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
+[![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
+
 Working in process
 
 ```
