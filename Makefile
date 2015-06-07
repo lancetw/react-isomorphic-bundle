@@ -10,7 +10,7 @@ TEST_JS = $(shell find tests -name "*-test.js")
 BABEL_ARGS = --stage 0 --source-maps-inline
 MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan $(TEST_JS)
 ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
-TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register --report lcovonly -R spec $(TEST_JS) && codeclimate < coverage/lcov.info && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register --report lcovonly -R spec $(TEST_JS) && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 
 build: js webpack
