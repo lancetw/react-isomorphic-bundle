@@ -7,18 +7,12 @@ class HomeHandler extends React.Component {
 
   render() {
     return (
-      <header className="clearfix">
-        Application Name
-
-        <nav className="clearfix">
-          <div className="nav-item">
-            <Link to="home">Home</Link>
-          </div>
-          <div className="nav-item">
-            <Link to="info">Info</Link>
-          </div>
-        </nav>
-      </header>
+      <div>
+        <h1>Login</h1>
+        <Link className="ui primary button" to="login">
+          Login now
+        </Link>
+      </div>
     );
   }
 }

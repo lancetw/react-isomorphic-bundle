@@ -2,7 +2,7 @@ body {
   background: #f5f5f5;
 }
 
-$transition-duration: 180ms;
+$transition-duration: 130ms;
 
 .RouteTransition-enter, .RouteTransition-leave {
   position: absolute;

@@ -9,7 +9,6 @@ import stubRouterContext from 'tests/utils/stub-router-context.jsx';
 describe('App', () => {
 
   jsdom();
-
   const TestUtils = React.addons.TestUtils;
 
   beforeEach(() => {
@@ -20,18 +19,17 @@ describe('App', () => {
 
   });
 
-  it('displays two nav items with right text content', () => {
-
+  it('Header Test', () => {
 
     const Header = stubRouterContext(HeaderComponent);
-    const header = TestUtils.renderIntoDocument(<Header />);
-    const renderedItems = TestUtils.scryRenderedDOMComponentsWithTag(header, 'a'),
+    const _header = TestUtils.renderIntoDocument(<Header />);
+    const renderedItems = TestUtils.scryRenderedDOMComponentsWithTag(_header, 'a'),
     itemCount = renderedItems.length;
 
-    expect(itemCount).toBe(2);
+    expect(itemCount).toBe(3);
 
     expect(React.findDOMNode(renderedItems[0]).textContent).toEqual('Home');
-    expect(React.findDOMNode(renderedItems[1]).textContent).toEqual('Info');
+    expect(React.findDOMNode(renderedItems[1]).textContent).toEqual('Login');
   });
 
 });

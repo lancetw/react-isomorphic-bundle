@@ -9,7 +9,7 @@ class LoginHandler extends React.Component {
       <div>
         <h1>Login</h1>
         <Link className="ui primary button" to="/">
-          測試2
+          Back to Home
         </Link>
       </div>
     );

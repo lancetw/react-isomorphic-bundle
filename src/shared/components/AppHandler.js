@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import {RouteHandler} from 'react-router';
+import Header from './Header';
 
 const {CSSTransitionGroup} = React.addons;
 
@@ -26,6 +27,7 @@ class AppHandler extends React.Component {
   render() {
     return (
       <div>
+        <Header/>
         <CSSTransitionGroup transitionName="RouteTransition">
           <RouteHandler {...this.props} key={this.props.pathname} />
         </CSSTransitionGroup>

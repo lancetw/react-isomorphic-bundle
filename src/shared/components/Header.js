@@ -10,17 +10,30 @@ class Header extends React.Component{
 
   render() {
     return (
-      <header className="clearfix">
-        Application Name
+      <header className="ui orange inverted menu grid fixed top">
+        <div className="computer tablet only row">
+          <div className="left menu">
+            <Link to='/' className="item">
+              Home
+            </Link>
+            <Link to='login' className="item">Login</Link>
+          </div>
 
-        <nav className="clearfix">
-          <div className="nav-item">
-            <Link to="home">Home</Link>
+          <div className="right menu">
+            <div className="item">
+              <div className="ui transparent icon input inverted">
+                <input type="text" placeholder="Search ..." />
+                <i className="search icon"></i>
+              </div>
+            </div>
           </div>
-          <div className="nav-item">
-            <Link to="info">Info</Link>
-          </div>
-        </nav>
+        </div>
+        <div className="mobile only row">
+          <Link className="item left" to="login">
+            Home
+          </Link>
+        </div>
+
       </header>
     );
   }

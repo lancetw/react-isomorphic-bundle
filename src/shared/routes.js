@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 export default (
   <Route name="app" path="/" handler={AppHandler}>
     <Route name="login" path="/login" handler={LoginHandler} />
-    <DefaultRoute handler={HomeHandler} />
+    <DefaultRoute name="home" handler={HomeHandler} />
     <NotFoundRoute handler={NotFound} />
   </Route>
 );
