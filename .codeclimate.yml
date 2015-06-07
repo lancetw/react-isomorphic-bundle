@@ -1,2 +1,10 @@
 languages:
   JavaScript: true
+exclude_paths:
+- "styles"
+- "public"
+- "tests"
+- "coverage"
+- "lib"
+- "webpack"
+- "config"

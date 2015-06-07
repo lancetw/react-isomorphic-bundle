@@ -2,15 +2,7 @@ verbose: false
 instrumentation:
   root: src
   default-excludes: true
-  excludes: [
-    "server/webpack-stats.json",
-    "styles",
-    "public",
-    "tests",
-    "coverage",
-    "lib",
-    "webpack",
-    "config"]
+  excludes: ["server/webpack-stats.json"]
 reporting:
     print: summary
     reports:
