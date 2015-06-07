@@ -1,13 +1,14 @@
 
 import {Flummox} from 'flummox';
-//import DocActions from './actions/DocActions';
-//import DocStore from './stores/DocStore';
+import PageActions from './actions/PageActions';
+import PageStore from './stores/PageStore';
 
 export default class Flux extends Flummox {
   constructor() {
     super();
 
-    //const docActions = this.createActions('docs', DocActions);
-    //this.createStore('docs', DocStore, { docActions });
+    const pageActions = this.createActions('page', PageActions);
+    this.createStore('page', PageStore, {pageActions});
+
   }
 }

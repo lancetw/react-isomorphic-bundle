@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import {RouteHandler} from 'react-router';
 import Header from './Header';
+import FluxComponent from 'flummox/component';
 
 const {CSSTransitionGroup} = React.addons;
 
@@ -26,12 +27,12 @@ class AppHandler extends React.Component {
 
   render() {
     return (
-      <div>
+      <FluxComponent connectToStores={['page']}>
         <Header/>
         <CSSTransitionGroup transitionName="RouteTransition">
           <RouteHandler {...this.props} key={this.props.pathname} />
         </CSSTransitionGroup>
-      </div>
+      </FluxComponent>
     );
   }
 }

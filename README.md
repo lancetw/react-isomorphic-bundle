@@ -8,6 +8,8 @@
 
 Working in process
 
+Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [flummox](https://github.com/acdlite/flummox).
+
 ```
 io.js only
 

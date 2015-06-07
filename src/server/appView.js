@@ -42,7 +42,7 @@ export default function (app) {
 
       const flux = new Flux();
 
-      let appString, assets;
+      let appString, assets, title;
       try {
         const { Handler, state } = yield new Promise((resolve, reject) => {
           router.run((_Handler, _state) =>
@@ -73,6 +73,8 @@ export default function (app) {
             <Handler {...state} />
           </FluxComponent>
         );
+
+        title = flux.getStore('page').state.title;
       }
       catch (error) {
         if (error.redirect) {
@@ -85,7 +87,8 @@ export default function (app) {
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
-        env: process.env
+        env: process.env,
+        title
       });
 
     }

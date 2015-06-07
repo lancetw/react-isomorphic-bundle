@@ -27,6 +27,8 @@ router.run(async (Handler, state) => {
 
   await performRouteHandlerStaticMethod(state.routes, 'routerWillRun', routeHandlerInfo);
 
+  document.title = flux.getStore('page').state.title;
+
   React.render(
     <FluxComponent flux={flux}>
       <Handler {...state} />
