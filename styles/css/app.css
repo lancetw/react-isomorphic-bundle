@@ -1,10 +1,6 @@
-
-
-$transition-duration: 130ms;
+$transition-duration: 28ms;
 
 .RouteTransition-enter, .RouteTransition-leave {
-  position: absolute;
-  width: 100%;
   backface-visibility: hidden;
   transition: opacity $transition-duration ease-in;
 }
