@@ -6,8 +6,9 @@ import FluxComponent from 'flummox/component';
 const {CSSTransitionGroup} = React.addons;
 
 if (process.env.BROWSER) {
-  require('css/ui');
-  require('css/app');
+  require('css/ui.less');
+  require('css/app.css');
+  require('css/screen.less');
 }
 
 class AppHandler extends React.Component {
