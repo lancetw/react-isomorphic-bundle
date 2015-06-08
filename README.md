@@ -41,6 +41,8 @@ $ npm install
 
 ---
 
+[koa](https://github.com/koajs/koa)
+
 [flummox](https://github.com/acdlite/flummox)
 
 [react-router](https://github.com/rackt/react-router)
