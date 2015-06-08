@@ -16,7 +16,7 @@ class Header extends React.Component{
             <Link to='/' className="item">
               Home
             </Link>
-            <Link to='login' className="item">Login</Link>
+            <Link to='login' className="item">Log In</Link>
           </div>
 
           <div className="right menu">

@@ -12,12 +12,16 @@ class HomeHandler extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Login</h1>
-        <Link className="ui primary button" to="login">
-          Login now
-        </Link>
-      </div>
+      <main className="ui stackable page grid">
+        <div className="column">
+          <div className="ui segment">
+            <h1>Hello World!</h1>
+            <Link className="ui primary button" to="login">
+              Log in now
+            </Link>
+          </div>
+        </div>
+      </main>
     );
   }
 }
