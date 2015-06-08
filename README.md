@@ -16,6 +16,8 @@ io.js only
 $ npm install -g nodemon
 
 $ npm install
+
+$ cp config/default.json.sample config/default.json
 ```
 
 ---
