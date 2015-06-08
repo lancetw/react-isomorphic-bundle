@@ -1,0 +1,11 @@
+{
+  "app": {
+    "SESSION_KEYS": [
+      "this is a secret key, please replace it and keep secrets."
+    ]
+  },
+  "passport": {
+    "FACEBOOK_APP_ID": "",
+    "FACEBOOK_APP_SECRET": ""
+  }
+}
