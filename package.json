@@ -38,6 +38,7 @@
     "prestart": "npm run clean && make fast-build",
     "start": "NODE_ENV=production node --harmony ./lib/server",
     "dev": "make watch",
+    "lint": "make lint",
     "build": "make build",
     "debug": "make debug",
     "clean": "make clean",

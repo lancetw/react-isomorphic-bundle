@@ -23,7 +23,6 @@ router
       scope: ['email']
     }, function*(err, profile, info) {
       if (!err) {
-        console.log(profile);
         ctx.redirect('/post');
       }
     });
