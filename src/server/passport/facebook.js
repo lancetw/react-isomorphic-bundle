@@ -1,8 +1,5 @@
 'use strict';
 
-import {isArray} from 'lodash';
-import debug from 'debug';
-
 const FacebookStrategy = require('passport-facebook').Strategy;
 const FACEBOOK_CALLBACK_URL = '/auth/facebook/callback';
 

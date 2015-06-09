@@ -46,5 +46,6 @@ webpack-stats.json
 
 lib/
 
+storage/*
 
 *.env

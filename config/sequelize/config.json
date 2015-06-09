@@ -1,6 +1,6 @@
 {
   "development": {
-    "storage": "platform/db/db.development.sqlite",
+    "storage": "storage/db.development.sqlite",
     "dialect": "sqlite",
     "omitNull": true,
     "dialectOptions": {
@@ -8,7 +8,7 @@
       "bigNumberStrings=true": true
     },
     "migrationStorage": "json",
-    "migrationStoragePath": "meta-development.json",
+    "migrationStoragePath": "storage/meta-development.json",
     "define": {
       "timestamps": true,
       "freezeTableName": true,
@@ -20,7 +20,7 @@
     "logging": false
   },
   "test": {
-    "storage": "platform/db/db.test.sqlite",
+    "storage": "storage/db.test.sqlite",
     "dialect": "sqlite",
     "omitNull": true,
     "dialectOptions": {
@@ -28,7 +28,7 @@
       "bigNumberStrings=true": true
     },
     "migrationStorage": "json",
-    "migrationStoragePath": "meta-test.json",
+    "migrationStoragePath": "storage/meta-test.json",
     "define": {
       "timestamps": true,
       "freezeTableName": true,
@@ -51,7 +51,7 @@
       "bigNumberStrings=true": true
     },
     "migrationStorage": "json",
-    "migrationStoragePath": "meta-production.json",
+    "migrationStoragePath": "storage/meta-production.json",
     "define": {
       "timestamps": true,
       "freezeTableName": true,

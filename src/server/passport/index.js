@@ -12,5 +12,6 @@ passport.deserializeUser(function (obj, done) {
 
 module.exports = {
   passport: passport,
+  local: require('./local')(passport),
   facebook: require('./facebook')(passport)
 };

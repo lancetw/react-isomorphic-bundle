@@ -4,7 +4,19 @@ const router = require('koa-router')();
 const passport = require('./passport').passport;
 
 router
-  .get('/logout', function *(next) {
+  .get('/auth/local', function *(next) {
+    let ctx = this;
+    yield passport.authenticate('local', {
+      failureRedirect: '/login'
+    }, function*(err, profile, info) {
+      if (!err) {
+        ctx.redirect('/post');
+      }
+    });
+  });
+
+router
+  .get('/auth/logout', function *(next) {
     this.cookies.set('passport', null);
     this.logout();
     this.redirect('/');
@@ -19,8 +31,7 @@ router
   .get('/auth/facebook/callback', function *(next) {
     let ctx = this;
     yield passport.authenticate('facebook', {
-      failureRedirect: '/',
-      scope: ['email']
+      failureRedirect: '/login',
     }, function*(err, profile, info) {
       if (!err) {
         ctx.redirect('/post');
