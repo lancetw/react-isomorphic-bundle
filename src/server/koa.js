@@ -8,6 +8,7 @@ import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
 import session from 'koa-session';
 import staticCache from 'koa-static-cache';
+import {passport} from './passport';
 import router from './routes';
 import path from 'path';
 const app = koa();
@@ -52,6 +53,9 @@ else {
 
 app.keys = require('config').app.SESSION_KEYS;
 app.use(session(app));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(router.routes());
 

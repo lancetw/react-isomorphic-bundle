@@ -19,10 +19,11 @@ router
   .get('/auth/facebook/callback', function *(next) {
     let ctx = this;
     yield passport.authenticate('facebook', {
-      failureRedirect: '/'
-    }, function*(err, token, info) {
+      failureRedirect: '/',
+      scope: ['email']
+    }, function*(err, profile, info) {
       if (!err) {
-        ctx.cookies.set('passport', token);
+        console.log(profile);
         ctx.redirect('/post');
       }
     });

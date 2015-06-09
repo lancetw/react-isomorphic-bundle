@@ -29,7 +29,7 @@ export default function (app) {
         },
         onAbort: abortReason => {
           const error = new Error();
-
+          console.log(abortReason);
           if (abortReason.constructor.name === 'Redirect') {
             const { to, params, query } = abortReason;
             const url = router.makePath(to, params, query);

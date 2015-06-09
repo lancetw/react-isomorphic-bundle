@@ -1,12 +1,27 @@
 import React from 'react';
+import BaseComponent from './BaseComponent';
 import {Link} from 'react-router';
+import debug from 'debug';
 
-class LoginHandler extends React.Component {
+class LoginHandler extends BaseComponent {
   displayName: 'Log in'
+
+  constructor() {
+    super();
+    this._bind('_signInWithFacebook');
+  }
 
   static async routerWillRun({ flux, state }) {
     const pagesActions = flux.getActions('page');
     return await pagesActions.setTitle('Please Log in');
+  }
+
+  _signInWithFacebook(event) {
+    const self = this;
+    event.preventDefault();
+    setTimeout(function () {
+      self.context.router.transitionTo('/auth/facebook');
+    }, 100);
   }
 
   render() {
@@ -38,11 +53,11 @@ class LoginHandler extends React.Component {
               or
             </div>
             <div className="center aligned column">
-              <a className="large blue ui labeled icon button"
-                href="/auth/facebook">
+              <Link className="large blue ui labeled icon button"
+                to="/auth/facebook">
                 <i className="facebook icon"></i>
                 Sign In with Facebook
-              </a>
+              </Link>
               <div className="ui hidden divider" />
               <div className="large red ui labeled icon button">
                 <i className="google icon"></i>
@@ -60,5 +75,9 @@ class LoginHandler extends React.Component {
     );
   }
 }
+
+LoginHandler.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
 
 export default LoginHandler;

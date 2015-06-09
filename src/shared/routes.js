@@ -4,6 +4,7 @@ import AppHandler from './components/AppHandler';
 import HomeHandler from './components/HomeHandler';
 import LoginHandler from './components/LoginHandler';
 import PostHandler from './components/PostHandler';
+import DirectHandler from './components/DirectHandler';
 import NotFound from './pages/NotFound';
 
 export default (
@@ -11,8 +12,7 @@ export default (
     <DefaultRoute name="home" handler={HomeHandler} />
     <Route name="login" path="/login" handler={LoginHandler} />
     <Route name="post" path="/post" handler={PostHandler} />
-    <Route path="/auth/facebook" />
-    <Route path="/auth/facebook/callback" />
+    <Route path="/auth/facebook" handler={DirectHandler} />
     <NotFoundRoute handler={NotFound} />
   </Route>
 );

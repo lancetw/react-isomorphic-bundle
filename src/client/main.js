@@ -9,7 +9,6 @@ import performRouteHandlerStaticMethod from '../shared/utils/performRouteHandler
 import url from 'url';
 
 if (process.env.NODE_ENV === 'development') {
-  // Warns about potential accessibility issues with your React elements
   require('react-a11y')(React);
   require('debug').enable('dev,koa');
 }
@@ -21,7 +20,6 @@ const router = Router.create({
   location: Router.HistoryLocation
 });
 
-// Render app
 router.run(async (Handler, state) => {
   const routeHandlerInfo = {state, flux};
 
@@ -37,7 +35,6 @@ router.run(async (Handler, state) => {
   );
 });
 
-// Intercept local route changes
 document.onclick = event => {
   const { toElement: target } = event;
 
