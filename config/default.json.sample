@@ -5,15 +5,21 @@
     ],
     "SALT": "GOD'S IN HIS HEAVEN, ALL'S RIGHT WITH THE WORLD.",
     "BASEID": 9999,
-    "SEED": 1111
+    "SEED": 1412
   },
   "passport": {
     "FACEBOOK_APP_ID": "",
-    "FACEBOOK_APP_SECRET": ""
+    "FACEBOOK_APP_SECRET": "",
+    "FACEBOOK_CALLBACK": "/auth/facebook/callback"
   },
   "sequelize": {
-    "DATABASE": null,
-    "USERNAME": null,
-    "PASSWORD": null
+    "DATABASE": "",
+    "USERNAME": "",
+    "PASSWORD": ""
+  },
+  "jwt": {
+    "ISSUER": "192.168.0.100",
+    "SECRET_OR_KEY": "this is a secret key",
+    "AUDIENCE": "192.168.0.100"
   }
 }

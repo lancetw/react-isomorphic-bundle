@@ -1,7 +1,7 @@
 'use strict';
 
 const router = require('koa-router')();
-const passport = require('./passport').passport;
+const passport = require('koa-passport');
 
 router
   .get('/auth/local', function *(next) {

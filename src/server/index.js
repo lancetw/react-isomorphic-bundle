@@ -5,4 +5,4 @@ const path = require('path');
 require('app-module-path').addPath(path.join(__dirname, '../../'));
 
 require('babel/register');
-require('./koa.js');
+module.exports = require('./koa.js');

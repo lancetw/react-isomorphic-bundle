@@ -8,11 +8,18 @@ import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
 import session from 'koa-session';
 import staticCache from 'koa-static-cache';
-import {passport} from './passport';
+import cors from 'koa-cors';
+import basicAuth from './passport/basic';
+import facebookAuth from './passport/facebook';
 import router from './routes';
 import path from 'path';
+import co from 'co';
+import services from 'src/server/services';
+import models from 'src/server/db/models';
+
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
+
 export default app;
 
 app.use(responseTime());
@@ -54,14 +61,27 @@ else {
 app.keys = require('config').app.SESSION_KEYS;
 app.use(session(app));
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(facebookAuth.initialize());
+app.use(facebookAuth.session());
 
 app.use(router.routes());
+
+app.use(mount('/api/v1', services.v1));
+app.use(mount('/api/v1', cors()));
+app.use(mount('/api/v1', basicAuth.initialize()));
 
 import appView from './appView';
 appView(app);
 
 const port = process.env.PORT || 3000;
-app.listen(port);
-debug('*')(`App started listening on port ${port}`);
+
+co(function *() {
+  var connection = yield models.sequelize.sync();
+  if (connection) {
+    app.listen(port);
+    debug('*')(`App started listening on port ${port}`);
+  }
+});
+
+
+

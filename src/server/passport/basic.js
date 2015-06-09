@@ -1,16 +1,19 @@
 'use strict';
 
 import passport from 'koa-passport';
-import {LocalStrategy} from 'passport-local';
+import {BasicStrategy} from 'passport-http';
 import db from 'src/server/db';
 import co from 'co';
+import conifg from 'config';
+import debug from 'debug';
 
 const User = db.users;
 
-export default passport.use(new LocalStrategy(function (email, password, done) {
-  co(function* () {
+export default passport.use(new BasicStrategy(function (email, password, done) {
+  co(function *() {
     try {
       const user = yield User.auth(email, password);
+
       if (!user) {
         return false;
       }
@@ -29,6 +32,5 @@ export default passport.use(new LocalStrategy(function (email, password, done) {
     return done(err);
   });
 }));
-
 
 

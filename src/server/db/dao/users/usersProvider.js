@@ -1,9 +1,8 @@
 'use strict';
 
-const models = require('src/server/db/models');
 const bcrypt = require('co-bcrypt');
 const hashids = require('src/shared/utils/hashids-plus');
-const User = models.users;
+const models = require('src/server/db/models');
 
 exports.create = function *(user) {
   const fillable = ['email', 'name', 'passwd', 'status'];
@@ -11,12 +10,12 @@ exports.create = function *(user) {
   user.passwd = yield bcrypt.hash(user.password, salt);
   user.status = 0;
 
-  return yield User.create(user, {fields: fillable});
+  return yield models.users.create(user, {fields: fillable});
 };
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid);
-  return yield User.findOne({
+  return yield models.users.findOne({
     where: {id: id}
   });
 };
@@ -26,7 +25,7 @@ exports.update = function *(hid, user) {
   const id = +hashids.decode(hid);
   const salt = yield bcrypt.genSalt(10);
   user.passwd = yield bcrypt.hash(user.password, salt);
-  let u = yield User.findOne({
+  let u = yield models.users.findOne({
     where: {id: id}
   });
   return yield u.update(user, {fields: fillable});
@@ -34,12 +33,12 @@ exports.update = function *(hid, user) {
 
 exports.delete = function *(hid) {
   const id = +hashids.decode(hid);
-  let user = yield User.findOne({where: {id: id}});
+  let user = yield models.users.findOne({where: {id: id}});
   return yield user.destroy();
 };
 
 exports.auth = function *(email, password) {
-  const user = yield User.findOne({
+  const user = yield models.users.findOne({
     where: {email: email}
   });
 

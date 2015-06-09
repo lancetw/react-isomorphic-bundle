@@ -9,6 +9,7 @@ TEST_JS = $(shell find tests -name "*-test.js")
 
 BABEL_ARGS = --stage 0 --source-maps-inline
 MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan $(TEST_JS)
+MOCHA_ARGS_SPEC = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
 ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
 TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register --report lcovonly -R spec $(TEST_JS) && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
@@ -23,6 +24,9 @@ clean:
 test: lint js
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
+test-spec:
+	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS_SPEC)
+
 test-cov: js
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
@@ -30,7 +34,7 @@ test-ci: js
 	@NODE_ENV=test $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
-	$(ESLINT_CMD) $(SRC_JS)
+	$(ESLINT_CMD) $(SRC_JS) $(TEST_JS)
 
 # Build application quickly
 # Faster on first build, but not after that

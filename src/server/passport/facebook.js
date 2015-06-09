@@ -1,20 +1,20 @@
 'use strict';
 
-const FacebookStrategy = require('passport-facebook').Strategy;
-const FACEBOOK_CALLBACK_URL = '/auth/facebook/callback';
+import passport from 'koa-passport';
+import FacebookStrategy from 'passport-facebook';
+import conifg from 'config';
 
-module.exports = function (passport) {
-  passport.use(new FacebookStrategy({
-      clientID: require('config').passport.FACEBOOK_APP_ID,
-      clientSecret: require('config').passport.FACEBOOK_APP_SECRET,
-      callbackURL: FACEBOOK_CALLBACK_URL,
-      enableProof: false
-    },
-    function (accessToken, refreshToken, profile, done) {
-      process.nextTick(function () {
-        return done(null, profile);
-      });
-    }
-  ));
+const opts = {};
+opts.clientID = conifg.passport.FACEBOOK_APP_ID;
+opts.clientSecret = conifg.passport.FACEBOOK_APP_SECRET;
+opts.callbackURL = conifg.passport.FACEBOOK_CALLBACK;
+opts.enableProof = false;
 
-};
+export default passport.use(new FacebookStrategy(opts, function (accessToken, refreshToken, profile, done) {
+  process.nextTick(function () {
+    return done(null, profile);
+  });
+}));
+
+
+

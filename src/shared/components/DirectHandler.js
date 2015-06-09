@@ -4,7 +4,9 @@ class HomeHandler extends React.Component {
   displayName: 'Home'
 
   static willTransitionTo(transition, params, query, callback) {
-    window.location = transition.path;
+    if (typeof window !== 'undefined') {
+      window.location = transition.path;
+    }
     setTimeout(callback, 0);
   }
 

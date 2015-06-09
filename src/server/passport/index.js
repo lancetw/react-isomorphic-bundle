@@ -10,8 +10,4 @@ passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
-module.exports = {
-  passport: passport,
-  local: require('./local')(passport),
-  facebook: require('./facebook')(passport)
-};
+export default passport;
