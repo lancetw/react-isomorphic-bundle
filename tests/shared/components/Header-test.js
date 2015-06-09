@@ -29,7 +29,7 @@ describe('App', () => {
     expect(itemCount).toBe(3);
 
     expect(React.findDOMNode(renderedItems[0]).textContent).toEqual('Home');
-    expect(React.findDOMNode(renderedItems[1]).textContent).toEqual('Login');
+    expect(React.findDOMNode(renderedItems[1]).textContent).toEqual('Log In');
   });
 
 });
