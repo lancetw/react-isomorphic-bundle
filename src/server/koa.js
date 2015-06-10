@@ -73,17 +73,10 @@ app.use(mount('/api/v1', jwtAuth.initialize()));
 import appView from './appView';
 appView(app);
 
-let port;
-if (env === 'test') {
-  port = 3009;
-} else {
-  port = process.env.PORT || 3000;
-}
-
+const port = process.env.PORT || 3000;
 co(function *() {
   var connection = yield models.sequelize.sync();
   if (connection) {
-    console.log('tset', port);
     app.listen(port);
     debug('*')(`App started listening on port ${port}`);
   }
