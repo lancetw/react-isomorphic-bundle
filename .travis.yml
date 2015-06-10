@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "iojs-v2.1.0"
-script: NODE_ENV=test npm run test-ci
+script: npm run test-ci
 after_script:
   - codeclimate < coverage/lcov.info
+  - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - rm -rf coverage
