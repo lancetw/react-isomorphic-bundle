@@ -166,7 +166,7 @@ describe('user', function () {
 
     it('PUT /api/v1/users/' + hid + ' (Wrong token)', function *() {
       const res = yield request.put('/api/v1/users/' + hid).send(userModified)
-        .set('Authorization', 'JWT ' + token1)
+        .set('Authorization', 'JWT ' + token1 + token2)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(401).end();
