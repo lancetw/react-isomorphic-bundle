@@ -9,4 +9,4 @@ exclude_paths:
 - webpack/*
 - config/*
 - src/server/db/migrations/*
-
+- src/server/db/models/*
