@@ -59,4 +59,5 @@ exports.auth = function *(email, password) {
   else {
     return null;
   }
+
 };

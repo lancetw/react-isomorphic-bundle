@@ -22,6 +22,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       passwd: {
+        allowNull: true,
         validate: {
           min: 6
         },

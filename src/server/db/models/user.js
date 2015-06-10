@@ -21,6 +21,7 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.STRING
     },
     passwd: {
+      allowNull: true,
       validate: {
         min: 6
       },
