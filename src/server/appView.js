@@ -61,11 +61,11 @@ export default function (app) {
 
         const env = process.env.NODE_ENV;
         if (env === 'development') {
-          assets = fs.readFileSync(path.resolve(__dirname, './webpack-stats.json'));
+          assets = fs.readFileSync(path.resolve(__dirname, '../../storage/webpack-stats.json'));
           assets = JSON.parse(assets);
         }
         else {
-          assets = require('./webpack-stats.json');
+          assets = require('storage/webpack-stats.json');
         }
 
         appString = React.renderToString(

@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "iojs-v2.2.1"
-script: DEBUG=superagent,koa*,dev npm run test-ci
+script: npm run test-ci
 after_success:
   - codeclimate < coverage/lcov.info
   - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

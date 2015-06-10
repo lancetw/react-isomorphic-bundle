@@ -5,14 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import debug from 'debug';
 
-const env = process.env.NODE_ENV;
-
-let filepath;
-if (env  !== 'production') {
-  filepath = path.resolve(__dirname, '../../src/server/webpack-stats.json');
-} else {
-  filepath = path.resolve(__dirname, '../../lib/server/webpack-stats.json');
-}
+const filepath = path.resolve(__dirname, '../../storage/webpack-stats.json');
 
 export default function (stats) {
   const publicPath = this.options.output.publicPath;

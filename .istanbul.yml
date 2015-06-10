@@ -2,7 +2,7 @@ verbose: false
 instrumentation:
   root: src
   default-excludes: true
-  excludes: ["server/webpack-stats.json"]
+  excludes: []
 reporting:
     print: summary
     reports:

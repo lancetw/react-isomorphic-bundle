@@ -30,7 +30,7 @@ node_modules
 *.sqlite
 
 # global config
-#config/default.json
+config/development.json
 config/statging.json
 config/production.json
 
@@ -41,8 +41,6 @@ meta-*.json
 .sass-cache
 
 public/
-
-webpack-stats.json
 
 lib/
 

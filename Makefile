@@ -24,13 +24,13 @@ clean:
 test: lint js webpack-test
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
-test-spec: webpack-test
+test-spec:
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS_SPEC)
 
-test-cov: webpack-test
+test-cov:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
-test-ci:
+test-ci: webpack-test
 	@NODE_ENV=development $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
