@@ -1,6 +1,6 @@
 BIN = node_modules/.bin
 MOCHA_CMD = $(BIN)/mocha
-ISTANBUL_CMD = node --harmony node_modules/istanbul/lib/cli.js
+ISTANBUL_CMD = node --harmony node_modules/istanbul/lib/cli.js cover
 ESLINT_CMD = $(BIN)/eslint
 
 SRC_JS = $(shell find src -name "*.js")
@@ -10,8 +10,8 @@ TEST_JS = $(shell find tests -name "*-test.js")
 BABEL_ARGS = --stage 0 --source-maps-inline
 MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan $(TEST_JS)
 MOCHA_ARGS_SPEC = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
-ISTANBUL_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
-TRAVIS_ARGS = cover node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register --report lcovonly -R spec $(TEST_JS)
+ISTANBUL_ARGS = node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
+TRAVIS_ARGS = node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register --report lcovonly -R spec $(TEST_JS)
 
 
 build: js webpack
