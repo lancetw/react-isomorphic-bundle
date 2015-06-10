@@ -27,10 +27,10 @@ test: lint js
 test-spec:
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS_SPEC)
 
-test-cov: js
+test-cov:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
-test-ci: js
+test-ci:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
