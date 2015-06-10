@@ -40,11 +40,8 @@
     "logging": false
   },
   "production": {
-    "username": null,
-    "password": null,
-    "database": null,
-    "host": "127.0.0.1",
-    "dialect": "mssql",
+    "storage": "storage/db.production.sqlite",
+    "dialect": "sqlite",
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,
