@@ -18,8 +18,12 @@
     "PASSWORD": ""
   },
   "jwt": {
-    "ISSUER": "192.168.0.100",
-    "SECRET_OR_KEY": "this is a secret key",
-    "AUDIENCE": "192.168.0.100"
+    "SECRET_OR_KEY": "thisisasecretkey",
+    "OPTIONS": {
+      "ALG": "HS256",
+      "EXP": 300,
+      "ISS": "http://localhost:3000/api/v1/login",
+      "AUD": "http://localhost:3000"
+    }
   }
 }
