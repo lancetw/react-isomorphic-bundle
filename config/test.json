@@ -1,0 +1,29 @@
+{
+  "app": {
+    "SESSION_KEYS": [
+      "this is a secret key, please replace it and keep secrets."
+    ],
+    "SALT": "GOD'S IN HIS HEAVEN, ALL'S RIGHT WITH THE WORLD.",
+    "BASEID": 9999,
+    "SEED": 1412
+  },
+  "passport": {
+    "FACEBOOK_APP_ID": "",
+    "FACEBOOK_APP_SECRET": "",
+    "FACEBOOK_CALLBACK": "/auth/facebook/callback"
+  },
+  "sequelize": {
+    "DATABASE": "",
+    "USERNAME": "",
+    "PASSWORD": ""
+  },
+  "jwt": {
+    "SECRET_OR_KEY": "thisisasecretkey",
+    "OPTIONS": {
+      "ALG": "HS256",
+      "EXP": 300,
+      "ISS": "http://localhost:3000/api/v1/login",
+      "AUD": "http://localhost:3000"
+    }
+  }
+}
