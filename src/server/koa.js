@@ -10,6 +10,7 @@ import session from 'koa-session';
 import staticCache from 'koa-static-cache';
 import cors from 'koa-cors';
 import basicAuth from './passport/basic';
+import jwtAuth from './passport/local-jwt';
 import facebookAuth from './passport/facebook';
 import router from './routes';
 import path from 'path';
@@ -69,6 +70,7 @@ app.use(router.routes());
 app.use(mount('/api/v1', services.v1));
 app.use(mount('/api/v1', cors()));
 app.use(mount('/api/v1', basicAuth.initialize()));
+app.use(mount('/api/v1', jwtAuth.initialize()));
 
 import appView from './appView';
 appView(app);

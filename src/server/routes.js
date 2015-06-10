@@ -1,23 +1,43 @@
 'use strict';
 
+import jwt from 'jsonwebtoken';
+import config from 'config';
+import hashids from 'src/shared/utils/hashids-plus';
+import debug from 'debug';
+
 const router = require('koa-router')();
 const passport = require('koa-passport');
 
 router
-  .get('/auth/local', function *(next) {
+  .post('/api/v1/login', function *(next) {
     let ctx = this;
-    yield passport.authenticate('local', {
+    yield passport.authenticate('basic', {
       failureRedirect: '/login'
     }, function*(err, profile, info) {
       if (!err) {
-        ctx.redirect('/post');
+        // response JSON web token
+
+        let opts = {};
+        opts.algorithm = config.jwt.OPTIONS.ALG;
+        opts.expiresInMinutes = config.jwt.OPTIONS.EXP;
+        opts.expiresInMinutes = config.jwt.OPTIONS.EXP;
+        opts.issuer = config.jwt.OPTIONS.ISS;
+        opts.audience = config.jwt.OPTIONS.AUD;
+
+        let data = {};
+        data.id = hashids.encode(profile.id);
+        data.email = profile.email;
+        data.password = profile.password;
+
+        let token = jwt.sign(data, config.jwt.SECRET_OR_KEY, opts);
+        ctx.body = {token: token};
       }
     });
   });
 
+
 router
-  .get('/auth/logout', function *(next) {
-    this.cookies.set('passport', null);
+  .get('/api/v1/login', function *(next) {
     this.logout();
     this.redirect('/');
   });

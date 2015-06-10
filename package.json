@@ -89,7 +89,6 @@
     "passport-facebook": "^2.0.0",
     "passport-http": "^0.2.2",
     "passport-jwt": "^1.1.0",
-    "passport-local": "^1.0.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "react-style": "^0.5.5",

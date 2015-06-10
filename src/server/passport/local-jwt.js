@@ -1,21 +1,25 @@
 'use strict';
 
 import passport from 'koa-passport';
-import {JwtStrategy} from 'passport-jwt';
 import db from 'src/server/db';
 import co from 'co';
-import conifg from 'config';
+import config from 'config';
+import debug from 'debug';
 
+const JwtStrategy = require('passport-jwt').Strategy;
 const User = db.users;
 
-const opts = {};
-opts.secretOrKey = conifg.jwt.SECRET_OR_KEY;
-opts.issuer = conifg.jwt.ISSUER;
-opts.audience = conifg.jwt.AUDIENCE;
+let opts = {};
+opts.secretOrKey = config.jwt.SECRET_OR_KEY;
+opts.algorithm = config.jwt.OPTIONS.ALG;
+opts.expiresInMinutes = config.jwt.OPTIONS.EXP;
+opts.issuer = config.jwt.OPTIONS.ISS;
+opts.audience = config.jwt.OPTIONS.AUD;
 
 export default passport.use(new JwtStrategy(opts, function (payload, done) {
   co(function* () {
     try {
+      debug('koa-passport')('jwt', payload.email, payload.password);
       const user = yield User.auth(payload.email, payload.password);
       if (!user) {
         return false;

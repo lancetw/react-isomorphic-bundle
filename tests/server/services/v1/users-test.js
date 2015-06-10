@@ -10,6 +10,7 @@ import bcrypt from 'co-bcrypt';
 const User = db.users;
 
 const request = require('co-supertest').agent(app.listen());
+let token1, token2;
 
 before(function *() {
   yield models.sequelize.sync();
@@ -52,6 +53,15 @@ describe('user', function () {
         .expect(201).end();
 
       expect(res.body.email).is.equal(user.email);
+    });
+
+    it('GET JSON WEB TOKEN1', function *() {
+        // JWT
+      const res = yield request.post('/api/v1/login')
+        .auth('lancetw@gmail.com', '1234567890')
+        .end();
+
+      token1 = res.body.token;
     });
 
     it('POST /api/v1/users (user exists)', function *() {
@@ -104,7 +114,7 @@ describe('user', function () {
 
     it('GET 401 /api/v1/users/' + hid, function *() {
       const res = yield request.get('/api/v1/users/' + hid)
-        .auth('lancetw2@gmail.com', '1234567890')
+        .set('Authorization', token1)
         .expect(401).end();
 
       expect(res.body).to.be.empty;
@@ -112,7 +122,7 @@ describe('user', function () {
 
     it('GET /api/v1/users/' + hid, function *() {
       const res = yield request.get('/api/v1/users/' + hid)
-        .auth('lancetw@gmail.com', '1234567890')
+        .set('Authorization', 'JWT ' + token1)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200).end();
@@ -135,7 +145,7 @@ describe('user', function () {
 
     it('PUT /api/v1/users/' + hid, function *() {
       const res = yield request.put('/api/v1/users/' + hid).send(userModified)
-        .auth('lancetw@gmail.com', '1234567890')
+        .set('Authorization', 'JWT ' + token1)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(201).end();
@@ -145,9 +155,18 @@ describe('user', function () {
       expect(passwdTest).is.equal(true);
     });
 
-    it('PUT /api/v1/users/' + hid + ' (Wrong auth)', function *() {
+    it('GET JSON WEB TOKEN2', function *() {
+        // JWT
+      const res = yield request.post('/api/v1/login')
+        .auth('lancetw@gmail.com', '7777777777')
+        .end();
+
+      token2 = res.body.token;
+    });
+
+    it('PUT /api/v1/users/' + hid + ' (Wrong token)', function *() {
       const res = yield request.put('/api/v1/users/' + hid).send(userModified)
-        .auth('lancetw@gmail.com', '1234567890')
+        .set('Authorization', 'JWT ' + token1)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(401).end();
@@ -155,9 +174,10 @@ describe('user', function () {
       expect(res.body).to.be.empty;
     });
 
+
     it('GET /api/v1/users/' + hid, function *() {
       const res = yield request.get('/api/v1/users/' + hid)
-        .auth('lancetw@gmail.com', '7777777777')
+        .set('Authorization', 'JWT ' + token2)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200).end();
@@ -172,7 +192,7 @@ describe('user', function () {
 
     it('DELETE /api/v1/users/' + hid, function *() {
       const res = yield request.delete('/api/v1/users/' + hid)
-        .auth('lancetw@gmail.com', '7777777777')
+        .set('Authorization', 'JWT ' + token2)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200).end();
@@ -182,7 +202,7 @@ describe('user', function () {
 
     it('DELETE /api/v1/users/' + hid + ' (Wrong auth)', function *() {
       const res = yield request.delete('/api/v1/users/' + hid)
-        .auth('lancetw@gmail.com', '7777777777')
+        .set('Authorization', 'JWT ' + token2)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(401).end();
@@ -192,7 +212,7 @@ describe('user', function () {
 
     it('GET /api/v1/users/' + hid, function *() {
       const res = yield request.get('/api/v1/users/' + hid)
-        .auth('lancetw@gmail.com', '7777777777')
+        .set('Authorization', 'JWT ' + token2)
         .expect(401).end();
 
       expect(res.body).to.be.empty;
