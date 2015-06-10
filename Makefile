@@ -20,6 +20,9 @@ clean:
 	rm -rf public/assets/
 	rm -rf lib/
 
+storage:
+	mkdir storage
+
 # Test
 test: lint js webpack-test
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
