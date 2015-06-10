@@ -24,7 +24,7 @@ storage:
 	mkdir -p storage
 
 # Test
-test: lint js webpack-test
+test: lint webpack-test
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
 test-spec:
