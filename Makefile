@@ -14,7 +14,7 @@ ISTANBUL_ARGS = node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --re
 TRAVIS_ARGS = node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register --report lcovonly -R spec $(TEST_JS)
 
 
-build: webpack
+build: js webpack
 
 clean:
 	rm -rf public/assets/
