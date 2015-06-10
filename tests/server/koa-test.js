@@ -1,7 +1,7 @@
 'use strict';
 
 const app = require('src/server');
-const request = require('co-supertest').agent(app.listen(3002));
+const request = require('co-supertest').agent(app.listen());
 
 describe('index', function () {
   describe('read', function () {
