@@ -8,8 +8,8 @@
     "SEED": 1412
   },
   "passport": {
-    "FACEBOOK_APP_ID": "",
-    "FACEBOOK_APP_SECRET": "",
+    "FACEBOOK_APP_ID": "1234567890",
+    "FACEBOOK_APP_SECRET": "abcdefg",
     "FACEBOOK_CALLBACK": "/auth/facebook/callback"
   },
   "sequelize": {
