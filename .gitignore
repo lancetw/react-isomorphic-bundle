@@ -30,7 +30,7 @@ node_modules
 *.sqlite
 
 # global config
-config/default.json
+#config/default.json
 config/statging.json
 config/production.json
 
