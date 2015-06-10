@@ -21,13 +21,13 @@ clean:
 	rm -rf lib/
 
 # Test
-test: lint js
+test: lint js webpack-test
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
-test-spec:
+test-spec: webpack-test
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS_SPEC)
 
-test-cov:
+test-cov: webpack-test
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
 test-ci:
@@ -43,7 +43,6 @@ fast-build: fast-js build
 # Watch for changes
 watch:
 	@NODE_ENV=development $(MAKE) -j5 dev-server webpack-server browser-sync
-
 
 debug:
 	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
@@ -80,6 +79,9 @@ webpack-server: $(LIB_JS)
 	node ./webpack/server.js
 
 webpack: public/js/index.js
+
+webpack-test:
+	@NODE_ENV=test $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
 
 public/js/index.js: $(SRC_JS)
 	@NODE_ENV=production $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js

@@ -10,9 +10,8 @@ require('app-module-path').addPath(path.join(__dirname, '../'));
 process.env.NODE_CONFIG_DIR = path.join(__dirname, '../../config');
 
 var config;
-if (env === 'development' || env === 'debug') {
-  config = env === 'debug' ? require('config/webpack/debug.config') : require('config/webpack/development.config');
-
+if (env !== 'production' && env !== 'test') {
+  config = require('config/webpack/'+ env +'.config');
   var webpack = require('webpack');
   var WebpackDevServer = require('webpack-dev-server');
   var compiler = webpack(config.webpack);
@@ -23,8 +22,9 @@ if (env === 'development' || env === 'debug') {
     debug('dev')('webpack-dev-server listen on port %s', config.server.port);
   });
 } else {
+
   module.exports = [
-    require('config/webpack/production.config').webpack
+    require('config/webpack/'+ env +'.config').webpack
   ];
 }
 

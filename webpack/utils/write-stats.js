@@ -8,7 +8,7 @@ import debug from 'debug';
 const env = process.env.NODE_ENV;
 
 let filepath;
-if (env  === 'development' || env === 'debug') {
+if (env  !== 'production') {
   filepath = path.resolve(__dirname, '../../src/server/webpack-stats.json');
 } else {
   filepath = path.resolve(__dirname, '../../lib/server/webpack-stats.json');
