@@ -21,7 +21,7 @@ clean:
 	rm -rf lib/
 
 storage:
-	mkdir storage
+	mkdir -p storage
 
 # Test
 test: lint js webpack-test
@@ -83,7 +83,7 @@ webpack-server: $(LIB_JS)
 
 webpack: public/js/index.js
 
-webpack-test:
+webpack-test: storage
 	@NODE_ENV=test $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
 
 public/js/index.js: $(SRC_JS)
