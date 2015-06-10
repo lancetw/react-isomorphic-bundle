@@ -32,7 +32,8 @@
     "mocha",
     "jsdom",
     "istanbul",
-    "sequelize"
+    "sequelize",
+    "jwt"
   ],
   "scripts": {
     "prestart": "npm run clean && make fast-build",
@@ -97,6 +98,7 @@
     "semantic-ui": "^1.12.3",
     "sequelize": "^3.2.0",
     "sqlite3": "^3.0.8",
+    "superagent": "^1.2.0",
     "tedious": "^1.11.0",
     "traverse": "^0.6.6"
   },
