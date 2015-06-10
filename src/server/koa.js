@@ -21,8 +21,6 @@ import models from 'src/server/db/models';
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
 
-export default app;
-
 app.use(responseTime());
 app.use(logger());
 app.use(helmet.defaults());
@@ -91,5 +89,4 @@ co(function *() {
   }
 });
 
-
-
+export default app;
