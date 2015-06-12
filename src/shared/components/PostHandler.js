@@ -39,7 +39,7 @@ class LoginHandler extends React.Component {
             <div className="field">
               <div className="ui checkbox">
                 <input type="checkbox" name="tos-check" />
-                <label>I agreed <a role="botton" href="#">ToS</a></label>
+                <label>I agree to the <a role="botton" href="#">Terms and Conditions</a></label>
               </div>
             </div>
             <div className="ui divider"></div>

@@ -43,7 +43,8 @@ export default {
     devtool: 'source-map',
     entry: {
       app: [
-        './src/client/index'
+        './src/client/index',
+        './src/client/fallback'
       ]
     },
     output: {

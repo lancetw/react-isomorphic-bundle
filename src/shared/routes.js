@@ -3,6 +3,7 @@ import {Route, DefaultRoute, NotFoundRoute} from 'react-router';
 import AppHandler from './components/AppHandler';
 import HomeHandler from './components/HomeHandler';
 import LoginHandler from './components/LoginHandler';
+import SignupHandler from './components/SignupHandler';
 import PostHandler from './components/PostHandler';
 import DirectHandler from './components/DirectHandler';
 import NotFound from './pages/NotFound';
@@ -11,6 +12,7 @@ export default (
   <Route name="app" path="/" handler={AppHandler}>
     <DefaultRoute name="home" handler={HomeHandler} />
     <Route name="login" path="/login" handler={LoginHandler} />
+    <Route name="signup" path="/signup" handler={SignupHandler} />
     <Route name="post" path="/post" handler={PostHandler} />
     <Route path="/auth/facebook" handler={DirectHandler} />
     <NotFoundRoute handler={NotFound} />

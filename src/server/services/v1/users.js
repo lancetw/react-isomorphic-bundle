@@ -22,7 +22,6 @@ export default new Resource('users', {
   // POST /users
   create: function *(next) {
     let body = yield parse(this);
-
     const rule = {
       name: {type: 'string', required: false, allowEmpty: true},
       password: 'password',

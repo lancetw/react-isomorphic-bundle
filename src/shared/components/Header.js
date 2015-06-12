@@ -22,7 +22,7 @@ class Header extends React.Component{
           <div className="right menu">
             <div className="item">
               <div className="ui transparent icon input inverted">
-                <input type="text" placeholder="Search ..." />
+                <input type="text" placeholder="Search ..." aria-label="Search" />
                 <i className="search icon"></i>
               </div>
             </div>
@@ -33,7 +33,6 @@ class Header extends React.Component{
             Home
           </Link>
         </div>
-
       </header>
     );
   }

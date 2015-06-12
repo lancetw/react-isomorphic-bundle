@@ -1,5 +1,4 @@
 import {Store} from 'flummox';
-import debug from 'debug';
 
 export default class MessageStore extends Store {
   constructor({pageActions}) {
@@ -13,7 +12,7 @@ export default class MessageStore extends Store {
   }
 
   handleTitle(title) {
-    title = `${this.baseTitle} ${this.delimeter} ${title}`;
+    title = `${title} ${this.delimeter} ${this.baseTitle} `;
 
     this.setState({title: title});
   }

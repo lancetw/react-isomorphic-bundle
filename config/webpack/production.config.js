@@ -24,16 +24,19 @@ export default {
     entry: {
       app: [
         './src/client/index'
+      ],
+      fallback: [
+        './src/client/fallback'
       ]
     },
     output: {
       path: path.join(__dirname, '../../public/assets/'),
-      filename: '[name]-[chunkhash].js',
+      filename: '[name].js',
       chunkFilename: '[name]-[chunkhash].js',
       publicPath: PUBLIC_PATH,
     },
     plugins: [
-      new ExtractTextPlugin('[name]-[chunkhash].css'),
+      new ExtractTextPlugin('[name].css'),
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
@@ -94,7 +97,8 @@ export default {
           exclude: /node_modules/
         },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss') },
-        { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less?noIeCompat') }
+        { test: /\.less$/,
+          loader: ExtractTextPlugin.extract('style', 'css!postcss!less?noIeCompat')}
       ]
     },
     postcss: {

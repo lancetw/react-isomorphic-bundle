@@ -1,27 +1,17 @@
 import React from 'react';
-import BaseComponent from './BaseComponent';
+import BaseComponent from 'shared/components/BaseComponent';
 import {Link} from 'react-router';
-import debug from 'debug';
 
 class LoginHandler extends BaseComponent {
   displayName: 'Log in'
 
-  constructor() {
-    super();
-    this._bind('_signInWithFacebook');
+  constructor(props) {
+    super(props);
   }
 
   static async routerWillRun({ flux, state }) {
     const pagesActions = flux.getActions('page');
     return await pagesActions.setTitle('Please Log in');
-  }
-
-  _signInWithFacebook(event) {
-    const self = this;
-    event.preventDefault();
-    setTimeout(function () {
-      self.context.router.transitionTo('/auth/facebook');
-    }, 100);
   }
 
   render() {
@@ -34,7 +24,7 @@ class LoginHandler extends BaseComponent {
                 <div className="field">
                   <label>Email</label>
                   <div className="ui left icon input">
-                    <input type="text" placeholder="example@gmail.com" />
+                    <input type="text" placeholder="example@email.com" />
                     <i className="user icon"></i>
                   </div>
                 </div>
@@ -58,16 +48,12 @@ class LoginHandler extends BaseComponent {
                 <i className="facebook icon"></i>
                 Sign In with Facebook
               </Link>
-              <div className="ui hidden divider" />
-              <div className="large red ui labeled icon button">
-                <i className="google icon"></i>
-                Sign In with Google
-              </div>
               <div className="ui hidden divider"></div>
-              <div className="huge green ui labeled icon button">
+              <Link className="huge green ui labeled icon button"
+                to="/signup">
                 <i className="signup icon"></i>
                 Sign Up
-              </div>
+              </Link>
             </div>
           </div>
         </div>

@@ -43,7 +43,8 @@ export default {
       app: [
         `webpack-dev-server/client?http://localhost:${PORT}`,
         'webpack/hot/only-dev-server',
-        './src/client/index'
+        './src/client/index',
+        './src/client/fallback'
       ]
     },
     publicPath: PUBLIC_PATH,
