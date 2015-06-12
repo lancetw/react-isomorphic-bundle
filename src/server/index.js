@@ -8,7 +8,8 @@ const path = require('path');
 require('app-module-path').addPath(path.join(__dirname, '../../'));
 if (env !== 'production') {
   require('app-module-path').addPath(path.join(__dirname, '../../src'));
-} else {
+}
+else {
   require('app-module-path').addPath(path.join(__dirname, '../../lib'));
 }
 

@@ -20,6 +20,12 @@ clean:
 	rm -rf public/assets/
 	rm -rf lib/
 
+clean-db:
+	rm -rf storage/*.sqlite
+
+clean-stats:
+	rm -rf storage/webpack-stats.json
+
 storage:
 	mkdir -p storage
 
