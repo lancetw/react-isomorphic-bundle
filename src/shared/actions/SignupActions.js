@@ -28,7 +28,7 @@ export default class SignupActions extends Actions {
             resolve(res.body);
           }
           else {
-            resolve(res.text);
+            resolve(res.body);
           }
         });
     });

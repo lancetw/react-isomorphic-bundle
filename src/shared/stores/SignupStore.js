@@ -1,5 +1,6 @@
 import {Store} from 'flummox';
 import debug from 'debug';
+import {isArray} from 'lodash';
 
 export default class SignupStore extends Store {
   constructor({signupActions}) {
@@ -13,7 +14,12 @@ export default class SignupStore extends Store {
 
   getErrors(errors) {
     if (!errors.token) {
-      this.setState({errors: JSON.parse(errors), response: {}});
+      if (isArray(errors)) {
+        this.setState({errors: errors, response: {}});
+      }
+      else {
+        this.setState({errors: errors.errors, response: {}});
+      }
     }
     else {
       // save token
