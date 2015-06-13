@@ -10,3 +10,4 @@ exclude_paths:
 - config/*
 - src/server/db/migrations/*
 - src/server/db/models/*
+- src/shared/utils/semantic-custom.js
