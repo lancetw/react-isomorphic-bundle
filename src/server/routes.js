@@ -2,7 +2,7 @@
 
 import jwtHelper from './jwt-helper';
 import passport from 'koa-passport';
-import Flux from '../shared/flux';
+import Flux from 'shared/flux';
 
 const router = require('koa-router')();
 
