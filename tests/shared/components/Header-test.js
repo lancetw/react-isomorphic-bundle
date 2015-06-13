@@ -3,7 +3,7 @@
 import jsdom from 'mocha-jsdom';
 import expect from 'expect';
 import React from 'react/addons';
-import HeaderComponent from 'src/shared/components/Header';
+import HeaderComponent from 'src/shared/components/HeaderComponent';
 import stubRouterContext from 'tests/utils/stub-router-context.jsx';
 
 describe('App', () => {
@@ -26,10 +26,11 @@ describe('App', () => {
     const renderedItems = TestUtils.scryRenderedDOMComponentsWithTag(_header, 'a'),
     itemCount = renderedItems.length;
 
-    expect(itemCount).toBe(3);
+    expect(itemCount).toBe(4);
 
     expect(React.findDOMNode(renderedItems[0]).textContent).toEqual('Home');
     expect(React.findDOMNode(renderedItems[1]).textContent).toEqual('Log In');
+    expect(React.findDOMNode(renderedItems[2]).textContent).toEqual('Post');
   });
 
 });

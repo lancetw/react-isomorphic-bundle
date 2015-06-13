@@ -1,11 +1,11 @@
 import React from 'react';
 import connectToStores from 'flummox/connect';
-import {Link} from 'react-router';
+import {Link} from 'react-router/build/npm/lib';
 
 class HomeHandler extends React.Component {
   displayName: 'Home'
 
-  static async routerWillRun({ flux, state }) {
+  static async routerWillRun({flux, state}) {
     const pagesActions = flux.getActions('page');
     return await pagesActions.setTitle('Homepage');
   }

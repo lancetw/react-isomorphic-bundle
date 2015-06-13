@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router/build/npm/lib';
 import FluxComponent from 'flummox/component';
 import Flux from '../shared/Flux';
 import routes from '../shared/routes';
@@ -17,7 +17,10 @@ const flux = new Flux();
 
 const router = Router.create({
   routes: routes,
-  location: Router.HistoryLocation
+  location: Router.HistoryLocation,
+  transitionContext: {
+    flux: flux
+  }
 });
 
 router.run(async (Handler, state) => {

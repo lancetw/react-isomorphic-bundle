@@ -24,12 +24,30 @@ exports.SignupFormOptions = {
   }
 };
 
-exports.FormT = t;
-
-exports.Form = t.form.Form;
-
 exports.SignupForm = t.struct({
   email: t.Str,
   password: t.Str,
   tos: t.Bool
 });
+
+exports.LoginFormOptions = {
+  auto: 'placeholders',
+  fields: {
+    email: {
+      hasError: false
+    },
+    password: {
+      type: 'password',
+      hasError: false
+    }
+  }
+};
+
+exports.LoginForm = t.struct({
+  email: t.Str,
+  password: t.Str
+});
+
+
+exports.FormT = t;
+exports.Form = t.form.Form;

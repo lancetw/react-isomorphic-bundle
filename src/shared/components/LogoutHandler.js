@@ -1,9 +1,9 @@
 import React from 'react';
-import Signup from './SignupComponent';
+import Logout from './LogoutComponent';
 import FluxComponent from 'flummox/component';
 
-class SignupHandler extends React.Component{
-  displayName: 'Signup'
+class LogoutHandler extends React.Component{
+  displayName: 'Log Out'
 
   /*constructor(props) {
     super(props);
@@ -11,16 +11,16 @@ class SignupHandler extends React.Component{
 
   static async routerWillRun({flux, state}) {
     const pagesActions = flux.getActions('page');
-    return await pagesActions.setTitle('Sign Up');
+    return await pagesActions.setTitle('Log out');
   }
 
   render() {
     return (
-      <FluxComponent connectToStores={['signup']}>
-        <Signup />
+      <FluxComponent connectToStores={['auth']}>
+        <Logout />
       </FluxComponent>
     );
   }
 }
 
-export default SignupHandler;
+export default LogoutHandler;

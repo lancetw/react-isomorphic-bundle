@@ -36,6 +36,9 @@ test: lint webpack-test
 test-spec:
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS_SPEC)
 
+test-debug:
+	@NODE_ENV=debug $(MOCHA_CMD) $(MOCHA_ARGS_SPEC)
+
 test-cov:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
@@ -94,3 +97,6 @@ webpack-test: storage
 
 public/js/index.js: $(SRC_JS)
 	@NODE_ENV=production $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
+
+react-router:
+	cd node_modules/react-router && npm run build-npm

@@ -1,6 +1,6 @@
 import React from 'react/addons';
-import {RouteHandler} from 'react-router';
-import Header from './Header';
+import {RouteHandler} from 'react-router/build/npm/lib';
+import Header from './HeaderHandler';
 
 const {CSSTransitionGroup} = React.addons;
 

@@ -6,8 +6,10 @@ const models = require('src/server/db/models');
 
 exports.create = function *(user) {
   const fillable = ['email', 'name', 'passwd', 'status'];
-  const salt = yield bcrypt.genSalt(10);
-  user.passwd = yield bcrypt.hash(user.password, salt);
+  if (user.password) {
+    const salt = yield bcrypt.genSalt(10);
+    user.passwd = yield bcrypt.hash(user.password, salt);
+  }
   user.status = 0;
 
   return yield models.users.create(user, {fields: fillable});
@@ -17,6 +19,12 @@ exports.load = function *(hid) {
   const id = +hashids.decode(hid);
   return yield models.users.findOne({
     where: {id: id}
+  });
+};
+
+exports.loadByEmail = function *(email) {
+  return yield models.users.findOne({
+    where: {email: email}
   });
 };
 

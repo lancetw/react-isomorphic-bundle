@@ -6,11 +6,9 @@ import debug from 'debug';
 export default function *(next) {
   var ctx = this;
   yield* passport.authenticate('jwt', {session: false}, function *(err, user, info) {
-
-    debug('koa-passport')('authenticate', err, info);
-
     if (err) {
-      throw err;
+      ctx.status = 401;
+      ctx.body = {};
     }
     if (user === false) {
       ctx.status = 401;

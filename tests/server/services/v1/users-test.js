@@ -66,7 +66,7 @@ describe('user', function () {
 
     it('POST /api/v1/users (user exists)', function *() {
       const res = yield request.post('/api/v1/users').send(user2)
-        .expect(403).end();
+        .expect(200).end();
 
       expect(res.body.name).is.equal('SequelizeUniqueConstraintError');
       expect(res.body.message).is.equal('Validation error');
@@ -74,28 +74,28 @@ describe('user', function () {
 
     it('bad email', function *() {
       const res = yield request.post('/api/v1/users').send({email: 'lancetw', password: '1234567890'})
-        .expect(400).end();
+        .expect(200).end();
 
       expect(res.body[0].message).is.equal('email should be an email');
     });
 
     it('missing email', function *() {
       const res = yield request.post('/api/v1/users').send({password: '12345678'})
-        .expect(400).end();
+        .expect(200).end();
 
       expect(res.body[0].message).is.equal('email required');
     });
 
     it('bad password', function *() {
       const res = yield request.post('/api/v1/users').send({email: 'lancetw@gmail.com', password: '1234'})
-        .expect(400).end();
+        .expect(200).end();
 
       expect(res.body[0].message).is.equal('password length should bigger than 6');
     });
 
     it('missing password', function *() {
       const res = yield request.post('/api/v1/users').send({email: 'lancetw@gmail.com'})
-        .expect(400).end();
+        .expect(200).end();
 
       expect(res.body[0].message).is.equal('password required');
     });
@@ -202,7 +202,7 @@ describe('user', function () {
 
     it('DELETE /api/v1/users/' + hid + ' (Wrong auth)', function *() {
       const res = yield request.delete('/api/v1/users/' + hid)
-        .set('Authorization', 'JWT ' + token2)
+        .set('Authorization', 'JWT ' + token1 + token2)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(401).end();

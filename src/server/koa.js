@@ -6,7 +6,7 @@ import mount from 'koa-mount';
 import helmet from 'koa-helmet';
 import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
-import session from 'koa-session';
+//import session from 'koa-session';
 import staticCache from 'koa-static-cache';
 import cors from 'koa-cors';
 import basicAuth from './passport/basic';
@@ -57,11 +57,11 @@ else {
   app.use(mount('/assets', staticCache(path.join(__dirname, '../../public/assets'), cacheOpts)));
 }
 
-app.keys = require('config').app.SESSION_KEYS;
-app.use(session(app));
+//app.keys = require('config').app.SESSION_KEYS;
+//app.use(session(app));
 
 app.use(facebookAuth.initialize());
-app.use(facebookAuth.session());
+//app.use(facebookAuth.session());
 
 app.use(router.routes());
 

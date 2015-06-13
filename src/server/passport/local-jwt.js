@@ -19,8 +19,7 @@ opts.audience = config.jwt.OPTIONS.AUD;
 export default passport.use(new JwtStrategy(opts, function (payload, done) {
   co(function* () {
     try {
-      debug('koa-passport')('jwt', payload.email, payload.password);
-      const user = yield User.auth(payload.email, payload.password);
+      const user = yield User.loadByEmail(payload.email);
       if (!user) {
         return false;
       }
@@ -29,7 +28,7 @@ export default passport.use(new JwtStrategy(opts, function (payload, done) {
       }
     }
     catch (err) {
-      return err;
+      throw err;
     }
   })
   .then(function (user) {

@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router/build/npm/lib';
 
 class NotFound extends React.Component {
   displayName: 'NotFound'

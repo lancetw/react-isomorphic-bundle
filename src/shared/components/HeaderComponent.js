@@ -1,14 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router/build/npm/lib';
 
 class Header extends React.Component{
-  displayName: 'Header'
-
-  constructor(props, context) {
-    super(props);
-  }
+  displayName: 'Header Component'
 
   render() {
+
+    let AuthLink;
+    if (this.props.token) {
+      AuthLink = <Link to='logout' className="item">Log Out</Link>;
+    }
+    else {
+      AuthLink = <Link to='login' className="item">Log In</Link>;
+    }
+
     return (
       <header className="ui orange inverted menu grid fixed top">
         <div className="computer tablet only row">
@@ -16,7 +21,8 @@ class Header extends React.Component{
             <Link to='/' className="item">
               Home
             </Link>
-            <Link to='login' className="item">Log In</Link>
+            {AuthLink}
+            <Link to='post' className="item">Post</Link>
           </div>
 
           <div className="right menu">

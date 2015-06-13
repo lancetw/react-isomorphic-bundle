@@ -22,8 +22,6 @@ export default class SignupStore extends Store {
       }
     }
     else {
-      // save token
-
       this.setState({errors: [], response: errors});
     }
   }

@@ -39,6 +39,26 @@
     },
     "logging": false
   },
+  "debug": {
+    "storage": "storage/db.debug.sqlite",
+    "dialect": "sqlite",
+    "omitNull": true,
+    "dialectOptions": {
+      "supportBigNumbers": true,
+      "bigNumberStrings=true": true
+    },
+    "migrationStorage": "json",
+    "migrationStoragePath": "storage/meta-debug.json",
+    "define": {
+      "timestamps": true,
+      "freezeTableName": true,
+      "paranoid": true,
+      "underscored" : true,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
+    },
+    "logging": false
+  },
   "production": {
     "storage": "storage/db.production.sqlite",
     "dialect": "sqlite",

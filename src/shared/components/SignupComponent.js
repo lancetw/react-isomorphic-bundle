@@ -64,6 +64,9 @@ class Signup extends BaseComponent{
   checkSubmited(response) {
     if (!isEmpty(response)) {
       this.setState({submited: true});
+
+      // redirect to customs
+      //this.context.router.transitionTo('/customs');
     }
   }
 
@@ -73,18 +76,10 @@ class Signup extends BaseComponent{
   }
 
   render() {
-    let formClass = require('classnames')('ui', 'form', 'segment', {'error': !isEmpty(this.props.errors)});
-
     return (
       <main className="ui two column stackable page grid">
         <div className="column">
           <form className="ui form segment" action="/api/v1/userstoken" method="post" onSubmit={this.handleSubmit}>
-            <div className="ui error message">
-              <div className="header">Please correct the errors below and try again</div>
-                {!isEmpty(this.props.errors) && this.props.errors.map(function (err) {
-                  return <li key={err.id}>{err.message}</li>;
-                })}
-            </div>
             <Form ref="form" type={SignupForm} options={this.state.options} value={this.state.value} />
             <div className="ui hidden divider" />
             <button type="submit" className="ui teal labeled icon huge button" disabled={this.state.submited}>
@@ -117,5 +112,11 @@ Signup.propTypes = {
 Signup.defaultTypes = {
   errors: {}
 };
+
+Signup.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
+
+
 
 export default Signup;

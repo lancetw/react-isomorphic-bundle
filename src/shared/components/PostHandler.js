@@ -1,7 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router/build/npm/lib';
+import auth from './addon/require-auth';
 
-class LoginHandler extends React.Component {
+const PostHandler = auth(class PostHandler extends React.Component {
   displayName: 'Post'
 
   static async routerWillRun({ flux, state }) {
@@ -54,6 +55,6 @@ class LoginHandler extends React.Component {
       </main>
     );
   }
-}
+});
 
-export default LoginHandler;
+export default PostHandler;

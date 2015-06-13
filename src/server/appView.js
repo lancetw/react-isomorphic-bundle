@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router/build/npm/lib';
 import FluxComponent from 'flummox/component';
 import Flux from '../shared/Flux';
 import routes from '../shared/routes';
@@ -19,11 +19,16 @@ export default function (app) {
 
   app.use(function *() {
     const isCashed = this.cashed ? yield *this.cashed() : false;
-
     if (!isCashed) {
+
+      const flux = new Flux();
+
       const router = Router.create({
         routes: routes,
         location: this.url,
+        transitionContext: {
+          flux: flux
+        },
         onError: error => {
           throw error;
         },
@@ -40,7 +45,6 @@ export default function (app) {
         }
       });
 
-      const flux = new Flux();
 
       let appString, assets, title;
       try {

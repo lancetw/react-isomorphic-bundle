@@ -37,6 +37,7 @@
   ],
   "scripts": {
     "prestart": "npm run clean && make fast-build",
+    "postinstall": "make react-router",
     "start": "NODE_ENV=production node --harmony ./lib/server",
     "dev": "make watch",
     "lint": "make lint",
@@ -92,7 +93,7 @@
     "passport-http": "^0.2.2",
     "passport-jwt": "^1.1.0",
     "react": "^0.13.3",
-    "react-router": "^0.13.3",
+    "react-router": "nicolashery/react-router#2e375e94033e1cab5ed5b922395a79e368bb1929",
     "react-style": "^0.5.5",
     "react-suitcss": "^1.1.1",
     "require-dot-file": "^0.4.0",

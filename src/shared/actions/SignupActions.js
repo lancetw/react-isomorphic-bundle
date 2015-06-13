@@ -1,5 +1,6 @@
 import {Actions} from 'flummox';
 import request from 'superagent';
+import Flux from 'shared/Flux';
 
 export default class SignupActions extends Actions {
 
@@ -8,9 +9,10 @@ export default class SignupActions extends Actions {
   }
 
   async submit(form) {
+    const flux = new Flux();
     const res = await this.sendForm(form);
     if (res.email) {
-      return await this.auth(form);
+      return await flux.getActions('auth').send(form);
     }
     else {
       return res;
@@ -28,26 +30,10 @@ export default class SignupActions extends Actions {
             resolve(res.body);
           }
           else {
-            resolve(res.body);
-          }
-        });
-    });
-  }
-
-  async auth(form) {
-    return new Promise((resolve, reject) => {
-      request
-        .post('/api/v1/login')
-        .send(form)
-        .set('Accept', 'application/json')
-        .end(function (err, res) {
-          if (!err) {
-            resolve(res.body);
-          }
-          else {
             reject(err);
           }
         });
     });
   }
+
 }

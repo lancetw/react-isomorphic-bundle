@@ -30,7 +30,7 @@ export default new Resource('users', {
     const errors = validate(rule, body);
     if (errors) {
       this.type = 'json';
-      this.status = 400;
+      this.status = 200;
       this.body = errors;
       return;
     }
@@ -43,7 +43,7 @@ export default new Resource('users', {
     }
     catch (err) {
       this.type = 'josn';
-      this.status = 403;
+      this.status = 200;
       this.body = err;
     }
 
@@ -70,7 +70,7 @@ export default new Resource('users', {
     const errors = validate(rule, body);
     if (errors) {
       this.type = 'json';
-      this.status = 400;
+      this.status = 200;
       this.body = errors;
       return;
     }

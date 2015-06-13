@@ -1,50 +1,48 @@
 'use strict';
 
-import jwt from 'jsonwebtoken';
-import config from 'config';
-import hashids from 'src/shared/utils/hashids-plus';
-import debug from 'debug';
+import jwtHelper from './jwt-helper';
+import passport from 'koa-passport';
+import Flux from 'shared/flux';
 
 const router = require('koa-router')();
-const passport = require('koa-passport');
 
 router
   .post('/api/v1/login', function *(next) {
     let ctx = this;
     yield passport.authenticate('basic', {
-      failureRedirect: '/login'
+      session: false,
     }, function*(err, profile, info) {
-      if (!err) {
+      if (!err && profile) {
         // response JSON web token
+        const token = jwtHelper(profile);
 
-        let opts = {};
-        opts.algorithm = config.jwt.OPTIONS.ALG;
-        opts.expiresInMinutes = config.jwt.OPTIONS.EXP;
-        opts.expiresInMinutes = config.jwt.OPTIONS.EXP;
-        opts.issuer = config.jwt.OPTIONS.ISS;
-        opts.audience = config.jwt.OPTIONS.AUD;
+        const flux = new Flux();
+        flux.getActions('auth').setToken(token);
 
-        let data = {};
-        data.id = hashids.encode(profile.id);
-        data.email = profile.email;
-        data.password = profile.password;
-
-        let token = jwt.sign(data, config.jwt.SECRET_OR_KEY, opts);
         ctx.body = {token: token};
+      }
+      else {
+        ctx.status = 200;
+        ctx.body = {profile};
       }
     });
   });
 
 
 router
-  .get('/api/v1/login', function *(next) {
+  .get('/api/v1/logout', function *(next) {
     this.logout();
     this.redirect('/');
   });
 
 router
   .get('/auth/facebook', function *(next) {
-    yield passport.authenticate('facebook');
+    yield passport.authenticate('facebook', {scope: ['email']});
+  });
+
+router
+  .get('/auth/facebook/request/email', function *(next) {
+    yield passport.authenticate('facebook', {authType: 'rerequest', scope: ['email']});
   });
 
 router
@@ -54,7 +52,12 @@ router
       failureRedirect: '/login',
     }, function*(err, profile, info) {
       if (!err) {
-        ctx.redirect('/post');
+        const token = jwtHelper(profile);
+        ctx.redirect('/customs?token=' + token);
+      }
+      else {
+        // need email
+        ctx.redirect('/auth/facebook/request/email');
       }
     });
   });
