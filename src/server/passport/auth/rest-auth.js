@@ -6,11 +6,7 @@ import debug from 'debug';
 export default function *(next) {
   var ctx = this;
   yield* passport.authenticate('jwt', {session: false}, function *(err, user, info) {
-    if (err) {
-      ctx.status = 401;
-      ctx.body = {};
-    }
-    if (user === false) {
+    if (err || !user) {
       ctx.status = 401;
       ctx.body = {};
     }
