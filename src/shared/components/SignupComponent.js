@@ -66,7 +66,7 @@ class Signup extends BaseComponent{
       this.setState({submited: true});
 
       // redirect to customs
-      //this.context.router.transitionTo('/customs');
+      this.context.router.transitionTo('/customs');
     }
   }
 

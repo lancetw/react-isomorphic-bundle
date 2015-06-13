@@ -11,7 +11,7 @@ export default class AuthActions extends Actions {
         .auth(form.email, form.password)
         .end(function (err, res) {
           if (!err) {
-            resolve(res.body.token);
+            resolve(res.body);
           }
           else {
             reject(err);
