@@ -21,7 +21,7 @@ export default passport.use(new JwtStrategy(opts, function (payload, done) {
     try {
       const user = yield User.loadByEmail(payload.email);
       if (!user) {
-        return false;
+        throw new Error('no user');
       }
       else {
         return user;
