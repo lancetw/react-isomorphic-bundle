@@ -21,11 +21,12 @@ export default passport.use(new FacebookStrategy(opts, function (accessToken, re
     let user;
 
     try {
-      if (isEmpty(profile.emails)) {
+      if (isEmpty(profile.emails) || isEmpty(profile.emails[0].value)) {
         throw new Error('no emails');
       }
-
+      debug('dev')('profile.emails', profile.emails[0].value);
       const email = profile.emails[0].value;
+
       if (!isEmpty(profile.displayName)) {
         profile.name = profile.displayName;
       }

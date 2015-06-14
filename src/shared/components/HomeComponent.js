@@ -16,7 +16,7 @@ class HomeComponent extends BaseComponent{
             <h1>Your JSON Web Token</h1>
             <div className="ui fluid right labeled left icon input">
               <i className="tags icon"></i>
-              <input type="text" placeholder="token" value={this.props.token} readonly />
+              <input type="text" placeholder="token" value={this.props.token} readOnly />
               <div className="ui tag label">
                 KEY
               </div>

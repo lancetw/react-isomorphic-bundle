@@ -19,9 +19,9 @@ export default (
     <Route name="post" path="/post" handler={PostHandler} />
     <Route path="/sync/token" handler={SyncTokenHandler} />
     <Route path="/auth/register" handler={DirectHandler} />
-    <Route path="/auth/facebook" handler={DirectHandler} />
     <Route path="/auth/login" handler={DirectHandler} />
     <Route path="/auth/logout" handler={DirectHandler} />
+    <Route path="/auth/facebook" handler={DirectHandler} />
     <Route path="/auth/facebook/request/email" handler={DirectHandler} />
     <NotFoundRoute handler={NotFound} />
   </Route>

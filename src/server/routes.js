@@ -5,6 +5,7 @@ import passport from 'koa-passport';
 import parse from 'co-body';
 import validate from 'parameter';
 import db from 'src/server/db';
+import debug from 'debug';
 
 const router = require('koa-router')();
 
@@ -128,7 +129,7 @@ router
     yield passport.authenticate('facebook', {
       failureRedirect: '/login',
     }, function*(err, profile, info) {
-      if (!err) {
+      if (!err && profile) {
         const token = jwtHelper(profile);
 
         // set session token
@@ -139,7 +140,9 @@ router
       }
       else {
         // need email
-        console.log(err);
+        debug('dev')('error', err);
+        debug('dev')('info', info);
+
         ctx.redirect('/auth/facebook/request/email');
       }
     });
