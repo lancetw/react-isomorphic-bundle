@@ -63,7 +63,7 @@ else {
 
 app.keys = require('config').app.SESSION_KEYS;
 app.use(session({
-  store: store({ db: leveldb })
+  store: store({db: leveldb})
 }));
 
 app.use(facebookAuth.initialize());

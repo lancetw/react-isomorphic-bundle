@@ -16,9 +16,6 @@ class HomeHandler extends React.Component {
         <div className="column">
           <div className="ui segment">
             <h1>Hello World!</h1>
-            <Link className="ui primary button" to="login">
-              Log in now
-            </Link>
           </div>
         </div>
       </main>

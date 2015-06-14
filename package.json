@@ -33,7 +33,9 @@
     "jsdom",
     "istanbul",
     "sequelize",
-    "jwt"
+    "jwt",
+    "leveldb",
+    "tcomb-form"
   ],
   "scripts": {
     "prestart": "npm run clean && make fast-build",

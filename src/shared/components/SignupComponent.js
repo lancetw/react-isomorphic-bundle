@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
-import {Form, FormT, SignupForm, SignupFormOptions} from 'shared/utils/forms';
+import {Form, Tcomb, SignupForm, SignupFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone, omit} from 'lodash';
 
 class Signup extends BaseComponent{
@@ -10,20 +10,45 @@ class Signup extends BaseComponent{
     super(props);
     this.state = {value: {email: '', password: '', tos: false}, options: SignupFormOptions, submited: false};
 
-    this._bind('handleSubmit', 'validation');
+    this._bind('handleSubmit', 'validation', 'handleChange');
+  }
+
+  handleChange(value, path) {
+    if (path[0] === 'password' || path[0] === 'passwordCheck') {
+      const pass = this.refs.form.getComponent('password');
+      const check = this.refs.form.getComponent('passwordCheck');
+      if (pass.state.value !== check.state.value) {
+        check.setState({hasError: true});
+      }
+      else {
+        check.setState({hasError: false});
+      }
+
+      if (pass.state.value.length < 6) {
+        pass.setState({hasError: true});
+        pass.setState({hasError: true, error: 'ERROR MESSAGE'});
+      }
+      else {
+        pass.setState({hasError: false});
+      }
+    }
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
-    var value = this.refs.form.getValue();
-    if (value && value.tos) {
+
+    let value = this.refs.form.getValue();
+
+    if (value && value.tos === true) {
       let saved = clone(value);
-      saved = omit(saved, 'password');
       this.setState({value: saved});
+
+      saved = omit(saved, 'password');
+      saved = omit(saved, 'passwordCheck');
       this.props.flux.getActions('signup').submit(value);
       this.setState({submited: true});
-      this.clearFormErrors();
     }
+
   }
 
   clearFormErrors() {
@@ -76,18 +101,9 @@ class Signup extends BaseComponent{
   }
 
   render() {
+
     return (
       <main className="ui two column stackable page grid">
-        <div className="column">
-          <form className="ui form segment" action="/api/v1/userstoken" method="post" onSubmit={this.handleSubmit}>
-            <Form ref="form" type={SignupForm} options={this.state.options} value={this.state.value} />
-            <div className="ui hidden divider" />
-            <button type="submit" className="ui teal labeled icon huge button" disabled={this.state.submited}>
-              Register
-              <i className="add icon"></i>
-            </button>
-          </form>
-        </div>
         <div className="column">
           <div className="ui piled segment">
             <h2 className="ui header">
@@ -99,6 +115,16 @@ class Signup extends BaseComponent{
               </div>
             </h2>
           </div>
+        </div>
+        <div className="column">
+          <form className="ui form segment" action="/api/v1/userstoken" method="post" onSubmit={this.handleSubmit}>
+            <Form ref="form" type={SignupForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
+            <div className="ui hidden divider" />
+            <button type="submit" className="ui teal labeled icon huge button" disabled={this.state.submited}>
+              Register
+              <i className="add icon"></i>
+            </button>
+          </form>
         </div>
       </main>
     );
