@@ -39,13 +39,25 @@ $ npm install
 * open `http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=5858`
 * open `http://127.0.0.1:3000`
 
+---
+
+## Features
+
+- [x] isomorphic flux (flummox), supports JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] Register (isomorphic)
+- [x] Log in (isomorphic)
+- [x] Facebook Sign In (isomorphic)
+- [ ] Restful API with JWT
 
 ---
+
+## You May Interested In...
 
 * [flummox](https://github.com/acdlite/flummox)
 * [react-router](https://github.com/rackt/react-router)
 * [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)
 * [tcomb-form](https://github.com/gcanti/tcomb-form)
+* [parameter](https://github.com/node-modules/parameter)
 * [Semantic UI](http://semantic-ui.com/)
 * [koa](https://github.com/koajs/koa)
 * [koa-resource-router](https://github.com/alexmingoia/koa-resource-router)
@@ -53,3 +65,9 @@ $ npm install
 * [koa-generic-session](https://github.com/koajs/generic-session)
 * [leveldb](https://github.com/google/leveldb)
 * [koa-level](https://github.com/purposeindustries/koa-level)
+* [passport](https://github.com/jaredhanson/passport)
+* [passport-facebook](https://github.com/jaredhanson/passport-facebook)
+* [passport-jwt](https://github.com/themikenicholson/passport-jwt)
+* [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+* [sequelize](https://github.com/sequelize/sequelize)
+* [superagent](https://github.com/visionmedia/superagent)

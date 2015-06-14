@@ -12,19 +12,19 @@ const User = db.users;
 
 router
   .post('/auth/login', function *(next) {
-    let body = yield parse(this);
+    let user = yield parse(this);
 
     const rule = {
       password: 'password',
       email: 'email'
     };
-    const errors = validate(rule, body);
+    const errors = validate(rule, user);
     if (errors) {
       this.redirect('/login');
     }
 
     try {
-      const profile = yield User.auth(body.email, body.password);
+      const profile = yield User.auth(user.email, user.password);
 
       if (!profile) {
         throw new Error('no user');
@@ -42,6 +42,44 @@ router
     catch (err) {
       this.redirect('/login');
     }
+  });
+
+router
+  .post('/auth/register', function *(next) {
+    let user = yield parse(this);
+
+    const rule = {
+      email: 'email',
+      password: {type: 'password', compare: 'passwordCheck', min: 6},
+      tos: 'string'
+    };
+
+    const errors = validate(rule, user);
+    if (errors) {
+      this.redirect('/signup');
+    }
+    else {
+      try {
+        const profile = yield User.create(user);
+
+        if (!profile) {
+          throw new Error('no user');
+        }
+
+        // response JSON web token
+        const token = jwtHelper(profile);
+
+        // set session token
+        let sess = this.session;
+        sess.token = token;
+
+        this.redirect('/sync/token?token=' + token);
+      }
+      catch (err) {
+        this.redirect('/signup');
+      }
+    }
+
   });
 
 router

@@ -18,6 +18,7 @@ export default (
     <Route name="signup" path="/signup" handler={SignupHandler} />
     <Route name="post" path="/post" handler={PostHandler} />
     <Route path="/sync/token" handler={SyncTokenHandler} />
+    <Route path="/auth/register" handler={DirectHandler} />
     <Route path="/auth/facebook" handler={DirectHandler} />
     <Route path="/auth/login" handler={DirectHandler} />
     <Route path="/auth/logout" handler={DirectHandler} />

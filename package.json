@@ -35,7 +35,10 @@
     "sequelize",
     "jwt",
     "leveldb",
-    "tcomb-form"
+    "tcomb-form",
+    "facebook",
+    "passport",
+    "passport-facebook"
   ],
   "scripts": {
     "prestart": "npm run clean && make fast-build",

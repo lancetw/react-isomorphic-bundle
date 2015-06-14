@@ -14,7 +14,7 @@ exports.SignupFormOptions = {
       type: 'password',
       error: function (value) {
         return (
-          (value.length < 6 && 'Must be 6 or more')
+          (value.length < 6 && 'length should bigger than 6')
         );
       }
     },

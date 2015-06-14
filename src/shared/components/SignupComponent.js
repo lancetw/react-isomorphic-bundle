@@ -26,7 +26,6 @@ class Signup extends BaseComponent{
 
       if (pass.state.value.length < 6) {
         pass.setState({hasError: true});
-        pass.setState({hasError: true, error: 'ERROR MESSAGE'});
       }
       else {
         pass.setState({hasError: false});
@@ -117,7 +116,7 @@ class Signup extends BaseComponent{
           </div>
         </div>
         <div className="column">
-          <form className="ui form segment" action="/api/v1/userstoken" method="post" onSubmit={this.handleSubmit}>
+          <form className="ui form segment" action="/auth/register" method="post" onSubmit={this.handleSubmit}>
             <Form ref="form" type={SignupForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
             <div className="ui hidden divider" />
             <button type="submit" className="ui teal labeled icon huge button" disabled={this.state.submited}>
