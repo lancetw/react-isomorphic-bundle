@@ -47,7 +47,8 @@ $ npm install
 - [x] Register (isomorphic)
 - [x] Log in (isomorphic)
 - [x] Facebook Sign In (isomorphic)
-- [ ] Restful API with JWT
+- [x] Restful API with JWT
+- [ ] Change password
 - [ ] more ...
 
 ---

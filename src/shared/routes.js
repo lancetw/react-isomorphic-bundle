@@ -22,6 +22,7 @@ export default (
     <Route path="/auth/facebook" handler={DirectHandler} />
     <Route path="/auth/login" handler={DirectHandler} />
     <Route path="/auth/logout" handler={DirectHandler} />
+    <Route path="/auth/facebook/request/email" handler={DirectHandler} />
     <NotFoundRoute handler={NotFound} />
   </Route>
 );
