@@ -48,6 +48,7 @@ $ npm install
 - [x] Log in (isomorphic)
 - [x] Facebook Sign In (isomorphic)
 - [ ] Restful API with JWT
+- [ ] more ...
 
 ---
 

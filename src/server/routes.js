@@ -139,6 +139,7 @@ router
       }
       else {
         // need email
+        console.log(err);
         ctx.redirect('/auth/facebook/request/email');
       }
     });

@@ -15,7 +15,9 @@ export default class AuthStore extends Store {
   save(payload) {
     const token = payload.token;
     if (typeof localStorage !== 'undefined' && localStorage !== null) {
-      localStorage.setItem('token', token);
+      if (token && token !== 'undefined') {
+        localStorage.setItem('token', token);
+      }
     }
 
     this.setState({token: token});
@@ -31,7 +33,9 @@ export default class AuthStore extends Store {
     }
     else {
       if (typeof localStorage !== 'undefined' && localStorage !== null) {
-        localStorage.setItem('token', token);
+        if (token && token !== 'undefined') {
+          localStorage.setItem('token', token);
+        }
       }
     }
 

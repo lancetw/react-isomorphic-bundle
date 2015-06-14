@@ -13,8 +13,14 @@ class HomeComponent extends BaseComponent{
       <main className="ui stackable page grid">
         <div className="column">
           <div className="ui segment">
-            <h1>Hello World!</h1>
-            <p>{this.props.token}</p>
+            <h1>Your JSON Web Token</h1>
+            <div className="ui fluid right labeled left icon input">
+              <i className="tags icon"></i>
+              <input type="text" placeholder="token" value={this.props.token} readonly />
+              <div className="ui tag label">
+                KEY
+              </div>
+            </div>
           </div>
         </div>
       </main>
