@@ -97,7 +97,7 @@ router
         let sess = ctx.session;
         sess.token = token;
 
-        ctx.redirect('/');
+        ctx.redirect('/sync/token?token=' + token);
       }
       else {
         // need email

@@ -18,18 +18,37 @@ opts.enableProof = false;
 
 export default passport.use(new FacebookStrategy(opts, function (accessToken, refreshToken, profile, done) {
   co(function *() {
+    let user;
+
     try {
-      if (!profile.emails) {
+      if (isEmpty(profile.emails)) {
         throw new Error('no emails');
       }
 
-      let data = {};
-      data.email = profile.emails[0].value;
+      const email = profile.emails[0].value;
+      if (!isEmpty(profile.displayName)) {
+        profile.name = profile.displayName;
+      }
 
-      let user = yield User.loadByEmail(data.email);
+      if (!isEmpty(email)) {
+        profile.email = email;
+      }
 
-      if (!user) {
-        user = yield User.create(data);
+      if (profile.email) {
+        user = yield User.loadByEmail(email);
+        if (!user) {
+          try {
+            user = yield User.create(profile);
+          }
+          catch (err) {
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              return yield User.recreate(profile);
+            }
+            else {
+              throw err;
+            }
+          }
+        }
       }
 
       if (!user) {
@@ -42,6 +61,7 @@ export default passport.use(new FacebookStrategy(opts, function (accessToken, re
     catch (err) {
       throw err;
     }
+
   })
   .then(function (user) {
     return done(null, user);

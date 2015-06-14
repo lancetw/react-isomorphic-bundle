@@ -42,14 +42,14 @@ $ npm install
 
 ---
 
+* [flummox](https://github.com/acdlite/flummox)
+* [react-router](https://github.com/rackt/react-router)
+* [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)
+* [tcomb-form](https://github.com/gcanti/tcomb-form)
+* [Semantic UI](http://semantic-ui.com/)
 * [koa](https://github.com/koajs/koa)
 * [koa-resource-router](https://github.com/alexmingoia/koa-resource-router)
 * [koa-router](https://github.com/alexmingoia/koa-router)
 * [koa-generic-session](https://github.com/koajs/generic-session)
 * [leveldb](https://github.com/google/leveldb)
 * [koa-level](https://github.com/purposeindustries/koa-level)
-* [flummox](https://github.com/acdlite/flummox)
-* [react-router](https://github.com/rackt/react-router)
-* [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)
-* [tcomb-form](https://github.com/gcanti/tcomb-form)
-* [Semantic UI](http://semantic-ui.com/)

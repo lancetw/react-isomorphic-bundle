@@ -7,6 +7,7 @@ import LogoutHandler from './components/LogoutHandler';
 import SignupHandler from './components/SignupHandler';
 import PostHandler from './components/PostHandler';
 import DirectHandler from './components/DirectHandler';
+import SyncTokenHandler from './components/SyncTokenHandler';
 import NotFound from './pages/NotFound';
 
 export default (
@@ -16,6 +17,7 @@ export default (
     <Route name="logout" path="/logout" handler={LogoutHandler} />
     <Route name="signup" path="/signup" handler={SignupHandler} />
     <Route name="post" path="/post" handler={PostHandler} />
+    <Route path="/sync/token" handler={SyncTokenHandler} />
     <Route path="/auth/facebook" handler={DirectHandler} />
     <Route path="/auth/login" handler={DirectHandler} />
     <Route path="/auth/logout" handler={DirectHandler} />

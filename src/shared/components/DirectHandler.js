@@ -3,11 +3,11 @@ import React from 'react';
 class HomeHandler extends React.Component {
   displayName: 'Home'
 
-  static willTransitionTo(transition, params, query, callback) {
+  static willTransitionTo(transition, params, query, done) {
     if (typeof window !== 'undefined') {
       window.location = transition.path;
     }
-    setTimeout(callback, 0);
+    setTimeout(done, 0);
   }
 
   render() {

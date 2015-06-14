@@ -15,6 +15,28 @@ exports.create = function *(user) {
   return yield models.users.create(user, {fields: fillable});
 };
 
+
+exports.recreate = function *(unuser) {
+  const fillable = ['name', 'passwd'];
+  const user = yield models.users.findOne({
+    where: {email: unuser.email},
+    paranoid: false
+  });
+
+  if (user) {
+    if (user.password) {
+      const salt = yield bcrypt.genSalt(10);
+      user.passwd = yield bcrypt.hash(user.password, salt);
+    }
+
+    user.setDataValue('deletedAt', null);
+    yield user.save({paranoid: false});
+  }
+
+  return yield user.update(unuser, {fields: fillable});
+};
+
+
 exports.load = function *(hid) {
   const id = +hashids.decode(hid);
   return yield models.users.findOne({

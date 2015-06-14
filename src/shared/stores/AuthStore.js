@@ -24,10 +24,15 @@ export default class AuthStore extends Store {
   load(token) {
     if (!token) {
       token = this.state.token;
-    }
 
-    if (typeof localStorage !== 'undefined' && localStorage !== null) {
-      token = localStorage.getItem('token');
+      if (typeof localStorage !== 'undefined' && localStorage !== null) {
+        token = localStorage.getItem('token');
+      }
+    }
+    else {
+      if (typeof localStorage !== 'undefined' && localStorage !== null) {
+        localStorage.setItem('token', token);
+      }
     }
 
     this.setState({token: token});
