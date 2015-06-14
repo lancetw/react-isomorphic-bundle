@@ -1,59 +1,46 @@
 import {Store} from 'flummox';
+import {isEmpty} from 'lodash';
 import debug from 'debug';
 
 export default class AuthStore extends Store {
   constructor({authActions}) {
     super();
 
-    this.state = {token: null};
+    this.state = {token: ''};
     this.register(authActions.send, this.save);
-    this.register(authActions.setToken, this.handleToken);
     this.register(authActions.revoke, this.reset);
+    this.register(authActions.sync, this.load);
   }
 
-  save(token) {
+  save(payload) {
+    const token = payload.token;
     if (typeof localStorage !== 'undefined' && localStorage !== null) {
       localStorage.setItem('token', token);
     }
-    else {
-      debug('*')('Save to TokenDB: not yet implemented');
-    }
+
     this.setState({token: token});
   }
 
-  load() {
-    let token = this.state.token;
+  load(token) {
+    if (!token) {
+      token = this.state.token;
+    }
+
     if (typeof localStorage !== 'undefined' && localStorage !== null) {
       token = localStorage.getItem('token');
     }
-    else {
-      debug('*')('Load from TokenDB: not yet implemented');
-    }
+
     this.setState({token: token});
+
     return token;
   }
 
   reset() {
     if (typeof localStorage !== 'undefined' && localStorage !== null) {
-      localStorage.setItem('token', null);
+      localStorage.setItem('token', '');
     }
-    else {
-      debug('*')('Reset TokenDB: not yet implemented');
-    }
-    this.setState({token: null});
+
+    this.setState({token: ''});
   }
 
-  isAuthenticated() {
-    if (this.state.token) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  handleToken(token) {
-    debug('*')('Handle token to TokenDB: not yet implemented');
-    this.setState({token: token});
-  }
 }

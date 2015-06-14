@@ -26,6 +26,9 @@ const router = Router.create({
 router.run(async (Handler, state) => {
   const routeHandlerInfo = {state, flux};
 
+  /* Important: must sync auth token on client with no argument */
+  await flux.getActions('auth').sync();
+
   await performRouteHandlerStaticMethod(state.routes, 'routerWillRun', routeHandlerInfo);
 
   document.title = flux.getStore('page').state.title;

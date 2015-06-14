@@ -18,4 +18,9 @@ class HeaderHandler extends React.Component{
   }
 }
 
+Header.contextTypes = {
+  router: React.PropTypes.func.isRequired,
+  flux: React.PropTypes.object.isRequired
+};
+
 export default HeaderHandler;

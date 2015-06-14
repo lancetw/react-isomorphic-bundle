@@ -20,7 +20,7 @@ export default class AuthActions extends Actions {
     });
   }
 
-  async setToken(token) {
+  async revoke(token) {
     try {
       return token;
     }
@@ -29,7 +29,7 @@ export default class AuthActions extends Actions {
     }
   }
 
-  async revoke(token) {
+  async sync(token) {
     try {
       return token;
     }

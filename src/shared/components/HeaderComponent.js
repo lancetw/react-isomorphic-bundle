@@ -7,11 +7,11 @@ class Header extends React.Component{
   render() {
 
     let AuthLink;
-    if (this.props.token) {
-      AuthLink = <Link to='logout' className="item">Log Out</Link>;
+    if (!this.props.token) {
+      AuthLink = <Link to='login' className="item">Log In</Link>;
     }
     else {
-      AuthLink = <Link to='login' className="item">Log In</Link>;
+      AuthLink = <Link to='logout' className="item">Log Out</Link>;
     }
 
     return (
@@ -44,9 +44,5 @@ class Header extends React.Component{
   }
 
 }
-
-Header.contextTypes = {
-  router: React.PropTypes.func.isRequired
-};
 
 export default Header;

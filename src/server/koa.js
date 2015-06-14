@@ -6,7 +6,9 @@ import mount from 'koa-mount';
 import helmet from 'koa-helmet';
 import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
-//import session from 'koa-session';
+import session from 'koa-generic-session';
+import level from 'levelup';
+import store from 'koa-level';
 import staticCache from 'koa-static-cache';
 import cors from 'koa-cors';
 import basicAuth from './passport/basic';
@@ -17,6 +19,8 @@ import path from 'path';
 import co from 'co';
 import services from 'src/server/services';
 import models from 'src/server/db/models';
+
+const leveldb = level('./storage/leveldb');
 
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
@@ -57,8 +61,10 @@ else {
   app.use(mount('/assets', staticCache(path.join(__dirname, '../../public/assets'), cacheOpts)));
 }
 
-//app.keys = require('config').app.SESSION_KEYS;
-//app.use(session(app));
+app.keys = require('config').app.SESSION_KEYS;
+app.use(session({
+  store: store({ db: leveldb })
+}));
 
 app.use(facebookAuth.initialize());
 //app.use(facebookAuth.session());

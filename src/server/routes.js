@@ -2,7 +2,6 @@
 
 import jwtHelper from './jwt-helper';
 import passport from 'koa-passport';
-import Flux from 'shared/Flux';
 
 const router = require('koa-router')();
 
@@ -16,8 +15,9 @@ router
         // response JSON web token
         const token = jwtHelper(profile);
 
-        const flux = new Flux();
-        flux.getActions('auth').setToken(token);
+        // set session token
+        let sess = ctx.session;
+        sess.token = token;
 
         ctx.body = {token: token};
       }
@@ -28,9 +28,9 @@ router
     });
   });
 
-
 router
   .get('/api/v1/logout', function *(next) {
+    this.session.token = null;
     this.logout();
     this.redirect('/');
   });

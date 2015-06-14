@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+const isClient = (typeof (document) !== 'undefined') ? true : false;
+
 const RequireAuth = (Component) => {
   class Authenticated extends React.Component {
     displayName = 'RequireAuth'
@@ -17,11 +19,10 @@ const RequireAuth = (Component) => {
 
   Authenticated.willTransitionTo = function (transition, params, query) {
     const flux = transition.context.flux;
-    let isAuthenticated = flux.getStore('auth').isAuthenticated();
     const nextPath = transition.path;
-    if (!isAuthenticated) {
-      transition.redirect('/login', {}, {'nextPath': nextPath});
-    }
+    const isAuthenticated = isClient ? (!!flux.getStore('auth').load()) : (!!transition.context.token);
+
+    !isAuthenticated && transition.redirect('/login', {}, {'nextPath': nextPath});
   };
 
   Authenticated.contextTypes = {

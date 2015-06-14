@@ -65,7 +65,7 @@ class Login extends BaseComponent{
       this.setState({submited: true});
 
       setTimeout(function () {
-        this.context.router.transitionTo('/post');
+        this.context.router.transitionTo('/');
       }.bind(this), 1000);
     }
   }

@@ -27,7 +27,8 @@ export default function (app) {
         routes: routes,
         location: this.url,
         transitionContext: {
-          flux: flux
+          flux: flux,
+          token: this.session.token || null
         },
         onError: error => {
           throw error;
@@ -56,6 +57,9 @@ export default function (app) {
 
         const routeHandlerInfo = {state, flux};
 
+        /* Important: must sync auth token on server with session */
+        yield flux.getActions('auth').sync(this.session.token);
+
         try {
           yield performRouteHandlerStaticMethod(state.routes, 'routerWillRun', routeHandlerInfo);
         }
@@ -79,6 +83,7 @@ export default function (app) {
         );
 
         title = flux.getStore('page').state.title;
+
       }
       catch (error) {
         if (error.redirect) {
