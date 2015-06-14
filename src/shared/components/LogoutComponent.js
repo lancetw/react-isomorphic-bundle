@@ -1,13 +1,15 @@
 import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
+import {Link} from 'react-router/build/npm/lib';
 
 class Logout extends BaseComponent{
   displayName: 'Log out Component'
 
-  componentWillMount() {
+  componentDidMount() {
     const authActions = this.props.flux.getActions('auth');
     authActions.revoke(this.props.token);
-    this.context.router.transitionTo('/api/v1/logout');
+
+    setTimeout(() => this.context.router.transitionTo('/auth/logout'), 0);
   }
 
   render() {
@@ -15,7 +17,7 @@ class Logout extends BaseComponent{
       <main className="ui stackable page grid">
         <div className="column">
           <div className="segment">
-            Log Out
+            If You want to log out, <Link to="/auth/logout">click here.</Link>
           </div>
         </div>
       </main>

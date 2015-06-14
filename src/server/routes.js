@@ -2,12 +2,51 @@
 
 import jwtHelper from './jwt-helper';
 import passport from 'koa-passport';
+import parse from 'co-body';
+import validate from 'parameter';
+import db from 'src/server/db';
 
 const router = require('koa-router')();
 
+const User = db.users;
+
+router
+  .post('/auth/login', function *(next) {
+    let body = yield parse(this);
+
+    const rule = {
+      password: 'password',
+      email: 'email'
+    };
+    const errors = validate(rule, body);
+    if (errors) {
+      this.redirect('/login');
+    }
+
+    try {
+      const profile = yield User.auth(body.email, body.password);
+
+      if (!profile) {
+        throw new Error('no user');
+      }
+
+      // response JSON web token
+      const token = jwtHelper(profile);
+
+      // set session token
+      let sess = this.session;
+      sess.token = token;
+
+      this.redirect('/');
+    }
+    catch (err) {
+      this.redirect('/login');
+    }
+  });
+
 router
   .post('/api/v1/login', function *(next) {
-    let ctx = this;
+    const ctx = this;
     yield passport.authenticate('basic', {
       session: false,
     }, function*(err, profile, info) {
@@ -29,7 +68,7 @@ router
   });
 
 router
-  .get('/api/v1/logout', function *(next) {
+  .get('/auth/logout', function *(next) {
     this.session.token = null;
     this.logout();
     this.redirect('/');
@@ -53,7 +92,12 @@ router
     }, function*(err, profile, info) {
       if (!err) {
         const token = jwtHelper(profile);
-        ctx.redirect('/customs?token=' + token);
+
+        // set session token
+        let sess = ctx.session;
+        sess.token = token;
+
+        ctx.redirect('/');
       }
       else {
         // need email

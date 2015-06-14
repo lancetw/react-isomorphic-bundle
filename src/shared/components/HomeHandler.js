@@ -1,6 +1,6 @@
 import React from 'react';
-import connectToStores from 'flummox/connect';
-import {Link} from 'react-router/build/npm/lib';
+import FluxComponent from 'flummox/component';
+import Home from './HomeComponent';
 
 class HomeHandler extends React.Component {
   displayName: 'Home'
@@ -12,13 +12,9 @@ class HomeHandler extends React.Component {
 
   render() {
     return (
-      <main className="ui stackable page grid">
-        <div className="column">
-          <div className="ui segment">
-            <h1>Hello World!</h1>
-          </div>
-        </div>
-      </main>
+      <FluxComponent connectToStores={['auth']}>
+        <Home />
+      </FluxComponent>
     );
   }
 }

@@ -17,7 +17,8 @@ export default (
     <Route name="signup" path="/signup" handler={SignupHandler} />
     <Route name="post" path="/post" handler={PostHandler} />
     <Route path="/auth/facebook" handler={DirectHandler} />
-    <Route path="/api/v1/logout" handler={DirectHandler} />
+    <Route path="/auth/login" handler={DirectHandler} />
+    <Route path="/auth/logout" handler={DirectHandler} />
     <NotFoundRoute handler={NotFound} />
   </Route>
 );

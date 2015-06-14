@@ -90,8 +90,8 @@ class Signup extends BaseComponent{
     if (!isEmpty(response)) {
       this.setState({submited: true});
 
-      // redirect to customs
-      this.context.router.transitionTo('/customs');
+      setTimeout(() => this.context.router.transitionTo('/'), 1000);
+
     }
   }
 

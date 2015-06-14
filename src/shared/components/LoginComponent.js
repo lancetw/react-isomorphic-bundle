@@ -81,7 +81,7 @@ class Login extends BaseComponent{
         <div className="column">
           <div className="ui two column middle aligned relaxed fitted stackable grid">
             <div className="column">
-              <form className="ui form segment" action="/api/v1/login" method="post" onSubmit={this.handleSubmit}>
+              <form className="ui form segment" action="/auth/login" method="post" onSubmit={this.handleSubmit}>
                 <Form ref="form" type={LoginForm} options={this.state.options} value={this.state.value} />
                 <div className="ui hidden divider" />
                 <button type="submit" className="fluid ui blue large button" disabled={this.state.submited}>
