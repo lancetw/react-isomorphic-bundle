@@ -25,6 +25,9 @@ const leveldb = level('./storage/leveldb');
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
 
+// ES7 async
+app.experimental = true;
+
 app.use(responseTime());
 app.use(logger());
 app.use(helmet.defaults());

@@ -1,7 +1,8 @@
 {
   "watch": [
-    "lib/",
+    "src/server/",
+    "src/client/",
     "views/"
   ],
-  "ext": "html css less"
+  "ext": "html css less js"
 }

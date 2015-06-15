@@ -96,7 +96,7 @@ class Signup extends BaseComponent{
 
   componentWillReceiveProps(nextProps) {
     this.validation(nextProps.errors);
-    this.checkSubmited(nextProps.response);
+    this.checkSubmited(nextProps.response);   // got token string
   }
 
   render() {
@@ -110,7 +110,6 @@ class Signup extends BaseComponent{
               <div className="content">
                 Hello folks!
                 <div className="sub header">Welcome to The Zone</div>
-                {this.props.response}
               </div>
             </h2>
           </div>

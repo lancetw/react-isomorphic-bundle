@@ -14,7 +14,7 @@ export default class AuthActions extends Actions {
             resolve(res.body);
           }
           else {
-            reject(err);
+            throw (err);
           }
         });
     });
@@ -38,4 +38,15 @@ export default class AuthActions extends Actions {
     }
   }
 
+  async verify(token) {
+    return new Promise((resolve, reject) => {
+      request
+        .post('/auth/token/verify')
+        .set('Accept', 'application/json')
+        .send({token: token})
+        .end(function (err, res) {
+          resolve(res.body.response);
+        });
+    });
+  }
 }

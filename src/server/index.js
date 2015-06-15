@@ -13,7 +13,10 @@ else {
   require('app-module-path').addPath(path.join(__dirname, '../../lib'));
 }
 
-require('babel/register');
+require('babel/register')({
+  "stage": 1
+});
+
 const app = require('./koa.js');
 
 module.exports = app;

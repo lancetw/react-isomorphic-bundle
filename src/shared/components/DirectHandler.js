@@ -11,15 +11,27 @@ class HomeHandler extends React.Component {
   }
 
   render() {
-    return (
-      <main className="ui stackable page grid">
-        <div className="column">
-          <div className="ui segment">
-            <h1>Redirecting...</h1>
+    const isClient = (typeof (document) !== 'undefined') ? true : false;
+    if (isClient) {
+      return (
+        <main className="ui stackable page grid">
+          <div className="column">
+
           </div>
-        </div>
-      </main>
-    );
+        </main>
+      );
+    }
+    else {
+      return (
+        <main className="ui stackable page grid">
+          <div className="column">
+            <div className="ui segment">
+              <h1>Redirecting...</h1>
+            </div>
+          </div>
+        </main>
+      );
+    }
   }
 }
 

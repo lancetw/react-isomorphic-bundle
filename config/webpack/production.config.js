@@ -93,7 +93,7 @@ export default {
         },
         {
           test: /\.jsx?$/,
-          loader: 'babel',
+          loader: 'babel?optional[]=runtime&stage=1',
           exclude: /node_modules/
         },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss') },

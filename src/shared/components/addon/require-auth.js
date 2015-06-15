@@ -1,12 +1,13 @@
 'use strict';
 
 import React from 'react';
+import {isEmpty} from 'lodash';
 
 const isClient = (typeof (document) !== 'undefined') ? true : false;
 
 const RequireAuth = (Component) => {
   class Authenticated extends React.Component {
-    displayName = 'RequireAuth'
+    displayName: 'RequireAuth'
 
     constructor(props) {
       super(props);
@@ -17,12 +18,19 @@ const RequireAuth = (Component) => {
     }
   }
 
-  Authenticated.willTransitionTo = function (transition, params, query) {
+  Authenticated.willTransitionTo = function (transition, params, query, done) {
     const flux = transition.context.flux;
     const nextPath = transition.path;
-    const isAuthenticated = isClient ? (!!flux.getStore('auth').load()) : (!!transition.context.token);
+    const token = isClient ? flux.getStore('auth').load() : transition.context.token;
 
-    !isAuthenticated && transition.redirect('/login', {}, {'nextPath': nextPath});
+    let isTokenNonExist = isEmpty(token) ? true : false;
+    let isNonAuthenticated = true;
+    flux.getActions('auth').verify(token).then(function (isVerifed) {
+      isNonAuthenticated = isClient ? !isVerifed : isTokenNonExist;
+      isNonAuthenticated && transition.redirect('/login', {}, {'nextPath': nextPath});
+
+      done();
+    });
   };
 
   Authenticated.contextTypes = {

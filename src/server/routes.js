@@ -1,6 +1,7 @@
 'use strict';
 
 import jwtHelper from './jwt-helper';
+import {verifyJwt} from './jwt-helper';
 import passport from 'koa-passport';
 import parse from 'co-body';
 import validate from 'parameter';
@@ -146,6 +147,32 @@ router
         ctx.redirect('/auth/facebook/request/email');
       }
     });
+  });
+
+router
+  .post('/auth/token/verify', function *(next) {
+    let body = yield parse(this);
+
+    const rule = {
+      token: 'string'
+    };
+    const errors = validate(rule, body);
+    if (errors) {
+      this.status = 400;
+      this.set('WWW-Authenticate', 'JWT realm="users", error="invalid_token", error_description="' + JSON.stringify(errors) + '"');
+      this.body = errors;
+    }
+
+    try {
+      const verified = yield verifyJwt(body.token);
+
+      this.body = {response: verified};
+    }
+    catch (err) {
+      this.status = 401;
+      this.set('WWW-Authenticate', 'JWT realm="users", error="invalid_token", error_description="' + JSON.stringify(err) + '"');
+      this.body = err;
+    }
   });
 
 module.exports = router;

@@ -28,7 +28,7 @@ export default function (app) {
         location: this.url,
         transitionContext: {
           flux: flux,
-          token: this.session.token || null
+          token: this.session.token || ''
         },
         onError: error => {
           throw error;
