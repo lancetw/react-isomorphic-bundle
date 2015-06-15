@@ -20,9 +20,10 @@ export default class AuthActions extends Actions {
     });
   }
 
-  async revoke(token) {
+  async revoke() {
+    // maybe also delete session token ?
     try {
-      return token;
+      return;
     }
     catch (err) {
       throw (err);

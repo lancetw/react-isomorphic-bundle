@@ -14,6 +14,11 @@ class Header extends React.Component{
       AuthLink = <Link to='logout' className="item">Log Out</Link>;
     }
 
+    let ChangePasswordLink;
+    if (this.props.token) {
+      ChangePasswordLink = <Link to='changePassword' className="item">Password</Link>;
+    }
+
     return (
       <header className="ui orange inverted menu grid fixed top">
         <div className="computer tablet only row">
@@ -23,6 +28,7 @@ class Header extends React.Component{
             </Link>
             {AuthLink}
             <Link to='post' className="item">Post</Link>
+            {ChangePasswordLink}
           </div>
 
           <div className="right menu">
