@@ -14,7 +14,7 @@ else {
 }
 
 require('babel/register')({
-  "stage": 1
+  'stage': 1
 });
 
 const app = require('./koa.js');

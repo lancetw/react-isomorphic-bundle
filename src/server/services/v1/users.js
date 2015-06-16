@@ -24,7 +24,7 @@ export default new Resource('users', {
     let body = yield parse(this);
     const rule = {
       name: {type: 'string', required: false, allowEmpty: true},
-      password: { type: 'password', compare: 'passwordCheck' },
+      password: {type: 'password', compare: 'passwordCheck'},
       passwordCheck: 'password',
       email: 'email'
     };
@@ -66,7 +66,7 @@ export default new Resource('users', {
 
     const rule = {
       name: {type: 'string', required: false, allowEmpty: true},
-      password: { type: 'password', compare: 'passwordCheck' },
+      password: {type: 'password', compare: 'passwordCheck'},
       passwordCheck: 'password'
     };
     const errors = validate(rule, body);
