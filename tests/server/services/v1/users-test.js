@@ -23,12 +23,16 @@ after(function *() {
 describe('user', function () {
   const user = {
     email: 'lancetw@gmail.com',
-    password: '1234567890'
+    password: '1234567890',
+    passwordCheck: '1234567890',
+    tos: 'on'
   };
 
   const user2 = {
     email: 'lancetw@gmail.com',
-    password: '1111111111'
+    password: '1111111111',
+    passwordCheck: '1111111111',
+    tos: 'on'
   };
 
   describe('create', function () {
@@ -73,21 +77,21 @@ describe('user', function () {
     });
 
     it('bad email', function *() {
-      const res = yield request.post('/api/v1/users').send({email: 'lancetw', password: '1234567890'})
+      const res = yield request.post('/api/v1/users').send({email: 'lancetw', password: '1234567890', passwordCheck: '1234567890', 'tos': 'on'})
         .expect(200).end();
 
       expect(res.body[0].message).is.equal('email should be an email');
     });
 
     it('missing email', function *() {
-      const res = yield request.post('/api/v1/users').send({password: '12345678'})
+      const res = yield request.post('/api/v1/users').send({password: '12345678', passwordCheck: '12345678', 'tos': 'on'})
         .expect(200).end();
 
       expect(res.body[0].message).is.equal('email required');
     });
 
     it('bad password', function *() {
-      const res = yield request.post('/api/v1/users').send({email: 'lancetw@gmail.com', password: '1234'})
+      const res = yield request.post('/api/v1/users').send({email: 'lancetw@gmail.com', password: '1234', passwordCheck: '1234', 'tos': 'on'})
         .expect(200).end();
 
       expect(res.body[0].message).is.equal('password length should bigger than 6');
@@ -140,7 +144,8 @@ describe('user', function () {
 
     const userModified = {
       name: 'test',
-      password: '7777777777'
+      password: '7777777777',
+      passwordCheck: '7777777777'
     };
 
     it('PUT /api/v1/users/' + hid, function *() {
