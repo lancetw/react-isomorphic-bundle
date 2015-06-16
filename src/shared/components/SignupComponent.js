@@ -14,16 +14,19 @@ class Signup extends BaseComponent{
   }
 
   handleChange(value, path) {
-    if (path[0] === 'password' || path[0] === 'passwordCheck') {
-      const pass = this.refs.form.getComponent('password');
-      const check = this.refs.form.getComponent('passwordCheck');
+    const pass = this.refs.form.getComponent('password');
+    const check = this.refs.form.getComponent('passwordCheck');
+
+    if (path[0] === 'passwordCheck') {
       if (pass.state.value !== check.state.value) {
         check.setState({hasError: true});
       }
       else {
         check.setState({hasError: false});
       }
+    }
 
+    if (path[0] === 'password') {
       if (pass.state.value.length < 6) {
         pass.setState({hasError: true});
       }

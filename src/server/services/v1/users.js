@@ -80,7 +80,7 @@ export default new Resource('users', {
     const user = yield User.update(this.params.user, body);
     this.type = 'json';
     this.status = 201;
-    this.body = hashids.encodeJson(user);
+    this.body = hashids.encodeJson(user), 'passwd';
   }],
   // DELETE /users/:user
   destroy: [RestAuth, function *(next) {
