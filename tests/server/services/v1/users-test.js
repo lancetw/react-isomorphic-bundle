@@ -131,10 +131,8 @@ describe('user', function () {
         .expect('Content-Type', /json/)
         .expect(200).end();
 
-      const passwdTest = yield bcrypt.compare(user.password, res.body.passwd);
-
       expect(res.body.email).is.equal(user.email);
-      expect(passwdTest).is.equal(true);
+
     });
   });
 
@@ -155,9 +153,7 @@ describe('user', function () {
         .expect('Content-Type', /json/)
         .expect(201).end();
 
-      const passwdTest = yield bcrypt.compare(userModified.password, res.body.passwd);
-
-      expect(passwdTest).is.equal(true);
+      expect(res.body.email).is.equal(user.email);
     });
 
     it('GET JSON WEB TOKEN2', function *() {
@@ -202,7 +198,7 @@ describe('user', function () {
         .expect('Content-Type', /json/)
         .expect(200).end();
 
-      expect(res.body.id).to.be.equal(hid);
+      expect(res.body.email).is.equal(user.email);
     });
 
     it('DELETE /api/v1/users/' + hid + ' (Wrong auth)', function *() {
