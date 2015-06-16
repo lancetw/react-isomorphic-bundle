@@ -17,23 +17,23 @@ exports.decode = function (str) {
 };
 
 exports.encodeJson = function (object) {
-  return traverse(object).map(function () {
+  return _.omit(traverse(object).map(function () {
     if (_.endsWith(this.key, 'id') && _.isNumber(this.node)) {
       return hashids.encode(this.node * BASEID, SEED);
     }
     else {
       return this.node;
     }
-  });
+  }), ['passwd', 'password']);
 };
 
 exports.decodeJson = function (object) {
-  return traverse(object).map(function () {
+  return _.omit(traverse(object).map(function () {
     if (_.endsWith(this.key, 'id') && _.isString(this.node) && this.node.length === 8) {
       return hashids.decode(this.node)[0] / BASEID;
     }
     else {
       return this.node;
     }
-  });
+  }), ['passwd', 'password']);
 };

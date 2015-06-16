@@ -19,3 +19,22 @@ $transition-duration: 28ms;
   }
 }
 
+.MessageTransition-enter, .MessageTransition-leave {
+  backface-visibility: hidden;
+  transition: opacity $transition-duration ease-out;
+}
+
+.MessageTransition-enter {
+  opacity: 0.01;
+  &.MessageTransition-enter-active {
+    opacity: 1;
+  }
+}
+
+.MessageTransition-leave {
+  opacity: 1;
+  &.MessageTransition-leave-active {
+    opacity: 0.01;
+  }
+}
+

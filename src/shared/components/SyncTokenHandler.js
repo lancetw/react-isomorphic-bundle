@@ -25,11 +25,6 @@ class SyncTokenHandler extends React.Component {
     else {
       return (
         <main className="ui stackable page grid">
-          <div className="column">
-            <div className="ui segment">
-              <h1><Link to="/">請按此繼續登入</Link></h1>
-            </div>
-          </div>
         </main>
       );
     }

@@ -27,10 +27,17 @@ const RequireAuth = (Component) => {
     let isNonAuthenticated = true;
     flux.getActions('auth').verify(token).then(function (isVerifed) {
       isNonAuthenticated = isClient ? !isVerifed : isTokenNonExist;
-      isNonAuthenticated && transition.redirect('/logout', {}, {'nextPath': nextPath});
+      isNonAuthenticated && transition.redirect('/logout');
 
       done();
+    }, function (err) {
+      transition.redirect('/');
+      done();
     });
+
+    if (!isClient) {
+      done();
+    }
   };
 
   Authenticated.contextTypes = {

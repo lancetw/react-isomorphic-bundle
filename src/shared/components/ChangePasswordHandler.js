@@ -17,7 +17,7 @@ const ChangePasswordHandler = auth(class ChangePasswordHandler extends React.Com
 
   render() {
     return (
-      <FluxComponent connectToStores={['auth']}>
+      <FluxComponent connectToStores={['user']}>
         <ChangePassword />
       </FluxComponent>
     );

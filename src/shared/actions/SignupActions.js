@@ -26,7 +26,7 @@ export default class SignupActions extends Actions {
         .send(form)
         .set('Accept', 'application/json')
         .end(function (err, res) {
-          if (!err) {
+          if (!err && res.body) {
             resolve(res.body);
           }
           else {

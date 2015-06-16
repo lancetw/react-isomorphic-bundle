@@ -8,7 +8,7 @@ class Signup extends BaseComponent{
 
   constructor(props, context) {
     super(props);
-    this.state = {value: {email: '', password: '', tos: false}, options: SignupFormOptions, submited: false};
+    this.state = {value: {email: '', password: '', passwordCheck: '', tos: false}, options: SignupFormOptions, submited: false};
 
     this._bind('handleSubmit', 'validation', 'handleChange');
   }
@@ -38,7 +38,7 @@ class Signup extends BaseComponent{
 
     let value = this.refs.form.getValue();
 
-    if (value && value.tos === true) {
+    if (value && value.tos === true && (value.password === value.passwordCheck)) {
       let saved = clone(value);
       this.setState({value: saved});
 

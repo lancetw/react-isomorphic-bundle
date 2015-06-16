@@ -10,11 +10,11 @@ export default class AuthActions extends Actions {
         .set('Accept', 'application/json')
         .auth(form.email, form.password)
         .end(function (err, res) {
-          if (!err) {
+          if (!err && res.body) {
             resolve(res.body);
           }
           else {
-            throw (err);
+            reject(err);
           }
         });
     });
@@ -46,7 +46,12 @@ export default class AuthActions extends Actions {
         .set('Accept', 'application/json')
         .send({token: token})
         .end(function (err, res) {
-          resolve(res.body.response);
+          if (!err && res.body) {
+            resolve(res.body.response);
+          }
+          else {
+            reject(err);
+          }
         });
     });
   }
