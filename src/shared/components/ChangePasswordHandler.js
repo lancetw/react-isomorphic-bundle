@@ -6,13 +6,9 @@ import auth from './addon/require-auth';
 const ChangePasswordHandler = auth(class ChangePasswordHandler extends React.Component{
   displayName: 'Change Password'
 
-  /*constructor(props) {
-    super(props);
-  }*/
-
-  static async routerWillRun({flux, state}) {
-    const pagesActions = flux.getActions('page');
-    return await pagesActions.setTitle('Change Password');
+  componentWillMount() {
+    const pagesActions = this.props.flux.getActions('page');
+    pagesActions.setTitle('Change Password');
   }
 
   render() {

@@ -119,6 +119,15 @@ module.exports = {
             throw new Error('Require either both latitude and longitude or neither');
           }
         }
+      },
+      instanceMethods: {
+        toJSON: function () {
+          var values = this.get();
+          delete values.created_at;
+          delete values.updated_at;
+          delete values.deleted_at;
+          return values;
+        }
       }
     });
   },

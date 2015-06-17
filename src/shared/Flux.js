@@ -8,6 +8,8 @@ import AuthActions from './actions/AuthActions';
 import AuthStore from './stores/AuthStore';
 import UserActions from './actions/UserActions';
 import UserStore from './stores/UserStore';
+import PostActions from './actions/PostActions';
+import PostStore from './stores/PostStore';
 
 export default class Flux extends Flummox {
   constructor() {
@@ -24,5 +26,8 @@ export default class Flux extends Flummox {
 
     const userActions = this.createActions('user', UserActions);
     this.createStore('user', UserStore, {userActions});
+
+    const postActions = this.createActions('post', PostActions);
+    this.createStore('post', PostStore, {postActions});
   }
 }

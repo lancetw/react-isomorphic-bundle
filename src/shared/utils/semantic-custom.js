@@ -278,6 +278,8 @@ function select(locals) {
 
   attrs.className = _tcombValidation2['default'].mixin({}, attrs.className);
   attrs.className['form-control'] = true;
+  attrs.className['ui'] = true;
+  attrs.className['dropdown'] = true;
 
   attrs.multiple = locals.isMultiple;
   attrs.disabled = locals.disabled;
@@ -337,6 +339,7 @@ function radio(locals) {
     attrs: {
       className: {
         fields: true,
+        inline: true,
         grouped: true
       }
     },
@@ -414,6 +417,14 @@ function range(n) {
   return result;
 }
 
+function range2(start, n) {
+  var result = [];
+  for (var i = start; i <= n; i++) {
+    result.push(i);
+  }
+  return result;
+}
+
 function padLeft(x, len) {
   var str = String(x);
   var times = len - str.length;
@@ -438,7 +449,11 @@ var days = nullOption.concat(range(31).map(function (i) {
 }));
 
 var months = nullOption.concat(range(12).map(function (i) {
-  return toOption(i - 1, padLeft(i, 2));
+  return toOption(i, padLeft(i, 2));
+}));
+
+var years = nullOption.concat(range2(2015, 2038).map(function (i) {
+  return toOption(i, padLeft(i, 2));
 }));
 
 function date(locals) {
@@ -475,7 +490,11 @@ function date(locals) {
         tag: 'select',
         attrs: {
           disabled: locals.disabled,
-          value: value[2]
+          value: value[2],
+          className: {
+            ui: true,
+            dropdown: true
+          }
         },
         events: {
           change: onDayChange
@@ -496,7 +515,11 @@ function date(locals) {
         tag: 'select',
         attrs: {
           disabled: locals.disabled,
-          value: value[1]
+          value: value[1],
+          className: {
+            ui: true,
+            dropdown: true
+          }
         },
         events: {
           change: onMonthChange
@@ -505,25 +528,28 @@ function date(locals) {
       }
     },
 
-    YY: {
+    YYYY: {
       tag: 'div',
-      key: 'YY',
+      key: 'YYYY',
       attrs: {
         className: {
           field: true
         }
       },
       children: {
-        tag: 'input',
+        tag: 'select',
         attrs: {
           disabled: locals.disabled,
-          type: 'text',
-          size: 5,
-          value: value[0]
+          value: value[0],
+          className: {
+            ui: true,
+            dropdown: true
+          }
         },
         events: {
           change: onYearChange
-        }
+        },
+        children: years
       }
     }
 

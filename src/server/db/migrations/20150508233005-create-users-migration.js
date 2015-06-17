@@ -35,6 +35,19 @@ module.exports = {
         associate: function (models) {
           // associations can be defined here
         }
+      },
+      instanceMethods: {
+        toJSON: function () {
+          var values = this.get();
+          delete values.id;
+          delete values.passwd;
+          delete values.password;
+          delete values.created_at;
+          delete values.updated_at;
+          delete values.deleted_at;
+          delete values.status;
+          return values;
+        }
       }
     });
   },

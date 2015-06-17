@@ -9,16 +9,18 @@ t.form.Form.templates = semantic;
 
 const Password = t.subtype(t.Str, s => s.length >= 6);
 
+exports.SignupForm = t.struct({
+  email: t.Str,
+  password: Password,
+  passwordCheck: t.Str,
+  tos: t.Bool
+});
 exports.SignupFormOptions = {
   auto: 'placeholders',
   fields: {
     password: {
       type: 'password',
-      error: function (value) {
-        return (
-          (value.length < 6 && 'length should bigger than 6')
-        );
-      }
+      error: 'length should bigger than 6'
     },
     passwordCheck: {
       type: 'password',
@@ -31,13 +33,10 @@ exports.SignupFormOptions = {
   }
 };
 
-exports.SignupForm = t.struct({
+exports.LoginForm = t.struct({
   email: t.Str,
-  password: Password,
-  passwordCheck: t.Str,
-  tos: t.Bool
+  password: Password
 });
-
 exports.LoginFormOptions = {
   auto: 'placeholders',
   fields: {
@@ -51,21 +50,16 @@ exports.LoginFormOptions = {
   }
 };
 
-exports.LoginForm = t.struct({
-  email: t.Str,
-  password: Password
+exports.ChangePasswordForm = t.struct({
+  password: Password,
+  passwordCheck: t.Str
 });
-
 exports.ChangePasswordFormOptions = {
   auto: 'placeholders',
   fields: {
     password: {
       type: 'password',
-      error: function (value) {
-        return (
-          (value.length < 6 && 'length should bigger than 6')
-        );
-      }
+      error: 'length should bigger than 6'
     },
     passwordCheck: {
       type: 'password',
@@ -75,10 +69,57 @@ exports.ChangePasswordFormOptions = {
   }
 };
 
-exports.ChangePasswordForm = t.struct({
-  password: Password,
-  passwordCheck: t.Str
+const PostType = t.enums({
+  1: 'News',
+  2: 'Event'
 });
+
+const PostProp = t.enums({
+  1: 'General',
+  2: 'Music',
+  3: 'Communication',
+  4: 'Group Community',
+  5: 'Special Groups',
+  6: 'Health Care',
+  7: 'Others'
+});
+
+exports.PostForm = t.subtype(t.struct({
+  type: PostType,
+  prop: PostProp,
+  startDate: t.Dat,
+  endDate: t.Dat,
+  title: t.Str,
+  content: t.Str
+}), function (value) {
+  return (
+    (value.startDate <= value.endDate)
+  );
+});
+
+exports.PostFormOptions = {
+  error: <div data-errors="date">Date range is invalid.</div>,
+  auto: 'placeholders',
+  fields: {
+    type: {
+      factory: t.form.Radio
+    },
+    prop: {
+      factory: t.form.Select
+    },
+    startDate: {
+      label: 'Start date',
+      order: ['YYYY', 'M', 'D']
+    },
+     endDate: {
+      label: 'End date',
+      order: ['YYYY', 'M', 'D']
+    },
+    content: {
+      type: 'textarea'
+    }
+  }
+};
 
 exports.Tcomb = t;
 exports.Form = t.form.Form;

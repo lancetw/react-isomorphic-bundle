@@ -1,52 +1,35 @@
 import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
-import {Form, Tcomb, ChangePasswordForm, ChangePasswordFormOptions} from 'shared/utils/forms';
-import {isEmpty, clone} from 'lodash';
+import {Form, Tcomb, PostForm, PostFormOptions} from 'shared/utils/forms';
+import {isEmpty, clone, omit} from 'lodash';
 import classNames from 'classNames';
+import moment from 'moment';
 
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
-class ChangePassword extends BaseComponent{
-  displayName: 'Change Password Component'
+class Post extends BaseComponent{
+  displayName: 'Post Component'
 
   constructor(props, context) {
     super(props);
-    this.state = {value: {password: '', passwordCheck: ''}, options: ChangePasswordFormOptions, submited: false, updated: false};
+    const today = moment().format('YYYY-M-D').split('-');
+    this.state = {value: {type: '2', prop: '1', startDate: today, endDate: today, title: null, content: null}, options: PostFormOptions, submited: false, updated: false};
 
     this._bind('handleSubmit', 'validation', 'handleChange');
   }
 
   handleChange(value, path) {
-    const pass = this.refs.form.getComponent('password');
-    const check = this.refs.form.getComponent('passwordCheck');
-
-    if (path[0] === 'passwordCheck') {
-      if (pass.state.value !== check.state.value) {
-        check.setState({hasError: true});
-      }
-      else {
-        check.setState({hasError: false});
-      }
-    }
-
-    if (path[0] === 'password') {
-      if (pass.state.value.length < 6) {
-        pass.setState({hasError: true});
-      }
-      else {
-        pass.setState({hasError: false});
-      }
-    }
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
 
     let value = this.refs.form.getValue();
-    if (value && (value.password === value.passwordCheck)) {
-      this.props.flux.getActions('user').changePassword(value);
+
+    if (value) {
+      let saved = clone(value);
+      this.setState({value: saved});
+
+      this.props.flux.getActions('post').submit(value);
       this.setState({submited: true});
-      this.clearFormErrors();
     }
   }
 
@@ -88,9 +71,11 @@ class ChangePassword extends BaseComponent{
   checkSubmited(response) {
     if (!isEmpty(response)) {
       this.setState({submited: true});
-      if (response.email) {
-        this.setState({updated: true});
+
+      if (response.id) {
+        this.setState({updated: true, submited: false});
       }
+      //setTimeout(() => this.context.router.transitionTo('/'), 1000);
     }
   }
 
@@ -99,35 +84,21 @@ class ChangePassword extends BaseComponent{
     this.checkSubmited(nextProps.response);
   }
 
-  shouldComponentUpdate() {
-    setTimeout(() => this.setState({updated: false, submited: false}), 6000);
-    return true;
+  componentDidMount() {
+    var type = this.refs.form.getComponent('type');
   }
 
   render() {
     let Loading = this.state.submited && !this.state.updated ? classNames('ui', 'form', 'segment', 'loading') : classNames('ui', 'form', 'segment');
 
-    let Message = this.state.updated ?
-    (
-      <div className="ui success message">
-        <div className="header">
-          Your password change request was successful.
-        </div>
-        <p>Please use new password to login next time.</p>
-      </div>
-    ) : null;
-
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
-          <ReactCSSTransitionGroup transitionName="MessageTransition">
-            {Message}
-          </ReactCSSTransitionGroup>
-          <form className={Loading} action="/auth/changePassword" method="post" onSubmit={this.handleSubmit}>
-            <Form ref="form" type={ChangePasswordForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
+          <form className={Loading} action="/posts/new" method="post" onSubmit={this.handleSubmit}>
+            <Form ref="form" type={PostForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
             <div className="ui hidden divider" />
-            <button type="submit" className="ui blue labeled icon large button" disabled={this.state.submited}>
-              Change
+            <button type="submit" className="ui red labeled icon large button" disabled={this.state.submited}>
+              Post it!
               <i className="add icon"></i>
             </button>
           </form>
@@ -137,16 +108,18 @@ class ChangePassword extends BaseComponent{
   }
 }
 
-ChangePassword.propTypes = {
+Post.propTypes = {
   errors: React.PropTypes.object
 };
 
-ChangePassword.defaultTypes = {
+Post.defaultTypes = {
   errors: {}
 };
 
-ChangePassword.contextTypes = {
+Post.contextTypes = {
   router: React.PropTypes.func.isRequired
 };
 
-export default ChangePassword;
+
+
+export default Post;

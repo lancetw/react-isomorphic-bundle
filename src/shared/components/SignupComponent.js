@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {Form, Tcomb, SignupForm, SignupFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone, omit} from 'lodash';
+import classNames from 'classNames';
 
 class Signup extends BaseComponent{
   displayName: 'Signup Component'
@@ -103,6 +104,7 @@ class Signup extends BaseComponent{
   }
 
   render() {
+    let Loading = this.state.submited ? classNames('ui', 'form', 'segment', 'loading') : classNames('ui', 'form', 'segment');
 
     return (
       <main className="ui two column stackable page grid">
@@ -118,7 +120,7 @@ class Signup extends BaseComponent{
           </div>
         </div>
         <div className="column">
-          <form className="ui form segment" action="/auth/register" method="post" onSubmit={this.handleSubmit}>
+          <form className={Loading} action="/auth/register" method="post" onSubmit={this.handleSubmit}>
             <Form ref="form" type={SignupForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
             <div className="ui hidden divider" />
             <button type="submit" className="ui teal labeled icon huge button" disabled={this.state.submited}>

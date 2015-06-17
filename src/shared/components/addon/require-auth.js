@@ -1,17 +1,14 @@
 'use strict';
 
 import React from 'react';
+import BaseComponent from 'shared/components/BaseComponent';
 import {isEmpty} from 'lodash';
 
 const isClient = (typeof (document) !== 'undefined') ? true : false;
 
 const RequireAuth = (Component) => {
-  class Authenticated extends React.Component {
+  class Authenticated extends BaseComponent{
     displayName: 'RequireAuth'
-
-    constructor(props) {
-      super(props);
-    }
 
     render() {
       return <Component {...this.props} />;
@@ -25,7 +22,7 @@ const RequireAuth = (Component) => {
 
     let isTokenNonExist = isEmpty(token) ? true : false;
     let isNonAuthenticated = true;
-    flux.getActions('auth').verify(token).then(function (isVerifed) {
+    isClient && flux.getActions('auth').verify(token).then(function (isVerifed) {
       isNonAuthenticated = isClient ? !isVerifed : isTokenNonExist;
       isNonAuthenticated && transition.redirect('/logout');
 
@@ -36,13 +33,17 @@ const RequireAuth = (Component) => {
     });
 
     if (!isClient) {
+      if (isTokenNonExist) {
+        transition.redirect('/');
+        done();
+      }
+
       done();
     }
   };
 
   Authenticated.contextTypes = {
-    router: React.PropTypes.func.isRequired,
-    flux: React.PropTypes.object.isRequired
+    router: React.PropTypes.func.isRequired
   };
 
   return Authenticated;

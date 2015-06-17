@@ -4,14 +4,13 @@ import {Link} from 'react-router/build/npm/lib';
 class SyncTokenHandler extends React.Component {
   displayName: 'Sync Token'
 
-  static willTransitionTo(transition, params, query, done) {
-    if (typeof window !== 'undefined') {
-      if (query.hasOwnProperty('token')) {
+  static willTransitionTo(transition, params, query) {
+    if (query.hasOwnProperty('token')) {
+      if (typeof window !== 'undefined') {
         transition.context.flux.getActions('auth').sync(query.token);
         transition.redirect('/');
       }
     }
-    setTimeout(done, 0);
   }
 
   render() {
@@ -19,12 +18,14 @@ class SyncTokenHandler extends React.Component {
     if (isClient) {
       return (
         <main className="ui stackable page grid">
+        Loading...
         </main>
       );
     }
     else {
       return (
         <main className="ui stackable page grid">
+        <Link to="/">Click here to continue...</Link>
         </main>
       );
     }

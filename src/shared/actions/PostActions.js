@@ -2,29 +2,32 @@ import {Actions} from 'flummox';
 import request from 'superagent';
 import Flux from 'shared/Flux';
 import jwt from 'jsonwebtoken';
+import {clone} from 'lodash';
+import moment from 'moment';
 
-export default class UserActions extends Actions {
+export default class PostActions extends Actions {
 
-  async changePassword(form) {
+  async submit(form) {
     const flux = new Flux();
     const token = flux.getStore('auth').load();
-    const user = await this.update(form, token);
-
-    // should delete client token ?
-    //await flux.getActions('auth').revoke();
-    return user;
+    const post = await this.create(form, token);
+    return post;
   }
 
-  async update(form, token) {
+  async create(form, token) {
     return new Promise((resolve, reject) => {
       const user = jwt.decode(token);
       if (!user.id) reject('invalid token');
-      const userId = user.id;
+      const _form = clone(form);
+      _form.uid = user.id;
+      _form.startDate = moment(_form.startDate).format('YYYY-MM-DD');
+      _form.endDate = moment(_form.endDate).format('YYYY-MM-DD');
+
       request
-        .put('/api/v1/users/' + userId)
+        .post('/api/v1/posts')
         .set('Accept', 'application/json')
         .set('Authorization', 'JWT ' + token)
-        .send(form)
+        .send(_form)
         .end(function (err, res) {
           if (!err && res.body) {
             resolve(res.body);

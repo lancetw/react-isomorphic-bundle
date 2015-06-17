@@ -36,6 +36,11 @@ export default {
       publicPath: PUBLIC_PATH,
     },
     plugins: [
+      new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery",
+          "window.jQuery": "jquery"
+      }),
       new ExtractTextPlugin('[name].css'),
       new webpack.DefinePlugin({
         'process.env': {
@@ -77,7 +82,7 @@ export default {
       preLoaders: [
         {
           test: /\.jsx?$/,
-          exclude: /node_modules/,
+          exclude: /(node_modules|styles)/,
           loader: 'eslint'
         }
       ],
@@ -94,7 +99,7 @@ export default {
         {
           test: /\.jsx?$/,
           loader: 'babel?optional[]=runtime&stage=1',
-          exclude: /node_modules/
+          exclude: (/node_modules|styles/)
         },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss') },
         { test: /\.less$/,

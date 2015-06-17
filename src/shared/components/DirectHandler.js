@@ -16,7 +16,7 @@ class HomeHandler extends React.Component {
       return (
         <main className="ui stackable page grid">
           <div className="column">
-
+            <h1>Redirecting...</h1>
           </div>
         </main>
       );

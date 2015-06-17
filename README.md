@@ -48,12 +48,13 @@ $ npm install
 - [x] Log in (isomorphic)
 - [x] Facebook Sign In (isomorphic)
 - [x] Restful API with JWT
-- [ ] Change password
+- [x] Change password
+- [ ] Create post
 - [ ] more ...
 
 ---
 
-## You May Interested In...
+## You May Be Interested In...
 
 * [flummox](https://github.com/acdlite/flummox)
 * [react-router](https://github.com/rackt/react-router)

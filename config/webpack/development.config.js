@@ -55,6 +55,11 @@ export default {
       publicPath: PUBLIC_PATH
     },
     plugins: [
+      new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery",
+          "window.jQuery": "jquery"
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
       new webpack.DefinePlugin({
@@ -74,7 +79,7 @@ export default {
       preLoaders: [
         {
           test: /\.js$|.jsx$/,
-          exclude: /node_modules/,
+          exclude: /(node_modules|styles)/,
           loader: 'eslint'
         }
       ],
@@ -87,7 +92,7 @@ export default {
         {
           test: /\.jsx?$/,
           loader: 'react-hot!babel?optional[]=runtime&stage=1',
-          exclude: /node_modules/
+          exclude: (/node_modules|styles/)
         },
         { test: /\.css$/, loader: 'style!css?sourceMap&importLoaders=1!postcss' },
         { test: /\.less$/, loader: 'style!css?sourceMap&importLoaders=1!postcss!less?noIeCompat' }

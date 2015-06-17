@@ -3,6 +3,7 @@ import {Link} from 'react-router/build/npm/lib';
 import BaseComponent from 'shared/components/BaseComponent';
 import {Form, FormT, LoginForm, LoginFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone, omit} from 'lodash';
+import classNames from 'classNames';
 
 class Login extends BaseComponent{
   displayName: 'Log in Component'
@@ -76,12 +77,14 @@ class Login extends BaseComponent{
   }
 
   render() {
+    let Loading = this.state.submited ? classNames('ui', 'form', 'segment', 'loading') : classNames('ui', 'form', 'segment');
+
     return (
       <main className="ui stackable page grid">
         <div className="column">
           <div className="ui two column middle aligned relaxed fitted stackable grid">
             <div className="column">
-              <form className="ui form segment" action="/auth/login" method="post" onSubmit={this.handleSubmit}>
+              <form className={Loading} action="/auth/login" method="post" onSubmit={this.handleSubmit}>
                 <Form ref="form" type={LoginForm} options={this.state.options} value={this.state.value} />
                 <div className="ui hidden divider" />
                 <button type="submit" className="fluid ui blue large button" disabled={this.state.submited}>
