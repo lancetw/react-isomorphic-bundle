@@ -16,6 +16,10 @@ body {
   }
 }
 
+* {
+  appearance: none;
+}
+
 main.ui.stackable.page.grid {
   position: absolute;
   width: 100%;
