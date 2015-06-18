@@ -26,11 +26,12 @@ describe('App', () => {
     const renderedItems = TestUtils.scryRenderedDOMComponentsWithTag(_header, 'a'),
     itemCount = renderedItems.length;
 
-    expect(itemCount).toBe(4);
+    expect(itemCount).toBe(6);
 
     expect(React.findDOMNode(renderedItems[0]).textContent).toEqual('Home');
     expect(React.findDOMNode(renderedItems[1]).textContent).toEqual('Log In');
-    expect(React.findDOMNode(renderedItems[2]).textContent).toEqual('Post');
+    expect(React.findDOMNode(renderedItems[2]).textContent).toEqual('Wall');
+    expect(React.findDOMNode(renderedItems[3]).textContent).toEqual('Post');
   });
 
 });
