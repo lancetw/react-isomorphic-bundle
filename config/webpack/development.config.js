@@ -25,6 +25,7 @@ export default {
     port: PORT,
     options: {
       publicPath: PUBLIC_PATH,
+      historyApiFallback: true,
       hot: true,
       stats: {
         assets: true,

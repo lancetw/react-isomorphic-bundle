@@ -3,9 +3,10 @@
 const models = require('src/server/db/models');
 const hashids = require('src/shared/utils/hashids-plus');
 const Post = models.posts;
+const moment = require('moment');
 
 exports.create = function *(post) {
-  const fillable = ['uid', 'type', 'prop', 'start_date', 'end_date', 'open_date', 'close_date', 'title', 'content'];
+  const fillable = ['uid', 'type', 'prop', 'startDate', 'endDate', 'openDate', 'closeDate', 'title', 'content'];
 
   return yield Post.create(post, {fields: fillable});
 };
@@ -14,6 +15,23 @@ exports.load = function *(hid) {
   const id = +hashids.decode(hid);
   return yield Post.findOne({
     where: {id: id}
+  });
+};
+
+/* eslint-disable camelcase */
+exports.list = function *(offset, limit) {
+  offset = typeof offset !== 'undefined' ? offset : 0;
+  limit = typeof limit !== 'undefined' ? limit : 20;
+
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [['start_date', 'ASC']],
+    where: {
+      close_date: {
+        $gte: moment().startOf('day').subtract('1', 'days').format()
+      }
+    }
   });
 };
 

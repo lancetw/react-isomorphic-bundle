@@ -30,25 +30,29 @@ module.exports = {
         defaultValue: 0,
         type: Sequelize.INTEGER.UNSIGNED
       },
-      start_date: {
+      startDate: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'start_date'
       },
-      end_date: {
+      endDate: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'end'
       },
-      open_date: {
+      openDate: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'open_date'
       },
-      close_date: {
+      closeDate: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'close_date'
       },
       title: {
         allowNull: false,
@@ -107,7 +111,6 @@ module.exports = {
         type: Sequelize.TEXT
       }
     }, {
-      freezeTableName: true,
       classMethods: {
         associate: function (models) {
           // associations can be defined here

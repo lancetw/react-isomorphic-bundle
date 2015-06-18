@@ -3,6 +3,19 @@
   "version": "0.0.1",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
+  "scripts": {
+    "prestart": "npm run clean && make fast-build",
+    "postinstall": "make react-router",
+    "start": "NODE_ENV=production node --harmony ./lib/server",
+    "dev": "make watch",
+    "lint": "make lint",
+    "build": "make build",
+    "debug": "make debug",
+    "clean": "make clean",
+    "test": "make test",
+    "test:cov": "make test-cov",
+    "test:ci": "make test-ci"
+  },
   "author": "lancetw aka Hsin-lin Cheng <lancetw@gmail.com>",
   "repository": {
     "type": "git",
@@ -40,19 +53,6 @@
     "passport",
     "passport-facebook"
   ],
-  "scripts": {
-    "prestart": "npm run clean && make fast-build",
-    "postinstall": "make react-router",
-    "start": "NODE_ENV=production node --harmony ./lib/server",
-    "dev": "make watch",
-    "lint": "make lint",
-    "build": "make build",
-    "debug": "make debug",
-    "clean": "make clean",
-    "test": "make test",
-    "test-cov": "make test-cov",
-    "test-ci": "make test-ci"
-  },
   "dependencies": {
     "app-module-path": "^1.0.2",
     "better-console": "^0.2.4",
@@ -71,6 +71,7 @@
     "hashids": "^1.0.1",
     "immutable": "^3.7.3",
     "isomorphic-fetch": "^2.1.0",
+    "jquery": "^2.1.4",
     "jsonwebtoken": "^5.0.1",
     "koa": "^0.21.0",
     "koa-cash": "^1.0.1",

@@ -22,12 +22,27 @@ export default class PostActions extends Actions {
       _form.uid = user.id;
       _form.startDate = moment(_form.startDate).format('YYYY-MM-DD');
       _form.endDate = moment(_form.endDate).format('YYYY-MM-DD');
-
       request
         .post('/api/v1/posts')
         .set('Accept', 'application/json')
         .set('Authorization', 'JWT ' + token)
         .send(_form)
+        .end(function (err, res) {
+          if (!err && res.body) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+  }
+
+  async list() {
+    return new Promise((resolve, reject) => {
+      request
+        .get('/api/v1/posts')
+        .set('Accept', 'application/json')
         .end(function (err, res) {
           if (!err && res.body) {
             resolve(res.body);

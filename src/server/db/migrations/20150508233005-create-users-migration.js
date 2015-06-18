@@ -30,7 +30,6 @@ module.exports = {
       },
       status: Sequelize.INTEGER
     }, {
-      freezeTableName: true,
       classMethods: {
         associate: function (models) {
           // associations can be defined here

@@ -11,6 +11,7 @@ class Post extends BaseComponent{
   constructor(props, context) {
     super(props);
     const today = moment().format('YYYY-M-D').split('-');
+    today[1] = today[1] - 1;
     this.state = {value: {type: '2', prop: '1', startDate: today, endDate: today, title: null, content: null}, options: PostFormOptions, submited: false, updated: false};
 
     this._bind('handleSubmit', 'validation', 'handleChange');
@@ -73,9 +74,9 @@ class Post extends BaseComponent{
       this.setState({submited: true});
 
       if (response.id) {
-        this.setState({updated: true, submited: false});
+        this.setState({updated: true, submited: true});
       }
-      //setTimeout(() => this.context.router.transitionTo('/'), 1000);
+      setTimeout(() => this.context.router.transitionTo('/wall'), 2000);
     }
   }
 
@@ -91,9 +92,20 @@ class Post extends BaseComponent{
   render() {
     let Loading = this.state.submited && !this.state.updated ? classNames('ui', 'form', 'segment', 'loading') : classNames('ui', 'form', 'segment');
 
+    let Message = this.state.updated ?
+    (
+      <div className="ui success message">
+        <div className="header">
+          Post created!
+        </div>
+        <p>now will redirect to homepage.</p>
+      </div>
+    ) : null;
+
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
+          {Message}
           <form className={Loading} action="/posts/new" method="post" onSubmit={this.handleSubmit}>
             <Form ref="form" type={PostForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
             <div className="ui hidden divider" />

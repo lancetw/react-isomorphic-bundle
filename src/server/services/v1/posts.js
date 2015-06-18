@@ -13,7 +13,7 @@ const Post = db.posts;
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
-    this.body = nunjucks.render('posts/index.html');
+    this.body = yield Post.list(0, 10);
   },
   // GET /posts/new
   new: function *(next) {
@@ -40,6 +40,8 @@ export default new Resource('posts', {
     }
 
     try {
+      body.closeDate = body.endDate;
+
       const post = yield Post.create(body);
       this.type = 'json';
       this.status = 201;

@@ -10,9 +10,13 @@ const WallHandler = class WallHandler extends React.Component{
     return await pagesActions.setTitle('Wall');
   }
 
+  componentWillMount() {
+    this.props.flux.getActions('post').list();
+  }
+
   render() {
     return (
-      <FluxComponent connectToStores={['post', 'user']}>
+      <FluxComponent connectToStores={['user']}>
         <Wall />
       </FluxComponent>
     );
