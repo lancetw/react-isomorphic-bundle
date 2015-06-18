@@ -30,24 +30,36 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.INTEGER.UNSIGNED
     },
     startDate: {
+      validate: {
+        isDate: true
+      },
       allowNull: false,
       defaultValue: Sequelize.NOW,
       type: Sequelize.DATE,
       field: 'start_date'
     },
     endDate: {
+      validate: {
+        isDate: true
+      },
       allowNull: false,
       defaultValue: Sequelize.NOW,
       type: Sequelize.DATE,
       field: 'end_date'
     },
     openDate: {
+      validate: {
+        isDate: true
+      },
       allowNull: false,
       defaultValue: Sequelize.NOW,
       type: Sequelize.DATE,
       field: 'open_date'
     },
     closeDate: {
+      validate: {
+        isDate: true
+      },
       allowNull: false,
       defaultValue: Sequelize.NOW,
       type: Sequelize.DATE,

@@ -12,8 +12,10 @@ class PostCard extends BaseComponent{
   constructor(props) {
     super(props);
     this.state = {};
-
     //this._bind();
+  }
+
+  componentDidMount() {
   }
 
   render() {
@@ -24,7 +26,7 @@ class PostCard extends BaseComponent{
         <div className="content">
           <div className="header">{card.title}</div>
           <div className="meta">
-            <span className="right floated time">{moment(card.startDate).format('M/D')} ~ {moment(card.endDate).format('M/D')}</span>
+            <span className="right floated time">{moment(card.startDate.split(' ')[0]).format('M/D')} ~ {moment(card.endDate.split(' ')[0]).format('M/D')}</span>
             <span className="category">{card.prop}</span>
           </div>
           <div className="description">
