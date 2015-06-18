@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {Form, Tcomb, SignupForm, SignupFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone, omit} from 'lodash';
-import classNames from 'classNames';
+import classNames from 'classnames';
 
 class Signup extends BaseComponent{
   displayName: 'Signup Component'

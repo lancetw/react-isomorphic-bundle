@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {Form, Tcomb, ChangePasswordForm, ChangePasswordFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone} from 'lodash';
-import classNames from 'classNames';
+import classNames from 'classnames';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 

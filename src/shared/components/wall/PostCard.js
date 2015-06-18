@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {isEmpty} from 'lodash';
-import classNames from 'classNames';
+import classNames from 'classnames';
 import moment from 'moment';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;

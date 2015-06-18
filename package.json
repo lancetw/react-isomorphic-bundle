@@ -91,7 +91,6 @@
     "koa-response-time": "^1.0.2",
     "koa-router": "^5.1.1",
     "koa-static-cache": "^3.1.1",
-    "level-sublevel": "^6.4.6",
     "leveldown": "^1.2.2",
     "levelup": "^1.2.1",
     "lodash": "^3.9.3",

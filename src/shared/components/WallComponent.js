@@ -1,7 +1,6 @@
 import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {isEmpty} from 'lodash';
-import classNames from 'classNames';
 import Cards from 'shared/components/wall/PostCards';
 import FluxComponent from 'flummox/component';
 

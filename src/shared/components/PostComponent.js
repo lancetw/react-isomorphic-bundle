@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {Form, Tcomb, PostForm, PostFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone, omit} from 'lodash';
-import classNames from 'classNames';
+import classNames from 'classnames';
 import moment from 'moment';
 
 class Post extends BaseComponent{

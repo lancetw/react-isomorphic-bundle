@@ -3,7 +3,7 @@ import {Link} from 'react-router/build/npm/lib';
 import BaseComponent from 'shared/components/BaseComponent';
 import {Form, FormT, LoginForm, LoginFormOptions} from 'shared/utils/forms';
 import {isEmpty, clone, omit} from 'lodash';
-import classNames from 'classNames';
+import classNames from 'classnames';
 
 class Login extends BaseComponent{
   displayName: 'Log in Component'

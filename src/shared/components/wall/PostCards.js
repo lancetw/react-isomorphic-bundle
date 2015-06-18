@@ -1,8 +1,8 @@
 import React from 'react';
 import BaseComponent from 'shared/components/BaseComponent';
 import {isEmpty} from 'lodash';
-import classNames from 'classNames';
-import Card from 'shared/components/wall/postCard';
+import classNames from 'classnames';
+import Card from 'shared/components/wall/PostCard';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
