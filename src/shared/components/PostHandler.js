@@ -6,11 +6,6 @@ import auth from './addon/require-auth';
 const PostHandler = auth(class PostHandler extends React.Component {
   displayName: 'Post'
 
-  componentWillMount() {
-    const pagesActions = this.props.flux.getActions('page');
-    pagesActions.setTitle('Post new message');
-  }
-
   render() {
     return (
       <FluxComponent connectToStores={['post']}>

@@ -28,13 +28,13 @@ const RequireAuth = (Component) => {
 
       done();
     }, function (err) {
-      transition.redirect('/');
+      transition.redirect('/login');
       done();
     });
 
     if (!isClient) {
       if (isTokenNonExist) {
-        transition.redirect('/');
+        transition.redirect('/login');
         done();
       }
 

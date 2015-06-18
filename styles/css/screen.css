@@ -20,7 +20,7 @@ body {
   appearance: none;
 }
 
-main.ui.stackable.page.grid {
+main.ui.stackable.page {
   position: absolute;
   width: 100%;
   padding-top: 64px;

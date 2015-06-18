@@ -27,6 +27,7 @@ class Header extends React.Component{
               Home
             </Link>
             {AuthLink}
+            <Link to='wall' className="item">Wall</Link>
             <Link to='post' className="item">Post</Link>
             {ChangePasswordLink}
           </div>
@@ -41,9 +42,10 @@ class Header extends React.Component{
           </div>
         </div>
         <div className="mobile only row">
-          <Link className="item left" to="login">
+          <Link className="item left" to="wall">
             Home
           </Link>
+          <Link to='post' className="item">Post</Link>
         </div>
       </header>
     );

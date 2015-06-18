@@ -6,11 +6,6 @@ import auth from './addon/require-auth';
 const ChangePasswordHandler = auth(class ChangePasswordHandler extends React.Component{
   displayName: 'Change Password'
 
-  componentWillMount() {
-    const pagesActions = this.props.flux.getActions('page');
-    pagesActions.setTitle('Change Password');
-  }
-
   render() {
     return (
       <FluxComponent connectToStores={['user']}>

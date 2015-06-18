@@ -49,7 +49,8 @@ $ npm install
 - [x] Facebook Sign In (isomorphic)
 - [x] Restful API with JWT
 - [x] Change password
-- [ ] Create post
+- [x] Create post
+- [ ] Posts with Location/Category/Timeline view
 - [ ] more ...
 
 ---
