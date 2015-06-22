@@ -31,14 +31,18 @@ export default function (app) {
       const location = new Location(this.path, this.query)
 
       // save session token to store
-      this.session.token && redux.dispatch(AuthActions.save(this.session.token))
+      if (this.session.token)
+        redux.dispatch(AuthActions.save(this.session.token))
 
       let appString, assets, title
 
       try {
-        const { error, initialState, transition, handler } =
-          yield new Promise((resolve) => {
-          Router.run(routes(redux), location, (_error, _initialState, _transition) => {
+        const { error, initialState, transition, handler }
+          = yield new Promise((resolve) => {
+          Router.run(
+            routes(redux),
+            location,
+            (_error, _initialState, _transition) => {
 
             resolve({
               error: _error,
@@ -48,11 +52,8 @@ export default function (app) {
           })
         })
 
-        if (!initialState) {
-          if (transition.isCancelled) {
-            return this.redirect(url.format(transition.redirectInfo))
-          }
-        }
+        if (!initialState && transition.isCancelled)
+          return this.redirect(url.format(transition.redirectInfo))
 
         try {
           yield runStaticMethod(
@@ -60,7 +61,9 @@ export default function (app) {
             'routerWillRun',
             { dispatch: redux.dispatch }
           )
-        } catch (error) {}
+        } catch (err) {
+          throw err
+        }
 
         appString = React.renderToString(
           <Provider redux={redux}>
