@@ -1,93 +1,126 @@
-import React from 'react';
-import {Link} from 'react-router/build/npm/lib';
-import BaseComponent from 'shared/components/BaseComponent';
-import {Form, FormT, LoginForm, LoginFormOptions} from 'shared/utils/forms';
-import {isEmpty, clone, omit} from 'lodash';
-import classNames from 'classnames';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
+import BaseComponent from 'shared/components/BaseComponent'
+import { Form, LoginForm, LoginFormOptions } from 'shared/utils/forms'
+import { isEmpty, clone, omit } from 'lodash'
+import classNames from 'classnames'
 
-class Login extends BaseComponent{
-  displayName: 'Log in Component'
+export default class Login extends BaseComponent {
 
-  constructor(props, context) {
-    super(props);
-    this.state = {value: {email: '', password: ''}, options: LoginFormOptions, submited: false};
+  constructor (props) {
+    super(props)
+    this.state = {
+      value: {
+        email: '',
+        password: ''
+      },
+      options: LoginFormOptions,
+      submited: false,
+      ok: false
+    }
 
-    this._bind('handleSubmit', 'clearFormErrors', 'fillFormAllErrors');
+    this._bind('handleSubmit', 'clearFormErrors', 'fillFormAllErrors')
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
-    var value = this.refs.form.getValue();
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+    const value = this.refs.form.getValue()
     if (value) {
-      let saved = clone(value);
-      saved = omit(saved, 'password');
-      this.setState({value: saved});
-      this.props.flux.getActions('auth').send(value);
-      this.setState({submited: true});
-      this.clearFormErrors();
+      let saved = clone(value)
+      saved = omit(saved, 'password')
+      this.setState({ value: saved })
+      this.setState({ submited: true })
+      this.clearFormErrors()
+
+      setTimeout(() => this.props.login(value), 1000)
     }
   }
 
-  clearFormErrors() {
-    let options = clone(this.state.options);
-    options.fields = clone(options.fields);
+  clearFormErrors () {
+    let options = clone(this.state.options)
+    options.fields = clone(options.fields)
 
     for (let key in options.fields) {
-      options.fields[key] = clone(options.fields[key]);
-      if (options.fields[key].hasOwnProperty('hasError')) {
-        options.fields[key].hasError = false;
-      }
+      options.fields[key] = clone(options.fields[key])
+      if (options.fields[key].hasOwnProperty('hasError'))
+        options.fields[key].hasError = false
     }
-    this.setState({options: options});
+    this.setState({ options: options })
   }
 
-  fillFormAllErrors() {
-    let options = clone(this.state.options);
-    options.fields = clone(options.fields);
+  fillFormAllErrors () {
+    let options = clone(this.state.options)
+    options.fields = clone(options.fields)
 
     for (let key in options.fields) {
-      options.fields[key] = clone(options.fields[key]);
-      if (options.fields[key].hasOwnProperty('hasError')) {
-        options.fields[key].hasError = true;
-      }
+      options.fields[key] = clone(options.fields[key])
+      if (options.fields[key].hasOwnProperty('hasError'))
+        options.fields[key].hasError = true
     }
-    this.setState({options: options});
+    this.setState({ options: options })
   }
 
-  validation(token) {
-    if (isEmpty(token)) {
-      this.fillFormAllErrors();
-      this.setState({submited: false});
-    }
-  }
-
-  checkSubmited(response) {
-    if (!isEmpty(response)) {
-      this.setState({submited: true});
-
-      setTimeout(function () {
-        this.context.router.transitionTo('/');
-      }.bind(this), 1000);
+  validation (errors) {
+    if (!isEmpty(errors)) {
+      this.fillFormAllErrors()
+      this.setState({ submited: false })
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.validation(nextProps.token);
-    this.checkSubmited(nextProps.token);
+  checkSubmited (token) {
+    if (token) {
+      setTimeout(() => this.setState({ ok: true }), 0)
+      setTimeout(() => this.setState({ submited: true }), 300)
+      setTimeout(() => this.props.save(token), 100)
+      setTimeout(() => this.context.router.transitionTo('/'), 1000)
+    } else
+      this.setState({ submited: false })
   }
 
-  render() {
-    let Loading = this.state.submited ? classNames('ui', 'form', 'segment', 'loading') : classNames('ui', 'form', 'segment');
+  componentWillReceiveProps (nextProps) {
+    this.validation(nextProps.auth.errors)
+    this.checkSubmited(nextProps.auth.token)
+  }
+
+  render () {
+    let Loading = this.state.submited && !(this.state.ok) ?
+      classNames('ui', 'form', 'segment', 'loading') :
+      classNames('ui', 'form', 'segment')
 
     return (
       <main className="ui stackable page grid">
         <div className="column">
-          <div className="ui two column middle aligned relaxed fitted stackable grid">
+          <div className="
+            ui two column middle aligned relaxed fitted stackable grid">
             <div className="column">
-              <form className={Loading} action="/auth/login" method="post" onSubmit={this.handleSubmit}>
-                <Form ref="form" type={LoginForm} options={this.state.options} value={this.state.value} />
+              <form
+                className={Loading}
+                action="/auth/login"
+                method="post"
+                onSubmit={this.handleSubmit}
+              >
+                <Form
+                  ref="form"
+                  type={LoginForm}
+                  options={this.state.options}
+                  value={this.state.value}
+                />
                 <div className="ui hidden divider" />
-                <button type="submit" className="fluid ui blue large button" disabled={this.state.submited}>
+                <button
+                  type="submit"
+                  className="fluid ui blue large button"
+                  disabled={this.state.ok}
+                >
                   Log In
                 </button>
               </form>
@@ -96,11 +129,11 @@ class Login extends BaseComponent{
               or
             </div>
             <div className="center aligned column">
-              <Link className="large blue ui labeled icon button"
-                to="/auth/facebook">
+              <a className="large blue ui labeled icon button"
+                href="/auth/facebook">
                 <i className="facebook icon"></i>
                 Sign In with Facebook
-              </Link>
+              </a>
               <div className="ui hidden divider"></div>
               <Link className="ui huge green labeled icon button"
                 to="/signup">
@@ -111,20 +144,7 @@ class Login extends BaseComponent{
           </div>
         </div>
       </main>
-    );
+    )
   }
 }
 
-Login.propTypes = {
-  errors: React.PropTypes.object
-};
-
-Login.defaultTypes = {
-  errors: {}
-};
-
-Login.contextTypes = {
-  router: React.PropTypes.func.isRequired
-};
-
-export default Login;

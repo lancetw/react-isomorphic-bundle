@@ -1,14 +1,22 @@
-import React from 'react';
-import BaseComponent from 'shared/components/BaseComponent';
+import React, { PropTypes } from 'react'
+import BaseComponent from 'shared/components/BaseComponent'
 
-class HomeComponent extends BaseComponent{
-  displayName: 'Home Component'
+export default class HomeComponent extends BaseComponent {
 
-  /*constructor(props) {
-    super(props);
-  }*/
+  constructor (props) {
+    super(props)
+  }
 
-  render() {
+  static propTypes = {
+    load: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  }
+
+  componentWillMount () {
+    this.props.load()
+  }
+
+  render () {
     return (
       <main className="ui stackable page grid">
         <div className="column">
@@ -16,7 +24,12 @@ class HomeComponent extends BaseComponent{
             <h1>Your JSON Web Token</h1>
             <div className="ui fluid right labeled left icon input">
               <i className="tags icon"></i>
-              <input type="text" placeholder="token" value={this.props.token} readOnly />
+              <input
+                type="text"
+                placeholder="token"
+                value={this.props.auth.token}
+                readOnly
+              />
               <div className="ui tag label">
                 KEY
               </div>
@@ -24,8 +37,7 @@ class HomeComponent extends BaseComponent{
           </div>
         </div>
       </main>
-    );
+    )
   }
 }
 
-export default HomeComponent;

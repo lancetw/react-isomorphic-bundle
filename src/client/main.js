@@ -1,62 +1,30 @@
-'use strict';
+'use strict'
 
-import React from 'react';
-import Router from 'react-router/build/npm/lib';
-import FluxComponent from 'flummox/component';
-import Flux from '../shared/Flux';
-import routes from '../shared/routes';
-import performRouteHandlerStaticMethod from '../shared/utils/performRouteHandlerStaticMethod';
-import url from 'url';
+import React from 'react'
+import { Router } from 'react-router'
+import { createRedux } from 'redux'
+import * as stores from 'shared/stores'
+import { Provider } from 'redux/react'
+import routes from 'shared/routes'
+import BrowserHistory from 'react-router/lib/BrowserHistory'
+import runStaticMethod from 'shared/utils/runStaticMethod'
+import url from 'url'
 
 if (process.env.NODE_ENV === 'development') {
-  require('react-a11y')(React);
-  require('debug').enable('dev,koa');
+  require('react-a11y')(React)
+  require('debug').enable('dev,koa')
 }
 
-const flux = new Flux();
+const initialState = window.STATE_FROM_SERVER   // no data
+const redux = createRedux(stores, initialState)
 
-const router = Router.create({
-  routes: routes,
-  location: Router.HistoryLocation,
-  transitionContext: {
-    flux: flux
-  }
-});
+const history = new BrowserHistory()
 
-router.run(async (Handler, state) => {
-  const routeHandlerInfo = {state, flux};
-
-  /* Important: must sync auth token on client with no argument */
-  await flux.getActions('auth').sync();
-
-  await performRouteHandlerStaticMethod(state.routes, 'routerWillRun', routeHandlerInfo);
-
-  document.title = flux.getStore('page').state.title;
-
-  React.render(
-    <FluxComponent flux={flux}>
-      <Handler {...state} />
-    </FluxComponent>,
-    document.getElementById('app')
-  );
-});
-
-document.onclick = event => {
-  const { toElement: target } = event;
-
-  if (!target) return;
-
-  if (target.tagName !== 'A') return;
-
-  const href = target.getAttribute('href');
-
-  if (!href) return;
-
-  const resolvedHref = url.resolve(window.location.href, href);
-  const { host, path } = url.parse(resolvedHref);
-
-  if (host === window.location.host) {
-    event.preventDefault();
-    router.transitionTo(path);
-  }
-};
+React.render((
+  <Provider redux={redux}>
+    {() =>
+      <Router children={routes(redux)} history={history} />
+    }
+  </Provider>
+  ), document.getElementById('app')
+)

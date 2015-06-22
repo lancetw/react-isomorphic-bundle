@@ -1,18 +1,29 @@
-import React from 'react';
-import ChangePassword from './ChangePasswordComponent';
-import FluxComponent from 'flummox/component';
-import auth from './addon/require-auth';
+import React, { PropTypes } from 'react'
+import ChangePassword from './ChangePasswordComponent'
+import { bindActionCreators } from 'redux'
+import { connect } from 'redux/react'
+import * as UserActions from '../actions/UserActions'
+import DocumentTitle from './addon/document-title'
 
-const ChangePasswordHandler = auth(class ChangePasswordHandler extends React.Component{
-  displayName: 'Change Password'
+@connect(state => ({
+  user: state.user
+}))
+export default class ChangePasswordHandler extends React.Component {
 
-  render() {
-    return (
-      <FluxComponent connectToStores={['user']}>
-        <ChangePassword />
-      </FluxComponent>
-    );
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
   }
-});
 
-export default ChangePasswordHandler;
+  render () {
+    const { dispatch } = this.props
+    return (
+      <DocumentTitle title='Change my password'>
+        <ChangePassword
+          {...bindActionCreators(UserActions, dispatch)}
+          {...this.props}
+        />
+      </DocumentTitle>
+    )
+  }
+
+}

@@ -1,34 +1,26 @@
-import React from 'react';
-import BaseComponent from 'shared/components/BaseComponent';
-import {isEmpty} from 'lodash';
-import classNames from 'classnames';
-import Card from 'shared/components/wall/PostCard';
+import React, { PropTypes } from 'react'
+import BaseComponent from 'shared/components/BaseComponent'
+import { isEmpty } from 'lodash'
+import Card from 'shared/components/wall/PostCard'
 
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+export default class PostCards extends BaseComponent {
 
-class PostCards extends BaseComponent{
-  displayName: 'PostCards Component'
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-
-    //this._bind();
+  constructor (props) {
+    super(props)
   }
 
-  componentDidMount() {
+  static propTypes = {
+    posts: PropTypes.array.isRequired
   }
 
-  render() {
-    const cards = this.props.posts;
+  render () {
+    const cards = this.props.posts
     return (
       <div className="ui cards">
         {!isEmpty(cards) && cards.map(function (card) {
-          return <Card key={card.id} data={card} />;
+          return <Card key={card.id} data={card} />
         })}
       </div>
-    );
+    )
   }
 }
-
-export default PostCards;

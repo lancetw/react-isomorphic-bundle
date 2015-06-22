@@ -1,2 +1,2 @@
-require('babel/polyfill');
-require('./main');
+require('babel/polyfill')
+require('./main')

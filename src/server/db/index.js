@@ -1,2 +1,2 @@
-exports.users = require('./dao/users');
-exports.posts = require('./dao/posts');
+exports.users = require('./dao/users')
+exports.posts = require('./dao/posts')

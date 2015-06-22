@@ -1,20 +1,20 @@
-const React = require('react');
+const React = require('react')
 
-const t = require('tcomb-form/lib');
-const en = require('tcomb-form/lib/i18n/en');
-const semantic = require('./semantic-custom');
+const t = require('tcomb-form/lib')
+const en = require('tcomb-form/lib/i18n/en')
+const semantic = require('./semantic-custom')
 
-t.form.Form.i18n = en;
-t.form.Form.templates = semantic;
+t.form.Form.i18n = en
+t.form.Form.templates = semantic
 
-const Password = t.subtype(t.Str, s => s.length >= 6);
+const Password = t.subtype(t.Str, s => s.length >= 6)
 
 exports.SignupForm = t.struct({
   email: t.Str,
   password: Password,
   passwordCheck: t.Str,
   tos: t.Bool
-});
+})
 exports.SignupFormOptions = {
   auto: 'placeholders',
   fields: {
@@ -28,15 +28,15 @@ exports.SignupFormOptions = {
       help: <i>Please enter password again</i>
     },
     tos: {
-      label: 'I agree to the Terms and Conditions',
+      label: 'I agree to the Terms and Conditions'
     }
   }
-};
+}
 
 exports.LoginForm = t.struct({
   email: t.Str,
   password: Password
-});
+})
 exports.LoginFormOptions = {
   auto: 'placeholders',
   fields: {
@@ -48,12 +48,12 @@ exports.LoginFormOptions = {
       hasError: false
     }
   }
-};
+}
 
 exports.ChangePasswordForm = t.struct({
   password: Password,
   passwordCheck: t.Str
-});
+})
 exports.ChangePasswordFormOptions = {
   auto: 'placeholders',
   fields: {
@@ -67,12 +67,12 @@ exports.ChangePasswordFormOptions = {
       help: <i>Please enter password again</i>
     }
   }
-};
+}
 
 const PostType = t.enums({
   1: 'News',
   2: 'Event'
-});
+})
 
 const PostProp = t.enums({
   1: 'General',
@@ -82,7 +82,7 @@ const PostProp = t.enums({
   5: 'Special Groups',
   6: 'Health Care',
   7: 'Others'
-});
+})
 
 exports.PostForm = t.subtype(t.struct({
   type: PostType,
@@ -94,8 +94,8 @@ exports.PostForm = t.subtype(t.struct({
 }), function (value) {
   return (
     (value.startDate <= value.endDate)
-  );
-});
+  )
+})
 
 exports.PostFormOptions = {
   error: <div data-errors="date">Date range is invalid.</div>,
@@ -109,17 +109,17 @@ exports.PostFormOptions = {
     },
     startDate: {
       label: 'Start date',
-      order: ['YYYY', 'M', 'D']
+      order: [ 'YYYY', 'M', 'D' ]
     },
      endDate: {
       label: 'End date',
-      order: ['YYYY', 'M', 'D']
+      order: [ 'YYYY', 'M', 'D' ]
     },
     content: {
       type: 'textarea'
     }
   }
-};
+}
 
-exports.Tcomb = t;
-exports.Form = t.form.Form;
+exports.Tcomb = t
+exports.Form = t.form.Form

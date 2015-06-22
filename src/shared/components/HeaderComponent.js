@@ -1,41 +1,52 @@
-import React from 'react';
-import {Link} from 'react-router/build/npm/lib';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
-class Header extends React.Component{
-  displayName: 'Header Component'
+export default class Header extends React.Component {
 
-  render() {
+  constructor (props) {
+    super(props)
+  }
 
-    let AuthLink;
-    if (!this.props.token) {
-      AuthLink = <Link to='login' className="item">Log In</Link>;
-    }
-    else {
-      AuthLink = <Link to='logout' className="item">Log Out</Link>;
-    }
+  static propTypes = {
+    auth: PropTypes.object.isRequired
+  }
 
-    let ChangePasswordLink;
-    if (this.props.token) {
-      ChangePasswordLink = <Link to='changePassword' className="item">Password</Link>;
-    }
+  render () {
+    let AuthLink
+    if (!this.props.auth.token)
+      AuthLink = <Link to='/login' className="item">Log In</Link>
+    else
+      AuthLink = <Link to='/logout' className="item">Log Out</Link>
+
+    let ChangePasswordLink
+    if (this.props.auth.token)
+      ChangePasswordLink = (
+        <Link to='/password' className="item">
+          Password
+        </Link>
+      )
 
     return (
       <header className="ui orange inverted menu grid fixed top">
         <div className="computer tablet only row">
           <div className="left menu">
-            <Link to='/' className="item">
+            <Link to='/home' className="item">
               Home
             </Link>
             {AuthLink}
-            <Link to='wall' className="item">Wall</Link>
-            <Link to='post' className="item">Post</Link>
+            <Link to='/wall' className="item">Wall</Link>
+            <Link to='/post' className="item">Post</Link>
             {ChangePasswordLink}
           </div>
 
           <div className="right menu">
             <div className="item">
               <div className="ui transparent icon input inverted">
-                <input type="text" placeholder="Search ..." aria-label="Search" />
+                <input
+                  type="text"
+                  placeholder="Search ..."
+                  aria-label="Search"
+                />
                 <i className="search icon"></i>
               </div>
             </div>
@@ -48,9 +59,6 @@ class Header extends React.Component{
           <Link to='post' className="item">Post</Link>
         </div>
       </header>
-    );
+    )
   }
-
 }
-
-export default Header;

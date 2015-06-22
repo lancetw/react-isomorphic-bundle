@@ -1,33 +1,22 @@
-import {Store} from 'flummox';
-import debug from 'debug';
-import {isArray} from 'lodash';
+import { SIGNUP_USER_STARTED, SIGNUP_USER_COMPLETED,
+  SIGNUP_USER_FAILED } from 'shared/constants/ActionTypes'
 
-export default class SignupStore extends Store {
-  constructor({signupActions}) {
-    super();
+const initialState = {
+  response: {},
+  errors: {}
+}
 
-    this.state = {response: {}, errors: {}};
+const actionsMap = {
+  [SIGNUP_USER_STARTED]: () => (initialState),
+  [SIGNUP_USER_COMPLETED]: (state, action) =>
+    ({ response: action.response }),
+  [SIGNUP_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors })
+}
 
-    this.register(signupActions.submit, this.getErrors);
-    this.register(signupActions.reset, this.reset);
-  }
+export default function signup (state = initialState, action) {
+  const reduceFn = actionsMap[action.type]
+  if (!reduceFn) return state
 
-  getErrors(errors) {
-    if (!errors.token) {
-      if (isArray(errors)) {
-        this.setState({errors: errors, response: {}});
-      }
-      else {
-        this.setState({errors: errors.errors, response: {}});
-      }
-    }
-    else {
-      this.setState({errors: [], response: errors});
-    }
-  }
-
-  reset() {
-    this.setState({response: {}, error: []});
-  }
-
+  return Object.assign({}, state, reduceFn(state, action))
 }

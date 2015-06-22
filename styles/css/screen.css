@@ -16,7 +16,7 @@ body {
   }
 }
 
-* {
+select {
   appearance: none;
 }
 

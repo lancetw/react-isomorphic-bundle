@@ -1,26 +1,28 @@
-import React from 'react';
-import Logout from './LogoutComponent';
-import FluxComponent from 'flummox/component';
+import React, { PropTypes } from 'react'
+import Logout from './LogoutComponent'
+import { bindActionCreators } from 'redux'
+import { connect } from 'redux/react'
+import * as AuthActions from '../actions/AuthActions'
+import DocumentTitle from './addon/document-title'
 
-class LogoutHandler extends React.Component{
-  displayName: 'Log Out'
+@connect(state => ({
+  auth: state.auth
+}))
+export default class LogoutHandler extends React.Component {
 
-  /*constructor(props) {
-    super(props);
-  }*/
-
-  static async routerWillRun({flux, state}) {
-    const pagesActions = flux.getActions('page');
-    return await pagesActions.setTitle('Log out');
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
   }
 
-  render() {
+  render () {
+    const { dispatch } = this.props
     return (
-      <FluxComponent connectToStores={['auth']}>
-        <Logout />
-      </FluxComponent>
-    );
+      <DocumentTitle title='Log out'>
+        <Logout
+          {...bindActionCreators(AuthActions, dispatch)}
+          {...this.props}
+        />
+      </DocumentTitle>
+    )
   }
 }
-
-export default LogoutHandler;

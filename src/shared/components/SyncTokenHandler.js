@@ -1,39 +1,46 @@
-import React from 'react';
-import {Link} from 'react-router/build/npm/lib';
+import React, { PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { save } from '../actions/AuthActions'
+import DocumentTitle from './addon/document-title'
 
-class SyncTokenHandler extends React.Component {
-  displayName: 'Sync Token'
+export default class SyncTokenHandler extends React.Component {
 
-  static willTransitionTo(transition, params, query) {
-    if (query.hasOwnProperty('token')) {
-      if (typeof window !== 'undefined') {
-        transition.context.flux.getActions('auth').sync(query.token);
-        transition.redirect('/');
-      }
-    }
+  constructor (props) {
+    super(props)
+    this.state = { isClient: false }
   }
 
-  render() {
-    const isClient = (typeof (document) !== 'undefined') ? true : false;
-    if (isClient) {
-      return (
+  static propTypes = {
+    location: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    redux: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+  }
+
+  componentDidMount () {
+    this.setState({ isClient: true })
+
+    const dispatch = this.context.redux.dispatch
+    const token = this.props.location.query.token
+    setTimeout(() => dispatch(save(token)), 1000)
+    setTimeout(() => this.context.router.transitionTo('/'), 2000)
+  }
+
+  render () {
+    const msg = this.state.isClient
+      ? <div>Redirecting...</div>
+      : <div><a href="/">Click here to continue...</a></div>
+
+    return (
+      <DocumentTitle title='Redirecting...'>
         <main className="ui stackable page grid">
-        Loading...
+          <div className="column">
+            { msg }
+          </div>
         </main>
-      );
-    }
-    else {
-      return (
-        <main className="ui stackable page grid">
-        <Link to="/">Click here to continue...</Link>
-        </main>
-      );
-    }
+      </DocumentTitle>
+    )
   }
 }
-
-SyncTokenHandler.contextTypes = {
-  flux: React.PropTypes.object.isRequired
-};
-
-export default SyncTokenHandler;

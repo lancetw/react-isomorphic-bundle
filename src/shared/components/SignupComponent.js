@@ -1,110 +1,124 @@
-import React from 'react';
-import BaseComponent from 'shared/components/BaseComponent';
-import {Form, Tcomb, SignupForm, SignupFormOptions} from 'shared/utils/forms';
-import {isEmpty, clone, omit} from 'lodash';
-import classNames from 'classnames';
+import React, { PropTypes } from 'react'
+import BaseComponent from 'shared/components/BaseComponent'
+import { Form, SignupForm, SignupFormOptions } from 'shared/utils/forms'
+import { isEmpty, clone, omit } from 'lodash'
+import classNames from 'classnames'
 
-class Signup extends BaseComponent{
-  displayName: 'Signup Component'
+export default class Signup extends BaseComponent {
 
-  constructor(props, context) {
-    super(props);
-    this.state = {value: {email: '', password: '', passwordCheck: '', tos: false}, options: SignupFormOptions, submited: false};
-
-    this._bind('handleSubmit', 'validation', 'handleChange');
-  }
-
-  handleChange(value, path) {
-    const pass = this.refs.form.getComponent('password');
-    const check = this.refs.form.getComponent('passwordCheck');
-
-    if (path[0] === 'passwordCheck') {
-      if (pass.state.value !== check.state.value) {
-        check.setState({hasError: true});
-      }
-      else {
-        check.setState({hasError: false});
-      }
+  constructor (props) {
+    super(props)
+    this.state = {
+      value: {
+        email: '',
+        password: '',
+        passwordCheck: '',
+        tos: false
+      },
+      options: SignupFormOptions,
+      submited: false,
+      ok: false
     }
 
-    if (path[0] === 'password') {
-      if (pass.state.value.length < 6) {
-        pass.setState({hasError: true});
-      }
-      else {
-        pass.setState({hasError: false});
-      }
-    }
+    this._bind('handleSubmit', 'validation', 'handleChange')
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
+  static propTypes = {
+    submit: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired,
+    signup: PropTypes.object.isRequired
+  }
 
-    let value = this.refs.form.getValue();
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
 
-    if (value && value.tos === true && (value.password === value.passwordCheck)) {
-      let saved = clone(value);
-      this.setState({value: saved});
+  handleChange (value, path) {
+    const pass = this.refs.form.getComponent('password')
+    const check = this.refs.form.getComponent('passwordCheck')
 
-      saved = omit(saved, 'password');
-      saved = omit(saved, 'passwordCheck');
-      this.props.flux.getActions('signup').submit(value);
-      this.setState({submited: true});
+    if (path[0] === 'passwordCheck')
+      if (pass.state.value !== check.state.value)
+        check.setState({ hasError: true })
+      else
+        check.setState({ hasError: false })
+
+    if (path[0] === 'password')
+      if (pass.state.value.length < 6)
+        pass.setState({ hasError: true })
+      else
+        pass.setState({ hasError: false })
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+    const value = this.refs.form.getValue()
+    if (value && value.tos === true &&
+      (value.password === value.passwordCheck)) {
+      let saved = clone(value)
+      this.setState({ value: saved })
+      saved = omit(saved, 'password')
+      saved = omit(saved, 'passwordCheck')
+      this.setState({ submited: true })
+      this.clearFormErrors()
+
+      setTimeout(() => this.props.submit(value), 1000)
     }
 
   }
 
-  clearFormErrors() {
-    let options = clone(this.state.options);
-    options.fields = clone(options.fields);
+  clearFormErrors () {
+    let options = clone(this.state.options)
+    options.fields = clone(options.fields)
 
     for (let key in options.fields) {
-      options.fields[key] = clone(options.fields[key]);
-      if (options.fields[key].hasOwnProperty('hasError')) {
-        options.fields[key].hasError = false;
-      }
+      options.fields[key] = clone(options.fields[key])
+      if (options.fields[key].hasOwnProperty('hasError'))
+        options.fields[key].hasError = false
     }
-    this.setState({options: options});
+    this.setState({ options: options })
   }
 
-  validation(errors) {
+  validation (errors) {
     if (!isEmpty(errors)) {
-      let options = clone(this.state.options);
-      options.fields = clone(options.fields);
+      let options = clone(this.state.options)
+      options.fields = clone(options.fields)
 
       errors.map(function (err) {
         if (err.code === 'invalid') {
-          options.fields[err.field] = clone(options.fields[err.field]);
-          options.fields[err.field] = {hasError: true, error: err.message};
+          options.fields[err.field] = clone(options.fields[err.field])
+          options.fields[err.field] = { hasError: true, error: err.message }
         }
         else {
-          options.fields[err.path] = clone(options.fields[err.path]);
-          options.fields[err.path] = {hasError: true, error: err.message};
+          options.fields[err.path] = clone(options.fields[err.path])
+          options.fields[err.path] = { hasError: true, error: err.message }
         }
-      });
+      })
 
-      this.setState({options: options});
-    }
-
-    this.setState({submited: false});
-  }
-
-  checkSubmited(response) {
-    if (!isEmpty(response)) {
-      this.setState({submited: true});
-
-      setTimeout(() => this.context.router.transitionTo('/'), 1000);
-
+      this.setState({ submited: false })
+      this.setState({ options: options })
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.validation(nextProps.errors);
-    this.checkSubmited(nextProps.response);   // got token string
+  checkSubmited (response) {
+    if (response && response.token) {
+      setTimeout(() => this.setState({ ok: true }), 300)
+      setTimeout(() => this.setState({ submited: true }), 300)
+      setTimeout(() => this.props.save(response.token), 100)
+      setTimeout(() => this.context.router.transitionTo('/'), 1000)
+    } else
+      this.setState({ submited: false })
   }
 
-  render() {
-    let Loading = this.state.submited ? classNames('ui', 'form', 'segment', 'loading') : classNames('ui', 'form', 'segment');
+  componentWillReceiveProps (nextProps) {
+    this.validation(nextProps.signup.errors)
+    this.checkSubmited(nextProps.signup.response)
+  }
+
+  render () {
+    let Loading = this.state.submited && !(this.state.ok) ?
+      classNames('ui', 'form', 'segment', 'loading') :
+      classNames('ui', 'form', 'segment')
 
     return (
       <main className="ui two column stackable page grid">
@@ -120,32 +134,31 @@ class Signup extends BaseComponent{
           </div>
         </div>
         <div className="column">
-          <form className={Loading} action="/auth/register" method="post" onSubmit={this.handleSubmit}>
-            <Form ref="form" type={SignupForm} options={this.state.options} value={this.state.value} onChange={this.handleChange} />
+          <form
+            className={Loading}
+            action="/auth/register"
+            method="post"
+            onSubmit={this.handleSubmit}
+          >
+            <Form
+              ref="form"
+              type={SignupForm}
+              options={this.state.options}
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
             <div className="ui hidden divider" />
-            <button type="submit" className="ui teal labeled icon huge button" disabled={this.state.submited}>
+            <button
+              type="submit"
+              className="ui teal labeled icon huge button"
+              disabled={this.state.submited && this.state.ok}
+            >
               Register
               <i className="add icon"></i>
             </button>
           </form>
         </div>
       </main>
-    );
+    )
   }
 }
-
-Signup.propTypes = {
-  errors: React.PropTypes.object
-};
-
-Signup.defaultTypes = {
-  errors: {}
-};
-
-Signup.contextTypes = {
-  router: React.PropTypes.func.isRequired
-};
-
-
-
-export default Signup;

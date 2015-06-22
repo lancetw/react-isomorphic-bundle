@@ -1,26 +1,22 @@
-import {Store} from 'flummox';
-import debug from 'debug';
-import {isArray} from 'lodash';
+import { CHANGE_PASS_USER_STARTED, CHANGE_PASS_USER_COMPLETED,
+  CHANGE_PASS_USER_FAILED } from 'shared/constants/ActionTypes'
 
-export default class UserStore extends Store {
-  constructor({userActions}) {
-    super();
+const initialState = {
+  errors: {},
+  info: {}
+}
 
-    this.state = {errors: [], response: {}};
-    this.register(userActions.changePassword, this.getErrors);
-  }
+const actionsMap = {
+  [CHANGE_PASS_USER_STARTED]: () => (initialState),
+  [CHANGE_PASS_USER_COMPLETED]: (state, action) =>
+    ({ info: action.info }),
+  [CHANGE_PASS_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors })
+}
 
-  getErrors(errors) {
-    if (!errors.email) {
-      if (isArray(errors)) {
-        this.setState({errors: errors, response: {}});
-      }
-      else {
-        this.setState({errors: errors.errors, response: {}});
-      }
-    }
-    else {
-      this.setState({errors: [], response: errors});
-    }
-  }
+export default function user (state = initialState, action) {
+  const reduceFn = actionsMap[action.type]
+  if (!reduceFn) return state
+
+  return Object.assign({}, state, reduceFn(state, action))
 }

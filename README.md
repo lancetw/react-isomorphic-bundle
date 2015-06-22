@@ -8,7 +8,7 @@
 
 Working in process
 
-Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [flummox](https://github.com/acdlite/flummox).
+Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
 
 ```
 io.js only
@@ -50,6 +50,8 @@ $ npm install
 - [x] Restful API with JWT
 - [x] Change password
 - [x] Create post
+- [x] react-router upgrade to 1.0.0beta2
+- [x] flummox change to redux...!
 - [ ] Posts with Location/Category/Timeline view
 - [ ] more ...
 
@@ -57,6 +59,7 @@ $ npm install
 
 ## You May Be Interested In...
 
+* [redux](https://github.com/gaearon/redux)
 * [flummox](https://github.com/acdlite/flummox)
 * [react-router](https://github.com/rackt/react-router)
 * [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)

@@ -1,26 +1,42 @@
-import React from 'react';
-import Wall from './WallComponent';
-import FluxComponent from 'flummox/component';
+import React, { PropTypes } from 'react'
+import Wall from './WallComponent'
+import { connect } from 'redux/react'
+import { showList } from '../actions/PostActions'
+import DocumentTitle from './addon/document-title'
 
-const WallHandler = class WallHandler extends React.Component{
-  displayName: 'Wall'
+@connect(state => ({
+  post: state.post
+}))
+export default class WallHandler extends React.Component {
 
-  static async routerWillRun({flux, state}) {
-    const pagesActions = flux.getActions('page');
-    return await pagesActions.setTitle('Wall');
+  constructor (props) {
+    super(props)
   }
 
-  componentWillMount() {
-    this.props.flux.getActions('post').list();
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
   }
 
-  render() {
+  static contextTypes = {
+    redux: PropTypes.object.isRequired
+  }
+
+  static async routerWillRun ({ dispatch }) {
+    return await dispatch(showList())
+  }
+
+  componentWillMount () {
+    const dispatch = this.context.redux.dispatch
+    setTimeout(() => dispatch(showList()), 0)
+  }
+
+  render () {
     return (
-      <FluxComponent connectToStores={['user']}>
-        <Wall />
-      </FluxComponent>
-    );
+      <DocumentTitle title='All events for you'>
+        <Wall
+          {...this.props}
+        />
+      </DocumentTitle>
+    )
   }
-};
-
-export default WallHandler;
+}

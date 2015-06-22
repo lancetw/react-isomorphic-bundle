@@ -1,22 +1,29 @@
-import React from 'react';
-import FluxComponent from 'flummox/component';
-import Home from './HomeComponent';
+import React, { PropTypes } from 'react'
+import Home from './HomeComponent'
+import { bindActionCreators } from 'redux'
+import { connect } from 'redux/react'
+import * as AuthActions from '../actions/AuthActions'
+import DocumentTitle from './addon/document-title'
 
-class HomeHandler extends React.Component {
-  displayName: 'Home'
+@connect(state => ({
+  auth: state.auth
+}))
+export default class HomeHandler extends React.Component {
 
-  static async routerWillRun({flux, state}) {
-    const pagesActions = flux.getActions('page');
-    return await pagesActions.setTitle('Homepage');
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
   }
 
-  render() {
+  render () {
+    const { dispatch } = this.props
     return (
-      <FluxComponent connectToStores={['auth']}>
-        <Home />
-      </FluxComponent>
-    );
+      <DocumentTitle title='Home'>
+        <Home
+          {...bindActionCreators(AuthActions, dispatch)}
+          {...this.props}
+        />
+      </DocumentTitle>
+    )
   }
-}
 
-export default HomeHandler;
+}

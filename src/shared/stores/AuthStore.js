@@ -1,55 +1,35 @@
-import {Store} from 'flummox';
-import {isEmpty} from 'lodash';
-import debug from 'debug';
+import debug from 'debug'
+import {
+  AUTH_USER_STARTED,
+  AUTH_USER_COMPLETED,
+  AUTH_USER_FAILED,
+  REVOKE_USER_STARTED,
+  REVOKE_USER_COMPLETED,
+  REVOKE_USER_FAILED
+} from 'shared/constants/ActionTypes'
 
-export default class AuthStore extends Store {
-  constructor({authActions}) {
-    super();
+const initialState = {
+  errors: {},
+  token: null,
+  isAuthenticated: false
+}
 
-    this.state = {token: ''};
-    this.register(authActions.send, this.save);
-    this.register(authActions.revoke, this.reset);
-    this.register(authActions.sync, this.load);
-  }
+const actionsMap = {
+  [AUTH_USER_STARTED]: () => (initialState),
+  [AUTH_USER_COMPLETED]: (state, action) =>
+    ({ token: action.token, isAuthenticated: !!action.token }),
+  [AUTH_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors, isAuthenticated: false }),
+  [REVOKE_USER_COMPLETED]: (state, action) =>
+    ({ token: null, isAuthenticated: false }),
+  [REVOKE_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors })
+}
 
-  save(payload) {
-    const token = payload.token;
-    if (typeof localStorage !== 'undefined' && localStorage !== null) {
-      if (token && token !== 'undefined') {
-        localStorage.setItem('token', token);
-      }
-    }
+export default function auth (state = initialState, action) {
+  debug('dev')('%c ' + action.type + ' ', 'background: black; color: lime')
+  const reduceFn = actionsMap[action.type]
+  if (!reduceFn) return state
 
-    this.setState({token: token});
-  }
-
-  load(token) {
-    if (!token) {
-      token = this.state.token;
-
-      if (typeof localStorage !== 'undefined' && localStorage !== null) {
-        token = localStorage.getItem('token');
-      }
-    }
-    else {
-      if (typeof localStorage !== 'undefined' && localStorage !== null) {
-        if (token && token !== 'undefined') {
-          localStorage.setItem('token', token);
-        }
-      }
-    }
-
-    this.setState({token: token});
-
-    return token;
-  }
-
-  reset() {
-    if (typeof localStorage !== 'undefined' && localStorage !== null) {
-      localStorage.setItem('token', '');
-    }
-
-    this.setState({token: ''});
-  }
-
+  return Object.assign({}, state, reduceFn(state, action))
 }

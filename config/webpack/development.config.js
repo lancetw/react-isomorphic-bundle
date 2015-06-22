@@ -92,7 +92,7 @@ export default {
         },
         {
           test: /\.jsx?$/,
-          loader: 'react-hot!babel?optional[]=runtime&stage=1',
+          loader: 'react-hot!babel?optional[]=runtime&stage=0',
           exclude: (/node_modules|styles/)
         },
         { test: /\.css$/, loader: 'style!css?sourceMap&importLoaders=1!postcss' },

@@ -1,41 +1,38 @@
-import React from 'react/addons';
-import {RouteHandler} from 'react-router/build/npm/lib';
-import Header from './HeaderHandler';
+import React, { PropTypes } from 'react/addons'
+import Header from './HeaderHandler'
 
-const {CSSTransitionGroup} = React.addons;
+const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
-  require('css/ui/base');
-  require('css/app');
-  require('css/screen');
+  require('css/ui/base')
+  require('css/app')
+  require('css/screen')
 }
 
-class AppHandler extends React.Component {
-  displayName: 'AppHandler'
+export default class AppHandler extends React.Component {
 
-  static willTransitionTo(transition) {
-    const { path } = transition;
-
-    if (path !== '/' && path.endsWith('/')) {
-      transition.redirect(path.substring(0, path.length - 1));
-    }
+  constructor (props) {
+    super(props)
   }
 
-  componentDidMount() {
-    require('fastclick').attach(document.body);
+  static propTypes = {
+    children: PropTypes.any
   }
 
-  render() {
+  componentDidMount () {
+    require('fastclick').attach(document.body)
+  }
+
+  render () {
     return (
       <div>
         <Header/>
         <CSSTransitionGroup transitionName="RouteTransition">
-          <RouteHandler {...this.props} key={this.props.pathname} />
+          {this.props.children}
         </CSSTransitionGroup>
       </div>
-    );
+    )
   }
 }
 
-export default AppHandler;
 

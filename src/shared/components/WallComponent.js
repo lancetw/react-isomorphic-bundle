@@ -1,33 +1,24 @@
-import React from 'react';
-import BaseComponent from 'shared/components/BaseComponent';
-import {isEmpty} from 'lodash';
-import Cards from 'shared/components/wall/PostCards';
-import FluxComponent from 'flummox/component';
+import React, { PropTypes } from 'react'
+import Cards from 'shared/components/wall/PostCards'
 
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+export default class Wall extends React.Component {
 
-class Wall extends BaseComponent{
-  displayName: 'Wall Component'
-
-  constructor(props, context) {
-    super(props);
-    this.state = {};
-
-    //this._bind();
+  constructor (props) {
+    super(props)
   }
 
-  render() {
+  static propTypes = {
+    post: PropTypes.object.isRequired
+  }
 
+
+  render () {
     return (
       <main className="ui stackable page centered grid">
         <div className="column">
-          <FluxComponent connectToStores={['post']}>
-            <Cards />
-          </FluxComponent>
+          <Cards posts={this.props.post.posts} />
         </div>
       </main>
-    );
+    )
   }
 }
-
-export default Wall;

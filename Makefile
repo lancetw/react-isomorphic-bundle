@@ -97,6 +97,3 @@ webpack-test: storage
 
 public/js/index.js: $(SRC_JS)
 	@NODE_ENV=production $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
-
-react-router:
-	cd node_modules/react-router && npm run build-npm

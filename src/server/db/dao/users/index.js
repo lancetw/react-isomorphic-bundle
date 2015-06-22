@@ -1,1 +1,1 @@
-module.exports = require('./usersProvider');
+module.exports = require('./usersProvider')

@@ -1,42 +1,34 @@
-import {Store} from 'flummox';
-import debug from 'debug';
-import {isArray} from 'lodash';
+import {
+  CREATE_POST_STARTED,
+  CREATE_POST_COMPLETED,
+  CREATE_POST_FAILED,
+  LIST_POST_STARTED,
+  LIST_POST_COMPLETED,
+  LIST_POST_FAILED
+} from 'shared/constants/ActionTypes'
 
-export default class PostStore extends Store {
-  constructor({postActions}) {
-    super();
+const initialState = {
+  errors: {},
+  posts: [],
+  content: {}
+}
 
-    this.state = {errors: [], response: {}, posts: []};
-    this.register(postActions.submit, this.setErrors);
-    this.register(postActions.list, this.setList);
-  }
+const actionsMap = {
+  [CREATE_POST_STARTED]: () => (initialState),
+  [CREATE_POST_COMPLETED]: (state, action) =>
+    ({ content: action.content }),
+  [CREATE_POST_FAILED]: (state, action) =>
+    ({ errors: action.errors }),
+  [LIST_POST_STARTED]: () => (initialState),
+  [LIST_POST_COMPLETED]: (state, action) =>
+    ({ posts: action.posts }),
+  [LIST_POST_FAILED]: (state, action) =>
+    ({ errors: action.errors })
+}
 
-  setErrors(errors) {
-    if (!errors.id) {
-      if (isArray(errors)) {
-        this.setState({errors: errors, response: {}});
-      }
-      else {
-        this.setState({errors: errors.errors, response: {}});
-      }
-    }
-    else {
-      if (isArray(errors)) {
-        this.setState({errors: [], response: {}, posts: errors});
-      }
-      else {
-        this.setState({errors: [], response: errors});
-      }
+export default function post (state = initialState, action) {
+  const reduceFn = actionsMap[action.type]
+  if (!reduceFn) return state
 
-    }
-  }
-
-  setList(errors) {
-    if (isArray(errors)) {
-      this.setState({errors: [], response: {}, posts: errors});
-    }
-    else {
-      this.setState({errors: [], response: errors});
-    }
-  }
+  return Object.assign({}, state, reduceFn(state, action))
 }

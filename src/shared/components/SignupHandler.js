@@ -1,26 +1,32 @@
-import React from 'react';
-import Signup from './SignupComponent';
-import FluxComponent from 'flummox/component';
+import React, { PropTypes } from 'react'
+import Signup from './SignupComponent'
+import { bindActionCreators } from 'redux'
+import { connect } from 'redux/react'
+import * as SignupActions from '../actions/SignupActions'
+import * as AuthActions from '../actions/AuthActions'
+import DocumentTitle from './addon/document-title'
 
-class SignupHandler extends React.Component{
-  displayName: 'Signup'
+@connect(state => ({
+  signup: state.signup,
+  auth: state.auth
+}))
+export default class SignupHandler extends React.Component {
 
-  /*constructor(props) {
-    super(props);
-  }*/
-
-  static async routerWillRun({flux, state}) {
-    const pagesActions = flux.getActions('page');
-    return await pagesActions.setTitle('Sign Up');
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
   }
 
-  render() {
+  render () {
+    const { dispatch } = this.props
     return (
-      <FluxComponent connectToStores={['signup']}>
-        <Signup />
-      </FluxComponent>
-    );
+      <DocumentTitle title='Sign up'>
+        <Signup
+          {...bindActionCreators(SignupActions, dispatch)}
+          {...bindActionCreators(AuthActions, dispatch)}
+          {...this.props}
+        />
+      </DocumentTitle>
+    )
   }
-}
 
-export default SignupHandler;
+}

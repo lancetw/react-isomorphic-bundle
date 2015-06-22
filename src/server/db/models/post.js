@@ -1,5 +1,4 @@
-/*eslint-disable camelcase, new-cap */
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, Sequelize) {
   return sequelize.define('posts', {
@@ -78,13 +77,13 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.STRING
     },
     lat: {
-      validate: {min: -90, max: 90},
+      validate: { min: -90, max: 90 },
       allowNull: true,
       defaultValue: null,
       type: Sequelize.DOUBLE.UNSIGNED
     },
     lng: {
-      validate: {min: -180, max: 180},
+      validate: { min: -180, max: 180 },
       allowNull: true,
       defaultValue: null,
       type: Sequelize.DOUBLE.UNSIGNED
@@ -129,19 +128,20 @@ module.exports = function (sequelize, Sequelize) {
     },
     validate: {
       bothCoordsOrNone: function () {
-        if ((this.latitude === null) !== (this.longitude === null)) {
-          throw new Error('Require either both latitude and longitude or neither');
-        }
+        if ((this.latitude === null) !== (this.longitude === null))
+          throw new Error(
+            'Require either both latitude and longitude or neither'
+          )
       }
     },
     instanceMethods: {
       toJSON: function () {
-        var values = this.get();
-        delete values.created_at;
-        delete values.updated_at;
-        delete values.deleted_at;
-        return values;
+        let values = this.get()
+        delete values.created_at
+        delete values.updated_at
+        delete values.deleted_at
+        return values
       }
     }
-  });
-};
+  })
+}

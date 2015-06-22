@@ -1,26 +1,18 @@
-import React from 'react';
-import Header from './HeaderComponent';
-import FluxComponent from 'flummox/component';
+import React from 'react'
+import Header from './HeaderComponent'
+import { connect } from 'redux/react'
 
-class HeaderHandler extends React.Component{
-  displayName: 'Header'
+@connect(state => ({
+  auth: state.auth
+}))
+export default class HeaderHandler extends React.Component {
 
-  /*constructor(props) {
-    super(props);
-  }*/
-
-  render() {
+  render () {
     return (
-      <FluxComponent connectToStores={['auth']}>
-        <Header />
-      </FluxComponent>
-    );
+      <Header
+        {...this.props}
+      />
+    )
   }
 }
 
-HeaderHandler.contextTypes = {
-  router: React.PropTypes.func.isRequired,
-  flux: React.PropTypes.object.isRequired
-};
-
-export default HeaderHandler;

@@ -1,33 +1,40 @@
-import React from 'react';
-import BaseComponent from 'shared/components/BaseComponent';
-import {Link} from 'react-router/build/npm/lib';
+import React, { PropTypes } from 'react'
+import BaseComponent from 'shared/components/BaseComponent'
 
-class Logout extends BaseComponent{
-  displayName: 'Log out Component'
+export default class Logout extends BaseComponent {
 
-  componentDidMount() {
-    const authActions = this.props.flux.getActions('auth');
-    authActions.revoke(this.props.token);
-
-    setTimeout(() => this.context.router.transitionTo('/auth/logout'), 0);
+  constructor (props) {
+    super(props)
+    this.state = { isClient: false }
   }
 
-  render() {
+  static propTypes = {
+    logout: PropTypes.func.isRequired
+  }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
+  componentDidMount () {
+    this.setState({ isClient: true })
+
+    setTimeout(() => this.props.logout(), 1000)
+    setTimeout(() => this.context.router.transitionTo('/'), 2000)
+  }
+
+  render () {
+    const msg = this.state.isClient
+      ? <div>You are now logged out.</div>
+      : <div>If You want to log out,
+          <a href="/auth/logout">click here.</a>
+        </div>
     return (
       <main className="ui stackable page grid">
         <div className="column">
-          <div className="segment">
-            If You want to log out, <Link to="/auth/logout">click here.</Link>
-          </div>
+          { msg }
         </div>
       </main>
-    );
+    )
   }
 }
-
-Logout.contextTypes = {
-  router: React.PropTypes.func.isRequired
-};
-
-
-export default Logout;

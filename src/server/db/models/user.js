@@ -1,5 +1,4 @@
-/*eslint-disable camelcase, new-cap */
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, Sequelize) {
   return sequelize.define('users', {
@@ -36,16 +35,16 @@ module.exports = function (sequelize, Sequelize) {
     },
     instanceMethods: {
       toJSON: function () {
-        var values = this.get();
-        delete values.id;
-        delete values.passwd;
-        delete values.password;
-        delete values.created_at;
-        delete values.updated_at;
-        delete values.deleted_at;
-        delete values.status;
-        return values;
+        let values = this.get()
+        delete values.id
+        delete values.passwd
+        delete values.password
+        delete values.created_at
+        delete values.updated_at
+        delete values.deleted_at
+        delete values.status
+        return values
       }
     }
-  });
-};
+  })
+}
