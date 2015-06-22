@@ -8,6 +8,8 @@
 
 Working in process
 
+DEMO: http://react.deliverwork.co
+
 Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
 
 ```
