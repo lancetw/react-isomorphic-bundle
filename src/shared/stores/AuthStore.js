@@ -5,7 +5,9 @@ import {
   AUTH_USER_FAILED,
   REVOKE_USER_STARTED,
   REVOKE_USER_COMPLETED,
-  REVOKE_USER_FAILED
+  REVOKE_USER_FAILED,
+  SYNC_SERVER_USER_COMPLETED,
+  SYNC_CLIENT_USER_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
@@ -23,7 +25,29 @@ const actionsMap = {
   [REVOKE_USER_COMPLETED]: (state, action) =>
     ({ token: null, isAuthenticated: false }),
   [REVOKE_USER_FAILED]: (state, action) =>
-    ({ errors: action.errors })
+    ({ errors: action.errors }),
+  [SYNC_CLIENT_USER_COMPLETED]: (state, action) =>
+    ({
+      token:
+        typeof action.token !== 'undefined'
+        ? action.token
+        : state.token,
+      isAuthenticated:
+        typeof action.token !== 'undefined'
+        ? !!action.token
+        : state.isAuthenticated
+    }),
+  [SYNC_SERVER_USER_COMPLETED]: (state, action) =>
+    ({
+      token:
+        typeof action.token !== 'undefined'
+        ? action.token
+        : state.token,
+      isAuthenticated:
+        typeof action.token !== 'undefined'
+        ? !!action.token
+        : state.isAuthenticated
+    })
 }
 
 export default function auth (state = initialState, action) {

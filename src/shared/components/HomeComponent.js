@@ -8,12 +8,12 @@ export default class HomeComponent extends BaseComponent {
   }
 
   static propTypes = {
-    load: PropTypes.func.isRequired,
+    sync: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   }
 
   componentWillMount () {
-    this.props.load()
+    this.props.sync()
   }
 
   render () {

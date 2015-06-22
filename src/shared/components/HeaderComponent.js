@@ -8,7 +8,12 @@ export default class Header extends React.Component {
   }
 
   static propTypes = {
+    sync: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
+  }
+
+  componentWillMount () {
+    this.props.sync()
   }
 
   render () {

@@ -5,7 +5,9 @@ import {
   AUTH_USER_COMPLETED,
   AUTH_USER_FAILED,
   REVOKE_USER_COMPLETED,
-  REVOKE_USER_FAILED
+  REVOKE_USER_FAILED,
+  SYNC_SERVER_USER_COMPLETED,
+  SYNC_CLIENT_USER_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 export function save (token) {
@@ -13,7 +15,6 @@ export function save (token) {
     dispatch({ type: AUTH_USER_STARTED })
     try {
       setToken(token)
-
       return dispatch({
         type: AUTH_USER_COMPLETED,
         token: token
@@ -27,21 +28,18 @@ export function save (token) {
   }
 }
 
-export function load () {
+export function sync (token) {
   return async dispatch => {
-    dispatch({ type: AUTH_USER_STARTED })
-    try {
-      const token = getToken()
+    if (typeof document !== 'undefined')
       return dispatch({
-        type: AUTH_USER_COMPLETED,
+        type: SYNC_CLIENT_USER_COMPLETED,
+        token: getToken()
+      })
+    else
+      return dispatch({
+        type: SYNC_SERVER_USER_COMPLETED,
         token: token
       })
-    } catch (err) {
-      return dispatch({
-        type: AUTH_USER_FAILED,
-        errors: err
-      })
-    }
   }
 }
 

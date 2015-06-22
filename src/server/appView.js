@@ -31,8 +31,8 @@ export default function (app) {
       const location = new Location(this.path, this.query)
 
       // save session token to store
-      if (this.session.token)
-        redux.dispatch(AuthActions.save(this.session.token))
+      if (this.session.token && this.session.token !== null)
+        redux.dispatch(AuthActions.sync(this.session.token))
 
       let appString, assets, title
 
