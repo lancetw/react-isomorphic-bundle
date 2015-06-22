@@ -1,6 +1,8 @@
-const HOST = '192.168.0.100'
+const HOST = 'localhost'
 const PROTOCOL = 'http'
 const PORT = '3000'
-const LOCAL_PATH = `${PROTOCOL}://${HOST}:${PORT}`
+const LOCAL_PATH = typeof document === 'undefined'
+  ? `${PROTOCOL}://${HOST}:${PORT}`
+  : ''
 
 export default LOCAL_PATH
