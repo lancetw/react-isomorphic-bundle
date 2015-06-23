@@ -9,8 +9,11 @@ import DocumentTitle from './addon/document-title'
 }))
 export default class WallHandler extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
+
+    const dispatch = context.redux.dispatch
+    dispatch(showList())
   }
 
   static propTypes = {
@@ -23,11 +26,6 @@ export default class WallHandler extends React.Component {
 
   static async routerWillRun ({ dispatch }) {
     return await dispatch(showList())
-  }
-
-  componentWillMount () {
-    const dispatch = this.context.redux.dispatch
-    setTimeout(() => dispatch(showList()), 0)
   }
 
   render () {
