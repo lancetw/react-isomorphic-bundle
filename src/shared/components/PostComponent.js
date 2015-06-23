@@ -4,6 +4,7 @@ import { Form, PostForm, PostFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment'
+const { CSSTransitionGroup } = React.addons
 
 export default class Post extends BaseComponent {
 
@@ -80,7 +81,6 @@ export default class Post extends BaseComponent {
           options.fields[err.path] = { hasError: true, error: err.message }
         }
       })
-
       this.setState({ submited: false })
       this.setState({ options: options })
     }
@@ -103,10 +103,10 @@ export default class Post extends BaseComponent {
   }
 
   render () {
-    let Loading = this.state.submited &&
-      !this.state.updated ?
-        classNames('ui', 'form', 'segment', 'loading') :
-        classNames('ui', 'form', 'segment')
+    let Loading = this.state.submited
+      && !this.state.updated
+      ? classNames('ui', 'form', 'segment', 'loading')
+      : classNames('ui', 'form', 'segment')
 
     let Message = this.state.updated ?
     (
@@ -121,7 +121,9 @@ export default class Post extends BaseComponent {
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
-          {Message}
+          <CSSTransitionGroup transitionName="MessageTransition">
+            {Message}
+          </CSSTransitionGroup>
           <form
             className={Loading}
             action="/posts/new"

@@ -46,9 +46,12 @@ export default class ChangePassword extends BaseComponent {
     evt.preventDefault()
 
     let value = this.refs.form.getValue()
-    if (value && (value.password === value.passwordCheck)) {
-      this.setState({ submited: true })
+
+    if (value
+        && (value.password === value.passwordCheck)
+      ) {
       this.clearFormErrors()
+      this.setState({ submited: true })
 
       setTimeout(() => this.props.changePassword(value), 1000)
     }
@@ -81,11 +84,9 @@ export default class ChangePassword extends BaseComponent {
           options.fields[err.path] = { hasError: true, error: err.message }
         }
       })
-
+      this.setState({ submited: false })
       this.setState({ options: options })
     }
-
-    this.setState({ submited: false })
   }
 
   checkSubmited (info) {
@@ -101,15 +102,11 @@ export default class ChangePassword extends BaseComponent {
     this.checkSubmited(nextProps.user.info)
   }
 
-  shouldComponentUpdate () {
-    setTimeout(() => this.setState({ updated: false, submited: false }), 6000)
-    return true
-  }
-
   render () {
-    let Loading = this.state.submited && !this.state.updated ?
-      classNames('ui', 'form', 'segment', 'loading') :
-      classNames('ui', 'form', 'segment')
+    let Loading = this.state.submited
+      && !this.state.updated
+      ? classNames('ui', 'form', 'segment', 'loading')
+      : classNames('ui', 'form', 'segment')
 
     let Message = this.state.updated ?
     (
