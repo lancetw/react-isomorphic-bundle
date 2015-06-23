@@ -1,5 +1,4 @@
 // copy from flummox
-import debug from 'debug'
 
 export default async function runStaticMethod
   (components, methodName, ...args) {

@@ -90,10 +90,10 @@ webpack-dev:
 webpack-server: $(LIB_JS)
 	node ./webpack/server.js
 
-webpack: public/js/index.js
+webpack: public/assets
 
 webpack-test: storage
 	@NODE_ENV=test $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
 
-public/js/index.js: $(SRC_JS)
+public/assets: $(SRC_JS)
 	@NODE_ENV=production $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js

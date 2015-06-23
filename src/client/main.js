@@ -10,10 +10,7 @@ import BrowserHistory from 'react-router/lib/BrowserHistory'
 import runStaticMethod from 'shared/utils/runStaticMethod'
 import url from 'url'
 
-if (process.env.NODE_ENV === 'development') {
-  require('react-a11y')(React)
-  require('debug').enable('dev,koa')
-}
+require('react-a11y')(React)
 
 const initialState = window.STATE_FROM_SERVER   // no data
 const redux = createRedux(stores, initialState)

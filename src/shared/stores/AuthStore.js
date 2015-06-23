@@ -1,4 +1,3 @@
-import debug from 'debug'
 import {
   AUTH_USER_STARTED,
   AUTH_USER_COMPLETED,
@@ -51,7 +50,7 @@ const actionsMap = {
 }
 
 export default function auth (state = initialState, action) {
-  debug('dev')('%c ' + action.type + ' ', 'background: black; color: lime')
+  //console.log('%c ' + action.type + ' ', 'background: black; color: lime')
   const reduceFn = actionsMap[action.type]
   if (!reduceFn) return state
 

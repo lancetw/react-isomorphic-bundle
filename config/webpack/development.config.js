@@ -5,7 +5,6 @@ import path from 'path';
 import {isArray} from 'lodash';
 import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
-
 import bemLinter from 'postcss-bem-linter';
 import logWarnings from 'postcss-log-warnings';
 import nested from 'postcss-nested';
