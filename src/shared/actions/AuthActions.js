@@ -7,7 +7,10 @@ import {
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
   SYNC_SERVER_USER_COMPLETED,
-  SYNC_CLIENT_USER_COMPLETED
+  SYNC_CLIENT_USER_COMPLETED,
+  CHECK_TOKEN_STARTED,
+  CHECK_TOKEN_COMPLETED,
+  CHECK_TOKEN_FAILED
 } from 'shared/constants/ActionTypes'
 
 export function save (token) {
@@ -102,6 +105,28 @@ export function getToken () {
   return token
 }
 
+export function checkToken () {
+  return async dispatch => {
+    dispatch({ type: CHECK_TOKEN_STARTED })
+    try {
+      const res = await verify(getToken())
+      if (res.response)
+        return dispatch({
+          type: CHECK_TOKEN_COMPLETED,
+          verified: !!res.response
+        })
+      else
+        throw 'verification failed'
+
+    } catch (err) {
+      return dispatch({
+        type: CHECK_TOKEN_FAILED,
+        errors: err
+      })
+    }
+  }
+}
+
 export function clearToken () {
   if (typeof localStorage !== 'undefined'
       && localStorage !== null)
@@ -114,6 +139,21 @@ export async function auth (form) {
       .post('/api/v1/login')
       .set('Accept', 'application/json')
       .auth(form.email, form.password)
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}
+
+export async function verify (token) {
+  return new Promise((resolve, reject) => {
+    request
+      .post('/auth/token/verify')
+      .set('Accept', 'application/json')
+      .send({ token: token })
       .end(function (err, res) {
         if (!err && res.body)
           resolve(res.body)

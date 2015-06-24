@@ -6,13 +6,17 @@ import {
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
   SYNC_SERVER_USER_COMPLETED,
-  SYNC_CLIENT_USER_COMPLETED
+  SYNC_CLIENT_USER_COMPLETED,
+  CHECK_TOKEN_STARTED,
+  CHECK_TOKEN_COMPLETED,
+  CHECK_TOKEN_FAILED
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
   errors: {},
   token: null,
-  isAuthenticated: false
+  isAuthenticated: false,
+  verified: false
 }
 
 const actionsMap = {
@@ -46,7 +50,13 @@ const actionsMap = {
         typeof action.token !== 'undefined'
         ? !!action.token
         : state.isAuthenticated
-    })
+    }),
+  [CHECK_TOKEN_STARTED]: (state, action) =>
+    ({ verified: false }),
+  [CHECK_TOKEN_COMPLETED]: (state, action) =>
+    ({ verified: true }),
+  [CHECK_TOKEN_FAILED]: (state, action) =>
+    ({ errors: action.errors, verified: false })
 }
 
 export default function auth (state = initialState, action) {

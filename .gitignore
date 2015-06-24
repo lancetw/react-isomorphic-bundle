@@ -40,7 +40,7 @@ meta-*.json
 # SASS
 .sass-cache
 
-public/
+public/assets
 
 lib/
 
