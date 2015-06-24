@@ -160,11 +160,11 @@ router
 router
   .post('/auth/token/verify', function *(next) {
     let body = yield parse(this)
-
     const rule = {
       token: 'string'
     }
     const errors = validate(rule, body)
+
     if (errors) {
       this.status = 400
       this.set('WWW-Authenticate',
@@ -175,8 +175,10 @@ router
 
     try {
       const verified = yield verifyJwt(body.token)
-
-      this.body = { response: verified }
+      if (verified)
+        this.body = { response: true }
+      else
+        this.body = { response: false }
     }
     catch (err) {
       this.status = 401

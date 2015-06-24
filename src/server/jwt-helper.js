@@ -21,14 +21,12 @@ export default function (profile) {
 }
 
 export async function verifyJwt (token) {
-  // Promise should be removed :P
   return new Promise((resolve, reject) => {
     jwt.verify(token, config.jwt.SECRET_OR_KEY, opts, function (err, decoded) {
       if (!err)
-        if (decoded.id)
-          resolve(true)
+        resolve(decoded.id)
       else
-        resolve(false)
+        reject(err)
     })
   })
 }
