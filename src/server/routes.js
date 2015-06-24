@@ -170,7 +170,7 @@ router
       this.set('WWW-Authenticate',
                'JWT realm="users", error="invalid_token", error_description="'
                + JSON.stringify(errors) + '"')
-      this.body = errors
+      this.body = { response: false }
     }
 
     try {
