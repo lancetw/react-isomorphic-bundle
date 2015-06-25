@@ -7,7 +7,6 @@ import {
   REVOKE_USER_FAILED,
   SYNC_SERVER_USER_COMPLETED,
   SYNC_CLIENT_USER_COMPLETED,
-  CHECK_TOKEN_STARTED,
   CHECK_TOKEN_COMPLETED,
   CHECK_TOKEN_FAILED
 } from 'shared/constants/ActionTypes'
@@ -51,8 +50,6 @@ const actionsMap = {
         ? !!action.token
         : state.isAuthenticated
     }),
-  [CHECK_TOKEN_STARTED]: (state, action) =>
-    ({ verified: false }),
   [CHECK_TOKEN_COMPLETED]: (state, action) =>
     ({ verified: true }),
   [CHECK_TOKEN_FAILED]: (state, action) =>

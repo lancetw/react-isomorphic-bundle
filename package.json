@@ -71,6 +71,7 @@
     "isomorphic-fetch": "^2.1.0",
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.0.1",
+    "jwt-decode": "^1.1.1",
     "koa": "^0.21.0",
     "koa-cash": "^1.0.1",
     "koa-compose": "^2.3.0",

@@ -8,10 +8,10 @@ import {
   REVOKE_USER_FAILED,
   SYNC_SERVER_USER_COMPLETED,
   SYNC_CLIENT_USER_COMPLETED,
-  CHECK_TOKEN_STARTED,
   CHECK_TOKEN_COMPLETED,
   CHECK_TOKEN_FAILED
 } from 'shared/constants/ActionTypes'
+import jwtDecode from 'jwt-decode'
 
 export function save (token) {
   return async dispatch => {
@@ -51,7 +51,7 @@ export function login (form) {
     dispatch({ type: AUTH_USER_STARTED })
     try {
       const res = await auth(form)
-      if (!isEmpty(res.token))
+      if (res && res.token)
         return dispatch({
           type: AUTH_USER_COMPLETED,
           token: res.token
@@ -105,15 +105,17 @@ export function getToken () {
   return token
 }
 
-export function checkToken () {
+export function checkToken () {   // just check token expire field
   return async dispatch => {
-    dispatch({ type: CHECK_TOKEN_STARTED })
     try {
-      const res = await verify(getToken())
-      if (res.response)
+      const decoded = jwtDecode(getToken())
+      const now = Math.round(+new Date() / 1000)  // Unix Timestamp
+      const expired = decoded.exp >= now
+
+      if (!expired)
         return dispatch({
           type: CHECK_TOKEN_COMPLETED,
-          verified: !!res.response
+          verified: true
         })
       else
         throw 'verification failed'
@@ -148,12 +150,12 @@ export async function auth (form) {
   })
 }
 
-export async function verify (token) {
+export async function verify () {
   return new Promise((resolve, reject) => {
     request
       .post('/auth/token/verify')
       .set('Accept', 'application/json')
-      .send({ token: token })
+      .send({ token: getToken() })
       .end(function (err, res) {
         if (!err && res.body)
           resolve(res.body)
