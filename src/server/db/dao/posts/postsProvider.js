@@ -30,12 +30,12 @@ exports.load = function *(hid) {
 
 /* eslint-disable camelcase */
 exports.list = function *(offset, limit) {
-  offset = typeof offset !== 'undefined' ? offset : 0
-  limit = typeof limit !== 'undefined' ? limit : 20
+  const _offset = offset || 0
+  const _limit = limit || 20
 
   return yield Post.findAll({
-    offset: offset,
-    limit: limit,
+    offset: _offset,
+    limit: _limit,
     order: [[ 'start_date', 'ASC' ]],
     where: {
       close_date: {

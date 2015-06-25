@@ -15,10 +15,6 @@ export default new Resource('posts', {
   index: function *(next) {
     this.body = yield Post.list(0, 10)
   },
-  // GET /posts/new
-  new: function *(next) {
-    this.body = 'posts'
-  },
   // POST /posts
   create: [ RestAuth, function *(next) {
     let body = yield parse(this)
@@ -46,8 +42,7 @@ export default new Resource('posts', {
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(post)
-    }
-    catch (err) {
+    } catch (err) {
       this.type = 'josn'
       this.status = 200
       this.body = err

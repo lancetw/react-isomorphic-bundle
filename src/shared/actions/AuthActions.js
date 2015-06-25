@@ -57,7 +57,7 @@ export function login (form) {
           token: res.token
         })
       else
-        throw 'no token'
+        throw new Error('no token')
 
     } catch (err) {
       return dispatch({
@@ -77,8 +77,7 @@ export function logout () {
         return dispatch({
           type: REVOKE_USER_COMPLETED
         })
-      } else
-        throw 'revoke error'
+      } else throw new Error('revoke error')
 
     } catch (err) {
       return dispatch({
@@ -118,7 +117,7 @@ export function checkToken () {   // just check token expire field
           verified: true
         })
       else
-        throw 'verification failed'
+        throw new Error('verification failed')
 
     } catch (err) {
       return dispatch({

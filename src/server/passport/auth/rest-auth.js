@@ -12,7 +12,6 @@ export default function *(next) {
     if (err || !user) {
       ctx.status = 401
       ctx.body = {}
-    } else
-      yield* next
+    } else yield* next
   }).call(this, next)
 }

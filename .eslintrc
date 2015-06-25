@@ -1,5 +1,6 @@
 /* http://eslint.org/docs/rules/ */
 {
+  "extends": "eslint-config-airbnb",
   "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true
@@ -12,6 +13,11 @@
     "mocha": true
   },
   "rules": {
+    "padded-blocks": 0,
+    "func-names": 0,
+    "one-var": 0,
+    "block-scoped-var": 0,
+    "no-else-return": 0,
     "camelcase": 2,
     "consistent-return": 2,
     "curly": [2, "multi"],

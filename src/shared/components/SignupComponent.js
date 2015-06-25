@@ -72,9 +72,11 @@ export default class Signup extends BaseComponent {
     options.fields = clone(options.fields)
 
     for (let key in options.fields) {
-      options.fields[key] = clone(options.fields[key])
-      if (options.fields[key].hasOwnProperty('hasError'))
-        options.fields[key].hasError = false
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError'))
+          options.fields[key].hasError = false
+      }
     }
     this.setState({ options: options })
   }
@@ -88,8 +90,7 @@ export default class Signup extends BaseComponent {
         if (err.code === 'invalid') {
           options.fields[err.field] = clone(options.fields[err.field])
           options.fields[err.field] = { hasError: true, error: err.message }
-        }
-        else {
+        } else {
           options.fields[err.path] = clone(options.fields[err.path])
           options.fields[err.path] = { hasError: true, error: err.message }
         }
@@ -106,8 +107,7 @@ export default class Signup extends BaseComponent {
       setTimeout(() => this.setState({ submited: true }), 300)
       setTimeout(() => this.props.save(response.token), 100)
       setTimeout(() => this.context.router.transitionTo('/'), 1000)
-    } else
-      this.setState({ submited: false })
+    } else this.setState({ submited: false })
   }
 
   componentWillReceiveProps (nextProps) {

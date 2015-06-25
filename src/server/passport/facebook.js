@@ -24,7 +24,7 @@ export default passport.use(new FacebookStrategy(
 
     try {
       if (isEmpty(profile.emails) || isEmpty(profile.emails[0].value))
-        throw 'no emails'
+        throw new Error('no emails')
       debug('dev')('profile.emails', profile.emails[0].value)
       const email = profile.emails[0].value
 
@@ -39,22 +39,20 @@ export default passport.use(new FacebookStrategy(
         if (!user)
           try {
             user = yield User.create(profile)
-          }
-          catch (err) {
+          } catch (err) {
             if (err.name === 'SequelizeUniqueConstraintError')
               return yield User.recreate(profile)
             else
-              throw err
+              throw new Error(err)
           }
       }
 
       if (!user)
-        throw 'no user'
+        throw new Error('no user')
       else
         return user
-    }
-    catch (err) {
-      throw err
+    } catch (err) {
+      throw new Error(err)
     }
 
   })

@@ -66,15 +66,14 @@ if (env === 'development') {
     )
   )
 }
-else
-  app.use(
-    mount('/assets',
-      staticCache(
-        path.join(__dirname, '../../public/assets'),
-        cacheOpts
-      )
+else app.use(
+  mount('/assets',
+    staticCache(
+      path.join(__dirname, '../../public/assets'),
+      cacheOpts
     )
   )
+)
 
 app.use(favicon(path.join(__dirname, '../../public/images/favicon.ico')))
 
@@ -86,8 +85,6 @@ app.use(
 )
 
 app.use(facebookAuth.initialize())
-//app.use(facebookAuth.session())
-
 app.use(router.routes())
 
 app.use(mount('/api/v1', services.v1))

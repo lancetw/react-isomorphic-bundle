@@ -57,7 +57,7 @@ const actionsMap = {
 }
 
 export default function auth (state = initialState, action) {
-  //console.log('%c ' + action.type + ' ', 'background: black; color: lime')
+  // console.log('%c ' + action.type + ' ', 'background: black; color: lime')
   const reduceFn = actionsMap[action.type]
   if (!reduceFn) return state
 

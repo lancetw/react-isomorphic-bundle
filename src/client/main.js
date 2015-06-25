@@ -9,6 +9,7 @@ import routes from 'shared/routes'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import runStaticMethod from 'shared/utils/runStaticMethod'
 import url from 'url'
+import { IntlMixin } from 'react-intl'
 
 require('react-a11y')(React)
 
@@ -18,9 +19,12 @@ const redux = createRedux(stores, initialState)
 const history = new BrowserHistory()
 
 React.render((
-  <Provider redux={redux}>
+  <Provider redux={redux} i18n={IntlMixin.getIntlMessage}>
     {() =>
-      <Router children={routes(redux)} history={history} />
+      <Router
+        children={routes(redux)}
+        history={history}
+      />
     }
   </Provider>
   ), document.getElementById('app')

@@ -51,9 +51,11 @@ export default class Login extends BaseComponent {
     options.fields = clone(options.fields)
 
     for (let key in options.fields) {
-      options.fields[key] = clone(options.fields[key])
-      if (options.fields[key].hasOwnProperty('hasError'))
-        options.fields[key].hasError = false
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError'))
+          options.fields[key].hasError = false
+      }
     }
     this.setState({ options: options })
   }
@@ -63,9 +65,11 @@ export default class Login extends BaseComponent {
     options.fields = clone(options.fields)
 
     for (let key in options.fields) {
-      options.fields[key] = clone(options.fields[key])
-      if (options.fields[key].hasOwnProperty('hasError'))
-        options.fields[key].hasError = true
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError'))
+          options.fields[key].hasError = true
+      }
     }
     this.setState({ options: options })
   }
@@ -83,8 +87,7 @@ export default class Login extends BaseComponent {
       setTimeout(() => this.setState({ submited: true }), 300)
       setTimeout(() => this.props.save(token), 100)
       setTimeout(() => this.context.router.transitionTo('/'), 1000)
-    } else
-      this.setState({ submited: false })
+    } else this.setState({ submited: false })
   }
 
   componentWillReceiveProps (nextProps) {

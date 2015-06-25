@@ -15,11 +15,10 @@ export default passport.use(new BasicStrategy(
     try {
       const user = yield User.auth(email, password)
       if (!user)
-        throw 'no user'
+        throw new Error('no user')
       else
         return user
-    }
-    catch (err) {
+    } catch (err) {
       throw err
     }
   })

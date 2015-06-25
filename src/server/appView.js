@@ -16,6 +16,7 @@ import DocumentTitle from 'shared/components/addon/document-title'
 import * as AuthActions from 'shared/actions/AuthActions'
 import url from 'url'
 import runStaticMethod from 'shared/utils/runStaticMethod'
+import { IntlMixin } from 'react-intl'
 
 nunjucks.configure('views', {
   autoescape: true
@@ -38,11 +39,11 @@ export default function (app) {
 
       try {
         const { error, initialState, transition, handler }
-          = yield new Promise((resolve) => {
+        = yield new Promise((resolve) => {
           Router.run(
-            routes(redux),
-            location,
-            (_error, _initialState, _transition) => {
+          routes(redux),
+          location,
+          (_error, _initialState, _transition) => {
 
             resolve({
               error: _error,
@@ -66,7 +67,7 @@ export default function (app) {
         }
 
         appString = React.renderToString(
-          <Provider redux={redux}>
+          <Provider redux={redux} i18n={IntlMixin.getIntlMessage}>
             {() =>
               <Router {...initialState} />
             }
@@ -82,8 +83,7 @@ export default function (app) {
           )
           assets = JSON.parse(assets)
         }
-        else
-          assets = require('storage/webpack-stats.json')
+        else assets = require('storage/webpack-stats.json')
 
       } catch (error) {
         if (error.redirect)

@@ -15,10 +15,6 @@ export default new Resource('users', {
   index: function *(next) {
     this.body = nunjucks.render('users/index.html')
   },
-  // GET /users/new
-  new: function *(next) {
-    this.body = 'users'
-  },
   // POST /users
   create: function *(next) {
     let body = yield parse(this)
@@ -41,8 +37,7 @@ export default new Resource('users', {
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(user)
-    }
-    catch (err) {
+    } catch (err) {
       this.type = 'josn'
       this.status = 200
       this.body = err

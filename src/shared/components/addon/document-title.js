@@ -16,16 +16,16 @@ let _serverTitle = null
 export default createSideEffect(
   function handleChange (propsList) {
 
-  const title = extractTitle(propsList)
+    const title = extractTitle(propsList)
 
-  if (!title) return
+    if (!title) return
 
-  if (typeof document !== 'undefined')
-    document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
-  else
-    _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle
+    if (typeof document !== 'undefined')
+      document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
+    else
+      _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle
 
-}, {
+  }, {
 
   displayName: 'DocumentTitle',
 

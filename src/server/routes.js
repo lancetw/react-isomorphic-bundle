@@ -38,8 +38,7 @@ router
       sess.token = token
 
       this.redirect('/sync/token')
-    }
-    catch (err) {
+    } catch (err) {
       this.redirect('/login')
     }
   })
@@ -69,7 +68,7 @@ router
         const profile = yield User.create(user)
 
         if (!profile)
-          throw 'no user'
+           throw new Error('no user')
 
         // response JSON web token
         const token = jwtHelper(profile)
@@ -79,8 +78,7 @@ router
         sess.token = token
 
         this.redirect('/sync/token?token=' + token)
-      }
-      catch (err) {
+      } catch (err) {
         this.redirect('/signup')
       }
 
@@ -101,8 +99,7 @@ router
         sess.token = token
 
         ctx.body = { token: token }
-      }
-      else {
+      } else {
         ctx.status = 200
         ctx.body = { profile }
       }
@@ -146,8 +143,7 @@ router
         sess.token = token
 
         ctx.redirect('/sync/token?token=' + token)
-      }
-      else {
+      } else {
         // need email
         debug('dev')('error', err)
         debug('dev')('info', info)
@@ -179,8 +175,7 @@ router
         this.body = { response: true }
       else
         this.body = { response: false }
-    }
-    catch (err) {
+    } catch (err) {
       this.status = 401
       this.set('WWW-Authenticate',
                'JWT realm="users",error="invalid_token",error_description="'

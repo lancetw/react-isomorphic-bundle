@@ -44,8 +44,7 @@ describe('user', function () {
     it('DB: create duplicate user', function *() {
       try {
         yield User.create(user2)
-      }
-      catch (err) {
+      } catch (err) {
         expect(err.name).equal('SequelizeUniqueConstraintError')
       }
     })

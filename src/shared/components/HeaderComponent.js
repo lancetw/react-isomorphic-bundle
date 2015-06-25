@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import { T } from 'shared/components/addon/i18n'
 
 export default class Header extends React.Component {
 
@@ -36,8 +37,8 @@ export default class Header extends React.Component {
               Home
             </Link>
             {AuthLink}
-            <Link to='/wall' className="item">Wall</Link>
-            <Link to='/post' className="item">Post</Link>
+            <Link to='/wall' className="item"><T key='Wall'>Wall</T></Link>
+            <Link to='/post' className="item"><T key='Post'>Post</T></Link>
             {ChangePasswordLink}
           </div>
 
@@ -59,6 +60,10 @@ export default class Header extends React.Component {
             Home
           </Link>
           <Link to='post' className="item">Post</Link>
+
+        </div>
+        <div className="right menu">
+          {AuthLink}
         </div>
       </header>
     )
