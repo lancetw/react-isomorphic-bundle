@@ -26,9 +26,3 @@ export default function (nextState, transition) {
       {}
     )
 }
-
-
-function check (token) {
-  return true
-}
-
