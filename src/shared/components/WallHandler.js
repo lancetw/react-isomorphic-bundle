@@ -16,14 +16,6 @@ export default class WallHandler extends React.Component {
     dispatch(showList())
   }
 
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    redux: PropTypes.object.isRequired
-  }
-
   static async routerWillRun ({ dispatch }) {
     return await dispatch(showList())
   }

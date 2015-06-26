@@ -11,10 +11,6 @@ const Translate = require('react-translate-component')
 }))
 export default class HeaderHandler extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }

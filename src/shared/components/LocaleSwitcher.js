@@ -1,26 +1,25 @@
 import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
 import DocumentTitle from 'shared/components/addon/document-title'
-import * as LocaleActions from '../actions/AuthActions'
+import * as LocaleActions from 'shared/actions/LocaleActions'
 
 export default class LocaleSwitcher extends React.Component {
 
   constructor (props) {
     super(props)
+
+    this.handleChange = ::this.handleChange
   }
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }
 
-  static contextTypes = {
-    translator: PropTypes.object.isRequired
-  }
-
   handleChange (e) {
     counterpart.setLocale(e.target.value)
-    const { dispatch } = this.props
-    dispatch(LocaleActions.sync(e.target.value))
+    this.props.dispatch(
+      LocaleActions.sync(e.target.value)
+    )
   }
 
   render () {

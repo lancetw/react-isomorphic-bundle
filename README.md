@@ -54,6 +54,7 @@ $ npm install
 - [x] Create post
 - [x] react-router upgrade to 1.0.0beta2
 - [x] flummox change to redux...!
+- [x] i18n / language switcher
 - [ ] Posts with Location/Category/Timeline view
 - [ ] more ...
 

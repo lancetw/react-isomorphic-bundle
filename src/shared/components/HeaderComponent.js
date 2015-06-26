@@ -10,6 +10,7 @@ export default class Header extends React.Component {
   }
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     sync: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   }
@@ -68,7 +69,7 @@ export default class Header extends React.Component {
           </div>
 
           <div className="right menu">
-            <LocaleSwitcher/>
+            <LocaleSwitcher dispatch={this.props.dispatch} />
             <div className="item">
               <div className="ui transparent icon input inverted">
                 {TranslateProps(searchProps)}
@@ -87,7 +88,7 @@ export default class Header extends React.Component {
             </Link>
           </div>
           <div className="right menu">
-            <LocaleSwitcher/>
+            <LocaleSwitcher dispatch={this.props.dispatch} />
             {AuthLink}
           </div>
         </div>
