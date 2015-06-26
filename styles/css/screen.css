@@ -27,15 +27,20 @@ main.ui.stackable.page {
 }
 
 .ui.locale-switcher {
-  font-family: monospace;
-  padding: 0;
-  margin: 0 0 0 0;
+  text-align: center;
   select {
-    padding: 0;
-    margin: 0 0 0 0;
+    text-align: center;
+    padding: 1em 1.2em 1em 1.2em;
+    margin: -2em;
+    appearance: none;
+    text-overflow: '';
+    box-shadow: none;
+    border: none;
+    outline: none;
+    font-size: 0.9em;
+    font-family: 'Roboto';
     color: white;
     background: transparent;
-    border: 0;
 
     &:focus {
       outline: 0;
