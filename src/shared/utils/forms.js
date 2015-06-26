@@ -37,7 +37,7 @@ exports.LoginForm = t.struct({
   email: t.Str,
   password: Password
 })
-exports.LoginFormOptions = {
+const LoginFormOptionsEn = {
   auto: 'placeholders',
   fields: {
     email: {
@@ -48,6 +48,31 @@ exports.LoginFormOptions = {
       hasError: false
     }
   }
+}
+const LoginFormOptionsZhHantTW = {
+  auto: 'none',
+  fields: {
+    email: {
+      hasError: false,
+      attrs: {
+        placeholder: '電子郵件帳號'
+      }
+    },
+    password: {
+      type: 'password',
+      hasError: false,
+      attrs: {
+        placeholder: '密碼'
+      }
+    }
+  }
+}
+exports.LoginFormOptions = function (locale) {
+  const list = {
+    'en': LoginFormOptionsEn,
+    'zh-hant-tw': LoginFormOptionsZhHantTW
+  }
+  return list[locale]
 }
 
 exports.ChangePasswordForm = t.struct({

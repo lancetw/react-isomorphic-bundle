@@ -17,21 +17,30 @@ export default class HomeComponent extends BaseComponent {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+    const TranslateProps = React.createFactory(Translate)
+    const tokenProps = {
+      component: 'input',
+      type: 'text',
+      name: 'token',
+      scope: 'home_token',
+      readOnly: true,
+      attributes: {
+        placeholder: 'placeholder'
+      },
+      value: this.props.auth.token
+    }
+
     return (
       <main className="ui stackable page grid">
         <div className="column">
           <div className="ui segment">
-            <h1>Your JSON Web Token</h1>
+            <h1><Translate content="home.jwt_header" /></h1>
             <div className="ui fluid right labeled left icon input">
               <i className="tags icon"></i>
-              <input
-                type="text"
-                placeholder="token"
-                value={this.props.auth.token}
-                readOnly
-              />
+              {TranslateProps(tokenProps)}
               <div className="ui tag label">
-                KEY
+                <Translate content="home.key" />
               </div>
             </div>
           </div>

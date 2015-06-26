@@ -9,23 +9,32 @@ import routes from 'shared/routes'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import runStaticMethod from 'shared/utils/runStaticMethod'
 import url from 'url'
-import { IntlMixin } from 'react-intl'
+import AppContainer from 'shared/components/AppContainer'
+import counterpart from 'counterpart'
 
-require('react-a11y')(React)
+(async () => {
+  require('react-a11y')(React)
 
-const initialState = window.STATE_FROM_SERVER   // no data
-const redux = createRedux(stores, initialState)
+  const initialState = window.STATE_FROM_SERVER   // no data
+  const redux = createRedux(stores, initialState)
 
-const history = new BrowserHistory()
+  const history = new BrowserHistory()
 
-React.render((
-  <Provider redux={redux} i18n={IntlMixin.getIntlMessage}>
-    {() =>
-      <Router
-        children={routes(redux)}
-        history={history}
-      />
-    }
-  </Provider>
-  ), document.getElementById('app')
-)
+  counterpart.registerTranslations('en',
+    require('shared/i18n/en'))
+  counterpart.registerTranslations('zh-hant-tw',
+    require('shared/i18n/zh-hant-tw'))
+  counterpart.setLocale('zh-hant-tw')
+
+  React.render((
+    <Provider redux={redux}>
+      {() =>
+        <Router
+          children={routes(redux)}
+          history={history}
+        />
+      }
+    </Provider>
+  ), document.getElementById('app'))
+
+})()

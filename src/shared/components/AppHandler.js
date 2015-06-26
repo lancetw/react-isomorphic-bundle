@@ -26,7 +26,7 @@ export default class AppHandler extends React.Component {
   render () {
     return (
       <div>
-        <Header />
+        <Header/>
         <CSSTransitionGroup transitionName="RouteTransition">
           {this.props.children}
         </CSSTransitionGroup>

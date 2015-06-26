@@ -2,8 +2,15 @@
 
 import React from 'react'
 import createSideEffect from 'react-side-effect'
+import _t from 'counterpart'
 
-let defaultTitle = 'Isomorphic flummox demo'
+_t.setLocale('zh-hant-tw')
+_t.registerTranslations('en',
+  require('shared/i18n/en'))
+_t.registerTranslations('zh-hant-tw',
+  require('shared/i18n/zh-hant-tw'))
+
+let defaultTitle = _t('title.site')
 
 function extractTitle (propsList) {
   const innermostProps = propsList[propsList.length - 1]

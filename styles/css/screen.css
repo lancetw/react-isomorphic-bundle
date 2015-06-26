@@ -25,3 +25,21 @@ main.ui.stackable.page {
   width: 100%;
   padding-top: 64px;
 }
+
+.ui.locale-switcher {
+  font-family: monospace;
+  padding: 0;
+  margin: 0 0 0 0;
+  select {
+    padding: 0;
+    margin: 0 0 0 0;
+    color: white;
+    background: transparent;
+    border: 0;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+

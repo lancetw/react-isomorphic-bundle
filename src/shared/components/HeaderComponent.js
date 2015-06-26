@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { T } from 'shared/components/addon/i18n'
+import LocaleSwitcher from './LocaleSwitcher'
 
 export default class Header extends React.Component {
 
@@ -15,17 +15,38 @@ export default class Header extends React.Component {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+    const TranslateProps = React.createFactory(Translate)
+    const searchProps = {
+      component: 'input',
+      type: 'search',
+      name: 'q',
+      scope: 'search_input',
+      attributes: {
+        placeholder: 'placeholder',
+        title: 'tooltip'
+      }
+    }
+
     let AuthLink
     if (!this.props.auth.token)
-      AuthLink = <Link to='/login' className="item">Log In</Link>
+      AuthLink = (
+        <Link to='/login' className="item">
+          <Translate content="header.login" />
+        </Link>
+      )
     else
-      AuthLink = <Link to='/logout' className="item">Log Out</Link>
+      AuthLink = (
+        <Link to='/logout' className="item">
+          <Translate content="header.logout" />
+        </Link>
+      )
 
     let ChangePasswordLink
     if (this.props.auth.token)
       ChangePasswordLink = (
         <Link to='/password' className="item">
-          Password
+          <Translate content="header.password" />
         </Link>
       )
 
@@ -34,36 +55,41 @@ export default class Header extends React.Component {
         <div className="computer tablet only row">
           <div className="left menu">
             <Link to='/home' className="item">
-              Home
+              <Translate content="header.home" />
             </Link>
             {AuthLink}
-            <Link to='/wall' className="item"><T key='Wall'>Wall</T></Link>
-            <Link to='/post' className="item"><T key='Post'>Post</T></Link>
+            <Link to='/wall' className="item">
+              <Translate content="header.wall" />
+            </Link>
+            <Link to='/post' className="item">
+              <Translate content="header.post" />
+            </Link>
             {ChangePasswordLink}
           </div>
 
           <div className="right menu">
+            <LocaleSwitcher/>
             <div className="item">
               <div className="ui transparent icon input inverted">
-                <input
-                  type="text"
-                  placeholder="Search ..."
-                  aria-label="Search"
-                />
+                {TranslateProps(searchProps)}
                 <i className="search icon"></i>
               </div>
             </div>
           </div>
         </div>
         <div className="mobile only row">
-          <Link className="item left" to="wall">
-            Home
-          </Link>
-          <Link to='post' className="item">Post</Link>
-
-        </div>
-        <div className="right menu">
-          {AuthLink}
+          <div className="left menu">
+            <Link className="item left" to="wall">
+              <Translate content="header.home" />
+            </Link>
+            <Link to='post' className="item">
+              <Translate content="header.post" />
+            </Link>
+          </div>
+          <div className="right menu">
+            <LocaleSwitcher/>
+            {AuthLink}
+          </div>
         </div>
       </header>
     )

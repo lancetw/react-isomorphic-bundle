@@ -1,25 +1,33 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import BaseComponent from 'shared/components/BaseComponent'
-import { Form, LoginForm, LoginFormOptions } from 'shared/utils/forms'
+import {
+  Tcomb,
+  Form,
+  LoginForm,
+  LoginFormOptions
+} from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
+import counterpart from 'counterpart'
 
 export default class Login extends BaseComponent {
 
   constructor (props) {
     super(props)
+    this._bind(
+      'handleSubmit',
+      'clearFormErrors',
+      'fillFormAllErrors'
+    )
+
     this.state = {
-      value: {
-        email: '',
-        password: ''
-      },
-      options: LoginFormOptions,
       submited: false,
-      ok: false
+      ok: false,
+      options: LoginFormOptions(counterpart.getLocale())
     }
 
-    this._bind('handleSubmit', 'clearFormErrors', 'fillFormAllErrors')
+    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   static propTypes = {
@@ -30,6 +38,12 @@ export default class Login extends BaseComponent {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
+  }
+
+  handleLocaleChange (newLocale) {
+    this.setState({
+      options: LoginFormOptions(newLocale)
+    })
   }
 
   handleSubmit (evt) {
@@ -100,6 +114,8 @@ export default class Login extends BaseComponent {
       classNames('ui', 'form', 'segment', 'loading') :
       classNames('ui', 'form', 'segment')
 
+    const Translate = require('react-translate-component')
+
     return (
       <main className="ui stackable page grid">
         <div className="column">
@@ -124,24 +140,24 @@ export default class Login extends BaseComponent {
                   className="fluid ui blue large button"
                   disabled={this.state.ok}
                 >
-                  Log In
+                  <Translate content="header.login" />
                 </button>
               </form>
             </div>
             <div className="ui vertical divider">
-              or
+              <Translate content="login.or" />
             </div>
             <div className="center aligned column">
               <a className="large blue ui labeled icon button"
                 href="/auth/facebook">
                 <i className="facebook icon"></i>
-                Sign In with Facebook
+                <Translate content="login.facebook" />
               </a>
               <div className="ui hidden divider"></div>
               <Link className="ui huge green labeled icon button"
                 to="/signup">
                 <i className="signup icon"></i>
-                Sign Up
+                <Translate content="login.signup" />
               </Link>
             </div>
           </div>

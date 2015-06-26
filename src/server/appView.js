@@ -16,7 +16,9 @@ import DocumentTitle from 'shared/components/addon/document-title'
 import * as AuthActions from 'shared/actions/AuthActions'
 import url from 'url'
 import runStaticMethod from 'shared/utils/runStaticMethod'
-import { IntlMixin } from 'react-intl'
+import AppContainer from 'shared/components/AppContainer'
+
+const Translator = require('counterpart').Instance
 
 nunjucks.configure('views', {
   autoescape: true
@@ -34,6 +36,13 @@ export default function (app) {
       // save session token to store
       if (this.session.token && this.session.token !== null)
         redux.dispatch(AuthActions.sync(this.session.token))
+
+      const translator = new Translator()
+      translator.registerTranslations('en',
+        require('shared/i18n/en'))
+      translator.registerTranslations('zh-hant-tw',
+        require('shared/i18n/zh-hant-tw'))
+      translator.setLocale('zh-hant-tw')
 
       let appString, assets, title
 
@@ -60,18 +69,24 @@ export default function (app) {
           yield runStaticMethod(
             initialState.components,
             'routerWillRun',
-            { dispatch: redux.dispatch }
+            {
+              dispatch: redux.dispatch
+            }
           )
         } catch (err) {
           throw err
         }
 
         appString = React.renderToString(
-          <Provider redux={redux} i18n={IntlMixin.getIntlMessage}>
+          <AppContainer translator={translator}>
             {() =>
-              <Router {...initialState} />
+              <Provider redux={redux}>
+                {() =>
+                  <Router {...initialState} />
+                }
+              </Provider>
             }
-          </Provider>
+          </AppContainer>
         )
 
         title = DocumentTitle.rewind()

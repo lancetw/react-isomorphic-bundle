@@ -15,9 +15,10 @@ export default class HomeHandler extends React.Component {
   }
 
   render () {
+    const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title='Home'>
+      <DocumentTitle title={_t('title.home')}>
         <Home
           {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}

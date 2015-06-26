@@ -109,7 +109,7 @@ export function checkToken () {   // just check token expire field
     try {
       const decoded = jwtDecode(getToken())
       const now = Math.round(+new Date() / 1000)  // Unix Timestamp
-      const expired = decoded.exp >= now
+      const expired = decoded.exp <= now
 
       if (!expired)
         return dispatch({

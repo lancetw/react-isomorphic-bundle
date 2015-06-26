@@ -15,9 +15,10 @@ export default class LoginHandler extends React.Component {
   }
 
   render () {
+    const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title='Log in'>
+      <DocumentTitle title={_t('title.login')}>
         <Login
           {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}

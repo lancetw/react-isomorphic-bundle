@@ -13,15 +13,15 @@ export default function (nextState, transition) {
   // console.log('verified', verified)
 
   if (!isAuthenticated)
-    transition.to(
+    return transition.to(
       '/login',
       null,
       { nextPathname: nextState.location.pathname }
     )
 
   if (!verified)
-    transition.to(
-      '/',
+    return transition.to(
+      '/logout',
       null,
       {}
     )

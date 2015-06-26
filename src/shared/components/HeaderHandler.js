@@ -4,10 +4,16 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as AuthActions from '../actions/AuthActions'
 
+const Translate = require('react-translate-component')
+
 @connect(state => ({
   auth: state.auth
 }))
 export default class HeaderHandler extends React.Component {
+
+  constructor (props) {
+    super(props)
+  }
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
