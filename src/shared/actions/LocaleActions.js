@@ -4,7 +4,6 @@ import {
 } from 'shared/constants/ActionTypes'
 
 export function sync (locale) {
-  console.log(locale)
   setLocale(locale)
   return async dispatch => {
     if (typeof document !== 'undefined')

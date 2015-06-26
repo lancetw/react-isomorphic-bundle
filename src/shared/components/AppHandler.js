@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react/addons'
 import Header from './HeaderHandler'
+import counterpart from 'counterpart'
 
 const { CSSTransitionGroup } = React.addons
 
