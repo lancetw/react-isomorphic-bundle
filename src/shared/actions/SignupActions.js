@@ -22,7 +22,7 @@ export function submit (form) {
     } catch (err) {
       return dispatch({
         type: SIGNUP_USER_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }

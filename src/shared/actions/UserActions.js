@@ -23,7 +23,7 @@ export function changePassword (form) {
     } catch (err) {
       return dispatch({
         type: CHANGE_PASS_USER_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }

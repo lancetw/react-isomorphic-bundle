@@ -25,7 +25,7 @@ export function save (token) {
     } catch (err) {
       return dispatch({
         type: AUTH_USER_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }
@@ -62,7 +62,7 @@ export function login (form) {
     } catch (err) {
       return dispatch({
         type: AUTH_USER_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }
@@ -82,7 +82,7 @@ export function logout () {
     } catch (err) {
       return dispatch({
         type: REVOKE_USER_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }
@@ -122,7 +122,7 @@ export function checkToken () {   // just check token expire field
     } catch (err) {
       return dispatch({
         type: CHECK_TOKEN_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }

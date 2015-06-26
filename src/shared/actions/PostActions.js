@@ -34,7 +34,7 @@ export function submit (form) {
     } catch (err) {
       return dispatch({
         type: CREATE_POST_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }
@@ -58,7 +58,7 @@ export function showList () {
     } catch (err) {
       return dispatch({
         type: LIST_POST_FAILED,
-        errors: err
+        errors: err.message
       })
     }
   }
