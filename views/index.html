@@ -6,17 +6,6 @@
     <title>{{ title }}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% if env.NODE_ENV == 'production' %}
-    <script type="text/javascript">
-      var headID = document.getElementsByTagName("head")[0];
-      var cssNode = document.createElement('link');
-      cssNode.type = 'text/css';
-      cssNode.rel = 'stylesheet';
-      cssNode.href = 'assets/fallback.css';
-      cssNode.media = 'screen';
-      headID.appendChild(cssNode);
-    </script>
-    {% endif %}
     {% if env.NODE_ENV != 'development' %}
       {% for style in assets.style %}
         <link rel="stylesheet" href="{{ style }}">
@@ -30,6 +19,17 @@
       {% for script in assets.script %}
         <script src="{{ script }}" defer></script>
       {% endfor %}
+    {% endif %}
+    {% if env.NODE_ENV == 'production' %}
+    <script type="text/javascript">
+      var headID = document.getElementsByTagName("head")[0];
+      var cssNode = document.createElement('link');
+      cssNode.type = 'text/css';
+      cssNode.rel = 'stylesheet';
+      cssNode.href = 'assets/fallback.css';
+      cssNode.media = 'screen';
+      headID.appendChild(cssNode);
+    </script>
     {% endif %}
   </body>
 </html>

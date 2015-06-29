@@ -21,10 +21,8 @@ export default class PostCards extends BaseComponent {
           return <Card key={card.id} data={card} />
         })}
         {isEmpty(cards) && (
-          <div className="ui fluid card">
-            <div className="content">
-              No data.
-            </div>
+          <div className="ui active inverted dimmer">
+            <div className="ui text loader">Loading</div>
           </div>
         )}
       </div>

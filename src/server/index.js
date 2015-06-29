@@ -12,6 +12,8 @@ if (env !== 'production')
 else
   require('app-module-path').addPath(path.join(__dirname, '../../lib'))
 
+require('app-module-path').addPath(path.join(__dirname, '../../styles'))
+
 require('babel/register')({
   'stage': 1
 })

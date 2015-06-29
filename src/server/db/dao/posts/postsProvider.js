@@ -29,13 +29,11 @@ exports.load = function *(hid) {
 }
 
 /* eslint-disable camelcase */
-exports.list = function *(offset, limit) {
-  const _offset = offset || 0
-  const _limit = limit || 20
+exports.list = function *(offset=0, limit=20) {
 
   return yield Post.findAll({
-    offset: _offset,
-    limit: _limit,
+    offset: offset,
+    limit: limit,
     order: [[ 'start_date', 'ASC' ]],
     where: {
       close_date: {

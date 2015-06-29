@@ -37,9 +37,9 @@ export default {
     },
     plugins: [
       new webpack.ProvidePlugin({
-          $: "jquery",
-          jQuery: "jquery",
-          "window.jQuery": "jquery"
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
       }),
       new ExtractTextPlugin('[name].css'),
       new webpack.DefinePlugin({
