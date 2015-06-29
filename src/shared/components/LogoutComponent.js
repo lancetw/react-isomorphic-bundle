@@ -24,10 +24,12 @@ export default class Logout extends BaseComponent {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+
     const msg = this.state.isClient
-      ? <div>You are now logged out.</div>
-      : <div>If You want to log out,
-          <a href="/auth/logout">click here.</a>
+      ? <Translate content="logout.msg" />
+      : <div><Translate content="logout.msg2" />
+          <a href="/auth/logout"><Translate content="logout.click " /></a>
         </div>
     return (
       <main className="ui stackable page grid">

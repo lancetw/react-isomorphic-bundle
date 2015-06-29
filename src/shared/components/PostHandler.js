@@ -15,9 +15,10 @@ export default class PostHandler extends React.Component {
   }
 
   render () {
+    const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title='Post it!'>
+      <DocumentTitle title={_t('title.post')}>
         <Post
           {...bindActionCreators(PostActions, dispatch)}
           {...this.props}

@@ -5,11 +5,18 @@ import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment'
 const { CSSTransitionGroup } = React.addons
+import counterpart from 'counterpart'
 
 export default class Post extends BaseComponent {
 
   constructor (props) {
     super(props)
+    this._bind(
+      'handleSubmit',
+      'validation',
+      'handleChange'
+    )
+
     const today = moment().format('YYYY-M-D').split('-')
     today[1] = today[1] - 1
     this.state = {
@@ -21,12 +28,13 @@ export default class Post extends BaseComponent {
         title: null,
         content: null
       },
-      options: PostFormOptions,
+      options: PostFormOptions(counterpart.getLocale()),
       submited: false,
-      updated: false
+      updated: false,
+      locale: counterpart.getLocale()
     }
 
-    this._bind('handleSubmit', 'validation', 'handleChange')
+    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   static propTypes = {
@@ -36,6 +44,12 @@ export default class Post extends BaseComponent {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
+  }
+
+  handleLocaleChange (newLocale) {
+    this.setState({
+      options: PostFormOptions(newLocale)
+    })
   }
 
   handleChange () {}
@@ -119,6 +133,8 @@ export default class Post extends BaseComponent {
       </div>
     ) : null
 
+    const Translate = require('react-translate-component')
+
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
@@ -129,22 +145,19 @@ export default class Post extends BaseComponent {
             className={Loading}
             action="/posts/new"
             method="post"
-            onSubmit={this.handleSubmit}
-          >
+            onSubmit={this.handleSubmit}>
             <Form
               ref="form"
-              type={PostForm}
+              type={PostForm(counterpart.getLocale())}
               options={this.state.options}
               value={this.state.value}
-              onChange={this.handleChange}
-            />
+              onChange={this.handleChange}/>
             <div className="ui hidden divider" />
             <button
               type="submit"
               className="ui red labeled icon large button"
-              disabled={this.state.submited}
-            >
-              Post it!
+              disabled={this.state.submited}>
+              <Translate content="post.submit" />
               <i className="add icon"></i>
             </button>
           </form>

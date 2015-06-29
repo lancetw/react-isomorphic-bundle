@@ -15,9 +15,10 @@ export default class ChangePasswordHandler extends React.Component {
   }
 
   render () {
+    const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title='Change my password'>
+      <DocumentTitle title={_t('title.password')}>
         <ChangePassword
           {...bindActionCreators(UserActions, dispatch)}
           {...this.props}

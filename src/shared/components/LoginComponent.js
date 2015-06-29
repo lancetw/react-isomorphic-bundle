@@ -126,8 +126,7 @@ export default class Login extends BaseComponent {
                 className={Loading}
                 action="/auth/login"
                 method="post"
-                onSubmit={this.handleSubmit}
-              >
+                onSubmit={this.handleSubmit}>
                 <Form
                   ref="form"
                   type={LoginForm}
@@ -138,8 +137,7 @@ export default class Login extends BaseComponent {
                 <button
                   type="submit"
                   className="fluid ui blue large button"
-                  disabled={this.state.ok}
-                >
+                  disabled={this.state.ok}>
                   <Translate content="header.login" />
                 </button>
               </form>

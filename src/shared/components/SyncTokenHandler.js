@@ -29,12 +29,15 @@ export default class SyncTokenHandler extends React.Component {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+    const _t = require('counterpart')
+
     const msg = this.state.isClient
-      ? <div>Redirecting...</div>
-      : <div><a href="/">Click here to continue...</a></div>
+      ? <Translate content="redirect.msg" />
+      : <div><a href="/"><Translate content="redirect.click" /></a></div>
 
     return (
-      <DocumentTitle title='Redirecting...'>
+      <DocumentTitle title={_t('title.redirect')}>
         <main className="ui stackable page grid">
           <div className="column">
             { msg }

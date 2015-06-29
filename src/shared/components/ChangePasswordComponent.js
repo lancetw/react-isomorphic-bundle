@@ -5,19 +5,23 @@ import { Form, ChangePasswordForm,
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 const { CSSTransitionGroup } = React.addons
+import counterpart from 'counterpart'
 
 export default class ChangePassword extends BaseComponent {
 
   constructor (props) {
     super(props)
+    this._bind(
+      'handleSubmit',
+      'handleChange',
+      'clearFormErrors'
+    )
     this.state = {
       value: { password: '', passwordCheck: '' },
-      options: ChangePasswordFormOptions,
+      options: ChangePasswordFormOptions(counterpart.getLocale()),
       submited: false,
       updated: false
     }
-
-    this._bind('handleSubmit', 'validation', 'handleChange')
   }
 
   static propTypes = {
@@ -54,6 +58,20 @@ export default class ChangePassword extends BaseComponent {
       this.setState({ submited: true })
 
       setTimeout(() => this.props.changePassword(value), 1000)
+    } else {
+      const pass = this.refs.form.getComponent('password')
+      const check = this.refs.form.getComponent('passwordCheck')
+
+      if (pass.state.value !== check.state.value)
+        check.setState({ hasError: true })
+      else
+        check.setState({ hasError: false })
+
+
+      if (pass.state.value.length < 6)
+        pass.setState({ hasError: true })
+      else
+        pass.setState({ hasError: false })
     }
   }
 
@@ -72,22 +90,8 @@ export default class ChangePassword extends BaseComponent {
   }
 
   validation (errors) {
-    if (!isEmpty(errors)) {
-      let options = clone(this.state.options)
-      options.fields = clone(options.fields)
-
-      errors.map(function (err) {
-        if (err.code === 'invalid') {
-          options.fields[err.field] = clone(options.fields[err.field])
-          options.fields[err.field] = { hasError: true, error: err.message }
-        } else {
-          options.fields[err.path] = clone(options.fields[err.path])
-          options.fields[err.path] = { hasError: true, error: err.message }
-        }
-      })
+    if (!isEmpty(errors))
       this.setState({ submited: false })
-      this.setState({ options: options })
-    }
   }
 
   checkSubmited (info) {
@@ -104,6 +108,8 @@ export default class ChangePassword extends BaseComponent {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+
     let Loading = this.state.submited
       && !this.state.updated
       ? classNames('ui', 'form', 'segment', 'loading')
@@ -113,9 +119,9 @@ export default class ChangePassword extends BaseComponent {
     (
       <div className="ui success message">
         <div className="header">
-          Your password change request was successful.
+          <Translate content="password.modified.title" />
         </div>
-        <p>Please use new password to login next time.</p>
+        <p><Translate content="password.modified.content" /></p>
       </div>
     ) : null
 
@@ -129,22 +135,19 @@ export default class ChangePassword extends BaseComponent {
             className={Loading}
             action="/auth/changePassword"
             method="post"
-            onSubmit={this.handleSubmit}
-          >
+            onSubmit={this.handleSubmit}>
             <Form
               ref="form"
               type={ChangePasswordForm}
               options={this.state.options}
               value={this.state.value}
-              onChange={this.handleChange}
-            />
+              onChange={this.handleChange} />
             <div className="ui hidden divider" />
             <button
               type="submit"
               className="ui blue labeled icon large button"
-              disabled={this.state.submited}
-            >
-              Change
+              disabled={this.state.submited}>
+              <Translate content="password.submit" />
               <i className="add icon"></i>
             </button>
           </form>

@@ -2,7 +2,12 @@ export default {
   title: {
     site: 'Isomorphic redux 範例',
     home: '首頁',
-    login: '登入'
+    login: '登入',
+    logout: '登出',
+    wall: '所有佈告',
+    post: '張貼新佈告',
+    password: '修改密碼',
+    redirect: '重新導向中...'
   },
   header: {
     home: '首頁',
@@ -30,5 +35,29 @@ export default {
     facebook: '透過 Facebook 登入',
     signup: '註冊新帳號',
     or: '或'
+  },
+  register: {
+    hello: '歡迎註冊',
+    msg: '請詳閱註冊說明',
+    submit: '註冊'
+  },
+  redirect: {
+    msg: '重新導向中請稍等⋯',
+    click: '點此繼續⋯'
+  },
+  logout: {
+    msg: '您已經登出。',
+    msg2: '您若想登出，',
+    click: '請點擊此。'
+  },
+  password: {
+    modified: {
+      title: '您的密碼成功變更',
+      content: '下次請使用新的密碼登入'
+    },
+    submit: '變更'
+  },
+  post: {
+    submit: '張貼'
   }
 }

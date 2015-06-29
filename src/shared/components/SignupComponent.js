@@ -3,24 +3,28 @@ import BaseComponent from 'shared/components/BaseComponent'
 import { Form, SignupForm, SignupFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
+import counterpart from 'counterpart'
 
 export default class Signup extends BaseComponent {
 
   constructor (props) {
     super(props)
+    this._bind(
+      'handleSubmit',
+      'validation',
+      'handleChange'
+    )
+
     this.state = {
       value: {
-        email: '',
-        password: '',
-        passwordCheck: '',
         tos: false
       },
-      options: SignupFormOptions,
+      options: SignupFormOptions(counterpart.getLocale()),
       submited: false,
       ok: false
     }
 
-    this._bind('handleSubmit', 'validation', 'handleChange')
+    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   static propTypes = {
@@ -31,6 +35,12 @@ export default class Signup extends BaseComponent {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
+  }
+
+  handleLocaleChange (newLocale) {
+    this.setState({
+      options: SignupFormOptions(newLocale)
+    })
   }
 
   handleChange (value, path) {
@@ -120,6 +130,8 @@ export default class Signup extends BaseComponent {
       classNames('ui', 'form', 'segment', 'loading') :
       classNames('ui', 'form', 'segment')
 
+    const Translate = require('react-translate-component')
+
     return (
       <main className="ui two column stackable page grid">
         <div className="column">
@@ -127,8 +139,10 @@ export default class Signup extends BaseComponent {
             <h2 className="ui header">
               <i className="users icon"></i>
               <div className="content">
-                Hello folks!
-                <div className="sub header">Welcome to The Zone</div>
+                <Translate content="register.hello" />
+                <div className="sub header">
+                  <Translate content="register.msg" />
+                </div>
               </div>
             </h2>
           </div>
@@ -138,8 +152,7 @@ export default class Signup extends BaseComponent {
             className={Loading}
             action="/auth/register"
             method="post"
-            onSubmit={this.handleSubmit}
-          >
+            onSubmit={this.handleSubmit}>
             <Form
               ref="form"
               type={SignupForm}
@@ -151,9 +164,8 @@ export default class Signup extends BaseComponent {
             <button
               type="submit"
               className="ui teal labeled icon huge button"
-              disabled={this.state.submited && this.state.ok}
-            >
-              Register
+              disabled={this.state.submited && this.state.ok}>
+              <Translate content="register.submit" />
               <i className="add icon"></i>
             </button>
           </form>

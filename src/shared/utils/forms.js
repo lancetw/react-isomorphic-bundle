@@ -15,9 +15,13 @@ exports.SignupForm = t.struct({
   passwordCheck: t.Str,
   tos: t.Bool
 })
-exports.SignupFormOptions = {
+const SignupFormOptionsEn = {
   auto: 'placeholders',
   fields: {
+    email: {
+      type: 'email',
+      error: 'email should be an email'
+    },
     password: {
       type: 'password',
       error: 'length should bigger than 6'
@@ -31,6 +35,43 @@ exports.SignupFormOptions = {
       label: 'I agree to the Terms and Conditions'
     }
   }
+}
+const SignupFormOptionsZhHantTW = {
+  auto: 'none',
+  fields: {
+    email: {
+      type: 'email',
+      error: '電子郵件信箱不合規定',
+      attrs: {
+        placeholder: '電子郵件信箱'
+      }
+    },
+    password: {
+      type: 'password',
+      error: '長度應大於 6',
+      attrs: {
+        placeholder: '密碼'
+      }
+    },
+    passwordCheck: {
+      type: 'password',
+      error: '不一致',
+      help: <i>請再輸入一次密碼</i>,
+      attrs: {
+        placeholder: '重新輸入密碼'
+      }
+    },
+    tos: {
+      label: '我同意服務條款'
+    }
+  }
+}
+exports.SignupFormOptions = function (locale) {
+  const list = {
+    'en': SignupFormOptionsEn,
+    'zh-hant-tw': SignupFormOptionsZhHantTW
+  }
+  return list[locale]
 }
 
 exports.LoginForm = t.struct({
@@ -79,27 +120,58 @@ exports.ChangePasswordForm = t.struct({
   password: Password,
   passwordCheck: t.Str
 })
-exports.ChangePasswordFormOptions = {
+const ChangePasswordFormOptionsEn = {
   auto: 'placeholders',
   fields: {
     password: {
       type: 'password',
-      error: 'length should bigger than 6'
+      error: 'length should bigger than 6',
+      hasError: false
     },
     passwordCheck: {
       type: 'password',
       error: 'do not match',
+      hasError: false,
       help: <i>Please enter password again</i>
     }
   }
 }
+const ChangePasswordFormOptionsZhHantTW = {
+  auto: 'none',
+  fields: {
+    password: {
+      type: 'password',
+      error: '長度應大於 6',
+      hasError: false,
+      attrs: {
+        placeholder: '密碼'
+      }
+    },
+    passwordCheck: {
+      type: 'password',
+      error: '不一致',
+      hasError: false,
+      help: <i>請再輸入一次密碼</i>,
+      attrs: {
+        placeholder: '重新輸入密碼'
+      }
+    }
+  }
+}
+exports.ChangePasswordFormOptions = function (locale) {
+  const list = {
+    'en': ChangePasswordFormOptionsEn,
+    'zh-hant-tw': ChangePasswordFormOptionsZhHantTW
+  }
+  return list[locale]
+}
 
-const PostType = t.enums({
+const PostTypeEn = t.enums({
   1: 'News',
   2: 'Event'
 })
 
-const PostProp = t.enums({
+const PostPropEn = t.enums({
   1: 'General',
   2: 'Music',
   3: 'Communication',
@@ -108,10 +180,23 @@ const PostProp = t.enums({
   6: 'Health Care',
   7: 'Others'
 })
+const PostTypeZhHantTW = t.enums({
+  1: '新聞',
+  2: '活動'
+})
 
-exports.PostForm = t.subtype(t.struct({
-  type: PostType,
-  prop: PostProp,
+const PostPropZhHantTW = t.enums({
+  1: '一般',
+  2: '音樂',
+  3: '交流',
+  4: '社群',
+  5: '特殊群組',
+  6: '健康',
+  7: '其他'
+})
+const PostFormEn = t.subtype(t.struct({
+  type: PostTypeEn,
+  prop: PostPropEn,
   startDate: t.Dat,
   endDate: t.Dat,
   title: t.Str,
@@ -121,8 +206,26 @@ exports.PostForm = t.subtype(t.struct({
     (value.startDate <= value.endDate)
   )
 })
-
-exports.PostFormOptions = {
+const PostFormZhHantTW = t.subtype(t.struct({
+  type: PostTypeZhHantTW,
+  prop: PostPropZhHantTW,
+  startDate: t.Dat,
+  endDate: t.Dat,
+  title: t.Str,
+  content: t.Str
+}), function (value) {
+  return (
+    (value.startDate <= value.endDate)
+  )
+})
+exports.PostForm = function (locale) {
+  const list = {
+    'en': PostFormEn,
+    'zh-hant-tw': PostFormZhHantTW
+  }
+  return list[locale]
+}
+const PostFormOptionsEn = {
   error: <div data-errors="date">Date range is invalid.</div>,
   auto: 'placeholders',
   fields: {
@@ -144,6 +247,44 @@ exports.PostFormOptions = {
       type: 'textarea'
     }
   }
+}
+const PostFormOptionsZhHantTW = {
+  error: <div data-errors="date">日期區間有誤</div>,
+  auto: 'none',
+  fields: {
+    type: {
+      factory: t.form.Radio
+    },
+    prop: {
+      factory: t.form.Select
+    },
+    startDate: {
+      label: '開始日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+     endDate: {
+      label: '結束日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    title: {
+      attrs: {
+        placeholder: '標題'
+      }
+    },
+    content: {
+      type: 'textarea',
+      attrs: {
+        placeholder: '內容'
+      }
+    }
+  }
+}
+exports.PostFormOptions = function (locale) {
+  const list = {
+    'en': PostFormOptionsEn,
+    'zh-hant-tw': PostFormOptionsZhHantTW
+  }
+  return list[locale]
 }
 
 exports.Tcomb = t

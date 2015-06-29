@@ -10,8 +10,6 @@ _t.registerTranslations('en',
 _t.registerTranslations('zh-hant-tw',
   require('shared/i18n/zh-hant-tw'))
 
-let defaultTitle = _t('title.site')
-
 function extractTitle (propsList) {
   const innermostProps = propsList[propsList.length - 1]
   if (innermostProps)
@@ -22,6 +20,8 @@ let _serverTitle = null
 
 export default createSideEffect(
   function handleChange (propsList) {
+
+    let defaultTitle = _t('title.site')
 
     const title = extractTitle(propsList)
 

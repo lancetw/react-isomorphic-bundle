@@ -25,8 +25,10 @@ export default class WallHandler extends React.Component {
   }
 
   render () {
+    const _t = require('counterpart')
+
     return (
-      <DocumentTitle title='All events for you'>
+      <DocumentTitle title={_t('title.wall')}>
         <Wall
           {...this.props}
         />

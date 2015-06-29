@@ -15,9 +15,10 @@ export default class LogoutHandler extends React.Component {
   }
 
   render () {
+    const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title='Log out'>
+      <DocumentTitle title={_t('title.logout')}>
         <Logout
           {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}
