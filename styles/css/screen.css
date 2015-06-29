@@ -26,22 +26,9 @@ main.ui.stackable.page {
   padding-top: 64px;
 }
 
-.ui.locale-switcher {
-  text-align: center;
-  select {
-    text-align: center;
-    padding: 1em 1.2em 1em 1.2em;
-    margin: -2em;
-    appearance: none;
-    text-overflow: '';
-    box-shadow: none;
-    border: none;
-    outline: none;
-    font-size: 0.9em;
-    font-family: 'Roboto';
-    &:focus {
-      outline: 0;
-    }
+.ui.has-header {
+  padding-top: 64px;
+  .active.dimmer {
+    padding-top: 64px;
   }
 }
-

@@ -20,13 +20,6 @@ export default class PostCards extends BaseComponent {
         {!isEmpty(cards) && cards.map(function (card) {
           return <Card key={card.id} data={card} />
         })}
-        {isEmpty(cards) && (
-          <div className="ui basic segment">
-            <div className="ui active inverted dimmer">
-              <div className="ui text loader">Loading</div>
-            </div>
-          </div>
-        )}
       </div>
     )
   }
