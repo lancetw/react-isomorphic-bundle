@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
 import DocumentTitle from 'shared/components/addon/document-title'
 import * as LocaleActions from 'shared/actions/LocaleActions'
-import Dropdown from 'shared/components/portals/dropdown'
 
 export default class LocaleSwitcher extends React.Component {
 
@@ -26,20 +25,24 @@ export default class LocaleSwitcher extends React.Component {
 
   render () {
     return (
-      <Dropdown className="item">
-        <div
-          onClick={this.handleChange}
-          className="item"
-          value="zh-hant-tw">
-          正體中文
+      <div className="ui simple dropdown item">
+        <i className="world icon"></i>
+        <i className="dropdown icon"></i>
+        <div className="menu">
+          <div
+            onClick={this.handleChange}
+            className="item"
+            value="zh-hant-tw">
+            正體中文
+          </div>
+          <div
+            onClick={this.handleChange}
+            className="item"
+            value="en">
+            English
+          </div>
         </div>
-        <div
-          onClick={this.handleChange}
-          className="item"
-          value="en">
-          English
-        </div>
-      </Dropdown>
+      </div>
     )
   }
 }
