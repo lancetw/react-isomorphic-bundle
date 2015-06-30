@@ -45,10 +45,13 @@ exports.list = function *(offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.fetch = function *(offset=0, limit=20, start, end) {
-  if (typeof start === 'undefined')
-    start = moment().startOf('day').valueOf()
-  if (typeof end === 'undefined')
-    end = moment(+start).add('1', 'days').endOf('day').valueOf()
+  let _start = start
+  let _end = end
+
+  if (typeof _start === 'undefined')
+    _start = moment().startOf('day').valueOf()
+  if (typeof _end === 'undefined')
+    _end = moment(+_start).add('1', 'days').endOf('day').valueOf()
 
   return yield Post.findAll({
     offset: offset,
@@ -56,7 +59,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
     order: [[ 'start_date', 'ASC' ]],
     where: {
       end_date: {
-        $gte: moment(+start).subtract('1', 'days').startOf('day').format()
+        $gte: moment(+_start).subtract('1', 'days').startOf('day').format()
       }
     }
   })
