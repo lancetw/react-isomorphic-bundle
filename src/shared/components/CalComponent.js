@@ -46,7 +46,7 @@ export default class Cal extends React.Component {
 
   fixLocaleName (locale) {
     if (locale === 'zh-hant-tw')
-      return 'zh-tw'
+      return 'zh-TW'
 
     return locale
   }
