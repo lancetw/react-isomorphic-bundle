@@ -7,7 +7,7 @@ import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import bemLinter from 'postcss-bem-linter';
-import logWarnings from 'postcss-log-warnings';
+import atReporter from 'postcss-reporter';
 import nested from 'postcss-nested';
 import simpleVars from 'postcss-simple-vars';
 import atImport from 'postcss-import';
@@ -51,8 +51,8 @@ export default {
     },
     output: {
       path: path.join(__dirname, '../../public/assets/'),
-      filename: '[name]-[chunkhash].js',
-      chunkFilename: '[name]-[chunkhash].js',
+      filename: '[name]-[hash].js',
+      chunkFilename: '[name]-[hash].js',
       publicPath: PUBLIC_PATH,
     },
     plugins: [
@@ -61,7 +61,7 @@ export default {
         jQuery: "jquery",
         "window.jQuery": "jquery"
       }),
-      new ExtractTextPlugin('[name]-[chunkhash].css'),
+      new ExtractTextPlugin('[name]-[hash].css'),
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
@@ -126,7 +126,7 @@ export default {
       ]
     },
     postcss: {
-        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, logWarnings, nested, simpleVars, atColorFn],
+        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, atReporter, nested, simpleVars, atColorFn],
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {

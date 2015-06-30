@@ -61,6 +61,10 @@ export default {
     submit: 'Change'
   },
   post: {
+    created: {
+      title: 'Post created!',
+      content: 'Now will redirect to wall page.'
+    },
     submit: 'Post it',
     nodata: 'No data'
   },

@@ -108,7 +108,7 @@ export default class Post extends BaseComponent {
       if (content.uid)
         this.setState({ updated: true, submited: true })
 
-      setTimeout(() => this.context.router.transitionTo('/wall'), 2000)
+      setTimeout(() => this.context.router.transitionTo('/wall/today'), 2000)
     }
   }
 
@@ -118,6 +118,8 @@ export default class Post extends BaseComponent {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+
     let Loading = this.state.submited
       && !this.state.updated
       ? classNames('ui', 'form', 'segment', 'loading')
@@ -127,13 +129,11 @@ export default class Post extends BaseComponent {
     (
       <div className="ui success message">
         <div className="header">
-          Post created!
+          <Translate content="post.created.title" />
         </div>
-        <p>now will redirect to homepage.</p>
+        <p><Translate content="post.created.content" /></p>
       </div>
     ) : null
-
-    const Translate = require('react-translate-component')
 
     return (
       <main className="ui two column stackable centered page grid">

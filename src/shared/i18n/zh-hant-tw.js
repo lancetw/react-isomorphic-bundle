@@ -61,6 +61,10 @@ export default {
     submit: '變更'
   },
   post: {
+    created: {
+      title: '佈告已登錄！',
+      content: '現在自動轉頁⋯'
+    },
     submit: '張貼',
     nodata: '查無資料'
   },
