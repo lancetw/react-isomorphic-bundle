@@ -7,6 +7,7 @@ import { LocaleUtils } from 'react-day-picker/lib/addons'
 import { isSameDay } from 'shared/utils/date-utils'
 import moment from 'moment'
 import 'moment/locale/zh-TW'
+import counterpart from 'counterpart'
 
 if (process.env.BROWSER)
   require('css/ui/date-picker')
@@ -16,9 +17,11 @@ export default class Cal extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      locale: 'zh-TW',
+      locale: this.fixLocaleName(counterpart.getLocale()),
       selectedDay: new Date()
     }
+
+    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   static propTypes = {
@@ -33,6 +36,19 @@ export default class Cal extends React.Component {
     this.setState({
       selectedDay: day
     })
+  }
+
+  handleLocaleChange (newLocale) {
+    this.setState({
+      locale: this.fixLocaleName(newLocale)
+    })
+  }
+
+  fixLocaleName (locale) {
+    if (locale === 'zh-hant-tw')
+      return 'zh-TW'
+
+    return locale
   }
 
   render () {
