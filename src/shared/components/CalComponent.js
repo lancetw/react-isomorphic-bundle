@@ -6,7 +6,7 @@ import DayPicker from 'react-day-picker'
 import { LocaleUtils } from 'react-day-picker/lib/addons'
 import { isSameDay } from 'shared/utils/date-utils'
 import moment from 'moment'
-import 'moment/locale/zh-TW'
+import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
 
 if (process.env.BROWSER)
@@ -46,7 +46,7 @@ export default class Cal extends React.Component {
 
   fixLocaleName (locale) {
     if (locale === 'zh-hant-tw')
-      return 'zh-TW'
+      return 'zh-tw'
 
     return locale
   }
