@@ -13,7 +13,11 @@ const Post = db.posts
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
-    this.body = yield Post.list(0, 10)
+    const { start, end } = this.request.query
+    if (typeof start !== 'undefined')
+      this.body = yield Post.fetch(0, 10, start, end)
+    else
+      this.body = yield Post.list(0, 10)
   },
   // POST /posts
   create: [ RestAuth, function *(next) {
@@ -50,12 +54,17 @@ export default new Resource('posts', {
 
   }],
   // GET /posts/:post
-  show: [ RestAuth, function *(next) {
-    const post = yield Post.load(this.params.post)
-    this.type = 'json'
-    this.status = 200
-    this.body = hashids.encodeJson(post)
-  }],
+  show: function *(next) {
+    try {
+      const post = yield Post.load(this.params.post)
+      this.type = 'json'
+      this.status = 200
+      this.body = hashids.encodeJson(post)
+    } catch (err) {
+      this.type = 'josn'
+      this.status = 404
+    }
+  },
   // GET /posts/:post/edit
   edit: function *(next) {
     this.body = 'post'

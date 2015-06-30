@@ -7,11 +7,13 @@ export default {
     wall: 'All events',
     post: 'Post it!',
     password: 'Change My Password',
-    redirect: 'Redirecting...'
+    redirect: 'Redirecting...',
+    cal: 'Calendar view'
   },
   header: {
     home: 'Home',
     wall: 'Wall',
+    cal: 'Cal',
     post: 'Post',
     login: 'Log In',
     logout: 'Log Out',
@@ -58,6 +60,11 @@ export default {
     submit: 'Change'
   },
   post: {
-    submit: 'Post it'
+    submit: 'Post it',
+    nodata: 'No data'
+  },
+  wall: {
+    loading: 'Loading...',
+    header: 'All events'
   }
 }

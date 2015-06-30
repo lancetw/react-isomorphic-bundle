@@ -8,6 +8,7 @@ import {
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
+  loading: true,
   errors: {},
   posts: [],
   content: {}
@@ -21,9 +22,9 @@ const actionsMap = {
     ({ errors: action.errors }),
   [LIST_POST_STARTED]: () => (initialState),
   [LIST_POST_COMPLETED]: (state, action) =>
-    ({ posts: action.posts }),
+    ({ loading: false, posts: action.posts }),
   [LIST_POST_FAILED]: (state, action) =>
-    ({ errors: action.errors })
+    ({ loading: false, errors: action.errors })
 }
 
 export default function post (state = initialState, action) {

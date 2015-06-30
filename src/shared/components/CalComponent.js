@@ -2,19 +2,46 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
+import DayPicker from 'react-day-picker'
+import { LocaleUtils } from 'react-day-picker/lib/addons'
+import { isSameDay } from 'shared/utils/date-utils'
+import moment from 'moment'
+import 'moment/locale/zh-TW'
 
-export default class Wall extends React.Component {
+if (process.env.BROWSER)
+  require('css/ui/date-picker')
+
+export default class Cal extends React.Component {
 
   constructor (props) {
     super(props)
+    this.state = {
+      locale: 'zh-TW',
+      selectedDay: new Date()
+    }
   }
 
   static propTypes = {
+    fetchList: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired
+  }
+
+  handleDayClick (e, day) {
+    const date = moment(day).valueOf()
+    this.props.fetchList(date)
+
+    this.setState({
+      selectedDay: day
+    })
   }
 
   render () {
     const Translate = require('react-translate-component')
+    const { locale } = this.state
+    const { selectedDay } = this.state
+    const modifiers = {
+      'selected': (day) => isSameDay(selectedDay, day)
+    }
 
     return (
       <main className="ui stackable page centered grid">
@@ -30,6 +57,19 @@ export default class Wall extends React.Component {
             </div>
           </div>
           <div className="ui horizontal divider" />
+          <div className="row">
+            <div className="ui segment">
+              <DayPicker className="ui centered row compact"
+                modifiers={ modifiers }
+                onDayClick={ ::this.handleDayClick }
+                locale={ locale }
+                localeUtils={ LocaleUtils }
+              />
+            </div>
+          </div>
+          <div className="ui horizontal header divider">
+            { selectedDay.toLocaleDateString() }
+          </div>
           <div className="row">
             <Cards posts={this.props.post.posts} />
             {this.props.post.loading && (

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Wall from './WallComponent'
+import Cal from './CalComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as PostActions from '../actions/PostActions'
@@ -8,13 +8,13 @@ import DocumentTitle from './addon/document-title'
 @connect(state => ({
   post: state.post
 }))
-export default class WallHandler extends React.Component {
+export default class CalHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
 
     const dispatch = context.redux.dispatch
-    dispatch(PostActions.showList())
+    dispatch(PostActions.fetchList())
   }
 
   static propTypes = {
@@ -26,16 +26,17 @@ export default class WallHandler extends React.Component {
   }
 
   static async routerWillRun ({ dispatch }) {
-    return await dispatch(PostActions.showList())
+    return await dispatch(PostActions.fetchList())
   }
 
   render () {
     const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={_t('title.wall')}>
-        <Wall
+      <DocumentTitle title={_t('title.cal')}>
+        <Cal
           {...this.props}
+          {...bindActionCreators(PostActions, dispatch)}
         />
       </DocumentTitle>
     )

@@ -43,6 +43,25 @@ exports.list = function *(offset=0, limit=20) {
   })
 }
 
+/* eslint-disable camelcase */
+exports.fetch = function *(offset=0, limit=20, start, end) {
+  if (typeof start === 'undefined')
+    start = moment().startOf('day').valueOf()
+  if (typeof end === 'undefined')
+    end = moment(+start).add('1', 'days').endOf('day').valueOf()
+
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      end_date: {
+        $gte: moment(+start).subtract('1', 'days').startOf('day').format()
+      }
+    }
+  })
+}
+
 exports.update = function *(hid, post) {
   const fillable = [
     'type',

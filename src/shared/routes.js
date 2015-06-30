@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 import { App, Home, Login, Logout, Signup, Post,
-  Wall, ChangePassword, SyncToken } from './components'
+  Wall, Cal, ChangePassword, SyncToken } from './components'
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
 
@@ -13,7 +13,8 @@ export default function (redux) {
       <Route path="login" component={Login} />
       <Route path="logout" component={Logout} />
       <Route path="signup" component={Signup} />
-      <Route path="wall" component={Wall} />
+      <Route path="wall/today" component={Wall} />
+      <Route path="wall/cal" component={Cal} />
       <Route path="post" component={Post}
         redux={redux} onEnter={auth} />
       <Route path="password" component={ChangePassword}

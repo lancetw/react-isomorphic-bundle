@@ -64,6 +64,30 @@ export function showList () {
   }
 }
 
+export function fetchList (start, end) {
+  return async dispatch => {
+    dispatch({ type: LIST_POST_STARTED })
+    try {
+      const posts = await fetch(start, end)
+      if (isArray(posts))
+        return dispatch({
+          type: LIST_POST_COMPLETED,
+          posts: posts
+        })
+      else
+        return dispatch({
+          type: LIST_POST_FAILED,
+          errors: posts.errors ? posts.errors : posts
+        })
+    } catch (err) {
+      return dispatch({
+        type: LIST_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
 async function create (form, token) {
   return new Promise((resolve, reject) => {
     const user = jwt.decode(token)
@@ -100,3 +124,18 @@ async function list () {
   })
 }
 
+async function fetch (start, end) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(LOCAL_PATH + '/api/v1/posts')
+      .query({ start: start })
+      .query({ end: end })
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}

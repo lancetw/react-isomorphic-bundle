@@ -7,11 +7,13 @@ export default {
     wall: '所有佈告',
     post: '張貼新佈告',
     password: '修改密碼',
-    redirect: '重新導向中...'
+    redirect: '重新導向中...',
+    cal: '日曆瀏覽'
   },
   header: {
     home: '首頁',
     wall: '佈告',
+    cal: '日曆模式',
     post: '發表',
     login: '登入',
     logout: '登出',
@@ -58,6 +60,11 @@ export default {
     submit: '變更'
   },
   post: {
-    submit: '張貼'
+    submit: '張貼',
+    nodata: '查無資料'
+  },
+  wall: {
+    loading: '載入中...',
+    header: '所有活動'
   }
 }

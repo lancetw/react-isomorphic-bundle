@@ -59,7 +59,7 @@ export default class Header extends React.Component {
               <Translate content="header.home" />
             </Link>
             {AuthLink}
-            <Link to='/wall' className="item">
+            <Link to='/wall/today' className="item">
               <Translate content="header.wall" />
             </Link>
             <Link to='/post' className="item">
