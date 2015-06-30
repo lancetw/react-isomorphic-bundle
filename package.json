@@ -170,6 +170,7 @@
     "postcss-loader": "^0.4.4",
     "postcss-log-warnings": "^0.3.1",
     "postcss-nested": "^0.3.2",
+    "postcss-reporter": "^0.1.0",
     "postcss-simple-vars": "^0.3.0",
     "react-a11y": "^0.2.0",
     "react-hot-loader": "^1.2.7",

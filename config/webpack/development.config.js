@@ -6,7 +6,7 @@ import {isArray} from 'lodash';
 import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
 import bemLinter from 'postcss-bem-linter';
-import logWarnings from 'postcss-log-warnings';
+import atReporter from 'postcss-reporter';
 import nested from 'postcss-nested';
 import simpleVars from 'postcss-simple-vars';
 import atImport from 'postcss-import';
@@ -51,8 +51,8 @@ export default {
     publicPath: PUBLIC_PATH,
     output: {
       path: path.join(__dirname, '../../public'),
-      filename: '[name]-[chunkhash].js',
-      chunkFilename: '[name]-[chunkhash].js',
+      filename: '[name]-[hash].js',
+      chunkFilename: '[name]-[hash].js',
       publicPath: PUBLIC_PATH
     },
     plugins: [
@@ -100,7 +100,7 @@ export default {
       ]
     },
     postcss: {
-        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, logWarnings, nested, simpleVars, atColorFn],
+        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, atReporter, nested, simpleVars, atColorFn],
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
