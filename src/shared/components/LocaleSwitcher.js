@@ -2,7 +2,11 @@ import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
 import DocumentTitle from 'shared/components/addon/document-title'
 import * as LocaleActions from 'shared/actions/LocaleActions'
+import { connect } from 'redux/react'
 
+@connect(state => ({
+  locale: state.locale
+}))
 export default class LocaleSwitcher extends React.Component {
 
   constructor (props) {
@@ -12,6 +16,7 @@ export default class LocaleSwitcher extends React.Component {
   }
 
   static propTypes = {
+    locale: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -21,6 +26,9 @@ export default class LocaleSwitcher extends React.Component {
     this.props.dispatch(
       LocaleActions.sync(lang)
     )
+    const title = counterpart(this.props.locale.title)
+    const defaultTitle = counterpart('title.site')
+    document.title = `${title} | ${defaultTitle}`
   }
 
   render () {

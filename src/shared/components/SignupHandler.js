@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as SignupActions from '../actions/SignupActions'
 import * as AuthActions from '../actions/AuthActions'
+import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
@@ -12,14 +13,26 @@ import DocumentTitle from './addon/document-title'
 }))
 export default class SignupHandler extends React.Component {
 
+  constructor (props, context) {
+    super(props, context)
+
+    const dispatch = context.redux.dispatch
+    dispatch(updateTitle('title.signup'))
+  }
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }
 
+  static contextTypes = {
+    redux: PropTypes.object.isRequired
+  }
+
   render () {
+    const _t = require('counterpart')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title='Sign up'>
+      <DocumentTitle title={_t('title.signup')}>
         <Signup
           {...bindActionCreators(SignupActions, dispatch)}
           {...bindActionCreators(AuthActions, dispatch)}

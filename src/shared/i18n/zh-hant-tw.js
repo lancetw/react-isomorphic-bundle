@@ -4,6 +4,7 @@ export default {
     home: '首頁',
     login: '登入',
     logout: '登出',
+    signup: '註冊',
     wall: '所有佈告',
     post: '張貼新佈告',
     password: '修改密碼',

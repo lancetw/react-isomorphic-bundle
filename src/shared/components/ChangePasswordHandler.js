@@ -3,6 +3,7 @@ import ChangePassword from './ChangePasswordComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as UserActions from '../actions/UserActions'
+import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
@@ -10,8 +11,19 @@ import DocumentTitle from './addon/document-title'
 }))
 export default class ChangePasswordHandler extends React.Component {
 
+  constructor (props, context) {
+    super(props, context)
+
+    const dispatch = context.redux.dispatch
+    dispatch(updateTitle('title.password'))
+  }
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired
+  }
+
+  static contextTypes = {
+    redux: PropTypes.object.isRequired
   }
 
   render () {

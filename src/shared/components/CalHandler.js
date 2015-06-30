@@ -3,6 +3,7 @@ import Cal from './CalComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as PostActions from '../actions/PostActions'
+import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
@@ -15,6 +16,7 @@ export default class CalHandler extends React.Component {
 
     const dispatch = context.redux.dispatch
     dispatch(PostActions.fetchList())
+    dispatch(updateTitle('title.cal'))
   }
 
   static propTypes = {

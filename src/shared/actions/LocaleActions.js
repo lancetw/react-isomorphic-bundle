@@ -1,6 +1,7 @@
 import {
   SYNC_CLIENT_LOCALE_COMPLETED,
-  SYNC_SERVER_LOCALE_COMPLETED
+  SYNC_SERVER_LOCALE_COMPLETED,
+  UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 export function sync (locale) {
@@ -16,6 +17,15 @@ export function sync (locale) {
         type: SYNC_SERVER_LOCALE_COMPLETED,
         locale: locale
       })
+  }
+}
+
+export function updateTitle (title) {
+  return async dispatch => {
+    return dispatch({
+      type: UPDATE_TITLE_COMPLETED,
+      title: title
+    })
   }
 }
 

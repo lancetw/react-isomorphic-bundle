@@ -3,6 +3,7 @@ import Wall from './WallComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as PostActions from '../actions/PostActions'
+import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
@@ -15,6 +16,7 @@ export default class WallHandler extends React.Component {
 
     const dispatch = context.redux.dispatch
     dispatch(PostActions.showList())
+    dispatch(updateTitle('title.wall'))
   }
 
   static propTypes = {

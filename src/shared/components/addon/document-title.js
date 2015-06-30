@@ -17,11 +17,13 @@ function extractTitle (propsList) {
 }
 
 let _serverTitle = null
+let defaultTitle = _t('title.site')
+let tmp = null
 
 export default createSideEffect(
   function handleChange (propsList) {
 
-    let defaultTitle = _t('title.site')
+    defaultTitle = _t('title.site')
 
     const title = extractTitle(propsList)
 
@@ -31,6 +33,8 @@ export default createSideEffect(
       document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
     else
       _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle
+
+    tmp = title ? `${title} | ${defaultTitle}` : defaultTitle
 
   }, {
 

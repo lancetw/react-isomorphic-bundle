@@ -4,6 +4,7 @@ export default {
     home: 'Home',
     login: 'Log In',
     logout: 'Log Out',
+    signup: 'Sign Up',
     wall: 'All events',
     post: 'Post it!',
     password: 'Change My Password',

@@ -1,10 +1,12 @@
 import {
   SYNC_SERVER_LOCALE_COMPLETED,
-  SYNC_CLIENT_LOCALE_COMPLETED
+  SYNC_CLIENT_LOCALE_COMPLETED,
+  UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
-  locale: ''
+  locale: '',
+  title: ''
 }
 
 const actionsMap = {
@@ -21,7 +23,9 @@ const actionsMap = {
         typeof action.locale !== 'undefined'
         ? action.locale
         : state.locale
-    })
+    }),
+  [UPDATE_TITLE_COMPLETED]: (state, action) =>
+    ({ title: action.title })
 }
 
 export default function locale (state = initialState, action) {
