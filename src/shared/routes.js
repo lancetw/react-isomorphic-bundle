@@ -5,7 +5,7 @@ import { App, Home, Login, Logout, Signup, Post,
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
 
-export default function (redux) {
+export default function (store) {
   return (
     <Route component={App}>
       <Route path="/" component={Home} />
@@ -16,9 +16,9 @@ export default function (redux) {
       <Route path="wall/today" component={Wall} />
       <Route path="wall/cal" component={Cal} />
       <Route path="post" component={Post}
-        redux={redux} onEnter={auth} />
+        store={store} onEnter={auth} />
       <Route path="password" component={ChangePassword}
-        redux={redux} onEnter={auth} />
+        store={store} onEnter={auth} />
       <Route path="sync/token" component={SyncToken} />
       <Route path="*" component={NotFound} />
       <Redirect from="/" to="/home" />

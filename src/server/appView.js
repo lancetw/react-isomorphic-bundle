@@ -3,8 +3,8 @@
 import React from 'react'
 import { Router } from 'react-router'
 import Location from 'react-router/lib/Location'
-import { createRedux, createDispatcher } from 'redux'
-import * as stores from 'shared/stores'
+import { createStore } from 'redux'
+import * as reducers from 'shared/reducers'
 import { Provider } from 'redux/react'
 import routes from 'shared/routes'
 import fs from 'fs'
@@ -30,12 +30,12 @@ export default function (app) {
     const isCashed = this.cashed ? yield *this.cashed() : false
     if (!isCashed) {
 
-      const redux = createRedux(stores)
+      const store = createStore(reducers)
       const location = new Location(this.path, this.query)
 
       // save session token to store
       if (this.session.token && this.session.token !== null)
-        redux.dispatch(AuthActions.sync(this.session.token))
+        store.dispatch(AuthActions.sync(this.session.token))
 
       const translator = new Translator()
       translator.registerTranslations('en',
@@ -50,7 +50,7 @@ export default function (app) {
         const { error, initialState, transition, handler }
         = yield new Promise((resolve) => {
           Router.run(
-          routes(redux),
+          routes(store),
           location,
           (_error, _initialState, _transition) => {
 
@@ -70,7 +70,7 @@ export default function (app) {
             initialState.components,
             'routerWillRun',
             {
-              dispatch: redux.dispatch
+              dispatch: store.dispatch
             }
           )
         } catch (err) {
@@ -80,7 +80,7 @@ export default function (app) {
         appString = React.renderToString(
           <AppContainer translator={translator}>
             {() =>
-              <Provider redux={redux}>
+              <Provider store={store}>
                 {() =>
                   <Router {...initialState} />
                 }

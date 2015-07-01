@@ -15,14 +15,14 @@ export default class SyncTokenHandler extends React.Component {
   }
 
   static contextTypes = {
-    redux: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
   }
 
   componentDidMount () {
     this.setState({ isClient: true })
 
-    const dispatch = this.context.redux.dispatch
+    const dispatch = this.context.store.dispatch
     const token = this.props.location.query.token
     setTimeout(() => dispatch(save(token)), 1000)
     setTimeout(() => this.context.router.transitionTo('/'), 2000)

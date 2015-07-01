@@ -112,12 +112,17 @@ export default class Signup extends BaseComponent {
   }
 
   checkSubmited (response) {
-    if (response && response.token) {
-      setTimeout(() => this.setState({ ok: true }), 300)
-      setTimeout(() => this.setState({ submited: true }), 300)
-      setTimeout(() => this.props.save(response.token), 100)
-      setTimeout(() => this.context.router.transitionTo('/'), 1000)
-    } else this.setState({ submited: false })
+    if (response && response.token)
+      new Promise((resolve) => {
+        this.setState({ ok: true })
+        this.setState({ submited: true })
+        setTimeout(() => {
+          resolve(this.props.save(response.token))
+        }, 1000)
+
+      }).then(() => this.context.router.transitionTo('/home'))
+
+    else this.setState({ submited: false })
   }
 
   componentWillReceiveProps (nextProps) {

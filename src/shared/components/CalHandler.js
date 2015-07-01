@@ -14,7 +14,7 @@ export default class CalHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.redux.dispatch
+    const dispatch = context.store.dispatch
     dispatch(PostActions.fetchList())
     dispatch(updateTitle('title.cal'))
   }
@@ -24,7 +24,7 @@ export default class CalHandler extends React.Component {
   }
 
   static contextTypes = {
-    redux: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired
   }
 
   static async routerWillRun ({ dispatch }) {

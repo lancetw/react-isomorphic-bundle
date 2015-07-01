@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { Router } from 'react-router'
-import { createRedux } from 'redux'
-import * as stores from 'shared/stores'
+import { createStore } from 'redux'
+import * as reducers from 'shared/reducers'
 import { Provider } from 'redux/react'
 import routes from 'shared/routes'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
@@ -28,15 +28,15 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
   counterpart.setLocale(lang || 'zh-hant-tw')
 
   const initialState = window.STATE_FROM_SERVER   // no data
-  const redux = createRedux(stores, initialState)
+  const store = createStore(reducers, initialState)
 
   const history = new BrowserHistory()
 
   React.render((
-    <Provider redux={redux}>
+    <Provider store={store}>
       {() =>
         <Router
-          children={routes(redux)}
+          children={routes(store)}
           history={history}
         />
       }

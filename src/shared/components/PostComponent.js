@@ -102,14 +102,13 @@ export default class Post extends BaseComponent {
   }
 
   checkSubmited (content) {
-    if (!isEmpty(content)) {
-      this.setState({ submited: true })
+    if (!isEmpty(content))
+      new Promise((resolve) => {
+        this.setState({ submited: true })
+        if (content.uid) this.setState({ updated: true, submited: true })
+        setTimeout(() => resolve('ok'), 1000)
 
-      if (content.uid)
-        this.setState({ updated: true, submited: true })
-
-      setTimeout(() => this.context.router.transitionTo('/wall/today'), 2000)
-    }
+      }).then(() => this.context.router.transitionTo('/wall/today'))
   }
 
   componentWillReceiveProps (nextProps) {

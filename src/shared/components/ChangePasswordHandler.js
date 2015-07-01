@@ -14,7 +14,7 @@ export default class ChangePasswordHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.redux.dispatch
+    const dispatch = context.store.dispatch
     dispatch(updateTitle('title.password'))
   }
 
@@ -23,7 +23,7 @@ export default class ChangePasswordHandler extends React.Component {
   }
 
   static contextTypes = {
-    redux: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired
   }
 
   render () {

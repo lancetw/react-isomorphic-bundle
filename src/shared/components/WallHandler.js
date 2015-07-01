@@ -14,7 +14,7 @@ export default class WallHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.redux.dispatch
+    const dispatch = context.store.dispatch
     dispatch(PostActions.showList())
     dispatch(updateTitle('title.wall'))
   }
@@ -24,7 +24,7 @@ export default class WallHandler extends React.Component {
   }
 
   static contextTypes = {
-    redux: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired
   }
 
   static async routerWillRun ({ dispatch }) {

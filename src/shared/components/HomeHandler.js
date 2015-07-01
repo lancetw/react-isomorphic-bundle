@@ -14,12 +14,12 @@ export default class HomeHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.redux.dispatch
+    const dispatch = context.store.dispatch
     dispatch(updateTitle('title.home'))
   }
 
   static contextTypes = {
-    redux: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired
   }
 
   static propTypes = {
