@@ -80,10 +80,10 @@ export default class Header extends React.Component {
         </div>
         <div className="mobile only row">
           <div className="left menu">
-            <Link className="item left" to="wall">
+            <Link className="item left" to="/wall/today">
               <Translate content="header.home" />
             </Link>
-            <Link to='post' className="item">
+            <Link to='/post' className="item">
               <Translate content="header.post" />
             </Link>
           </div>
