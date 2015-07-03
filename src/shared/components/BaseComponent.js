@@ -6,4 +6,14 @@ export default class BaseComponent extends React.Component {
       (method) => this[method] = this[method].bind(this)
     )
   }
+
+  isMounted () {
+    try {
+      React.findDOMNode(this)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+
 }

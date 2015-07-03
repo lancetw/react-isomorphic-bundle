@@ -1,5 +1,8 @@
-import { CHANGE_PASS_USER_STARTED, CHANGE_PASS_USER_COMPLETED,
-  CHANGE_PASS_USER_FAILED } from 'shared/constants/ActionTypes'
+import {
+  CHANGE_PASS_USER_STARTED,
+  CHANGE_PASS_USER_COMPLETED,
+  CHANGE_PASS_USER_FAILED
+} from 'shared/constants/ActionTypes'
 
 const initialState = {
   errors: {},

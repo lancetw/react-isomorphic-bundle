@@ -102,13 +102,10 @@ export default class Post extends BaseComponent {
   }
 
   checkSubmited (content) {
-    if (!isEmpty(content))
-      new Promise((resolve) => {
-        this.setState({ submited: true })
-        if (content.uid) this.setState({ updated: true, submited: true })
-        setTimeout(() => resolve('ok'), 1000)
-
-      }).then(() => this.context.router.transitionTo('/wall/today'))
+    if (!isEmpty(content)) {
+      this.setState({ submited: true })
+      if (content.uid) this.setState({ updated: true, submited: true })
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -117,6 +114,9 @@ export default class Post extends BaseComponent {
   }
 
   render () {
+    if (!isEmpty(this.props.post.content))
+      setTimeout(() => this.context.router.transitionTo('/wall/today'), 1000)
+
     const Translate = require('react-translate-component')
 
     let Loading = this.state.submited

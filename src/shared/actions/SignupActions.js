@@ -1,7 +1,10 @@
 import request from 'superagent'
-import { SIGNUP_USER_STARTED, SIGNUP_USER_COMPLETED,
-  SIGNUP_USER_FAILED } from 'shared/constants/ActionTypes'
-import { auth } from 'shared/actions/AuthActions'
+import {
+  SIGNUP_USER_STARTED,
+  SIGNUP_USER_COMPLETED,
+  SIGNUP_USER_FAILED
+}from 'shared/constants/ActionTypes'
+import { auth, save } from 'shared/actions/AuthActions'
 
 export function submit (form) {
   return async dispatch => {
@@ -9,16 +12,17 @@ export function submit (form) {
 
     try {
       const res = await sendForm(form)
-      if (res.email)
+      if (res.email) {
+        const response = await auth(form)
+        dispatch(save(response.token))
         return dispatch({
           type: SIGNUP_USER_COMPLETED,
-          response: await auth(form)
+          response: response
         })
-      else
-        return dispatch({
-          type: SIGNUP_USER_FAILED,
-          errors: res.errors ? res.errors : res
-        })
+      } else return dispatch({
+        type: SIGNUP_USER_FAILED,
+        errors: res.errors ? res.errors : res
+      })
     } catch (err) {
       return dispatch({
         type: SIGNUP_USER_FAILED,

@@ -1,5 +1,8 @@
-import { SIGNUP_USER_STARTED, SIGNUP_USER_COMPLETED,
-  SIGNUP_USER_FAILED } from 'shared/constants/ActionTypes'
+import {
+  SIGNUP_USER_STARTED,
+  SIGNUP_USER_COMPLETED,
+  SIGNUP_USER_FAILED
+} from 'shared/constants/ActionTypes'
 
 const initialState = {
   response: {},

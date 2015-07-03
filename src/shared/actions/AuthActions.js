@@ -51,14 +51,13 @@ export function login (form) {
     dispatch({ type: AUTH_USER_STARTED })
     try {
       const res = await auth(form)
-      if (res && res.token)
+      if (res && res.token) {
+        setToken(res.token)
         return dispatch({
           type: AUTH_USER_COMPLETED,
           token: res.token
         })
-      else
-        throw new Error('no token')
-
+      } else throw new Error('no token')
     } catch (err) {
       return dispatch({
         type: AUTH_USER_FAILED,

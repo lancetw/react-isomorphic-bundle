@@ -3,13 +3,11 @@ import Signup from './SignupComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as SignupActions from '../actions/SignupActions'
-import * as AuthActions from '../actions/AuthActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
-  signup: state.signup,
-  auth: state.auth
+  signup: state.signup
 }))
 export default class SignupHandler extends React.Component {
 
@@ -35,7 +33,6 @@ export default class SignupHandler extends React.Component {
       <DocumentTitle title={_t('title.signup')}>
         <Signup
           {...bindActionCreators(SignupActions, dispatch)}
-          {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}
         />
       </DocumentTitle>

@@ -29,7 +29,6 @@ export default class Signup extends BaseComponent {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
-    save: PropTypes.func.isRequired,
     signup: PropTypes.object.isRequired
   }
 
@@ -111,26 +110,14 @@ export default class Signup extends BaseComponent {
     }
   }
 
-  checkSubmited (response) {
-    if (response && response.token)
-      new Promise((resolve) => {
-        this.setState({ ok: true })
-        this.setState({ submited: true })
-        setTimeout(() => {
-          resolve(this.props.save(response.token))
-        }, 1000)
-
-      }).then(() => this.context.router.transitionTo('/home'))
-
-    else this.setState({ submited: false })
-  }
-
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.signup.errors)
-    this.checkSubmited(nextProps.signup.response)
   }
 
   render () {
+    if (this.props.signup.response && this.props.signup.response.token)
+      setTimeout(() => this.context.router.replaceWith('/home'), 1000)
+
     let Loading = this.state.submited && !(this.state.ok) ?
       classNames('ui', 'form', 'segment', 'loading') :
       classNames('ui', 'form', 'segment')

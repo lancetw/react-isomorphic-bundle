@@ -11,6 +11,13 @@ import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
 
+const warn = console.warn
+console.warn = function (warning) {
+  if (/(setState)/.test(warning))
+    throw new Error(warning)
+  warn.apply(console, arguments)
+}
+
 export default class Login extends BaseComponent {
 
   constructor (props) {
@@ -33,6 +40,7 @@ export default class Login extends BaseComponent {
   static propTypes = {
     login: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
+    sync: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   }
 
@@ -56,7 +64,7 @@ export default class Login extends BaseComponent {
       this.setState({ submited: true })
       this.clearFormErrors()
 
-      setTimeout(() => this.props.login(value), 1000)
+      setTimeout(() => this.props.login(value), 100)
     }
   }
 
@@ -95,21 +103,22 @@ export default class Login extends BaseComponent {
     }
   }
 
-  checkSubmited (token) {
-    if (token) {
-      setTimeout(() => this.setState({ ok: true }), 0)
-      setTimeout(() => this.setState({ submited: true }), 300)
-      setTimeout(() => this.props.save(token), 100)
-      setTimeout(() => this.context.router.transitionTo('/'), 1000)
-    } else this.setState({ submited: false })
-  }
-
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.auth.errors)
-    this.checkSubmited(nextProps.auth.token)
   }
 
   render () {
+    if (this.props.auth.isAuthenticated) {
+      const { state } = this.context.router.state.location
+      let path
+      if (state && state.nextPathname)
+        path = state.nextPathname
+      else
+        path = '/home'
+
+      setTimeout(() => this.context.router.replaceWith(path), 1000)
+    }
+
     let Loading = this.state.submited && !(this.state.ok) ?
       classNames('ui', 'form', 'segment', 'loading') :
       classNames('ui', 'form', 'segment')

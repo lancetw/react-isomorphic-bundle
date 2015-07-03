@@ -46,8 +46,7 @@ export default {
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
-          NODE_ENV: JSON.stringify('production'),
-          BASE_URL: JSON.stringify(process.env.BASE_URL)
+          NODE_ENV: JSON.stringify('production')
         },
       }),
       new webpack.optimize.DedupePlugin(),

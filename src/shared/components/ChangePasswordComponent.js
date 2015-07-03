@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react/addons'
 import BaseComponent from 'shared/components/BaseComponent'
-import { Form, ChangePasswordForm,
-  ChangePasswordFormOptions } from 'shared/utils/forms'
+import {
+  Form,
+  ChangePasswordForm,
+  ChangePasswordFormOptions
+} from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 const { CSSTransitionGroup } = React.addons

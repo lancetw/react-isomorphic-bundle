@@ -6,6 +6,8 @@ export default class Logout extends BaseComponent {
   constructor (props) {
     super(props)
     this.state = { isClient: false }
+
+    props.logout()
   }
 
   static propTypes = {
@@ -18,12 +20,11 @@ export default class Logout extends BaseComponent {
 
   componentDidMount () {
     this.setState({ isClient: true })
-
-    setTimeout(() => this.props.logout(), 1000)
-    setTimeout(() => this.context.router.transitionTo('/'), 2000)
   }
 
   render () {
+    setTimeout(() => this.context.router.replaceWith('/'), 1000)
+
     const Translate = require('react-translate-component')
 
     const msg = this.state.isClient

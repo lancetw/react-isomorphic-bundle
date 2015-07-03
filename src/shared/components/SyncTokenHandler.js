@@ -24,8 +24,14 @@ export default class SyncTokenHandler extends React.Component {
 
     const dispatch = this.context.store.dispatch
     const token = this.props.location.query.token
-    setTimeout(() => dispatch(save(token)), 1000)
-    setTimeout(() => this.context.router.transitionTo('/'), 2000)
+
+    new Promise((resolve) => {
+      dispatch(save(token))
+      setTimeout(() => {
+        resolve('ok')
+      }, 1000)
+
+    }).then(() => this.context.router.transitionTo('/home'))
   }
 
   render () {

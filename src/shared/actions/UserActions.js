@@ -1,7 +1,10 @@
 import request from 'superagent'
 import jwt from 'jsonwebtoken'
-import { CHANGE_PASS_USER_STARTED, CHANGE_PASS_USER_COMPLETED,
-  CHANGE_PASS_USER_FAILED } from 'shared/constants/ActionTypes'
+import {
+  CHANGE_PASS_USER_STARTED,
+  CHANGE_PASS_USER_COMPLETED,
+  CHANGE_PASS_USER_FAILED
+} from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 
 export function changePassword (form) {
