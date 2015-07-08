@@ -11,13 +11,6 @@ import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
 
-const warn = console.warn
-console.warn = function (warning) {
-  if (/(setState)/.test(warning))
-    throw new Error(warning)
-  warn.apply(console, arguments)
-}
-
 export default class Login extends BaseComponent {
 
   constructor (props) {

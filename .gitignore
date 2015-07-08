@@ -46,4 +46,6 @@ lib/
 
 storage/*
 
+uploads/*
+
 *.env

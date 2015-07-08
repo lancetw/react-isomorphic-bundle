@@ -7,7 +7,8 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
-  post: state.post
+  post: state.post,
+  upload: state.upload
 }))
 export default class PostHandler extends React.Component {
 

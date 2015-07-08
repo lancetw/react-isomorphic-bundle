@@ -28,6 +28,7 @@ clean-stats:
 
 storage:
 	mkdir -p storage
+	mkdir -p uploads
 
 # Test
 test: lint webpack-test

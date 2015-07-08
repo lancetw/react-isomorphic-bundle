@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   title: {
     site: 'Isomorphic redux demo',
@@ -64,6 +65,16 @@ export default {
     created: {
       title: 'Post created!',
       content: 'Now will redirect to wall page.'
+    },
+    tabs: {
+      title: {
+        basic: 'Basic',
+        upload: 'Upload'
+      },
+      msg: {
+        upload: 'Dropping images or pdf files here, or click to select:',
+        limit: 'Per file size limit：3 MB'
+      }
     },
     submit: 'Post it',
     nodata: 'No data'

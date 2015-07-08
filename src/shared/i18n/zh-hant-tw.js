@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   title: {
     site: 'Isomorphic redux 範例',
@@ -65,7 +66,17 @@ export default {
       title: '佈告已登錄！',
       content: '現在自動轉頁⋯'
     },
-    submit: '張貼',
+    tabs: {
+      title: {
+        basic: '基本資料',
+        upload: '上傳附件'
+      },
+      msg: {
+        upload: '您可以上傳圖片或是 PDF（請拖拉至此或是點擊選擇檔案）：',
+        limit: '每個檔案大小上限 3 MB'
+      }
+    },
+    submit: '張貼佈告',
     nodata: '查無資料'
   },
   wall: {

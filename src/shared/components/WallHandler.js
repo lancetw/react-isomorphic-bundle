@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import Wall from './WallComponent'
-import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'

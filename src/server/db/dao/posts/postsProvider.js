@@ -15,7 +15,8 @@ exports.create = function *(post) {
     'openDate',
     'closeDate',
     'title',
-    'content'
+    'content',
+    'file'
   ]
 
   return yield Post.create(post, { fields: fillable })

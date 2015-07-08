@@ -118,4 +118,3 @@ export default class HomeComponent extends BaseComponent {
     )
   }
 }
-

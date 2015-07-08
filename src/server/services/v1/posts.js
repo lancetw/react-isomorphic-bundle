@@ -29,7 +29,13 @@ export default new Resource('posts', {
       startDate: { type: 'date' },
       endDate: { type: 'date' },
       title: { type: 'string' },
-      content: { type: 'string' }
+      content: { type: 'string' },
+      file: {
+        required: false,
+        type: 'array',
+        itemType: 'string',
+        rule: {type: 'string', allowEmpty: true}
+      }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -41,6 +47,7 @@ export default new Resource('posts', {
 
     try {
       body.closeDate = body.endDate
+      body.file = JSON.stringify(body.file)
 
       const post = yield Post.create(body)
       this.type = 'json'

@@ -4,8 +4,11 @@ import { Form, PostForm, PostFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment'
-const { CSSTransitionGroup } = React.addons
 import counterpart from 'counterpart'
+import ImageUpload from 'shared/components/addon/image-upload'
+import { Tab, Tabs, TabList, TabPanel } from 'shared/components/addon/tabs'
+
+const { CSSTransitionGroup } = React.addons
 
 export default class Post extends BaseComponent {
 
@@ -20,6 +23,7 @@ export default class Post extends BaseComponent {
     const today = moment().format('YYYY-M-D').split('-')
     today[1] = today[1] - 1
     this.state = {
+      images: [],
       value: {
         type: '2',
         prop: '1',
@@ -39,7 +43,8 @@ export default class Post extends BaseComponent {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    upload: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -52,7 +57,13 @@ export default class Post extends BaseComponent {
     })
   }
 
-  handleChange () {}
+  handleChange (value) {
+    this.setState({ value })
+  }
+
+  handleSelected (index, last) {
+
+  }
 
   handleSubmit (evt) {
     evt.preventDefault()
@@ -64,7 +75,8 @@ export default class Post extends BaseComponent {
       this.setState({ value: saved })
       this.setState({ submited: true })
 
-      setTimeout(() => this.props.submit(value), 1000)
+      const upload = this.props.upload.filenames
+      setTimeout(() => this.props.submit(value, upload), 1000)
     }
   }
 
@@ -115,22 +127,25 @@ export default class Post extends BaseComponent {
 
   render () {
     if (!isEmpty(this.props.post.content))
-      setTimeout(() => this.context.router.transitionTo('/wall/today'), 1000)
+      setTimeout(() => this.context.router.replaceWith('/wall/today'), 1000)
 
     const Translate = require('react-translate-component')
 
     let Loading = this.state.submited
       && !this.state.updated
-      ? classNames('ui', 'form', 'segment', 'loading')
-      : classNames('ui', 'form', 'segment')
+      ? classNames('ui', 'form', 'loading')
+      : classNames('ui', 'form')
 
     let Message = this.state.updated ?
     (
-      <div className="ui success message">
-        <div className="header">
-          <Translate content="post.created.title" />
+      <div>
+        <div className="ui success message">
+          <div className="header">
+            <Translate content="post.created.title" />
+          </div>
+          <p><Translate content="post.created.content" /></p>
         </div>
-        <p><Translate content="post.created.content" /></p>
+        <div className="ui hidden divider"></div>
       </div>
     ) : null
 
@@ -140,26 +155,53 @@ export default class Post extends BaseComponent {
           <CSSTransitionGroup transitionName="MessageTransition">
             {Message}
           </CSSTransitionGroup>
-          <form
-            className={Loading}
-            action="/posts/new"
-            method="post"
-            onSubmit={this.handleSubmit}>
-            <Form
-              ref="form"
-              type={PostForm(counterpart.getLocale())}
-              options={this.state.options}
-              value={this.state.value}
-              onChange={this.handleChange}/>
-            <div className="ui hidden divider" />
-            <button
-              type="submit"
-              className="ui red labeled icon large button"
-              disabled={this.state.submited}>
-              <Translate content="post.submit" />
-              <i className="add icon"></i>
-            </button>
-          </form>
+          <Tabs
+            onSelect={this.handleSelected}
+            selectedIndex={0}>
+            <TabList>
+              <Tab>
+                <Translate content="post.tabs.title.basic" />
+              </Tab>
+              <Tab>
+                <Translate content="post.tabs.title.upload" />
+              </Tab>
+            </TabList>
+            <TabPanel index={0}>
+              <form
+                className={Loading}
+                action="/posts/new"
+                method="post"
+                onSubmit={this.handleSubmit}>
+                <Form
+                  ref="form"
+                  type={PostForm(counterpart.getLocale())}
+                  options={this.state.options}
+                  value={this.state.value}
+                  onChange={this.handleChange}/>
+                <div className="ui hidden divider" />
+                <button
+                  type="submit"
+                  className="ui red labeled icon large button"
+                  disabled={this.state.submited}>
+                  <Translate content="post.submit" />
+                  <i className="add icon"></i>
+                </button>
+              </form>
+            </TabPanel>
+            <TabPanel index={1}>
+              <p>
+                <Translate content="post.tabs.msg.upload" />
+              </p>
+              <div className="ui three column grid center aligned">
+                <ImageUpload index={0} />
+                <ImageUpload index={1} />
+                <ImageUpload index={2} />
+              </div>
+              <div className="ui center aligned segment warning message">
+                <Translate content="post.tabs.msg.limit" />
+              </div>
+            </TabPanel>
+          </Tabs>
         </div>
       </main>
     )
