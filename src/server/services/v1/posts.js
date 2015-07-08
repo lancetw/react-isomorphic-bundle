@@ -34,7 +34,7 @@ export default new Resource('posts', {
         required: false,
         type: 'array',
         itemType: 'string',
-        rule: {type: 'string', allowEmpty: true}
+        rule: { type: 'string', allowEmpty: true }
       }
     }
     const errors = validate(rule, body)

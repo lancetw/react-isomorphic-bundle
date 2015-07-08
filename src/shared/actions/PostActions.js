@@ -95,7 +95,6 @@ export function fetchList (start, end) {
 
 async function create (token, form, upload) {
   const _upload = compact(upload)
-  console.log(_upload)
   return new Promise((resolve, reject) => {
     const user = jwt.decode(token)
     if (!user.id) reject('invalid token')
