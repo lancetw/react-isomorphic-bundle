@@ -119,17 +119,17 @@ export default class Signup extends BaseComponent {
       setTimeout(() => this.context.router.replaceWith('/home'), 1000)
 
     let Loading = this.state.submited && !(this.state.ok) ?
-      classNames('ui', 'form', 'segment', 'loading') :
-      classNames('ui', 'form', 'segment')
+      classNames('ui', 'orange', 'form', 'segment', 'loading') :
+      classNames('ui', 'orange', 'form', 'segment')
 
     const Translate = require('react-translate-component')
 
     return (
       <main className="ui two column stackable page grid">
         <div className="column">
-          <div className="ui piled segment">
+          <div className="ui segment">
             <h2 className="ui header">
-              <i className="users icon"></i>
+              <i className="orange inverted users icon"></i>
               <div className="content">
                 <Translate content="register.hello" />
                 <div className="sub header">
@@ -155,7 +155,7 @@ export default class Signup extends BaseComponent {
             <div className="ui hidden divider" />
             <button
               type="submit"
-              className="ui teal labeled icon huge button"
+              className="ui orange labeled icon huge button"
               disabled={this.state.submited && this.state.ok}>
               <Translate content="register.submit" />
               <i className="add icon"></i>

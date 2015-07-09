@@ -263,8 +263,9 @@ function checkbox(locals) {
       attrs: {
         className: {
           ui: true,
-          toggle: true,
-          checkbox: true
+          slider: true,
+          checkbox: true,
+          orange: true
         }
       },
       children: [control, label, help, error]
@@ -368,7 +369,8 @@ function radio(locals) {
             className: {
               ui: true,
               radio: true,
-              checkbox: true
+              checkbox: true,
+              orange: true
             }
           },
           children: [{

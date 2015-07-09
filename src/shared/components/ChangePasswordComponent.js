@@ -115,8 +115,8 @@ export default class ChangePassword extends BaseComponent {
 
     let Loading = this.state.submited
       && !this.state.updated
-      ? classNames('ui', 'form', 'segment', 'loading')
-      : classNames('ui', 'form', 'segment')
+      ? classNames('ui', 'orange', 'form', 'segment', 'loading')
+      : classNames('ui', 'orange', 'form', 'segment')
 
     let Message = this.state.updated ?
     (
@@ -148,7 +148,7 @@ export default class ChangePassword extends BaseComponent {
             <div className="ui hidden divider" />
             <button
               type="submit"
-              className="ui blue labeled icon large button"
+              className="ui orange labeled icon large button"
               disabled={this.state.submited}>
               <Translate content="password.submit" />
               <i className="add icon"></i>

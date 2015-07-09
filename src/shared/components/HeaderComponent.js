@@ -52,7 +52,8 @@ export default class Header extends React.Component {
       )
 
     return (
-      <header className="ui orange inverted menu grid fixed top">
+      <header
+        className="ui orange menu grid fixed top">
         <div className="computer tablet only row">
           <div className="left menu">
             <Link to='/home' className="item">
@@ -71,7 +72,7 @@ export default class Header extends React.Component {
           <div className="right menu">
             <LocaleSwitcher dispatch={this.props.dispatch} />
             <div className="item">
-              <div className="ui transparent icon input inverted">
+              <div className="ui transparent icon input">
                 {TranslateProps(searchProps)}
                 <i className="search icon"></i>
               </div>

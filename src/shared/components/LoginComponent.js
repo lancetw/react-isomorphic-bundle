@@ -113,8 +113,8 @@ export default class Login extends BaseComponent {
     }
 
     let Loading = this.state.submited && !(this.state.ok) ?
-      classNames('ui', 'form', 'segment', 'loading') :
-      classNames('ui', 'form', 'segment')
+      classNames('ui', 'orange', 'form', 'segment', 'loading') :
+      classNames('ui', 'orange', 'form', 'segment')
 
     const Translate = require('react-translate-component')
 
@@ -138,7 +138,7 @@ export default class Login extends BaseComponent {
                 <div className="ui hidden divider" />
                 <button
                   type="submit"
-                  className="fluid ui blue large button"
+                  className="ui orange large button"
                   disabled={this.state.ok}>
                   <Translate content="header.login" />
                 </button>
@@ -148,7 +148,7 @@ export default class Login extends BaseComponent {
               <Translate content="login.or" />
             </div>
             <div className="center aligned column">
-              <a className="large blue ui labeled icon button"
+              <a className="large facebook ui labeled icon button"
                 href="/auth/facebook">
                 <i className="facebook icon"></i>
                 <Translate content="login.facebook" />

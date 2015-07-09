@@ -179,7 +179,7 @@ export default class Post extends BaseComponent {
                 <div className="ui hidden divider" />
                 <button
                   type="submit"
-                  className="ui red labeled icon large button"
+                  className="ui orange labeled icon large button"
                   disabled={this.state.submited}>
                   <Translate content="post.submit" />
                   <i className="add icon"></i>
@@ -195,7 +195,7 @@ export default class Post extends BaseComponent {
                 <ImageUpload index={1} />
                 <ImageUpload index={2} />
               </div>
-              <div className="ui center aligned segment warning message">
+              <div className="ui orange center aligned segment">
                 <Translate content="post.tabs.msg.limit" />
               </div>
             </TabPanel>

@@ -63,7 +63,7 @@ export default class Cal extends React.Component {
       <main className="ui stackable page centered grid">
         <div className="column">
           <div className="row">
-            <div className="basic ui buttons">
+            <div className="ui orange inverted buttons">
               <Link className="ui button" to='/wall/today'>
                 <Translate content="header.wall" />
               </Link>

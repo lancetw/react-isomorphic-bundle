@@ -18,7 +18,7 @@ export default class PostCard extends BaseComponent{
     const card = this.props.data
     const files = JSON.parse(card.file)
     return (
-      <div className="ui fluid card">
+      <div className="ui fluid orange card">
         <div className="content">
           <div className="header">{card.title}</div>
           <div className="meta">
