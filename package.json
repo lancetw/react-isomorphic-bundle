@@ -91,6 +91,7 @@
     "koa-proxy": "^0.2.0",
     "koa-resource-router": "^0.4.0",
     "koa-response-time": "^1.0.2",
+    "koa-route": "^2.4.2",
     "koa-router": "^5.1.1",
     "koa-static-cache": "^3.1.1",
     "leveldown": "^1.2.2",

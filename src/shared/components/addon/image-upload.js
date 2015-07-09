@@ -29,7 +29,6 @@ export default class ImageUpload extends React.Component {
     const sizeLimit = 1024 * 1024 * 3
     const { dispatch } = this.props
     const file = files[0]
-
     if (file.size > sizeLimit)
       return
 

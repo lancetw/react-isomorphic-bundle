@@ -23,7 +23,7 @@ const MulterMiddleware = multer({
   putSingleFilesInArray: true,
   dest: './uploads/',
   rename: function (fieldname, filename) {
-    return filename.replace(/\W+/g, '-').toLowerCase() + '_' + Date.now()
+    return filename + '_' + Date.now()
   },
   limits: {
     fileSize: 1024 * 1024 * 3,
@@ -35,12 +35,6 @@ const MulterMiddleware = multer({
   },
   onFileUploadStart: (file, req, res) => {
     return include(mimeTypes, file.mimetype)
-  },
-  onFileUploadData: (file, data, req, res) => {
-    //res.body = { progress: data.length }
-  },
-  onFileUploadComplete: (file, req, res) => {
-    //res.body = { progress: 100 }
   }
 })
 

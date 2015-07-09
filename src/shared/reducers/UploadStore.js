@@ -4,9 +4,8 @@ import {
   UPLOAD_FILE_FAILED,
   UPLOAD_FILE_PROGRESS,
   SET_IMAGE_PREVIEW_COMPLETED,
-  CLEAR_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_FILENAME_COMPLETED,
-  CLEAR_IMAGE_FILENAME_COMPLETED
+  CLEAR_UPLOAD_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
@@ -41,8 +40,6 @@ const actionsMap = {
       index: action.index
     }
   },
-  [CLEAR_IMAGE_PREVIEW_COMPLETED]: (state, action) =>
-    ({ images: [], percentages: [] }),
   [SET_IMAGE_FILENAME_COMPLETED]: (state, action) => {
     let _filenames = initialState.filenames
     _filenames[action.index] = action.filename
@@ -51,8 +48,12 @@ const actionsMap = {
       index: action.index
     }
   },
-  [CLEAR_IMAGE_FILENAME_COMPLETED]: (state, action) =>
-    ({ filenames: [] })
+  [CLEAR_UPLOAD_COMPLETED]: (state, action) => {
+    state.images.length = 0
+    state.filenames.length = 0
+    state.percentages.length = 0
+    return initialState
+  }
 }
 
 export default function upload (state = initialState, action) {

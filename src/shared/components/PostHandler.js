@@ -3,6 +3,7 @@ import Post from './PostComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'redux/react'
 import * as PostActions from '../actions/PostActions'
+import * as UploadActions from '../actions/UploadActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
@@ -34,6 +35,7 @@ export default class PostHandler extends React.Component {
       <DocumentTitle title={_t('title.post')}>
         <Post
           {...bindActionCreators(PostActions, dispatch)}
+          {...bindActionCreators(UploadActions, dispatch)}
           {...this.props}
         />
       </DocumentTitle>

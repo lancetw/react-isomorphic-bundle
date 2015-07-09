@@ -17,6 +17,7 @@ import * as AuthActions from 'shared/actions/AuthActions'
 import url from 'url'
 import runStaticMethod from 'shared/utils/runStaticMethod'
 import AppContainer from 'shared/components/AppContainer'
+import route from 'koa-route'
 
 const Translator = require('counterpart').Instance
 
@@ -26,13 +27,21 @@ nunjucks.configure('views', {
 
 export default function (app) {
 
+  app.use(route.get('/uploads/*', function *() {
+    const location = path.join(__dirname, '../../', decodeURI(this.path))
+    const fstat = yield stat(location)
+
+    if (fstat.isFile()) {
+      this.type = path.extname(location)
+      this.body = fs.createReadStream(location)
+    }
+  }))
+
   app.use(function *() {
     const isCashed = this.cashed ? yield *this.cashed() : false
     if (!isCashed) {
-
       const store = createStore(reducers)
       const location = new Location(this.path, this.query)
-
       // save session token to store
       if (this.session.token && this.session.token !== null)
         store.dispatch(AuthActions.sync(this.session.token))
@@ -45,7 +54,6 @@ export default function (app) {
       translator.setLocale('zh-hant-tw')
 
       let appString, assets, title
-
       try {
         const { error, initialState, transition, handler }
         = yield new Promise((resolve) => {
@@ -53,7 +61,6 @@ export default function (app) {
           routes(store),
           location,
           (_error, _initialState, _transition) => {
-
             resolve({
               error: _error,
               initialState: _initialState,
@@ -116,4 +123,11 @@ export default function (app) {
 
     }
   })
+}
+
+// thunkify stat
+function stat (file) {
+  return function (done) {
+    fs.stat(file, done)
+  }
 }

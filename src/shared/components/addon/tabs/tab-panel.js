@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
-const { CSSTransitionGroup } = React.addons
 
 export default class TabPanel extends React.Component {
 
@@ -25,13 +24,11 @@ export default class TabPanel extends React.Component {
       classNames('ui', 'bottom', 'attached', 'tab', 'segment')
 
     return (
-      <CSSTransitionGroup transitionName="MessageTransition">
-        { actived &&
-          <div className={status}>
-            {this.props.children}
-          </div>
-        }
-      </CSSTransitionGroup>
+      actived && (
+        <div className={status}>
+          {this.props.children}
+        </div>
+      )
     )
   }
 }

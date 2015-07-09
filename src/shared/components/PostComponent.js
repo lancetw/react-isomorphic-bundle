@@ -61,9 +61,7 @@ export default class Post extends BaseComponent {
     this.setState({ value })
   }
 
-  handleSelected (index, last) {
-
-  }
+  handleSelected (index, last) {}
 
   handleSubmit (evt) {
     evt.preventDefault()

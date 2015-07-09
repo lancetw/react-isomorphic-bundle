@@ -12,10 +12,7 @@ import {
   LIST_POST_FAILED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
-import {
-  clearImagePreview,
-  clearImageFileNames
-} from 'shared/actions/UploadActions'
+import { clearUpload } from 'shared/actions/UploadActions'
 
 export function submit (form, upload) {
   return async dispatch => {
@@ -26,8 +23,7 @@ export function submit (form, upload) {
       const content = await create(token, form, upload)
 
       if (content.uid) {
-        dispatch(clearImagePreview())
-        dispatch(clearImageFileNames())
+        dispatch(clearUpload())
         return dispatch({
           type: CREATE_POST_COMPLETED,
           content: content

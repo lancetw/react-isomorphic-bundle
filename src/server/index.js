@@ -4,15 +4,16 @@ delete process.env.BROWSER
 const env = process.env.NODE_ENV || 'development'
 
 const path = require('path')
+const modulePath = require('app-module-path')
 
-require('app-module-path').addPath(path.join(__dirname, '../../'))
+modulePath.addPath(path.join(__dirname, '../../'))
 
 if (env !== 'production')
-  require('app-module-path').addPath(path.join(__dirname, '../../src'))
+  modulePath.addPath(path.join(__dirname, '../../src'))
 else
-  require('app-module-path').addPath(path.join(__dirname, '../../lib'))
+  modulePath.addPath(path.join(__dirname, '../../lib'))
 
-require('app-module-path').addPath(path.join(__dirname, '../../styles'))
+modulePath.addPath(path.join(__dirname, '../../styles'))
 
 require('babel/register')({
   'stage': 1

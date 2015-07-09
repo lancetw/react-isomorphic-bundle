@@ -82,6 +82,13 @@ app.use(mount('/images',
   )
 ))
 
+app.use(mount('/uploads',
+  staticCache(
+    path.join(__dirname, '../../uploads'),
+    cacheOpts
+  )
+))
+
 app.use(favicon(path.join(__dirname, '../../images/favicon.ico')))
 
 app.keys = require('config').app.SESSION_KEYS

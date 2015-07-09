@@ -6,9 +6,8 @@ import {
   UPLOAD_FILE_FAILED,
   UPLOAD_FILE_PROGRESS,
   SET_IMAGE_PREVIEW_COMPLETED,
-  CLEAR_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_FILENAME_COMPLETED,
-  CLEAR_IMAGE_FILENAME_COMPLETED
+  CLEAR_UPLOAD_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 
@@ -35,7 +34,7 @@ export function send (filename, file, index) {
       })
     request
       .post('/api/v1/uploads')
-      .attach(filename, file)
+      .attach('file', file, filename)
       .set('Accept', 'application/json')
       .set('Authorization', 'JWT ' + token)
       .on('progress', (e) => {
@@ -80,18 +79,10 @@ export function setImageFileName (filename, index) {
   }
 }
 
-export function clearImagePreview () {
+export function clearUpload () {
   return async dispatch => {
     return dispatch({
-      type: CLEAR_IMAGE_PREVIEW_COMPLETED
-    })
-  }
-}
-
-export function clearImageFileNames () {
-  return async dispatch => {
-    return dispatch({
-      type: CLEAR_IMAGE_FILENAME_COMPLETED
+      type: CLEAR_UPLOAD_COMPLETED
     })
   }
 }

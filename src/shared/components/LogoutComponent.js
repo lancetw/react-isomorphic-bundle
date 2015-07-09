@@ -30,7 +30,7 @@ export default class Logout extends BaseComponent {
     const msg = this.state.isClient
       ? <Translate content="logout.msg" />
       : <div><Translate content="logout.msg2" />
-          <a href="/auth/logout"><Translate content="logout.click " /></a>
+          <a href="/auth/logout"><Translate content="logout.click" /></a>
         </div>
     return (
       <main className="ui stackable page grid">

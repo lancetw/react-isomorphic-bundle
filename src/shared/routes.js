@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 import { App, Home, Login, Logout, Signup, Post,
-  Wall, Cal, ChangePassword, SyncToken } from './components'
+  Wall, Cal, ChangePassword, SyncToken, Direct } from './components'
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
 

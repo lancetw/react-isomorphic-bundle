@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from 'shared/components/BaseComponent'
 import moment from 'moment'
+import { isEmpty } from 'lodash'
 
 export default class PostCard extends BaseComponent{
 
@@ -15,7 +16,7 @@ export default class PostCard extends BaseComponent{
 
   render () {
     const card = this.props.data
-
+    const files = JSON.parse(card.file)
     return (
       <div className="ui fluid card">
         <div className="content">
@@ -29,7 +30,18 @@ export default class PostCard extends BaseComponent{
             <span className="category">{card.prop}</span>
           </div>
           <div className="description">
-            <p></p>
+          { files && !isEmpty(files) && <div className="ui divider"></div> }
+          {
+            files && !isEmpty(files) && files.map(function (file, i) {
+              return (
+                <div key={i}>
+                  <a target="_blank" href={'/uploads/' + file}>
+                    { file }
+                  </a>
+                </div>
+              )
+            })
+          }
           </div>
         </div>
         <div className="extra content">
