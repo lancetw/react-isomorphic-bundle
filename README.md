@@ -55,6 +55,7 @@ $ npm install
 - [x] react-router upgrade to 1.0.0beta2
 - [x] flummox change to redux...!
 - [x] i18n / language switcher
+- [x] Files/Images uploader
 - [ ] Posts with Location/Category/Timeline view
 - [ ] more ...
 

@@ -45,7 +45,12 @@ export function send (filename, file, index) {
       .end(function (err, res) {
         if (!err && res.body && res.body.response) {
           dispatch(setImageFileName(res.body.response.name, index))
-          dispatch(setImagePreview(file.preview, index))
+
+          if (res.body.response.ext === 'pdf')
+            dispatch(setImagePreview('/images/pdf.png', index))
+          else
+            dispatch(setImagePreview(file.preview, index))
+
           return dispatch({
             type: UPLOAD_FILE_COMPLETED,
             response: res.body.response

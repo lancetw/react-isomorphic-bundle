@@ -45,7 +45,12 @@ export default new Resource('uploads', {
       const filename = Object.keys(this.req.files)[0]
       const fileinfo = this.req.files[filename][0]
       if (!fileinfo.failed) {
-        this.body = { response: { name: fileinfo.name } }
+        this.body = {
+          response: {
+            name: fileinfo.name,
+            ext: fileinfo.extension
+          }
+        }
         return
       }
     }
