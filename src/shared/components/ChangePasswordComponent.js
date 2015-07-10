@@ -19,6 +19,7 @@ export default class ChangePassword extends BaseComponent {
       'handleChange',
       'clearFormErrors'
     )
+    this.messageTimeout = undefined
     this.releaseTimeout = undefined
     this.state = {
       value: { password: '', passwordCheck: '' },
@@ -101,7 +102,7 @@ export default class ChangePassword extends BaseComponent {
 
   checkSubmited (info) {
     if (!isEmpty(info)) {
-      this.setState({ submited: true })
+      this.setState({ submited: false })
       if (info.email)
         this.setState({ updated: true })
     }
@@ -121,7 +122,6 @@ export default class ChangePassword extends BaseComponent {
     const Translate = require('react-translate-component')
 
     let Loading = this.state.submited
-      && !this.state.updated
       ? classNames('ui', 'orange', 'form', 'segment', 'loading')
       : classNames('ui', 'orange', 'form', 'segment')
 
@@ -134,6 +134,10 @@ export default class ChangePassword extends BaseComponent {
         <p><Translate content="password.modified.content" /></p>
       </div>
     ) : null
+
+    if (this.state.updated)
+      this.messageTimeout =
+        setTimeout(() => this.setState({ updated: false }), 5000)
 
     return (
       <main className="ui two column stackable centered page grid">
