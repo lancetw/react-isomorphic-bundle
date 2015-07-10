@@ -27,11 +27,19 @@ export default class ChangePassword extends BaseComponent {
       submited: false,
       updated: false
     }
+
+    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   static propTypes = {
     changePassword: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
+  }
+
+  handleLocaleChange (newLocale) {
+    this.setState({
+      options: ChangePasswordFormOptions(newLocale)
+    })
   }
 
   handleChange (value, path) {
