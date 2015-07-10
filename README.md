@@ -56,6 +56,7 @@ $ npm install
 - [x] flummox change to redux...!
 - [x] i18n / language switcher
 - [x] Files/Images uploader
+- [x] Ad script support
 - [ ] Posts with Location/Category/Timeline view
 - [ ] more ...
 
@@ -82,3 +83,7 @@ $ npm install
 * [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
 * [sequelize](https://github.com/sequelize/sequelize)
 * [superagent](https://github.com/visionmedia/superagent)
+* [webpack](https://github.com/webpack/webpack)
+* [postcss](https://github.com/postcss/postcss)
+* [postscribe](https://github.com/krux/postscribe)
+* [babel](https://github.com/babel/babel)

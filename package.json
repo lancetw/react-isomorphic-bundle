@@ -50,7 +50,8 @@
     "tcomb-form",
     "facebook",
     "passport",
-    "passport-facebook"
+    "passport-facebook",
+    "postscribe"
   ],
   "dependencies": {
     "app-module-path": "^1.0.2",

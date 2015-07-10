@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+// ref: https://gist.github.com/Ambroos/734933c4d3d11c3af847
 import React, { PropTypes } from 'react'
 
 export default class Ad extends React.Component {
