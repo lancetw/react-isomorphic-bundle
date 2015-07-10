@@ -22,6 +22,7 @@ export default class Post extends BaseComponent {
 
     const today = moment().format('YYYY-M-D').split('-')
     today[1] = today[1] - 1
+    this.releaseTimeout = undefined
     this.state = {
       images: [],
       value: {
@@ -123,9 +124,15 @@ export default class Post extends BaseComponent {
     this.checkSubmited(nextProps.post.content)
   }
 
+  componentWillUnmount () {
+    if (this.op)
+      clearTimeout(this.releaseTimeout)
+  }
+
   render () {
     if (!isEmpty(this.props.post.content))
-      setTimeout(() => this.context.router.replaceWith('/wall/today'), 1000)
+      this.releaseTimeout =
+        setTimeout(() => this.context.router.replaceWith('/wall/today'), 1000)
 
     const Translate = require('react-translate-component')
 

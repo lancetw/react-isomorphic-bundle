@@ -19,6 +19,7 @@ export default class ChangePassword extends BaseComponent {
       'handleChange',
       'clearFormErrors'
     )
+    this.releaseTimeout = undefined
     this.state = {
       value: { password: '', passwordCheck: '' },
       options: ChangePasswordFormOptions(counterpart.getLocale()),
@@ -60,7 +61,8 @@ export default class ChangePassword extends BaseComponent {
       this.clearFormErrors()
       this.setState({ submited: true })
 
-      setTimeout(() => this.props.changePassword(value), 1000)
+      this.releaseTimeout =
+        setTimeout(() => this.props.changePassword(value), 1000)
     } else {
       const pass = this.refs.form.getComponent('password')
       const check = this.refs.form.getComponent('passwordCheck')
@@ -108,6 +110,11 @@ export default class ChangePassword extends BaseComponent {
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.user.errors)
     this.checkSubmited(nextProps.user.info)
+  }
+
+  componentWillUnmount () {
+    if (this.op)
+      clearTimeout(this.releaseTimeout)
   }
 
   render () {

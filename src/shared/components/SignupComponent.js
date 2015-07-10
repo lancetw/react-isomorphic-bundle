@@ -14,7 +14,8 @@ export default class Signup extends BaseComponent {
       'validation',
       'handleChange'
     )
-
+    this.releaseTimeout0 = undefined
+    this.releaseTimeout1 = undefined
     this.state = {
       value: {
         tos: false
@@ -71,7 +72,8 @@ export default class Signup extends BaseComponent {
       this.setState({ submited: true })
       this.clearFormErrors()
 
-      setTimeout(() => this.props.submit(value), 1000)
+      this.releaseTimeout0 =
+        setTimeout(() => this.props.submit(value), 1000)
     }
 
   }
@@ -114,9 +116,17 @@ export default class Signup extends BaseComponent {
     this.validation(nextProps.signup.errors)
   }
 
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this.releaseTimeout0)
+      clearTimeout(this.releaseTimeout1)
+    }
+  }
+
   render () {
     if (this.props.signup.response && this.props.signup.response.token)
-      setTimeout(() => this.context.router.replaceWith('/home'), 1000)
+      this.releaseTimeout1 =
+        setTimeout(() => this.context.router.replaceWith('/home'), 1000)
 
     let Loading = this.state.submited && !(this.state.ok) ?
       classNames('ui', 'orange', 'form', 'segment', 'loading') :

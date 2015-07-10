@@ -20,7 +20,7 @@ export default class Login extends BaseComponent {
       'clearFormErrors',
       'fillFormAllErrors'
     )
-
+    this.releaseTimeout = undefined
     this.state = {
       submited: false,
       ok: false,
@@ -100,6 +100,11 @@ export default class Login extends BaseComponent {
     this.validation(nextProps.auth.errors)
   }
 
+  componentWillUnmount () {
+    if (this.op)
+      clearTimeout(this.releaseTimeout)
+  }
+
   render () {
     if (this.props.auth.isAuthenticated) {
       const { state } = this.context.router.state.location
@@ -109,7 +114,8 @@ export default class Login extends BaseComponent {
       else
         path = '/home'
 
-      setTimeout(() => this.context.router.replaceWith(path), 1000)
+      this.releaseTimeout =
+        setTimeout(() => this.context.router.replaceWith(path), 1000)
     }
 
     let Loading = this.state.submited && !(this.state.ok) ?

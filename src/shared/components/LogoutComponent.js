@@ -5,8 +5,8 @@ export default class Logout extends BaseComponent {
 
   constructor (props) {
     super(props)
+    this.releaseTimeout = undefined
     this.state = { isClient: false }
-
     props.logout()
   }
 
@@ -22,8 +22,14 @@ export default class Logout extends BaseComponent {
     this.setState({ isClient: true })
   }
 
+  componentWillUnmount () {
+    if (this.op)
+      clearTimeout(this.releaseTimeout)
+  }
+
   render () {
-    setTimeout(() => this.context.router.replaceWith('/'), 1000)
+    this.releaseTimeout =
+      setTimeout(() => this.context.router.replaceWith('/'), 1000)
 
     const Translate = require('react-translate-component')
 
