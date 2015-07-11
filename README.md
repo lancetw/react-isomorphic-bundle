@@ -87,3 +87,4 @@ $ npm install
 * [postcss](https://github.com/postcss/postcss)
 * [postscribe](https://github.com/krux/postscribe)
 * [babel](https://github.com/babel/babel)
+* [react-hot-loader](https://github.com/gaearon/react-hot-loader)
