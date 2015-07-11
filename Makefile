@@ -51,11 +51,11 @@ lint:
 
 # Build application quickly
 # Faster on first build, but not after that
-fast-build: fast-js build
+fast-build: storage fast-js build
 
 # Watch for changes
 watch:
-	@NODE_ENV=development $(MAKE) -j5 dev-server webpack-server browser-sync
+	@NODE_ENV=development $(MAKE) -j5 storage dev-server webpack-server browser-sync
 
 debug:
 	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
@@ -93,7 +93,7 @@ webpack-server: $(LIB_JS)
 
 webpack: public/assets
 
-webpack-test: storage
+webpack-test:
 	@NODE_ENV=test $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
 
 public/assets: $(SRC_JS)

@@ -45,19 +45,22 @@ $ npm install
 
 ## Features
 
-- [x] isomorphic flux (flummox), supports JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] isomorphic flux (Flummox), supports JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] Flummox change to Redux...!
+- [x] React-router upgrade to 1.0.0beta2
 - [x] Register (isomorphic)
 - [x] Log in (isomorphic)
 - [x] Facebook Sign In (isomorphic)
 - [x] Restful API with JWT
 - [x] Change password
 - [x] Create post
-- [x] react-router upgrade to 1.0.0beta2
-- [x] flummox change to redux...!
 - [x] i18n / language switcher
 - [x] Files/Images uploader
 - [x] Ad script support
 - [ ] Posts with Location/Category/Timeline view
+- [ ] Full text Search
+- [ ] Sitemap
+- [ ] Static archive pages
 - [ ] more ...
 
 ---
@@ -86,5 +89,8 @@ $ npm install
 * [webpack](https://github.com/webpack/webpack)
 * [postcss](https://github.com/postcss/postcss)
 * [postscribe](https://github.com/krux/postscribe)
-* [babel](https://github.com/babel/babel)
+* [babeljs](https://github.com/babel/babel)
 * [react-hot-loader](https://github.com/gaearon/react-hot-loader)
+* [react-translate-component](https://github.com/martinandert/react-translate-component)
+* [react-dropzone](https://github.com/paramaggarwal/react-dropzone)
+* [react-day-picker](https://github.com/gpbl/react-day-picker)
