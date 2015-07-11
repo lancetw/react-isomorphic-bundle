@@ -31,7 +31,7 @@ storage:
 	mkdir -p uploads
 
 # Test
-test: lint webpack-test
+test: lint storage webpack-test
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
 test-spec:
@@ -43,7 +43,7 @@ test-debug:
 test-cov:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
-test-ci: webpack-test
+test-ci: storage webpack-test
 	@NODE_ENV=development $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
