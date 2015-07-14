@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Cal from './CalComponent'
 import { bindActionCreators } from 'redux'
-import { connect } from 'redux/react'
+import { connect } from 'react-redux'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'

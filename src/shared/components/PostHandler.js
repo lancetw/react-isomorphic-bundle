@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Post from './PostComponent'
 import { bindActionCreators } from 'redux'
-import { connect } from 'redux/react'
+import { connect } from 'react-redux'
 import * as PostActions from '../actions/PostActions'
 import * as UploadActions from '../actions/UploadActions'
 import { updateTitle } from '../actions/LocaleActions'

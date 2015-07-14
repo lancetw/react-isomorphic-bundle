@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Header from './HeaderComponent'
 import { bindActionCreators } from 'redux'
-import { connect } from 'redux/react'
+import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 
 const Translate = require('react-translate-component')

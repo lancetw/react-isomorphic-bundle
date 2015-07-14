@@ -3,15 +3,15 @@
 import React from 'react'
 import { Router } from 'react-router'
 import Location from 'react-router/lib/Location'
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import * as reducers from 'shared/reducers'
-import { Provider } from 'redux/react'
+import { Provider } from 'react-redux'
 import routes from 'shared/routes'
 import fs from 'fs'
 import path from 'path'
 import nunjucks from 'nunjucks'
 import debug from 'debug'
-import { connect } from 'redux/react'
 import DocumentTitle from 'shared/components/addon/document-title'
 import * as AuthActions from 'shared/actions/AuthActions'
 import url from 'url'
@@ -40,7 +40,9 @@ export default function (app) {
   app.use(function *() {
     const isCashed = this.cashed ? yield *this.cashed() : false
     if (!isCashed) {
-      const store = createStore(reducers)
+      const reducer = combineReducers(reducers)
+      const finalCreateStore = applyMiddleware(thunk)(createStore)
+      const store = finalCreateStore(reducer)
       const location = new Location(this.path, this.query)
       // save session token to store
       if (this.session.token && this.session.token !== null)

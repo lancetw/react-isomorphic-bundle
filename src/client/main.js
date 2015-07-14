@@ -2,9 +2,10 @@
 
 import React from 'react'
 import { Router } from 'react-router'
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import * as reducers from 'shared/reducers'
-import { Provider } from 'redux/react'
+import { Provider } from 'react-redux'
 import routes from 'shared/routes'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import runStaticMethod from 'shared/utils/runStaticMethod'
@@ -28,7 +29,9 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
   counterpart.setLocale(lang || 'zh-hant-tw')
 
   const initialState = window.STATE_FROM_SERVER   // no data
-  const store = createStore(reducers, initialState)
+  const reducer = combineReducers(reducers)
+  const finalCreateStore = applyMiddleware(thunk)(createStore)
+  const store = finalCreateStore(reducer, initialState)
 
   const history = new BrowserHistory()
 

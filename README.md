@@ -45,9 +45,9 @@ $ npm install
 
 ## Features
 
-- [x] isomorphic flux (Flummox), supports JSON Web Tokens (JWT) and Sessions (levelDB)
-- [x] Flummox change to Redux...!
-- [x] React-router upgrade to 1.0.0beta2
+- [x] isomorphic flux, supports JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] Flummox changes to Redux v1.0.0-rc...!
+- [x] React-router upgrades to 1.0.0beta2
 - [x] Register (isomorphic)
 - [x] Log in (isomorphic)
 - [x] Facebook Sign In (isomorphic)

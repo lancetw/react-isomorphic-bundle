@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
 import DocumentTitle from 'shared/components/addon/document-title'
 import * as LocaleActions from 'shared/actions/LocaleActions'
-import { connect } from 'redux/react'
+import { connect } from 'react-redux'
 
 @connect(state => ({
   locale: state.locale

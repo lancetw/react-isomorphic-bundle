@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ChangePassword from './ChangePasswordComponent'
 import { bindActionCreators } from 'redux'
-import { connect } from 'redux/react'
+import { connect } from 'react-redux'
 import * as UserActions from '../actions/UserActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
