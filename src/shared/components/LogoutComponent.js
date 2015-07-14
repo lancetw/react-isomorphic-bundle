@@ -28,8 +28,9 @@ export default class Logout extends BaseComponent {
   }
 
   render () {
-    this.releaseTimeout =
-      setTimeout(() => this.context.router.replaceWith('/'), 1000)
+    if (process.env.BROWSER)
+      this.releaseTimeout =
+        setTimeout(() => this.context.router.replaceWith('/'), 1000)
 
     const Translate = require('react-translate-component')
 

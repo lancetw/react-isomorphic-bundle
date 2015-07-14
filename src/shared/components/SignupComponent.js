@@ -124,9 +124,10 @@ export default class Signup extends BaseComponent {
   }
 
   render () {
-    if (this.props.signup.response && this.props.signup.response.token)
-      this.releaseTimeout1 =
-        setTimeout(() => this.context.router.replaceWith('/home'), 1000)
+    if (process.env.BROWSER)
+      if (this.props.signup.response && this.props.signup.response.token)
+        this.releaseTimeout1 =
+          setTimeout(() => this.context.router.replaceWith('/home'), 1000)
 
     let Loading = this.state.submited && !(this.state.ok) ?
       classNames('ui', 'orange', 'form', 'segment', 'loading') :

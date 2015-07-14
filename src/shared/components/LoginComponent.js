@@ -106,17 +106,18 @@ export default class Login extends BaseComponent {
   }
 
   render () {
-    if (this.props.auth.isAuthenticated) {
-      const { state } = this.context.router.state.location
-      let path
-      if (state && state.nextPathname)
-        path = state.nextPathname
-      else
-        path = '/home'
+    if (process.env.BROWSER)
+      if (this.props.auth.isAuthenticated) {
+        const { state } = this.context.router.state.location
+        let path
+        if (state && state.nextPathname)
+          path = state.nextPathname
+        else
+          path = '/home'
 
-      this.releaseTimeout =
-        setTimeout(() => this.context.router.replaceWith(path), 1000)
-    }
+        this.releaseTimeout =
+          setTimeout(() => this.context.router.replaceWith(path), 1000)
+      }
 
     let Loading = this.state.submited && !(this.state.ok) ?
       classNames('ui', 'orange', 'form', 'segment', 'loading') :

@@ -130,9 +130,10 @@ export default class Post extends BaseComponent {
   }
 
   render () {
-    if (!isEmpty(this.props.post.content))
-      this.releaseTimeout =
-        setTimeout(() => this.context.router.replaceWith('/wall/today'), 1000)
+    if (process.env.BROWSER)
+      if (!isEmpty(this.props.post.content))
+        this.releaseTimeout =
+          setTimeout(() => this.context.router.replaceWith('/wall/today'), 1000)
 
     const Translate = require('react-translate-component')
 
