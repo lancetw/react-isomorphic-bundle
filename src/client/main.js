@@ -4,6 +4,7 @@ import React from 'react'
 import { Router } from 'react-router'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import reduxPromise from 'shared/utils/promiseMiddleware'
 import * as reducers from 'shared/reducers'
 import { Provider } from 'react-redux'
 import routes from 'shared/routes'
@@ -30,7 +31,10 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
 
   const initialState = window.STATE_FROM_SERVER   // no data
   const reducer = combineReducers(reducers)
-  const finalCreateStore = applyMiddleware(thunk)(createStore)
+  const finalCreateStore = applyMiddleware(
+    thunk,
+    reduxPromise,
+  )(createStore)
   const store = finalCreateStore(reducer, initialState)
 
   const history = new BrowserHistory()

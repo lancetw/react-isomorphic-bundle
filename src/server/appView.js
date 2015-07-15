@@ -5,6 +5,7 @@ import { Router } from 'react-router'
 import Location from 'react-router/lib/Location'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import reduxPromise from 'shared/utils/promiseMiddleware'
 import * as reducers from 'shared/reducers'
 import { Provider } from 'react-redux'
 import routes from 'shared/routes'
@@ -41,7 +42,10 @@ export default function (app) {
     const isCashed = this.cashed ? yield *this.cashed() : false
     if (!isCashed) {
       const reducer = combineReducers(reducers)
-      const finalCreateStore = applyMiddleware(thunk)(createStore)
+      const finalCreateStore = applyMiddleware(
+        thunk,
+        reduxPromise,
+      )(createStore)
       const store = finalCreateStore(reducer)
       const location = new Location(this.path, this.query)
       // save session token to store
@@ -116,11 +120,21 @@ export default function (app) {
         throw error
       }
 
+      const serverState = React.renderToString(
+        <script
+          dangerouslySetInnerHTML=
+            {{
+              __html:
+                `window.STATE_FROM_SERVER=${JSON.stringify(store.getState())};`
+            }} />
+      )
+
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
         env: process.env,
-        title
+        title,
+        stateFromServer: serverState
       })
 
     }
