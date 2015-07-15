@@ -29,7 +29,7 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
   )
   counterpart.setLocale(lang || 'zh-hant-tw')
 
-  const initialState = window.STATE_FROM_SERVER   // no data
+  const initialState = window.STATE_FROM_SERVER
   const reducer = combineReducers(reducers)
   const finalCreateStore = applyMiddleware(
     thunk,

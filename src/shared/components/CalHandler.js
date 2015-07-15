@@ -15,6 +15,7 @@ export default class CalHandler extends React.Component {
     super(props, context)
 
     const dispatch = context.store.dispatch
+    dispatch(PostActions.fetchList())
     dispatch(updateTitle('title.cal'))
   }
 
