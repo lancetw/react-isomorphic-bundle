@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{{ style }}">
       {% endfor %}
     {% endif %}
-
+    {{ stateFromServer | safe }}
   </head>
   <body>
     <div id="app">{{ appString | safe }}</div>

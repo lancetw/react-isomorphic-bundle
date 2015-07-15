@@ -14,7 +14,6 @@ export default class WallHandler extends React.Component {
     super(props, context)
 
     const dispatch = context.store.dispatch
-    dispatch(PostActions.showList())
     dispatch(updateTitle('title.wall'))
   }
 
