@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import BaseComponent from 'shared/components/BaseComponent'
+import { BaseComponent } from 'shared/components'
 import { Form, SignupForm, SignupFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'

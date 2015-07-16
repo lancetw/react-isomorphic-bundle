@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import BaseComponent from 'shared/components/BaseComponent'
+import { BaseComponent } from 'shared/components'
 import { Form, PostForm, PostFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
@@ -142,18 +142,18 @@ export default class Post extends BaseComponent {
       ? classNames('ui', 'form', 'loading')
       : classNames('ui', 'form')
 
-    let Message = this.state.updated ?
-    (
-      <div>
-        <div className="ui success message">
-          <div className="header">
-            <Translate content="post.created.title" />
+    let Message = this.state.updated
+      ? (
+        <div>
+          <div className="ui success message">
+            <div className="header">
+              <Translate content="post.created.title" />
+            </div>
+            <p><Translate content="post.created.content" /></p>
           </div>
-          <p><Translate content="post.created.content" /></p>
-        </div>
-        <div className="ui hidden divider"></div>
-      </div>
-    ) : null
+          <div className="ui hidden divider"></div>
+        </div> )
+      : null
 
     return (
       <main className="ui two column stackable centered page grid">

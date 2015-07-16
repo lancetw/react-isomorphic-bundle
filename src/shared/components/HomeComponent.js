@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { PropTypes } from 'react'
-import BaseComponent from 'shared/components/BaseComponent'
+import { BaseComponent } from 'shared/components'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
 

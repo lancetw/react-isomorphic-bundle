@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import BaseComponent from 'shared/components/BaseComponent'
+import { BaseComponent } from 'shared/components'
 
 export default class Logout extends BaseComponent {
 

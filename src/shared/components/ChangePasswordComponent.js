@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react/addons'
-import BaseComponent from 'shared/components/BaseComponent'
+import { BaseComponent } from 'shared/components'
 import {
   Form,
   ChangePasswordForm,
@@ -133,15 +133,15 @@ export default class ChangePassword extends BaseComponent {
       ? classNames('ui', 'orange', 'form', 'segment', 'loading')
       : classNames('ui', 'orange', 'form', 'segment')
 
-    let Message = this.state.updated ?
-    (
-      <div className="ui success message">
-        <div className="header">
-          <Translate content="password.modified.title" />
-        </div>
-        <p><Translate content="password.modified.content" /></p>
-      </div>
-    ) : null
+    let Message = this.state.updated
+      ? (
+        <div className="ui success message">
+          <div className="header">
+            <Translate content="password.modified.title" />
+          </div>
+          <p><Translate content="password.modified.content" /></p>
+        </div> )
+      : null
 
     if (this.state.updated)
       this.messageTimeout =

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import BaseComponent from 'shared/components/BaseComponent'
+import { BaseComponent } from 'shared/components'
 import { isEmpty } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
 

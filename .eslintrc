@@ -13,6 +13,7 @@
     "mocha": true
   },
   "rules": {
+    "space-infix-ops": 0,
     "padded-blocks": 0,
     "func-names": 0,
     "one-var": 0,
