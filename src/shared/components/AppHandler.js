@@ -6,7 +6,7 @@ const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
   require('css/ui/base')
-  require('css/app')
+  require('css/animation')
   require('css/screen')
 }
 
