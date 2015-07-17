@@ -53,7 +53,7 @@ export default class Header extends React.Component {
 
     return (
       <header
-        className="ui orange menu grid fixed top">
+        className="ui orange top pointing menu grid fixed top">
         <div className="computer tablet only row">
           <div className="left menu">
             <Link to='/home' className="item">

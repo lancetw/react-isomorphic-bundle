@@ -40,8 +40,26 @@ main.ui.stackable.page {
 #map {
   positive: relative;
   width: auto;
-  height: 300px;
+  height: 431px;
   padding: 0;
   margin: 0;
   user-select: none;
+}
+
+/* iPhone 2G-4S in portrait & landscape */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #map {
+    height: 180px;
+  }
+}
+
+/* iPhone 6 in portrait & landscape  */
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+  #map {
+    height: 300px;
+  }
 }

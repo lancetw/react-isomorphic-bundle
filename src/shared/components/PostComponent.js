@@ -378,6 +378,7 @@ export default class Post extends BaseComponent {
             </TabPanel>
           </Tabs>
         </div>
+
       </main>
     )
   }
