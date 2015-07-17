@@ -30,6 +30,9 @@ export default new Resource('posts', {
       endDate: { type: 'date' },
       title: { type: 'string' },
       content: { type: 'string' },
+      lat: { type: 'number', required: false },
+      lng: { type: 'number', required: false },
+      place: { type: 'string', required: false },
       file: {
         required: false,
         type: 'array',
@@ -87,7 +90,10 @@ export default new Resource('posts', {
       startDate: { type: 'date' },
       endDate: { type: 'date' },
       title: { type: 'string' },
-      content: { type: 'string' }
+      content: { type: 'string' },
+      lat: { type: 'number', required: false },
+      lng: { type: 'number', required: false },
+      place: { type: 'string', required: false }
     }
     const errors = validate(rule, body)
     if (errors) {

@@ -69,12 +69,22 @@ export default {
     tabs: {
       title: {
         basic: '基本資料',
-        upload: '上傳附件'
+        upload: '上傳附件',
+        map: '活動位置'
       },
       msg: {
         upload: '您可以上傳圖片或是 PDF（請拖拉至此或是點擊選擇檔案）：',
         limit: '每個檔案大小上限 3 MB'
       }
+    },
+    map: {
+      'search': '關鍵字/地址搜尋',
+      'update': '更新位置',
+      'lat': '緯度',
+      'lng': '經度',
+      'my': '我的位置',
+      'geo': '尋找我的位置',
+      'tips': '為您的地點取個名稱'
     },
     submit: '張貼佈告',
     nodata: '查無資料'

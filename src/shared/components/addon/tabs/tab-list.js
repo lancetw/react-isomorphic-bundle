@@ -20,12 +20,14 @@ export default class TabList extends React.Component {
             React.cloneElement(child, {
               active: true,
               onSelect: this.props.onSelect,
-              index: index
+              index: index,
+              ref: 'tab-' + index
             }) :
             React.cloneElement(child, {
               active: false,
               onSelect: this.props.onSelect,
-              index: index
+              index: index,
+              ref: 'tab-' + index
             })
         })}
       </div>

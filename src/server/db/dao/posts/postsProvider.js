@@ -16,7 +16,10 @@ exports.create = function *(post) {
     'closeDate',
     'title',
     'content',
-    'file'
+    'file',
+    'lat',
+    'lng',
+    'place'
   ]
 
   return yield Post.create(post, { fields: fillable })

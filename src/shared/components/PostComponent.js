@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import moment from 'moment'
 import counterpart from 'counterpart'
 import ImageUpload from 'shared/components/addon/image-upload'
+import GMap from 'shared/components/addon/maps/gmap'
 import { Tab, Tabs, TabList, TabPanel } from 'shared/components/addon/tabs'
 
 const { CSSTransitionGroup } = React.addons
@@ -44,8 +45,12 @@ export default class Post extends BaseComponent {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired,
+    setPin: PropTypes.func.isRequired,
+    updateGeo: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
-    upload: PropTypes.object.isRequired
+    upload: PropTypes.object.isRequired,
+    map: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -58,6 +63,83 @@ export default class Post extends BaseComponent {
     })
   }
 
+  handleBoundsChange (event) {
+    if (this.refs.lat)
+      React.findDOMNode(this.refs.lat).value = event.center[0]
+    if (this.refs.lng)
+      React.findDOMNode(this.refs.lng).value = event.center[1]
+  }
+
+  handleSearch (event) {
+    event.preventDefault()
+    const address = React.findDOMNode(this.refs.place).value.trim()
+    if (!address || address === counterpart('post.map.my'))
+      this.runGeoLoc()
+    else
+      this.props.search(address)
+  }
+
+  handleGeo (event) {
+    event.preventDefault()
+    this.runGeoLoc()
+  }
+
+  runGeoLoc () {
+    const self = this
+    if (navigator.geolocation) {
+      let optn = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+      navigator.geolocation
+        .getCurrentPosition(self.showPosition.bind(self), this.showError, optn)
+
+    } else console.log('Geolocation is not supported in your browser')
+  }
+
+  showPosition (position) {
+    const map = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    }
+
+    this.props.setPin(map)
+  }
+
+  showError (error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        console.log('User denied the request for Geolocation.')
+        break
+      case error.POSITION_UNAVAILABLE:
+        console.log('Location information is unavailable.')
+        break
+      case error.TIMEOUT:
+        console.log('The request to get user location timed out.')
+        break
+      case error.UNKNOWN_ERROR:
+        console.log('An unknown error occurred.')
+        break
+      default:
+        break
+    }
+  }
+
+  handleMapSubmit (event) {
+    event.preventDefault()
+    const map = {
+      place: React.findDOMNode(this.refs.place).value.trim(),
+      lat: parseFloat(React.findDOMNode(this.refs.lat).value.trim()),
+      lng: parseFloat(React.findDOMNode(this.refs.lng).value.trim())
+    }
+
+    if (!map.lat || !map.lng)
+      return
+
+    this.props.setPin(map)
+  }
+
   handleChange (value) {
     this.setState({ value })
   }
@@ -68,14 +150,22 @@ export default class Post extends BaseComponent {
     evt.preventDefault()
 
     let value = this.refs.form.getValue()
-
     if (value) {
       let saved = clone(value)
       this.setState({ value: saved })
       this.setState({ submited: true })
 
       const upload = this.props.upload.filenames
-      setTimeout(() => this.props.submit(value, upload), 1000)
+      let map
+      console.log(this.props.map)
+      if (this.props.map.place)
+        map = {
+          place: this.props.map.place,
+          lat: this.props.map.lat,
+          lng: this.props.map.lng
+        }
+
+      setTimeout(() => this.props.submit({ value, upload, map }), 1000)
     }
   }
 
@@ -94,7 +184,7 @@ export default class Post extends BaseComponent {
   }
 
   validation (errors) {
-    if (!isEmpty(errors)) {
+    if (typeof errors !== 'undefined' && !isEmpty(errors)) {
       let options = clone(this.state.options)
       options.fields = clone(options.fields)
 
@@ -122,6 +212,11 @@ export default class Post extends BaseComponent {
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.post.errors)
     this.checkSubmited(nextProps.post.content)
+
+    if (this.refs.lat)
+      React.findDOMNode(this.refs.lat).value = nextProps.map.lat
+    if (this.refs.lng)
+      React.findDOMNode(this.refs.lng).value = nextProps.map.lng
   }
 
   componentWillUnmount () {
@@ -158,11 +253,19 @@ export default class Post extends BaseComponent {
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
+          <GMap
+            ref="gmap"
+            {...this.props.map}
+            onBoundsChange={::this.handleBoundsChange}
+          />
+        </div>
+        <div className="column">
           <CSSTransitionGroup transitionName="MessageTransition">
             {Message}
           </CSSTransitionGroup>
           <Tabs
-            onSelect={this.handleSelected}
+            ref="tabs"
+            onSelect={::this.handleSelected}
             selectedIndex={0}>
             <TabList>
               <Tab>
@@ -170,6 +273,9 @@ export default class Post extends BaseComponent {
               </Tab>
               <Tab>
                 <Translate content="post.tabs.title.upload" />
+              </Tab>
+              <Tab>
+                <Translate content="post.tabs.title.map" />
               </Tab>
             </TabList>
             <TabPanel index={0}>
@@ -205,6 +311,70 @@ export default class Post extends BaseComponent {
               </div>
               <div className="ui orange center aligned segment">
                 <Translate content="post.tabs.msg.limit" />
+              </div>
+            </TabPanel>
+            <TabPanel index={2}>
+              <div className="ui basic segment">
+                <form
+                  onSubmit={::this.handleMapSubmit}>
+                  <div className="ui fluid action input">
+                    <input
+                      type="text"
+                      placeholder="Place"
+                      ref="place"
+                      defaultValue={
+                        this.props.map.place
+                        || counterpart('post.map.my')
+                      } />
+                    <button
+                      className="ui green button"
+                      onClick={::this.handleSearch}>
+                      <Translate content="post.map.search" />
+                    </button>
+                  </div>
+                  <div className="ui pointing label visible">
+                    <i><Translate content="post.map.tips" /></i>
+                  </div>
+                  <div className="ui hidden divider" />
+                  <div className="ui fluid labeled input">
+                    <div className="ui label">
+                      <Translate content="post.map.lat" />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="latitude"
+                      ref="lat"
+                      defaultValue={this.props.map.lat} />
+                  </div>
+                  <div className="ui hidden divider" />
+                  <div className="ui fluid labeled input">
+                    <div className="ui label">
+                      <Translate content="post.map.lng" />
+                    </div>
+                    <input type="text"
+                      placeholder="longitude"
+                      ref="lng"
+                      defaultValue={this.props.map.lng} />
+                  </div>
+                  <div className="ui hidden divider" />
+                  <div className="ui list">
+                    <div className="item">
+                      <div className="left floated content">
+                        <button
+                          className="ui circular yellow icon button"
+                          onClick={::this.handleGeo}>
+                          <i className="icon large map"></i>
+                        </button>
+                      </div>
+                      <div className="right floated content">
+                        <button
+                          className="ui large orange button">
+                          <Translate content="post.map.update" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </TabPanel>
           </Tabs>

@@ -51,7 +51,9 @@
     "facebook",
     "passport",
     "passport-facebook",
-    "postscribe"
+    "postscribe",
+    "google-map-react",
+    "geolocation"
   ],
   "dependencies": {
     "app-module-path": "^1.0.2",
@@ -68,6 +70,7 @@
     "es6-promise": "^2.2.0",
     "extend": "^3.0.0",
     "fastclick": "^1.0.6",
+    "google-map-react": "^0.4.0",
     "hashids": "^1.0.1",
     "immutable": "^3.7.3",
     "isomorphic-fetch": "^2.1.0",
@@ -108,9 +111,11 @@
     "passport-jwt": "^1.1.0",
     "postscribe": "^1.4.0",
     "react": "^0.13.3",
+    "react-controllables": "^0.3.3",
     "react-day-picker": "^1.0.1",
     "react-dropzone": "^1.2.2",
     "react-interpolate-component": "^0.7.1",
+    "react-pure-render": "^1.0.2",
     "react-redux": "^0.2.2",
     "react-responsive": "0.0.6",
     "react-router": "^1.0.0-beta2",

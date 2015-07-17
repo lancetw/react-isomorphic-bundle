@@ -14,6 +14,7 @@ export default class PostCard extends BaseComponent{
     this.state = {}
   }
 
+  /* eslint-disable max-len */
   render () {
     const card = this.props.data
     const files = JSON.parse(card.file)
@@ -51,7 +52,10 @@ export default class PostCard extends BaseComponent{
           </span>
           <span className="right floated like">
             <i className="like icon"></i>
-            Chinese Christian Network Development Association
+            { card.place ? (
+                <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>{card.place}</a>
+              )
+              : `Chinese Christian Network Development Association` }
           </span>
         </div>
       </div>

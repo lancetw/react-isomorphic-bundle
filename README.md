@@ -57,6 +57,7 @@ $ npm install
 - [x] i18n / language switcher
 - [x] Files/Images uploader
 - [x] Ad script support
+- [x] Location Settings (Google maps with HTML5 Geolocation)
 - [ ] Posts with Location/Category/Timeline view
 - [ ] Full text Search
 - [ ] Sitemap
@@ -95,3 +96,4 @@ $ npm install
 * [react-translate-component](https://github.com/martinandert/react-translate-component)
 * [react-dropzone](https://github.com/paramaggarwal/react-dropzone)
 * [react-day-picker](https://github.com/gpbl/react-day-picker)
+* [google-map-react](https://github.com/istarkov/google-map-react)

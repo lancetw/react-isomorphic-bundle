@@ -4,12 +4,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PostActions from '../actions/PostActions'
 import * as UploadActions from '../actions/UploadActions'
+import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
   post: state.post,
-  upload: state.upload
+  upload: state.upload,
+  map: state.map
 }))
 export default class PostHandler extends React.Component {
 
@@ -36,6 +38,7 @@ export default class PostHandler extends React.Component {
         <Post
           {...bindActionCreators(PostActions, dispatch)}
           {...bindActionCreators(UploadActions, dispatch)}
+          {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
         />
       </DocumentTitle>

@@ -93,7 +93,7 @@ export default class Signup extends BaseComponent {
   }
 
   validation (errors) {
-    if (!isEmpty(errors)) {
+    if (typeof errors !== 'undefined' && !isEmpty(errors)) {
       let options = clone(this.state.options)
       options.fields = clone(options.fields)
 

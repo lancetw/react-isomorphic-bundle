@@ -1,5 +1,9 @@
 @import 'fonts';
 
+html, body {
+  height: 100%;
+}
+
 html {
   font-size: 100%;
 }
@@ -31,4 +35,13 @@ main.ui.stackable.page {
   .active.dimmer {
     padding-top: 64px;
   }
+}
+
+#map {
+  positive: relative;
+  width: auto;
+  height: 300px;
+  padding: 0;
+  margin: 0;
+  user-select: none;
 }

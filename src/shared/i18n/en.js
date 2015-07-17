@@ -69,12 +69,22 @@ export default {
     tabs: {
       title: {
         basic: 'Basic',
-        upload: 'Upload'
+        upload: 'Upload',
+        map: 'Location'
       },
       msg: {
         upload: 'Dropping images or pdf files here, or click to select:',
         limit: 'Per file size limit：3 MB'
       }
+    },
+    map: {
+      'search': 'Search',
+      'update': 'Update',
+      'lat': 'Lat',
+      'lng': 'Lng',
+      'my': 'My Place',
+      'geo': 'find my place',
+      'tips': 'Named  your place please'
     },
     submit: 'Post it',
     nodata: 'No data'

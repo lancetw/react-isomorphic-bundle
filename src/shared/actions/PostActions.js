@@ -14,13 +14,12 @@ import {
 import { getToken } from 'shared/actions/AuthActions'
 import { clearUpload } from 'shared/actions/UploadActions'
 
-export function submit (form, upload) {
+export function submit ({ value, upload, map }) {
   return async dispatch => {
     dispatch({ type: CREATE_POST_STARTED })
-
     try {
       const token = getToken()
-      const content = await create(token, form, upload)
+      const content = await create({ token, value, upload, map })
 
       if (content.uid) {
         dispatch(clearUpload())
@@ -33,6 +32,7 @@ export function submit (form, upload) {
         errors: content.errors ? content.errors : content
       })
     } catch (err) {
+      console.log(err)
       return dispatch({
         type: CREATE_POST_FAILED,
         errors: err.message
@@ -89,15 +89,20 @@ export function fetchList (start, end) {
   }
 }
 
-async function create (token, form, upload) {
+async function create ({ token, value, upload, map }) {
   const _upload = compact(upload)
   return new Promise((resolve, reject) => {
     const user = jwt.decode(token)
     if (!user.id) reject('invalid token')
-    const _form = clone(form)
+    const _form = clone(value)
     _form.uid = user.id
     _form.startDate = moment(_form.startDate).format('YYYY-MM-DD')
     _form.endDate = moment(_form.endDate).format('YYYY-MM-DD')
+    if (map && typeof map.lat !== undefined && typeof map.lng !== undefined) {
+      _form.lat = map.lat
+      _form.lng = map.lng
+      _form.place = map.place
+    }
     _form.file = _upload
     request
       .post('/api/v1/posts')
