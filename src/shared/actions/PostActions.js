@@ -32,7 +32,6 @@ export function submit ({ value, upload, map }) {
         errors: content.errors ? content.errors : content
       })
     } catch (err) {
-      console.log(err)
       return dispatch({
         type: CREATE_POST_FAILED,
         errors: err.message
