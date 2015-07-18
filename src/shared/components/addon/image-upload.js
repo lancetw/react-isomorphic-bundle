@@ -29,11 +29,15 @@ export default class ImageUpload extends React.Component {
     const sizeLimit = 1024 * 1024 * 3
     const { dispatch } = this.props
     const file = files[0]
-    if (file.size > sizeLimit)
+    if (file.size > sizeLimit) {
+      dispatch(UploadActions.setErrorMessage('1', 'too large'))
       return
+    }
 
-    if (typeof file.preview !== 'undefined')
+    if (typeof file.preview !== 'undefined') {
+      dispatch(UploadActions.clearErrorMessage())
       dispatch(UploadActions.send(file.name, file, this.props.index))
+    }
   }
 
   render () {
@@ -42,6 +46,11 @@ export default class ImageUpload extends React.Component {
       img = this.props.upload.images[this.props.index]
 
     let percentage = this.props.upload.percentages[this.props.index]
+
+    if (this.props.upload.errorId)
+      setTimeout(() => {
+        this.props.dispatch(UploadActions.clearErrorMessage())
+      }, 3000)
 
     return (
       <Dropzone

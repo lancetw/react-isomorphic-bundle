@@ -267,6 +267,18 @@ export default class Post extends BaseComponent {
         </div> )
       : null
 
+    let UploadErrorMessage = this.props.upload.errorId
+    ? (
+      <div>
+        <div className="ui error message">
+          <div className="header">
+            <Translate content="post.upload.error" />
+          </div>
+        </div>
+        <div className="ui hidden divider"></div>
+      </div> )
+    : null
+
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
@@ -318,6 +330,9 @@ export default class Post extends BaseComponent {
               </form>
             </TabPanel>
             <TabPanel index={1}>
+              <CSSTransitionGroup transitionName="MessageTransition">
+                {UploadErrorMessage}
+              </CSSTransitionGroup>
               <p>
                 <Translate content="post.tabs.msg.upload" />
               </p>

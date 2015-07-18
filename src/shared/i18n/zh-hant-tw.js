@@ -66,6 +66,9 @@ export default {
       title: '佈告已登錄！',
       content: '現在自動轉頁⋯'
     },
+    upload: {
+      error: '選擇要上傳的檔案太大了 :('
+    },
     tabs: {
       title: {
         basic: '基本',

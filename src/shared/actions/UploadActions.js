@@ -7,7 +7,9 @@ import {
   UPLOAD_FILE_PROGRESS,
   SET_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_FILENAME_COMPLETED,
-  CLEAR_UPLOAD_COMPLETED
+  CLEAR_UPLOAD_COMPLETED,
+  SET_UPLOAD_ERROR_MESSAGE_COMPLETED,
+  CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 
@@ -88,6 +90,24 @@ export function clearUpload () {
   return async dispatch => {
     return dispatch({
       type: CLEAR_UPLOAD_COMPLETED
+    })
+  }
+}
+
+export function setErrorMessage (errorId, errorMessage) {
+  return async dispatch => {
+    return dispatch({
+      type: SET_UPLOAD_ERROR_MESSAGE_COMPLETED,
+      errorId: errorId,
+      errorMessage: errorMessage
+    })
+  }
+}
+
+export function clearErrorMessage () {
+  return async dispatch => {
+    return dispatch({
+      type: CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED
     })
   }
 }

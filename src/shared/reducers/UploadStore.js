@@ -5,7 +5,9 @@ import {
   UPLOAD_FILE_PROGRESS,
   SET_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_FILENAME_COMPLETED,
-  CLEAR_UPLOAD_COMPLETED
+  CLEAR_UPLOAD_COMPLETED,
+  SET_UPLOAD_ERROR_MESSAGE_COMPLETED,
+  CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
@@ -14,7 +16,9 @@ const initialState = {
   index: 0,
   response: null,
   errors: null,
-  percentages: []
+  percentages: [],
+  errorMessage: null,
+  errorId: null
 }
 
 const actionsMap = {
@@ -53,6 +57,18 @@ const actionsMap = {
     state.filenames.length = 0
     state.percentages.length = 0
     return initialState
+  },
+  [SET_UPLOAD_ERROR_MESSAGE_COMPLETED]: (state, action) => {
+    return {
+      errorMessage: action.errorMessage,
+      errorId: action.errorId
+    }
+  },
+  [CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED]: (state, action) => {
+    return {
+      errorMessage: null,
+      errorId: null
+    }
   }
 }
 

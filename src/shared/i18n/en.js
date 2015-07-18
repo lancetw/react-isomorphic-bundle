@@ -66,6 +66,9 @@ export default {
       title: 'Post created!',
       content: 'Now will redirect to wall page.'
     },
+    upload: {
+      error: 'File too large :('
+    },
     tabs: {
       title: {
         basic: 'Basic',
