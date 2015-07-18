@@ -37,7 +37,9 @@ export default class Post extends BaseComponent {
       options: PostFormOptions(counterpart.getLocale()),
       submited: false,
       updated: false,
-      locale: counterpart.getLocale()
+      locale: counterpart.getLocale(),
+      placeError: false,
+      latlngError: false
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -134,10 +136,18 @@ export default class Post extends BaseComponent {
       lng: parseFloat(React.findDOMNode(this.refs.lng).value.trim())
     }
 
-    if (!map.lat || !map.lng)
+    if (!map.lat || !map.lng || !map.place) {
+      if (!map.lat || !map.lng)
+        this.setState({ latlngError: true })
+      if (!map.place)
+        this.setState({ placeError: true })
+
       return
+    }
 
     this.props.setPin(map)
+    this.setState({ latlngError: false })
+    this.setState({ placeError: false })
   }
 
   handleChange (value) {
@@ -236,6 +246,14 @@ export default class Post extends BaseComponent {
       ? classNames('ui', 'form', 'loading')
       : classNames('ui', 'form')
 
+    let PlaceInput = this.state.placeError
+      ? classNames('ui', 'fluid', 'action', 'input', 'error')
+      : classNames('ui', 'fluid', 'action', 'input')
+
+    let LatLngInput = this.state.latlngError
+      ? classNames('ui', 'fluid', 'labeled', 'input', 'error')
+      : classNames('ui', 'fluid', 'labeled', 'input')
+
     let Message = this.state.updated
       ? (
         <div>
@@ -316,7 +334,7 @@ export default class Post extends BaseComponent {
               <div className="ui basic segment">
                 <form
                   onSubmit={::this.handleMapSubmit}>
-                  <div className="ui fluid action input">
+                  <div className={PlaceInput}>
                     <input
                       type="text"
                       placeholder="Place"
@@ -335,7 +353,7 @@ export default class Post extends BaseComponent {
                     <i><Translate content="post.map.tips" /></i>
                   </div>
                   <div className="ui hidden divider" />
-                  <div className="ui fluid labeled input">
+                  <div className={LatLngInput}>
                     <div className="ui label">
                       <Translate content="post.map.lat" />
                     </div>
@@ -346,7 +364,7 @@ export default class Post extends BaseComponent {
                       defaultValue={this.props.map.lat} />
                   </div>
                   <div className="ui hidden divider" />
-                  <div className="ui fluid labeled input">
+                  <div className={LatLngInput}>
                     <div className="ui label">
                       <Translate content="post.map.lng" />
                     </div>

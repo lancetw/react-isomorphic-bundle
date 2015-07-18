@@ -79,7 +79,7 @@ export default {
     },
     map: {
       'search': '搜尋',
-      'update': '更新我的位置',
+      'update': '更新位置',
       'lat': '緯度',
       'lng': '經度',
       'my': '我的位置',
