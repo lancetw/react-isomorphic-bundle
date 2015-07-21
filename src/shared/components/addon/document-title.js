@@ -29,7 +29,7 @@ export default createSideEffect(
 
     if (!title) return
 
-    if (typeof document !== 'undefined')
+    if (process.env.BROWSER)
       document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
     else
       _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle

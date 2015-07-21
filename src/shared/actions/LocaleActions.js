@@ -7,7 +7,7 @@ import {
 export function sync (locale) {
   setLocale(locale)
   return async dispatch => {
-    if (typeof document !== 'undefined')
+    if (process.env.BROWSER)
       return dispatch({
         type: SYNC_CLIENT_LOCALE_COMPLETED,
         locale: getLocale()

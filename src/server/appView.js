@@ -3,7 +3,7 @@
 import React from 'react'
 import { Router } from 'react-router'
 import Location from 'react-router/lib/Location'
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import reduxPromise from 'shared/utils/promiseMiddleware'
 import * as reducers from 'shared/reducers'

@@ -5,7 +5,7 @@ import { sync, checkToken, logout } from 'shared/actions/AuthActions'
 
 export default function (nextState, transition) {
 
-  this.store.dispatch(checkToken())
+  if (process.env.BROWSER) this.store.dispatch(checkToken())
   const isAuthenticated = this.store.getState().auth.isAuthenticated
   const verified = this.store.getState().auth.verified
 
@@ -16,7 +16,7 @@ export default function (nextState, transition) {
       { nextPathname: nextState.location.pathname }
     )
 
-  if ((typeof document !== 'undefined') && !verified) {
+  if (process.env.BROWSER && !verified) {
     this.store.dispatch(logout())
     transition.to(
       '/login',

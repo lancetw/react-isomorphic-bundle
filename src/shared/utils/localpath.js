@@ -1,7 +1,7 @@
 const HOST = 'localhost'
 const PROTOCOL = 'http'
 const PORT = '3000'
-const LOCAL_PATH = typeof document === 'undefined'
+const LOCAL_PATH = process.env.BROWSER
   ? `${PROTOCOL}://${HOST}:${PORT}`
   : ''
 

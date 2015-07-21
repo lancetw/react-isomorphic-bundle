@@ -33,7 +33,7 @@ export function save (token) {
 
 export function sync (token) {
   return async dispatch => {
-    if (typeof document !== 'undefined')
+    if (process.env.BROWSER)
       return dispatch({
         type: SYNC_CLIENT_USER_COMPLETED,
         token: getToken(),

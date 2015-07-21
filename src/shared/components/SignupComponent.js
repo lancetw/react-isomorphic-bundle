@@ -97,15 +97,16 @@ export default class Signup extends BaseComponent {
       let options = clone(this.state.options)
       options.fields = clone(options.fields)
 
-      errors.map(function (err) {
-        if (err.code === 'invalid') {
-          options.fields[err.field] = clone(options.fields[err.field])
-          options.fields[err.field] = { hasError: true, error: err.message }
-        } else {
-          options.fields[err.path] = clone(options.fields[err.path])
-          options.fields[err.path] = { hasError: true, error: err.message }
-        }
-      })
+      if (typeof errors.map !== 'undefined')
+        errors.map(function (err) {
+          if (err.code === 'invalid') {
+            options.fields[err.field] = clone(options.fields[err.field])
+            options.fields[err.field] = { hasError: true, error: err.message }
+          } else {
+            options.fields[err.path] = clone(options.fields[err.path])
+            options.fields[err.path] = { hasError: true, error: err.message }
+          }
+        })
 
       this.setState({ submited: false })
       this.setState({ options: options })

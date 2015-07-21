@@ -101,8 +101,8 @@ app.use(
 app.use(facebookAuth.initialize())
 app.use(router.routes())
 
-app.use(mount('/api/v1', services.v1))
 app.use(mount('/api/v1', cors()))
+app.use(mount('/api/v1', services.v1))
 app.use(mount('/api/v1', basicAuth.initialize()))
 app.use(mount('/api/v1', jwtAuth.initialize()))
 
