@@ -1,7 +1,6 @@
 'use strict'
 
 import koa from 'koa'
-import debug from 'debug'
 import mount from 'koa-mount'
 import helmet from 'koa-helmet'
 import logger from 'koa-logger'
@@ -51,6 +50,7 @@ if (env === 'production') {
 }
 
 if (env === 'development') {
+  const debug = require('debug')
   debug.enable('dev,koa')
   require('blocked')((ms) => debug('koa')(`blocked for ${ms}ms`))
 }
