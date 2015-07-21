@@ -16,6 +16,8 @@ import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 
 (async () => {
+  require('react-a11y')(React)
+
   const lang = LocaleActions.getLocale()
   counterpart.registerTranslations(
     'en',
@@ -32,7 +34,6 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
 
   let finalCreateStore
   if (process.env.NODE_ENV !== 'production') {
-    require('react-a11y')(React)
     const debug = require('debug')
     debug.enable('dev,koa')
 
