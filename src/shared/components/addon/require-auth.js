@@ -4,13 +4,10 @@ import { Router } from 'react-router'
 import { sync, checkToken, logout } from 'shared/actions/AuthActions'
 
 export default function (nextState, transition) {
-  this.store.dispatch(sync())
+
   this.store.dispatch(checkToken())
   const isAuthenticated = this.store.getState().auth.isAuthenticated
   const verified = this.store.getState().auth.verified
-
-  // console.log('isAuthenticated', isAuthenticated)
-  // console.log('verified', verified)
 
   if (!isAuthenticated)
     transition.to(

@@ -7,9 +7,9 @@ import parse from 'co-body'
 import validate from 'parameter'
 import db from 'src/server/db'
 import debug from 'debug'
+import * as AuthActions from 'shared/actions/AuthActions'
 
 const router = require('koa-router')()
-
 const User = db.users
 
 router

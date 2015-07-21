@@ -36,12 +36,14 @@ export function sync (token) {
     if (typeof document !== 'undefined')
       return dispatch({
         type: SYNC_CLIENT_USER_COMPLETED,
-        token: getToken()
+        token: getToken(),
+        errors: {}
       })
     else
       return dispatch({
         type: SYNC_SERVER_USER_COMPLETED,
-        token: token
+        token: token,
+        errors: {}
       })
   }
 }
