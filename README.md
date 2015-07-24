@@ -58,6 +58,7 @@ $ npm install
 - [x] Files/Images uploader
 - [x] Ad script support
 - [x] Location Settings (Google maps with HTML5 Geolocation)
+- [x] Show list with Infinite scroll
 - [ ] Posts with Location/Category/Timeline view
 - [ ] Full text Search
 - [ ] Sitemap
