@@ -20,6 +20,7 @@ import favicon from 'koa-favicon'
 import services from 'src/server/services'
 import models from 'src/server/db/models'
 
+const debug = require('debug')
 const leveldb = level('./storage/leveldb')
 
 const app = koa()
@@ -50,7 +51,6 @@ if (env === 'production') {
 }
 
 if (env === 'development') {
-  const debug = require('debug')
   debug.enable('dev,koa')
   require('blocked')((ms) => debug('koa')(`blocked for ${ms}ms`))
 }

@@ -18,7 +18,10 @@ export default class Cal extends React.Component {
     super(props)
     this.state = {
       locale: this.fixLocaleName(counterpart.getLocale()),
-      selectedDay: new Date()
+      date: moment(new Date()).valueOf(),
+      selectedDay: new Date(),
+      nextOffset: 0,
+      limit: 5
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -31,10 +34,13 @@ export default class Cal extends React.Component {
 
   handleDayClick (e, day) {
     const date = moment(day).valueOf()
-    this.props.fetchList(date)
+    const reload = true
+    this.props.fetchList(0, 5, date, null, reload)
 
     this.setState({
-      selectedDay: day
+      date: date,
+      selectedDay: day,
+      nextOffset: 5
     })
   }
 
@@ -49,6 +55,13 @@ export default class Cal extends React.Component {
       return 'zh-TW'
 
     return locale
+  }
+
+  loadFunc () {
+    const nextOffset = this.state.nextOffset + this.state.limit
+    this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
+
+    this.setState({ nextOffset: nextOffset })
   }
 
   render () {
@@ -87,7 +100,11 @@ export default class Cal extends React.Component {
             { selectedDay.toLocaleDateString() }
           </div>
           <div className="row">
-            <Cards posts={this.props.post.posts} />
+            <Cards
+              posts={this.props.post.posts}
+              loadFunc={::this.loadFunc}
+              hasMore={this.props.post.hasMore}
+            />
             {this.props.post.loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">

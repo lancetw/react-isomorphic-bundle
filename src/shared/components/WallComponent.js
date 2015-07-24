@@ -10,7 +10,8 @@ export default class Wall extends React.Component {
   }
 
   static propTypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    loadFunc: PropTypes.func.isRequired
   }
 
   render () {
@@ -31,7 +32,11 @@ export default class Wall extends React.Component {
           </div>
           <div className="ui horizontal divider" />
           <div className="row">
-            <Cards posts={this.props.post.posts} />
+            <Cards
+              posts={this.props.post.posts}
+              loadFunc={this.props.loadFunc}
+              hasMore={this.props.post.hasMore}
+            />
             {this.props.post.loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">

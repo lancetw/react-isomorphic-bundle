@@ -54,8 +54,12 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 
   if (typeof _start === 'undefined')
     _start = moment().startOf('day').valueOf()
+  else
+    _start = +_start
   if (typeof _end === 'undefined')
     _end = moment(+_start).add('1', 'days').endOf('day').valueOf()
+  else
+    _end = +_end
 
   return yield Post.findAll({
     offset: offset,
@@ -63,7 +67,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
     order: [[ 'start_date', 'ASC' ]],
     where: {
       end_date: {
-        $gte: moment(+_start).subtract('1', 'days').startOf('day').format()
+        $gte: moment(_start).subtract('1', 'days').startOf('day').format()
       }
     }
   })

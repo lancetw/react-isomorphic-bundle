@@ -13,11 +13,11 @@ const Post = db.posts
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
-    const { start, end } = this.request.query
+    const { offset, limit, start, end } = this.request.query
     if (typeof start !== 'undefined')
-      this.body = yield Post.fetch(0, 10, start, end)
+      this.body = yield Post.fetch(offset, limit, start, end)
     else
-      this.body = yield Post.list(0, 10)
+      this.body = yield Post.list(offset, limit)
   },
   // POST /posts
   create: [ RestAuth, function *(next) {

@@ -40,15 +40,18 @@ export function submit ({ value, upload, map }) {
   }
 }
 
-export function showList () {
+export function showList (offset=0, limit=5, reload) {
   return async dispatch => {
-    dispatch({ type: LIST_POST_STARTED })
+    if (reload)
+      dispatch({ type: LIST_POST_STARTED })
     try {
-      const posts = await list()
+      const posts = await list(offset, limit)
       if (isArray(posts))
         return dispatch({
           type: LIST_POST_COMPLETED,
-          posts: posts
+          posts: posts,
+          offset: offset,
+          limit: limit
         })
       else
         return dispatch({
@@ -64,11 +67,12 @@ export function showList () {
   }
 }
 
-export function fetchList (start, end) {
+export function fetchList (offset=0, limit=5, start, end, reload) {
   return async dispatch => {
-    dispatch({ type: LIST_POST_STARTED })
+    if (reload)
+      dispatch({ type: LIST_POST_STARTED })
     try {
-      const posts = await fetch(start, end)
+      const posts = await fetch(offset, limit, start, end)
       if (isArray(posts))
         return dispatch({
           type: LIST_POST_COMPLETED,
@@ -117,10 +121,12 @@ async function create ({ token, value, upload, map }) {
   })
 }
 
-async function list () {
+async function list (offset, limit) {
   return new Promise((resolve, reject) => {
     request
       .get(LOCAL_PATH + '/api/v1/posts')
+      .query({ offset: offset })
+      .query({ limit: limit })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body)
@@ -131,10 +137,12 @@ async function list () {
   })
 }
 
-async function fetch (start, end) {
+async function fetch (offset, limit, start, end) {
   return new Promise((resolve, reject) => {
     request
       .get(LOCAL_PATH + '/api/v1/posts')
+      .query({ offset: offset })
+      .query({ limit: limit })
       .query({ start: start })
       .query({ end: end })
       .set('Accept', 'application/json')
