@@ -22,7 +22,7 @@ export default class PostCards extends BaseComponent {
   }
 
   handleScroll (event) {
-    const elem = event.srcElement.body
+    const elem = event.target.body || event.srcElement.body
     const threshold = 0.8
     if (this.isScrollToLoad(elem, threshold))
       this.setState({ shouldLoadFunc: true })
