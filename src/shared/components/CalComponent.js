@@ -45,9 +45,9 @@ export default class Cal extends React.Component {
   }
 
   handleLocaleChange (newLocale) {
-    this.setState({
-      locale: this.fixLocaleName(newLocale)
-    })
+    const locale = this.fixLocaleName(newLocale)
+    moment.locale(locale)
+    this.setState({ locale })
   }
 
   fixLocaleName (locale) {
@@ -97,7 +97,7 @@ export default class Cal extends React.Component {
             </div>
           </div>
           <div className="ui horizontal header divider">
-            { selectedDay.toLocaleDateString() }
+            { moment(selectedDay).format('LL') }
           </div>
           <div className="row">
             <Cards
