@@ -24,9 +24,9 @@ export default class PostCard extends BaseComponent{
           <div className="header">{card.title}</div>
           <div className="meta">
             <span className="right floated time">
-              {card.startDate}
+              {toShortDate(card.startDate)}
                 ~
-              {card.endDate}
+              {toShortDate(card.endDate)}
             </span>
             <span className="category">{card.prop}</span>
           </div>
@@ -61,4 +61,13 @@ export default class PostCard extends BaseComponent{
       </div>
     )
   }
+}
+
+function toShortDate (date) {
+  const moment = require('moment')
+  console.log('?', date)
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
+    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
+
+  return 'ERR DATE'
 }

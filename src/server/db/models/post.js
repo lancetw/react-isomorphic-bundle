@@ -140,22 +140,8 @@ module.exports = function (sequelize, Sequelize) {
         delete values.created_at
         delete values.updated_at
         delete values.deleted_at
-        values.startDate = _toShortDate(values.startDate)
-        values.endDate = _toShortDate(values.endDate)
-        values.openDate = _toShortDate(values.openDate)
-        values.closeDate = _toShortDate(values.closeDate)
         return values
       }
     }
   })
-}
-
-
-function _toShortDate (date) {
-  const moment = require('moment')
-  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid()) {
-    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
-  }
-
-  return date
 }
