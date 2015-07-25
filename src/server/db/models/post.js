@@ -153,8 +153,8 @@ module.exports = function (sequelize, Sequelize) {
 
 function _toShortDate (date) {
   const moment = require('moment')
-  if (moment(date, 'ddd, DD MMM YYYY HH:mm:ss ZZ').isValid()) {
-    return moment(date, 'ddd, DD MMM YYYY HH:mm:ss ZZ').format('MM/DD')
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid()) {
+    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
   }
 
   return date
