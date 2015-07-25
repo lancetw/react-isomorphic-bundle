@@ -33,6 +33,7 @@ export default class Cal extends React.Component {
   }
 
   handleDayClick (e, day) {
+    console.log(day)
     const date = moment(day).valueOf()
     const reload = true
     this.props.fetchList(0, 5, date, null, reload)

@@ -1,5 +1,6 @@
 'use strict'
 
+const Sequelize = require('sequelize')
 const models = require('src/server/db/models')
 const hashids = require('src/shared/utils/hashids-plus')
 const Post = models.posts
@@ -34,14 +35,13 @@ exports.load = function *(hid) {
 
 /* eslint-disable camelcase */
 exports.list = function *(offset=0, limit=20) {
-
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'ASC' ]],
     where: {
-      close_date: {
-        $gte: moment().startOf('day').subtract('1', 'days').format()
+      end_date: {
+        $gte: moment().startOf('day').utc().format()
       }
     }
   })
@@ -57,9 +57,10 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   else
     _start = +_start
   if (typeof _end === 'undefined')
-    _end = moment(+_start).add('1', 'days').endOf('day').valueOf()
+    _end = moment(+_start).endOf('day').valueOf()
   else
     _end = +_end
+
 
   return yield Post.findAll({
     offset: offset,
@@ -67,11 +68,33 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
     order: [[ 'start_date', 'ASC' ]],
     where: {
       end_date: {
-        $gte: moment(_start).subtract('1', 'days').startOf('day').format()
+        $gte: moment(_start).utc().subtract('1', 'days').startOf('day').format()
       }
     }
   })
 }
+
+/* eslint-disable camelcase */
+exports.count = function *(start, end) {
+  let _start = +start
+  let _end = +end
+
+  console.log(moment(_start).startOf('day').utc().format('MM-DD-YYYY'))
+  console.log(moment(_end).endOf('day').utc().format('MM-DD-YYYY'))
+
+  return yield Post.findAll({
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      start_date: {
+        $gte: moment(_start).startOf('day').utc().format()
+      },
+      start_date: {
+        $lte: moment(_end).endOf('day').utc().format()
+      }
+    }
+  })
+}
+
 
 exports.update = function *(hid, post) {
   const fillable = [

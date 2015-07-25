@@ -99,8 +99,8 @@ async function create ({ token, value, upload, map }) {
     if (!user.id) reject('invalid token')
     const _form = clone(value)
     _form.uid = user.id
-    _form.startDate = moment(_form.startDate).format('YYYY-MM-DD')
-    _form.endDate = moment(_form.endDate).format('YYYY-MM-DD')
+    _form.startDate = moment(_form.startDate).valueOf()
+    _form.endDate = moment(_form.endDate).valueOf()
     if (map && typeof map.lat !== undefined && typeof map.lng !== undefined) {
       _form.lat = map.lat
       _form.lng = map.lng

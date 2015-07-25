@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
-import moment from 'moment'
 import { isEmpty } from 'lodash'
 
 export default class PostCard extends BaseComponent{
@@ -17,6 +16,7 @@ export default class PostCard extends BaseComponent{
   /* eslint-disable max-len */
   render () {
     const card = this.props.data
+
     const files = JSON.parse(card.file)
     return (
       <div className="ui fluid orange card">
@@ -24,9 +24,9 @@ export default class PostCard extends BaseComponent{
           <div className="header">{card.title}</div>
           <div className="meta">
             <span className="right floated time">
-              {moment(card.startDate.split(' ')[0]).format('M/D')}
+              {card.startDate}
                 ~
-              {moment(card.endDate.split(' ')[0]).format('M/D')}
+              {card.endDate}
             </span>
             <span className="category">{card.prop}</span>
           </div>

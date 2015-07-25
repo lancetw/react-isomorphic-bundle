@@ -7,6 +7,7 @@ import hashids from 'src/shared/utils/hashids-plus'
 import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
+import moment from 'moment'
 
 const Post = db.posts
 
@@ -26,8 +27,8 @@ export default new Resource('posts', {
       uid: { type: 'string' },
       type: { type: 'string' },
       prop: { type: 'string' },
-      startDate: { type: 'date' },
-      endDate: { type: 'date' },
+      startDate: { type: 'int' },
+      endDate: { type: 'int' },
       title: { type: 'string' },
       content: { type: 'string' },
       lat: { type: 'number', required: false },
@@ -49,6 +50,9 @@ export default new Resource('posts', {
     }
 
     try {
+      body.startDate = moment(body.startDate).format()
+      body.endDate = moment(body.endDate).format()
+      body.openDate = body.startDate
       body.closeDate = body.endDate
       body.file = JSON.stringify(body.file)
 
