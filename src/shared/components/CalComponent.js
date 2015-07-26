@@ -46,7 +46,7 @@ export default class Cal extends React.Component {
     })
   }
 
-  handleMonthChange (e, day) {
+  handleMonthChange (day) {
     this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
   }
 
