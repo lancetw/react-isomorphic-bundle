@@ -134,7 +134,7 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
   background-color: color($grey lightness(95%));
 }
 
-.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):not(.DayPicker-Day--sunday) {
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: $white;
   background-color: $blue;
 }
