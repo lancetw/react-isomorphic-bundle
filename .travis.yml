@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - "iojs-v2.2.1"
+  - "iojs-v2.3.4"
+  - "0.12.7"
 script: npm run test:ci
 after_success:
   - codeclimate < coverage/lcov.info
