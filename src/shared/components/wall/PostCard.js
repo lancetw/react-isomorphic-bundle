@@ -65,7 +65,6 @@ export default class PostCard extends BaseComponent{
 
 function toShortDate (date) {
   const moment = require('moment')
-  console.log('?', date)
   if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
     return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
 

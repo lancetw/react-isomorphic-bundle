@@ -9,7 +9,10 @@ import {
   CREATE_POST_FAILED,
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
-  LIST_POST_FAILED
+  LIST_POST_FAILED,
+  COUNT_POST_IN_MONTH_STARTED,
+  COUNT_POST_IN_MONTH_COMPLETED,
+  COUNT_POST_IN_MONTH_FAILED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 import { clearUpload } from 'shared/actions/UploadActions'
@@ -92,6 +95,30 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
   }
 }
 
+export function countPostsWithCal (year, month) {
+  return async dispatch => {
+    dispatch({ type: COUNT_POST_IN_MONTH_STARTED })
+    try {
+      const count = await countPostInMonth(year, month)
+      if (isArray(count))
+        return dispatch({
+          type: COUNT_POST_IN_MONTH_COMPLETED,
+          count: count
+        })
+      else
+        return dispatch({
+          type: COUNT_POST_IN_MONTH_FAILED,
+          errors: count.errors ? count.errors : count
+        })
+    } catch (err) {
+      return dispatch({
+        type: COUNT_POST_IN_MONTH_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
 async function create ({ token, value, upload, map }) {
   const _upload = compact(upload)
   return new Promise((resolve, reject) => {
@@ -145,6 +172,23 @@ async function fetch (offset, limit, start, end) {
       .query({ limit: limit })
       .query({ start: start })
       .query({ end: end })
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}
+
+async function countPostInMonth (year, month) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(LOCAL_PATH + '/api/v1/cals')
+      .query({ action: 'countPostInMonth' })
+      .query({ year: year })
+      .query({ month: month })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body)

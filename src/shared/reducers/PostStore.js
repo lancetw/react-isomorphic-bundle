@@ -4,7 +4,10 @@ import {
   CREATE_POST_FAILED,
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
-  LIST_POST_FAILED
+  LIST_POST_FAILED,
+  COUNT_POST_IN_MONTH_STARTED,
+  COUNT_POST_IN_MONTH_COMPLETED,
+  COUNT_POST_IN_MONTH_FAILED
 } from 'shared/constants/ActionTypes'
 
 const initialState = {
@@ -14,7 +17,8 @@ const initialState = {
   offset: 0,
   limit: 0,
   hasMore: false,
-  content: {}
+  content: {},
+  count: []
 }
 
 const actionsMap = {
@@ -23,7 +27,11 @@ const actionsMap = {
     ({ content: action.content }),
   [CREATE_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
-  [LIST_POST_STARTED]: () => (initialState),
+  [LIST_POST_STARTED]: () => ({
+    errors: {},
+    posts: [],
+    hasMore: false
+  }),
   [LIST_POST_COMPLETED]: (state, action) => {
     let hasMore = false
     if (action.posts.length > 0)
@@ -40,7 +48,12 @@ const actionsMap = {
     }
   },
   [LIST_POST_FAILED]: (state, action) =>
-    ({ loading: false, errors: action.errors })
+    ({ loading: false, errors: action.errors }),
+  [COUNT_POST_IN_MONTH_STARTED]: () => ({ count: [] }),
+  [COUNT_POST_IN_MONTH_COMPLETED]: (state, action) =>
+    ({ count: action.count }),
+  [COUNT_POST_IN_MONTH_FAILED]: (state, action) =>
+    ({ errors: action.errors })
 }
 
 export default function post (state = initialState, action) {

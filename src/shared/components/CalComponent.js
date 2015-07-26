@@ -8,6 +8,7 @@ import { isSameDay } from 'shared/utils/date-utils'
 import moment from 'moment'
 import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
+import classNames from 'classnames'
 
 if (process.env.BROWSER)
   require('css/ui/date-picker')
@@ -29,11 +30,11 @@ export default class Cal extends React.Component {
 
   static propTypes = {
     fetchList: PropTypes.func.isRequired,
+    countPostsWithCal: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired
   }
 
   handleDayClick (e, day) {
-    console.log(day)
     const date = moment(day).valueOf()
     const reload = true
     this.props.fetchList(0, 5, date, null, reload)
@@ -43,6 +44,10 @@ export default class Cal extends React.Component {
       selectedDay: day,
       nextOffset: 5
     })
+  }
+
+  handleMonthChange (e, day) {
+    this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
   }
 
   handleLocaleChange (newLocale) {
@@ -65,12 +70,38 @@ export default class Cal extends React.Component {
     this.setState({ nextOffset: nextOffset })
   }
 
+  getTodayCount (date) {
+    if (typeof date !== 'undefined') {
+      const count = this.props.post.count[date]
+      return typeof count !== 'undefined' && count !== null ? count : 0
+    } else return 0
+  }
+
+   renderDay (day) {
+    const date = day.getDate()
+    const count = this.getTodayCount(date)
+
+    return (
+      <div>
+        <div className="day">
+          { date }
+        </div>
+      </div>
+    )
+  }
+
   render () {
     const Translate = require('react-translate-component')
     const { locale } = this.state
     const { selectedDay } = this.state
     const modifiers = {
-      'selected': (day) => isSameDay(selectedDay, day)
+      'sunday': (day) => day.getDay() === 0,
+      'saturday': (day) => day.getDay() === 6,
+      'selected': (day) => isSameDay(selectedDay, day),
+      'hasEventsLv3': (day) => this.getTodayCount(day.getDate()) >= 20,
+      'hasEventsLv2': (day) => this.getTodayCount(day.getDate()) >= 10,
+      'hasEventsLv1': (day) => this.getTodayCount(day.getDate()) > 0,
+      'hasEventsLv0': (day) => this.getTodayCount(day.getDate()) === 0
     }
 
     return (
@@ -90,10 +121,12 @@ export default class Cal extends React.Component {
           <div className="row">
             <div className="ui segment">
               <DayPicker className="ui centered row compact"
-                modifiers={ modifiers }
-                onDayClick={ ::this.handleDayClick }
-                locale={ locale }
-                localeUtils={ LocaleUtils }
+                renderDay={::this.renderDay}
+                modifiers={modifiers}
+                onDayClick={::this.handleDayClick}
+                onMonthChange={::this.handleMonthChange}
+                locale={locale}
+                localeUtils={LocaleUtils}
               />
             </div>
           </div>

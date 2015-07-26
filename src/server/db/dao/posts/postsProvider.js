@@ -1,10 +1,12 @@
 'use strict'
 
-const Sequelize = require('sequelize')
-const models = require('src/server/db/models')
-const hashids = require('src/shared/utils/hashids-plus')
+import models from 'src/server/db/models'
+import hashids from 'src/shared/utils/hashids-plus'
+import moment from 'moment'
+import { pluck, range, compact, reduce } from 'lodash'
+
+const Sequelize = models.Sequelize
 const Post = models.posts
-const moment = require('moment')
 
 exports.create = function *(post) {
   const fillable = [
@@ -41,7 +43,7 @@ exports.list = function *(offset=0, limit=20) {
     order: [[ 'start_date', 'ASC' ]],
     where: {
       end_date: {
-        $gte: moment().startOf('day').utc().format()
+        $gte: new Date(moment().endOf('day'))
       }
     }
   })
@@ -53,7 +55,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   let _end = end
 
   if (typeof _start === 'undefined')
-    _start = moment().startOf('day').valueOf()
+    _start = moment().endOf('day').valueOf()
   else
     _start = +_start
   if (typeof _end === 'undefined')
@@ -68,33 +70,127 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
     order: [[ 'start_date', 'ASC' ]],
     where: {
       end_date: {
-        $gte: moment(_start).utc().subtract('1', 'days').startOf('day').format()
+        $gte: new Date(moment(_start))
       }
     }
   })
 }
 
 /* eslint-disable camelcase */
-exports.count = function *(start, end) {
-  let _start = +start
-  let _end = +end
+exports.countPerDayInMonth = function *(year, month) {
+  let out = []
+  let _year = year
+  let _month = month
+  let totalDays
 
-  console.log(moment(_start).startOf('day').utc().format('MM-DD-YYYY'))
-  console.log(moment(_end).endOf('day').utc().format('MM-DD-YYYY'))
+  if (typeof _year !== 'undefined' && typeof _month !== 'undefined')
+    totalDays = moment({
+      year: _year,
+      month: _month - 1,
+      day: 1
+    }).endOf('month').date()
+  else {
+    totalDays = moment().endOf('month').date()
+    _year = moment().year()
+    _month = moment().month() + 1
+  }
 
-  return yield Post.findAll({
+  let items = yield Post.findAll({
+    attributes: [
+      'startDate',
+      'endDate'
+    ],
     order: [[ 'start_date', 'ASC' ]],
     where: {
       start_date: {
-        $gte: moment(_start).startOf('day').utc().format()
-      },
-      start_date: {
-        $lte: moment(_end).endOf('day').utc().format()
+        $between: [
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: 1
+          }).startOf('day')),
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: totalDays
+          }).endOf('day'))
+        ]
       }
-    }
+    },
+    raw: true
+  })
+
+
+  items.forEach(item => {
+    let start = moment(new Date(item.startDate)).date()
+    let _diff = moment(new Date(item.endDate))
+      .diff(new Date(item.startDate), 'days')
+
+    if (_diff > 0)
+      for (let i of range(start, start + _diff))
+        if (typeof out[i] === 'undefined')
+          out[i] = 1
+        else
+          out[i] = out[i] + 1
+    else
+      if (typeof out[start] === 'undefined')
+        out[start] = 1
+      else
+        out[start] = out[start] + 1
+  })
+
+  // Total in this month
+  out[0] = reduce(compact(out), (sum, n) => sum + n )
+
+  return out
+}
+
+/* eslint-disable camelcase, max-len */
+exports.countWithStartDay = function *(start, end) {
+  let _start = +start
+  let _end = +end
+
+  return yield Post.findAll({
+    attributes: [
+      () => {
+        const dialect = models.sequelize.options.dialect
+        if (dialect === 'sqlite')
+          return [
+            Sequelize.fn('DATE', Sequelize.col('start_date')),
+            'date'
+          ]
+        else if (dialect === 'mysql')
+          return [
+            Sequelize.fn('DATE_FORMAT', Sequelize.col('start_date'), '%Y-%m-%d'),
+            'date'
+          ]
+        else if (dialect === 'mssql')
+          return [
+            Sequelize.fn('CONVERT', 'CHAR(10)', Sequelize.col('start_date'), '126'),
+            'date'
+          ]
+      }(),
+      [
+        Sequelize.fn('count', moment(Sequelize.col('start_date')).format('YYYY-MM-DD')),
+        'total'
+      ]
+    ],
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      start_date: {
+        $between: [
+          moment.utc(_start).subtract('1', 'days').format(),
+          moment.utc(_end).format()
+        ]
+      }
+    },
+    group: ['date']
   })
 }
 
+function date_format (date, fm) {
+  return moment(date).format(fm)
+}
 
 exports.update = function *(hid, post) {
   const fillable = [

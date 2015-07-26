@@ -9,7 +9,12 @@ const Post = db.posts
 export default new Resource('cals', {
   // GET /cals
   index: function *(next) {
-    const { start, end } = this.request.query
-    this.body = yield Post.count(start, end)
+    const { action } = this.request.query
+
+    if (action === 'countPostInMonth') {
+      const { year, month } = this.request.query
+      this.body = yield Post.countPerDayInMonth(year, month)
+    }
+
   }
 })

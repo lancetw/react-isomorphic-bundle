@@ -3,6 +3,8 @@ $red: #D0021B;
 $grey: #DCE0E0;
 $dark-grey: #565A5C;
 $white: #FFF;
+$yellow: #FFFCC6;
+$green: #59A644;
 
 $font: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 $font-head: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -109,31 +111,50 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
   cursor: default;
 }
 
-.DayPicker-Day {
-  &.DayPicker-Day--today {
-    color: $red;
-    font-weight: 500;
-  }
-
-  &.DayPicker-Day--disabled {
-    color: $grey;
-    cursor: default;
-    background-color: color($grey lightness(30%));
-  }
-
-  &.DayPicker-Day--sunday {
-    color: $grey;
-    background-color: color($grey lightness(90%));
-  }
-
-  &.DayPicker-Day--outside {
-    cursor: default;
-    color: $grey;
-  }
-
-  &.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-    color: $white;
-    background-color: $blue;
-  }
-
+.DayPicker-Day--hasEventsLv0:not(.DayPicker-Day--outside) {
+  background-color: $white;
 }
+
+.DayPicker-Day--hasEventsLv1:not(.DayPicker-Day--outside) {
+  background-color: $yellow;
+}
+
+.DayPicker-Day--hasEventsLv2:not(.DayPicker-Day--outside) {
+  background-color: color($yellow lightness(80%));
+}
+
+.DayPicker-Day--hasEventsLv3:not(.DayPicker-Day--outside) {
+  background-color: color($yellow lightness(60%));
+}
+
+
+.DayPicker-Day--outside {
+  cursor: default;
+  color: $grey;
+  background-color: color($grey lightness(95%));
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):not(.DayPicker-Day--sunday) {
+  color: $white;
+  background-color: $blue;
+}
+
+.DayPicker-Day--today {
+  color: $blue;
+  font-weight: 500;
+}
+
+.DayPicker-Day--disabled {
+  color: $grey;
+  cursor: default;
+  background-color: color($grey lightness(30%));
+}
+
+.DayPicker-Day--sunday {
+  color: $red;
+}
+
+.DayPicker-Day--saturday {
+  color: $green;
+}
+

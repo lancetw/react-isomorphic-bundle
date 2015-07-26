@@ -14,6 +14,7 @@ export default class CalHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
     const dispatch = context.store.dispatch
+    dispatch(PostActions.countPostsWithCal())
     dispatch(PostActions.fetchList(0, 5))
     dispatch(updateTitle('title.cal'))
   }
@@ -27,6 +28,7 @@ export default class CalHandler extends React.Component {
   }
 
   static async routerWillRun ({ dispatch }) {
+    await dispatch(PostActions.countPostsWithCal())
     return await dispatch(PostActions.fetchList(0, 5))
   }
 
