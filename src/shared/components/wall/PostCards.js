@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { isEmpty } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
+import $ from 'jquery'
 
 export default class PostCards extends BaseComponent {
 
@@ -16,15 +17,27 @@ export default class PostCards extends BaseComponent {
     hasMore: PropTypes.bool.isRequired
   }
 
-  isScrollToLoad (elem, threshold=1) {
-    const elemHeight = elem.scrollHeight - elem.clientHeight
-    return elem.scrollTop >= parseInt(elemHeight * threshold, 10)
+  getDocHeight () {
+    const D = document
+    return Math.max(
+      Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+      Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+      Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+    )
+  }
+  getOffsetHeight () {
+    const D = document
+    return Math.max(D.body.offsetHeight, D.documentElement.offsetHeight)
+  }
+
+  isScrollToLoad (threshold=1) {
+    let elemHeight = this.getDocHeight() - this.getOffsetHeight()
+    return $(document).scrollTop() >= parseInt(elemHeight * threshold, 10)
   }
 
   handleScroll (event) {
-    const elem = event.target.body || event.srcElement.body
     const threshold = 0.8
-    if (this.isScrollToLoad(elem, threshold))
+    if (this.isScrollToLoad(threshold))
       this.setState({ shouldLoadFunc: true })
   }
 
