@@ -21,7 +21,7 @@ export default class Cal extends React.Component {
       locale: this.fixLocaleName(counterpart.getLocale()),
       date: moment(new Date()).valueOf(),
       selectedDay: new Date(),
-      nextOffset: 5,
+      nextOffset: 0,
       limit: 5
     }
 
@@ -42,7 +42,7 @@ export default class Cal extends React.Component {
     this.setState({
       date: date,
       selectedDay: day,
-      nextOffset: 5
+      nextOffset: 0
     })
   }
 
