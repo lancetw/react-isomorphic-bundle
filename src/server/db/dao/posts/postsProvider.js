@@ -167,32 +167,20 @@ exports.countPerDayInMonth = function *(year, month) {
     order: [[ 'start_date', 'ASC' ]],
     where: {
       start_date: {
-        $notBetween: [
+        $lt:
           new Date(moment({
             year: _year,
             month: _month - 1,
             day: 1
-          }).startOf('day')),
-          new Date(moment({
-            year: _year,
-            month: _month - 1,
-            day: totalDays
-          }).endOf('day'))
-        ]
+          }).startOf('day'))
       },
       end_date: {
-        $notBetween: [
-          new Date(moment({
-            year: _year,
-            month: _month - 1,
-            day: 1
-          }).startOf('day')),
+        $gt:
           new Date(moment({
             year: _year,
             month: _month - 1,
             day: totalDays
           }).endOf('day'))
-        ]
       }
     },
     raw: true
