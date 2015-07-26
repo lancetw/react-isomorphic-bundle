@@ -127,7 +127,7 @@ exports.countPerDayInMonth = function *(year, month) {
       .diff(new Date(item.startDate), 'days')
 
     if (_diff > 0)
-      for (let i of range(start, start + _diff))
+      for (let i of range(start, start + _diff + 1))
         if (typeof out[i] === 'undefined')
           out[i] = 1
         else
