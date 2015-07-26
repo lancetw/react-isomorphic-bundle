@@ -56,7 +56,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   let _end = end
 
   if (typeof _start === 'undefined')
-    _start = moment().endOf('day').valueOf()
+    _start = moment().startOf('day').valueOf()
   else
     _start = +_start
   if (typeof _end === 'undefined')
@@ -198,12 +198,12 @@ exports.countPerDayInMonth = function *(year, month) {
           out[i] = 1
         else
           out[i] = out[i] + 1
-    } else {
+      }
+    else
       if (typeof out[start] === 'undefined')
         out[start] = 1
       else
         out[start] = out[start] + 1
-    }
 
     startDateOut[start] = 1
   })
