@@ -95,7 +95,7 @@ exports.countPerDayInMonth = function *(year, month) {
     _month = moment().month() + 1
   }
 
-  let items = yield Post.findAll({
+  let startItems = yield Post.findAll({
     attributes: [
       'startDate',
       'endDate'
@@ -120,8 +120,85 @@ exports.countPerDayInMonth = function *(year, month) {
     raw: true
   })
 
+  let endItems = yield Post.findAll({
+    attributes: [
+      'startDate',
+      'endDate'
+    ],
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      start_date: {
+        $notBetween: [
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: 1
+          }).startOf('day')),
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: totalDays
+          }).endOf('day'))
+        ]
+      },
+      end_date: {
+        $between: [
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: 1
+          }).startOf('day')),
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: totalDays
+          }).endOf('day'))
+        ]
+      }
+    },
+    raw: true
+  })
 
-  items.forEach(item => {
+  let duringItems = yield Post.findAll({
+    attributes: [
+      'startDate',
+      'endDate'
+    ],
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      start_date: {
+        $notBetween: [
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: 1
+          }).startOf('day')),
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: totalDays
+          }).endOf('day'))
+        ]
+      },
+      end_date: {
+        $notBetween: [
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: 1
+          }).startOf('day')),
+          new Date(moment({
+            year: _year,
+            month: _month - 1,
+            day: totalDays
+          }).endOf('day'))
+        ]
+      }
+    },
+    raw: true
+  })
+
+  startItems.forEach(item => {
     let start = moment(new Date(item.startDate)).date()
     let _diff = moment(new Date(item.endDate))
       .diff(new Date(item.startDate), 'days')
@@ -137,6 +214,41 @@ exports.countPerDayInMonth = function *(year, month) {
         out[start] = 1
       else
         out[start] = out[start] + 1
+  })
+
+  endItems.forEach(item => {
+    let start = 1
+    let _diff = moment(new Date(item.endDate))
+      .diff(moment(new Date(item.endDate)).startOf('month'), 'days')
+
+    if (_diff > 0)
+      for (let i of range(start, start + _diff + 1))
+        if (typeof out[i] === 'undefined')
+          out[i] = 1
+        else
+          out[i] = out[i] + 1
+  })
+
+  duringItems.forEach(item => {
+    let start = 1
+    let _diff = moment({
+        year: _year,
+        month: _month - 1,
+        day: totalDays
+      })
+      .diff(moment({
+        year: _year,
+        month: _month - 1,
+        day: 1
+      })
+      , 'days')
+
+    if (_diff > 0)
+      for (let i of range(start, start + _diff + 1))
+        if (typeof out[i] === 'undefined')
+          out[i] = 1
+        else
+          out[i] = out[i] + 1
   })
 
   // Total in this month
