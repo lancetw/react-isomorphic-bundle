@@ -37,13 +37,14 @@ exports.load = function *(hid) {
 
 /* eslint-disable camelcase */
 exports.list = function *(offset=0, limit=20) {
+  let _start = moment().startOf('day').valueOf()
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'ASC' ]],
     where: {
       end_date: {
-        $gte: new Date(moment().endOf('day'))
+        $gte: new Date(moment(_start))
       }
     }
   })
@@ -63,7 +64,6 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   else
     _end = +_end
 
-
   return yield Post.findAll({
     offset: offset,
     limit: limit,
@@ -79,6 +79,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 /* eslint-disable camelcase */
 exports.countPerDayInMonth = function *(year, month) {
   let out = []
+  let startDateOut = []
   let _year = year
   let _month = month
   let totalDays
@@ -192,16 +193,19 @@ exports.countPerDayInMonth = function *(year, month) {
       .diff(new Date(item.startDate), 'days')
 
     if (_diff > 0)
-      for (let i of range(start, start + _diff + 1))
+      for (let i of range(start, start + _diff + 1)) {
         if (typeof out[i] === 'undefined')
           out[i] = 1
         else
           out[i] = out[i] + 1
-    else
+    } else {
       if (typeof out[start] === 'undefined')
         out[start] = 1
       else
         out[start] = out[start] + 1
+    }
+
+    startDateOut[start] = 1
   })
 
   endItems.forEach(item => {
@@ -242,11 +246,11 @@ exports.countPerDayInMonth = function *(year, month) {
   // Total in this month
   out[0] = reduce(compact(out), (sum, n) => sum + n )
 
-  return out
+  return { count: out, countStart: startDateOut }
 }
 
 /* eslint-disable camelcase, max-len */
-exports.countWithStartDay = function *(start, end) {
+exports.countWithStartDay_tmp = function *(start, end) {
   let _start = +start
   let _end = +end
 

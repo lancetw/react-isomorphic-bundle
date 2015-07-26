@@ -18,7 +18,8 @@ const initialState = {
   limit: 0,
   hasMore: false,
   content: {},
-  count: []
+  count: [],
+  countStart: []
 }
 
 const actionsMap = {
@@ -49,9 +50,9 @@ const actionsMap = {
   },
   [LIST_POST_FAILED]: (state, action) =>
     ({ loading: false, errors: action.errors }),
-  [COUNT_POST_IN_MONTH_STARTED]: () => ({ count: [] }),
+  [COUNT_POST_IN_MONTH_STARTED]: () => ({ count: [], countStart: [] }),
   [COUNT_POST_IN_MONTH_COMPLETED]: (state, action) =>
-    ({ count: action.count }),
+    ({ count: action.cals.count, countStart: action.cals.countStart }),
   [COUNT_POST_IN_MONTH_FAILED]: (state, action) =>
     ({ errors: action.errors })
 }

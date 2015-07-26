@@ -77,15 +77,24 @@ export default class Cal extends React.Component {
     } else return 0
   }
 
+  getTodayStartCount (date) {
+    if (typeof date !== 'undefined') {
+      const count = this.props.post.countStart[date]
+      return typeof count !== 'undefined' && count !== null ? count : 0
+    } else return 0
+  }
+
    renderDay (day) {
     const date = day.getDate()
-    const count = this.getTodayCount(date)
+    const count = this.getTodayStartCount(date)
 
     return (
       <div>
         <div className="day">
           { date }
         </div>
+        { count > 0 && (<span className="event-started">＊</span>) }
+        { count === 0 && (<span className="event-none">＊</span>) }
       </div>
     )
   }
@@ -98,10 +107,10 @@ export default class Cal extends React.Component {
       'sunday': (day) => day.getDay() === 0,
       'saturday': (day) => day.getDay() === 6,
       'selected': (day) => isSameDay(selectedDay, day),
-      'hasEventsLv3': (day) => this.getTodayCount(day.getDate()) >= 20,
-      'hasEventsLv2': (day) => this.getTodayCount(day.getDate()) >= 10,
-      'hasEventsLv1': (day) => this.getTodayCount(day.getDate()) > 0,
-      'hasEventsLv0': (day) => this.getTodayCount(day.getDate()) === 0
+      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) >= 10,
+      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) >= 5,
+      'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0,
+      'has-event-slv0': (day) => this.getTodayCount(day.getDate()) === 0
     }
 
     return (

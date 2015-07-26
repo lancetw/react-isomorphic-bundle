@@ -99,16 +99,16 @@ export function countPostsWithCal (year, month) {
   return async dispatch => {
     dispatch({ type: COUNT_POST_IN_MONTH_STARTED })
     try {
-      const count = await countPostInMonth(year, month)
-      if (isArray(count))
+      const cals = await countPostInMonth(year, month)
+      if (cals && isArray(cals.count))
         return dispatch({
           type: COUNT_POST_IN_MONTH_COMPLETED,
-          count: count
+          cals: cals
         })
       else
         return dispatch({
           type: COUNT_POST_IN_MONTH_FAILED,
-          errors: count.errors ? count.errors : count
+          errors: cals.errors ? cals.errors : cals
         })
     } catch (err) {
       return dispatch({

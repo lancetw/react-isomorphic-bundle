@@ -96,7 +96,7 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Day {
   display: table-cell;
-  padding: .5rem;
+  padding: .1rem .6rem;
   border: 1px solid color($grey lightness(86%));
   text-align: center;
   cursor: pointer;
@@ -107,23 +107,35 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
   }
 }
 
+.event-started {
+  display: inline;
+  color: $red;
+  font-size: 1.2rem;
+}
+
+.event-none {
+  display: inline;
+  color: transparent;
+  font-size: 1.2rem;
+}
+
 .DayPicker--interactionDisabled .DayPicker-Day {
   cursor: default;
 }
 
-.DayPicker-Day--hasEventsLv0:not(.DayPicker-Day--outside) {
+.DayPicker-Day--has-events-lv0:not(.DayPicker-Day--outside) {
   background-color: $white;
 }
 
-.DayPicker-Day--hasEventsLv1:not(.DayPicker-Day--outside) {
+.DayPicker-Day--has-events-lv1:not(.DayPicker-Day--outside) {
   background-color: $yellow;
 }
 
-.DayPicker-Day--hasEventsLv2:not(.DayPicker-Day--outside) {
+.DayPicker-Day--has-events-lv2:not(.DayPicker-Day--outside) {
   background-color: color($yellow lightness(80%));
 }
 
-.DayPicker-Day--hasEventsLv3:not(.DayPicker-Day--outside) {
+.DayPicker-Day--has-events-lv3:not(.DayPicker-Day--outside) {
   background-color: color($yellow lightness(60%));
 }
 
@@ -157,4 +169,3 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 .DayPicker-Day--saturday {
   color: $green;
 }
-
