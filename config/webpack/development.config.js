@@ -7,11 +7,10 @@ import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
 import bemLinter from 'postcss-bem-linter';
 import atReporter from 'postcss-reporter';
-import nested from 'postcss-nested';
-import simpleVars from 'postcss-simple-vars';
 import atImport from 'postcss-import';
 import atInclude from 'postcss-include';
 import atColorFn from 'postcss-color-function';
+import atPrecss from 'precss';
 
 const writeStats = require('webpack/utils/write-stats');
 const LOCAL_IP = require('dev-ip')();
@@ -99,7 +98,7 @@ export default {
       ]
     },
     postcss: {
-        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, atReporter, nested, simpleVars, atColorFn],
+        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, atReporter, atPrecss, atColorFn],
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
