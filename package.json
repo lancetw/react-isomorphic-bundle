@@ -111,6 +111,7 @@
     "passport-jwt": "^1.1.0",
     "postscribe": "^1.4.0",
     "react": "^0.13.3",
+    "react-a11y": "^0.2.6",
     "react-controllables": "^0.3.3",
     "react-day-picker": "^1.0.3",
     "react-dropzone": "^1.2.2",
