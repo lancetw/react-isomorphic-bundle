@@ -23,7 +23,7 @@ export default class HomeHandler extends React.Component {
   }
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func
   }
 
   render () {

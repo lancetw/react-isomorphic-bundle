@@ -16,8 +16,6 @@ import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 
 (async () => {
-  require('react-a11y')(React)
-
   const lang = LocaleActions.getLocale()
   counterpart.registerTranslations(
     'en',

@@ -4,8 +4,8 @@ const Translate = require('react-translate-component')
 
 export default class AppContainer extends React.Component {
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
   }
 
   static propTypes = {

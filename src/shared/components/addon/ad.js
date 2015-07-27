@@ -23,8 +23,9 @@ export default class Ad extends React.Component {
 
       new Promise((resolve) => {
         setTimeout(() => {
-          postscribe('#hotrank-container-' + this.props.id, `<script src='${this.props.link}'></script>`,
-          { done: () => { resolve(true) } })
+          postscribe('#hotrank-container-' + this.props.id,
+            `<script src='${this.props.link}'></script>`,
+            { done: () => { resolve(true) } })
         }, 0)
       }).then(() => this.setState({ released: true }))
     }

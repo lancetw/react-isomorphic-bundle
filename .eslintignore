@@ -1,0 +1,11 @@
+config/
+coverage/
+images/
+lib/
+node_modules/
+storage/
+styles/
+tests/
+uploads/
+views/
+webpack/

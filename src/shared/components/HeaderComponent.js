@@ -10,7 +10,7 @@ export default class Header extends React.Component {
   }
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    dispatch: PropTypes.func,
     sync: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   }
