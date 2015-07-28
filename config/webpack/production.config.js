@@ -7,11 +7,11 @@ import autoprefixer from 'autoprefixer-core';
 import csswring from 'csswring';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import bemLinter from 'postcss-bem-linter';
-import atReporter from 'postcss-reporter';
-import atImport from 'postcss-import';
-import atInclude from 'postcss-include';
-import atColorFn from 'postcss-color-function';
-import atPrecss from 'precss';
+import postReporter from 'postcss-reporter';
+import postImport from 'postcss-import';
+import postInclude from 'postcss-include';
+import postColorFn from 'postcss-color-function';
+import postPrecss from 'precss';
 
 const writeStats = require('webpack/utils/write-stats');
 const PUBLIC_PATH = `/assets/`;
@@ -106,7 +106,7 @@ export default {
       ]
     },
     postcss: {
-        defaults: [atImport, atInclude, autoprefixer, csswring, bemLinter, atReporter, atPrecss, atColorFn],
+        defaults: [postImport, postInclude, autoprefixer, csswring, bemLinter, postReporter, postPrecss, postColorFn],
         cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
