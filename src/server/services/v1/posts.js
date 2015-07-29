@@ -108,6 +108,7 @@ export default new Resource('posts', {
       return
     }
 
+    body.uid = hashids.decode(body.uid)
     const post = yield Post.update(this.params.post, body)
     this.type = 'json'
     this.status = 201
