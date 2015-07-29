@@ -50,6 +50,7 @@ export default new Resource('posts', {
     }
 
     try {
+      body.uid = hashids.decode(body.uid)
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
       body.openDate = body.startDate

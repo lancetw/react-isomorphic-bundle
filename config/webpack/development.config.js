@@ -41,7 +41,7 @@ export default {
     devtool: 'eval-source-map',
     entry: {
       app: [
-        `webpack-dev-server/client?http://localhost:${PORT}`,
+        `webpack-dev-server/client?http://${HOST}:${PORT}`,
         'webpack/hot/only-dev-server',
         './src/client/index',
         './src/client/fallback'
