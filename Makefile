@@ -55,7 +55,7 @@ fast-build: storage fast-js build
 
 # Watch for changes
 watch:
-	@NODE_ENV=development $(MAKE) -j5 storage dev-server webpack-server browser-sync
+	@NODE_ENV=development $(MAKE) -j5 storage webpack-server dev-server browser-sync
 
 debug:
 	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
