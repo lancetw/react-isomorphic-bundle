@@ -32,16 +32,20 @@ export default class PostCards extends BaseComponent {
   }
 
   isScrollToLoad (threshold=1) {
+    console.log('---')
     console.log(this.getDocHeight())
-    console.log(this.getOffsetHeight())
+    console.log('---')
     console.log(document.body.offsetHeight)
+    console.log(document.body.clientHeight)
     console.log(document.documentElement.offsetHeight)
+    console.log(document.documentElement.clientHeight)
+    console.log('---')
     let elemHeight = this.getDocHeight() - this.getOffsetHeight()
     return $(document).scrollTop() >= parseInt(elemHeight * threshold, 10)
   }
 
   handleScroll (event) {
-    const threshold = 0.65
+    const threshold = 0.9
     if (this.isScrollToLoad(threshold))
       this.setState({ shouldLoadFunc: true })
   }
