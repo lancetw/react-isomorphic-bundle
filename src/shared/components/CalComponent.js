@@ -19,8 +19,8 @@ export default class Cal extends React.Component {
     super(props)
     this.state = {
       locale: this.fixLocaleName(counterpart.getLocale()),
-      date: moment(new Date()).valueOf(),
-      selectedDay: new Date(),
+      date: moment(new Date()).startOf('day').valueOf(),
+      selectedDay: null,
       nextOffset: 0,
       limit: 5
     }
