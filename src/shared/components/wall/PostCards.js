@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
-import { isEmpty } from 'lodash'
+import { isEmpty, throttle } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
 import $ from 'jquery'
 
@@ -58,7 +58,7 @@ export default class PostCards extends BaseComponent {
   }
 
   componentDidMount () {
-    window.addEventListener('scroll', ::this.handleScroll)
+    window.addEventListener('scroll', throttle(::this.handleScroll, 200))
   }
 
   componentWillUnmount () {
