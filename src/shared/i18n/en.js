@@ -73,11 +73,13 @@ export default {
       title: {
         basic: 'Basic',
         upload: 'Upload',
+        advanced: 'Advanced',
         map: 'Location'
       },
       msg: {
         upload: 'Dropping images or pdf files here, or click to select:',
-        limit: 'Per file size limit：3 MB'
+        limit: 'Per file size limit：3 MB',
+        urltips: 'URL should be start with http://'
       }
     },
     map: {

@@ -22,7 +22,8 @@ exports.create = function *(post) {
     'file',
     'lat',
     'lng',
-    'place'
+    'place',
+    'url'
   ]
 
   return yield Post.create(post, { fields: fillable })

@@ -1,6 +1,12 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
-import { Form, PostForm, PostFormOptions } from 'shared/utils/forms'
+import {
+  Form,
+  PostForm,
+  PostFormOptions,
+  RegForm,
+  RegFormOptions
+} from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -18,7 +24,8 @@ export default class Post extends BaseComponent {
     this._bind(
       'handleSubmit',
       'validation',
-      'handleChange'
+      'handleChange',
+      'handleRegChange'
     )
 
     const today = moment().format('YYYY-M-D').split('-')
@@ -34,7 +41,12 @@ export default class Post extends BaseComponent {
         title: null,
         content: null
       },
+      regValue: {
+        openDate: today,
+        closeDate: today
+      },
       options: PostFormOptions(counterpart.getLocale()),
+      regOptions: RegFormOptions(counterpart.getLocale()),
       submited: false,
       updated: false,
       locale: counterpart.getLocale(),
@@ -61,7 +73,8 @@ export default class Post extends BaseComponent {
 
   handleLocaleChange (newLocale) {
     this.setState({
-      options: PostFormOptions(newLocale)
+      options: PostFormOptions(newLocale),
+      regOptions: RegFormOptions(newLocale)
     })
   }
 
@@ -154,6 +167,11 @@ export default class Post extends BaseComponent {
     this.setState({ value })
   }
 
+  handleRegChange (regValue, path) {
+    this.refs.regForm.getValue()
+    this.setState({ regValue })
+  }
+
   handleSelected (index, last) {}
 
   handleSubmit (evt) {
@@ -172,9 +190,13 @@ export default class Post extends BaseComponent {
           place: this.props.map.place,
           lat: this.props.map.lat,
           lng: this.props.map.lng
-        }
+      }
 
-      setTimeout(() => this.props.submit({ value, upload, map }), 1000)
+      const regValue = this.state.regValue
+
+      setTimeout(() => {
+        this.props.submit({ value, regValue, upload, map })
+      }, 1000)
     }
   }
 
@@ -196,19 +218,40 @@ export default class Post extends BaseComponent {
     if (typeof errors !== 'undefined' && !isEmpty(errors)) {
       let options = clone(this.state.options)
       options.fields = clone(options.fields)
+      let regOptions = clone(this.state.regOptions)
+      regOptions.fields = clone(regOptions.fields)
 
       if (typeof errors.map !== 'undefined')
         errors.map(function (err) {
-          if (err.code === 'invalid') {
-            options.fields[err.field] = clone(options.fields[err.field])
-            options.fields[err.field] = { hasError: true, error: err.message }
-          } else {
-            options.fields[err.path] = clone(options.fields[err.path])
-            options.fields[err.path] = { hasError: true, error: err.message }
-          }
+          if (options.fields[err.field] !== 'undefined')
+            if (err.code === 'invalid') {
+              options.fields[err.field] = clone(options.fields[err.field])
+              options.fields[err.field] = {
+                hasError: true, error: err.message
+              }
+            } else {
+              options.fields[err.path] = clone(options.fields[err.path])
+              options.fields[err.path] = {
+                hasError: true, error: err.message
+              }
+            }
+
+          if (regOptions.fields[err.field] !== 'undefined')
+            if (err.code === 'invalid') {
+              regOptions.fields[err.field] = clone(regOptions.fields[err.field])
+              regOptions.fields[err.field] = {
+                hasError: true, error: err.message
+              }
+            } else {
+              regOptions.fields[err.path] = clone(regOptions.fields[err.path])
+              regOptions.fields[err.path] = {
+                hasError: true, error: err.message
+              }
+            }
+
         })
       this.setState({ submited: false })
-      this.setState({ options: options })
+      this.setState({ options, regOptions })
     }
   }
 
@@ -246,6 +289,10 @@ export default class Post extends BaseComponent {
       && !this.state.updated
       ? classNames('ui', 'form', 'loading')
       : classNames('ui', 'form')
+
+    let AdvancedInput = this.state.placeError
+      ? classNames('ui', 'fluid', 'input', 'error')
+      : classNames('ui', 'fluid', 'input')
 
     let PlaceInput = this.state.placeError
       ? classNames('ui', 'fluid', 'action', 'input', 'error')
@@ -302,6 +349,9 @@ export default class Post extends BaseComponent {
                 <Translate content="post.tabs.title.basic" />
               </Tab>
               <Tab>
+                <Translate content="post.tabs.title.advanced" />
+              </Tab>
+              <Tab>
                 <Translate content="post.tabs.title.upload" />
               </Tab>
               <Tab>
@@ -331,6 +381,19 @@ export default class Post extends BaseComponent {
               </form>
             </TabPanel>
             <TabPanel index={1}>
+              <form>
+                <Form
+                  ref="regForm"
+                  type={RegForm(counterpart.getLocale())}
+                  options={this.state.regOptions}
+                  value={this.state.regValue}
+                  onChange={this.handleRegChange}/>
+              </form>
+              <div className="ui orange center aligned segment">
+                <Translate content="post.tabs.msg.urltips" />
+              </div>
+            </TabPanel>
+            <TabPanel index={2}>
               <CSSTransitionGroup transitionName="MessageTransition">
                 {UploadErrorMessage}
               </CSSTransitionGroup>
@@ -346,69 +409,67 @@ export default class Post extends BaseComponent {
                 <Translate content="post.tabs.msg.limit" />
               </div>
             </TabPanel>
-            <TabPanel index={2}>
-              <div className="ui basic segment">
-                <form
-                  onSubmit={::this.handleMapSubmit}>
-                  <div className={PlaceInput}>
-                    <input
-                      type="text"
-                      placeholder="Place"
-                      ref="place"
-                      defaultValue={
-                        this.props.map.place
-                        || counterpart('post.map.my')
-                      } />
-                    <button
-                      className="ui green button"
-                      onClick={::this.handleSearch}>
-                      <Translate content="post.map.search" />
-                    </button>
+            <TabPanel index={3}>
+              <form
+                onSubmit={::this.handleMapSubmit}>
+                <div className={PlaceInput}>
+                  <input
+                    type="text"
+                    placeholder="Place"
+                    ref="place"
+                    defaultValue={
+                      this.props.map.place
+                      || counterpart('post.map.my')
+                    } />
+                  <button
+                    className="ui green button"
+                    onClick={::this.handleSearch}>
+                    <Translate content="post.map.search" />
+                  </button>
+                </div>
+                <div className="ui pointing label visible">
+                  <i><Translate content="post.map.tips" /></i>
+                </div>
+                <div className="ui hidden divider" />
+                <div className={LatLngInput}>
+                  <div className="ui label">
+                    <Translate content="post.map.lat" />
                   </div>
-                  <div className="ui pointing label visible">
-                    <i><Translate content="post.map.tips" /></i>
+                  <input
+                    type="text"
+                    placeholder="latitude"
+                    ref="lat"
+                    defaultValue={this.props.map.lat} />
+                </div>
+                <div className="ui hidden divider" />
+                <div className={LatLngInput}>
+                  <div className="ui label">
+                    <Translate content="post.map.lng" />
                   </div>
-                  <div className="ui hidden divider" />
-                  <div className={LatLngInput}>
-                    <div className="ui label">
-                      <Translate content="post.map.lat" />
+                  <input type="text"
+                    placeholder="longitude"
+                    ref="lng"
+                    defaultValue={this.props.map.lng} />
+                </div>
+                <div className="ui hidden divider" />
+                <div className="ui list">
+                  <div className="item">
+                    <div className="left floated content">
+                      <button
+                        className="ui circular yellow icon button"
+                        onClick={::this.handleGeo}>
+                        <i className="icon large map"></i>
+                      </button>
                     </div>
-                    <input
-                      type="text"
-                      placeholder="latitude"
-                      ref="lat"
-                      defaultValue={this.props.map.lat} />
-                  </div>
-                  <div className="ui hidden divider" />
-                  <div className={LatLngInput}>
-                    <div className="ui label">
-                      <Translate content="post.map.lng" />
-                    </div>
-                    <input type="text"
-                      placeholder="longitude"
-                      ref="lng"
-                      defaultValue={this.props.map.lng} />
-                  </div>
-                  <div className="ui hidden divider" />
-                  <div className="ui list">
-                    <div className="item">
-                      <div className="left floated content">
-                        <button
-                          className="ui circular yellow icon button"
-                          onClick={::this.handleGeo}>
-                          <i className="icon large map"></i>
-                        </button>
-                      </div>
-                      <div className="right floated content">
-                        <button
-                          className="ui large orange button">
-                          <Translate content="post.map.update" />
-                        </button>
-                      </div>
+                    <div className="right floated content">
+                      <button
+                        className="ui large orange button">
+                        <Translate content="post.map.update" />
+                      </button>
                     </div>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </TabPanel>
           </Tabs>
         </div>

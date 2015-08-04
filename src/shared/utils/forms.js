@@ -239,7 +239,7 @@ const PostFormOptionsEn = {
       label: 'Start date',
       order: [ 'YYYY', 'M', 'D' ]
     },
-     endDate: {
+    endDate: {
       label: 'End date',
       order: [ 'YYYY', 'M', 'D' ]
     },
@@ -262,7 +262,7 @@ const PostFormOptionsZhHantTW = {
       label: '開始日期',
       order: [ 'YYYY', 'M', 'D' ]
     },
-     endDate: {
+    endDate: {
       label: '結束日期',
       order: [ 'YYYY', 'M', 'D' ]
     },
@@ -283,6 +283,73 @@ exports.PostFormOptions = function (locale) {
   const list = {
     'en': PostFormOptionsEn,
     'zh-hant-tw': PostFormOptionsZhHantTW
+  }
+  return list[locale]
+}
+
+const RegFormEn = t.subtype(t.struct({
+  openDate: t.Dat,
+  closeDate: t.Dat,
+  url: t.maybe(t.Str)
+}), function (value) {
+  return (
+    (value.openDate <= value.closeDate)
+  )
+})
+const RegFormZhHantTW = t.subtype(t.struct({
+  openDate: t.Dat,
+  closeDate: t.Dat,
+  url: t.maybe(t.Str)
+}), function (value) {
+  return (
+    (value.openDate <= value.closeDate)
+  )
+})
+exports.RegForm = function (locale) {
+  const list = {
+    'en': RegFormEn,
+    'zh-hant-tw': RegFormZhHantTW
+  }
+  return list[locale]
+}
+
+const RegFormOptionsEn = {
+  error: <div data-errors="date">Date range is invalid.</div>,
+  auto: 'placeholders',
+  fields: {
+    openDate: {
+      label: 'Open date',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    closeDate: {
+      label: 'Close date',
+      order: [ 'YYYY', 'M', 'D' ]
+    }
+  }
+}
+const RegFormOptionsZhHantTW = {
+  error: <div data-errors="date">日期區間有誤</div>,
+  auto: 'none',
+  fields: {
+    openDate: {
+      label: '報名開放日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    closeDate: {
+      label: '報名截止日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    url: {
+      attrs: {
+        placeholder: '報名網址'
+      }
+    }
+  }
+}
+exports.RegFormOptions = function (locale) {
+  const list = {
+    'en': RegFormOptionsEn,
+    'zh-hant-tw': RegFormOptionsZhHantTW
   }
   return list[locale]
 }

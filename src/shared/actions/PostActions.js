@@ -17,12 +17,12 @@ import {
 import { getToken } from 'shared/actions/AuthActions'
 import { clearUpload } from 'shared/actions/UploadActions'
 
-export function submit ({ value, upload, map }) {
+export function submit ({ value, regValue, upload, map }) {
   return async dispatch => {
     dispatch({ type: CREATE_POST_STARTED })
     try {
       const token = getToken()
-      const content = await create({ token, value, upload, map })
+      const content = await create({ token, value, regValue, upload, map })
 
       if (content.uid) {
         dispatch(clearUpload())
@@ -119,7 +119,7 @@ export function countPostsWithCal (year, month) {
   }
 }
 
-async function create ({ token, value, upload, map }) {
+async function create ({ token, value, regValue, upload, map }) {
   const _upload = compact(upload)
   return new Promise((resolve, reject) => {
     const user = jwt.decode(token)
@@ -128,6 +128,9 @@ async function create ({ token, value, upload, map }) {
     _form.uid = user.id
     _form.startDate = moment(_form.startDate).valueOf()
     _form.endDate = moment(_form.endDate).valueOf()
+    _form.openDate = moment(regValue.openDate).valueOf()
+    _form.closeDate = moment(regValue.closeDate).valueOf()
+    _form.url = regValue.url
     if (map && typeof map.lat !== undefined && typeof map.lng !== undefined) {
       _form.lat = map.lat
       _form.lng = map.lng

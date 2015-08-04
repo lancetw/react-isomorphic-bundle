@@ -29,6 +29,8 @@ export default new Resource('posts', {
       prop: { type: 'string' },
       startDate: { type: 'int' },
       endDate: { type: 'int' },
+      openDate: { type: 'int', required: false },
+      closeDate: { type: 'int', required: false },
       title: { type: 'string' },
       content: { type: 'string' },
       lat: { type: 'number', required: false },
@@ -39,13 +41,17 @@ export default new Resource('posts', {
         type: 'array',
         itemType: 'string',
         rule: { type: 'string', allowEmpty: true }
+      },
+      url: {
+        required: false,
+        type: 'url'
       }
     }
     const errors = validate(rule, body)
     if (errors) {
       this.type = 'json'
       this.status = 200
-      this.body = errors
+      this.body = { errors: errors }
       return
     }
 
@@ -53,8 +59,15 @@ export default new Resource('posts', {
       body.uid = hashids.decode(body.uid)
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
-      body.openDate = body.startDate
-      body.closeDate = body.endDate
+      if (typeof body.openDate === 'undefined')
+        body.openDate = body.startDate
+      else
+        body.openDate = moment(body.openDate).format()
+      if (typeof body.closeDate === 'undefined')
+        body.closeDate = body.endDate
+      else
+        body.closeDate = moment(body.closeDate).format()
+
       body.file = JSON.stringify(body.file)
 
       const post = yield Post.create(body)
