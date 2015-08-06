@@ -82,7 +82,8 @@ export default function (app) {
             initialState.components,
             'routerWillRun',
             {
-              dispatch: store.dispatch
+              dispatch: store.dispatch,
+              params: initialState.params
             }
           )
         } catch (err) {

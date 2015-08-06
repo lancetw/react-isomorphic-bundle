@@ -7,6 +7,9 @@ import {
   CREATE_POST_STARTED,
   CREATE_POST_COMPLETED,
   CREATE_POST_FAILED,
+  SHOW_POST_STARTED,
+  SHOW_POST_COMPLETED,
+  SHOW_POST_FAILED,
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
   LIST_POST_FAILED,
@@ -43,7 +46,31 @@ export function submit ({ value, regValue, upload, map }) {
   }
 }
 
-export function showList (offset=0, limit=5, reload) {
+export function show (id) {
+  return async dispatch => {
+    dispatch({ type: SHOW_POST_STARTED })
+    try {
+      const post = await get(id)
+      if (typeof post !== 'undefined')
+        return dispatch({
+          type: SHOW_POST_COMPLETED,
+          content: post
+        })
+      else
+        return dispatch({
+          type: SHOW_POST_FAILED,
+          errors: post.errors ? post.errors : post
+        })
+    } catch (err) {
+      return dispatch({
+        type: SHOW_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
+export function defaultList (offset=0, limit=5, reload) {
   return async dispatch => {
     if (reload)
       dispatch({ type: LIST_POST_STARTED })
@@ -150,6 +177,21 @@ async function create ({ token, value, regValue, upload, map }) {
       })
   })
 }
+
+async function get (id) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(LOCAL_PATH + '/api/v1/posts/' + id)
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}
+
 
 async function list (offset, limit) {
   return new Promise((resolve, reject) => {

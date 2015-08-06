@@ -16,9 +16,11 @@ export default new Resource('posts', {
   index: function *(next) {
     const { offset, limit, start, end } = this.request.query
     if (typeof start !== 'undefined')
-      this.body = yield Post.fetch(offset, limit, start, end)
+      this.body =
+        hashids.encodeJson(yield Post.fetch(offset, limit, start, end))
     else
-      this.body = yield Post.list(offset, limit)
+      this.body =
+        hashids.encodeJson(yield Post.list(offset, limit))
   },
   // POST /posts
   create: [ RestAuth, function *(next) {
@@ -66,7 +68,7 @@ export default new Resource('posts', {
       if (typeof body.closeDate === 'undefined')
         body.closeDate = body.endDate
       else
-        body.closeDate = moment(body.closeDate).format()
+        body.closeDate = moment(body.closeDate).endOf('day').format()
 
       body.file = JSON.stringify(body.file)
 

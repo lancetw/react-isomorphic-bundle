@@ -61,7 +61,6 @@ export default class Post extends BaseComponent {
     submit: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     setPin: PropTypes.func.isRequired,
-    updateGeo: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     upload: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired

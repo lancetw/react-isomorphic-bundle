@@ -8,6 +8,7 @@ export default {
     signup: 'Sign Up',
     wall: 'All events',
     post: 'Post it!',
+    post_detail: 'Detail',
     password: 'Change My Password',
     redirect: 'Redirecting...',
     cal: 'Calendar view'

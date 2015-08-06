@@ -25,7 +25,9 @@ $ npm install
 
 ## DEV MODE
 
-`npm run dev`
+`npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
+
+**Press "Ctrl + ]" to open redux devtools**
 
 * open `http://127.0.0.1:3000`
 * open `http://127.0.0.1:3002` (BrowserSync)
@@ -71,6 +73,7 @@ $ npm install
 ## You May Be Interested In...
 
 * [redux](https://github.com/gaearon/redux)
+* [redux-devtools-diff-monitor](https://github.com/whetstone/redux-devtools-diff-monitor)
 * [flummox](https://github.com/acdlite/flummox)
 * [react-router](https://github.com/rackt/react-router)
 * [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)

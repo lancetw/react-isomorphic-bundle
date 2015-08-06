@@ -38,11 +38,10 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
     debug.enable('dev,koa')
 
     const {
-      DevTools,
-      DebugPanel,
-      LogMonitor
+      DevTools
     } = require('redux-devtools/lib/react')
 
+    const DiffMonitor = require('redux-devtools-diff-monitor')
     const { devTools, persistState } = require('redux-devtools')
 
     finalCreateStore = compose(
@@ -67,9 +66,7 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
             />
           }
         </Provider>
-        <DebugPanel top right bottom>
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
+        <DevTools store={store} monitor={DiffMonitor} />
       </div>
     ), document.getElementById('app'))
 

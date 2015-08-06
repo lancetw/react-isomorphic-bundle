@@ -2,6 +2,9 @@ import {
   CREATE_POST_STARTED,
   CREATE_POST_COMPLETED,
   CREATE_POST_FAILED,
+  SHOW_POST_STARTED,
+  SHOW_POST_COMPLETED,
+  SHOW_POST_FAILED,
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
   LIST_POST_FAILED,
@@ -27,6 +30,14 @@ const actionsMap = {
   [CREATE_POST_COMPLETED]: (state, action) =>
     ({ content: action.content }),
   [CREATE_POST_FAILED]: (state, action) =>
+    ({ errors: action.errors }),
+  [SHOW_POST_STARTED]: () => ({
+    errors: {},
+    content: {}
+  }),
+  [SHOW_POST_COMPLETED]: (state, action) =>
+    ({ errors: {}, content: action.content }),
+  [SHOW_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [LIST_POST_STARTED]: () => ({
     errors: {},

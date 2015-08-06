@@ -13,7 +13,7 @@ export default class WallHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
     const { dispatch } = context.store
-    dispatch(PostActions.showList(0, 5))
+    dispatch(PostActions.defaultList(0, 5))
     dispatch(updateTitle('title.wall'))
     this.state = { limit: 5, nextOffset: 0 }
   }
@@ -27,13 +27,13 @@ export default class WallHandler extends React.Component {
   }
 
   static async routerWillRun ({ dispatch }) {
-    return await dispatch(PostActions.showList(0, 5))
+    return await dispatch(PostActions.defaultList(0, 5))
   }
 
   loadFunc () {
     const { dispatch } = this.props
     const nextOffset = this.state.nextOffset + this.state.limit
-    dispatch(PostActions.showList(nextOffset - 1, this.state.limit))
+    dispatch(PostActions.defaultList(nextOffset - 1, this.state.limit))
 
     this.setState({ nextOffset: nextOffset })
   }

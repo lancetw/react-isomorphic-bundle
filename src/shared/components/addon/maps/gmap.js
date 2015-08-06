@@ -24,7 +24,8 @@ export default class Gmap extends Component {
     onBoundsChange: PropTypes.func,
     place: PropTypes.string,
     lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired
+    lng: PropTypes.number.isRequired,
+    className: PropTypes.string
   }
 
   static defaultProps = {
@@ -32,7 +33,8 @@ export default class Gmap extends Component {
     zoom: 16,
     lat: 25.018536,
     lng: 121.529146,
-    place: counterpart('post.map.my')
+    place: counterpart('post.map.my'),
+    className: 'ui segment'
   }
 
     handleLocaleChange (newLocale) {
@@ -55,7 +57,7 @@ export default class Gmap extends Component {
   render () {
 
     return (
-      <div id="map" className="ui segment">
+      <div id="map" className={this.props.className}>
         <GoogleMap
           ref="gmap"
           onBoundsChange={this._onBoundsChange}

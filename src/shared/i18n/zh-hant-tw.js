@@ -8,6 +8,7 @@ export default {
     signup: '註冊',
     wall: '所有佈告',
     post: '張貼新佈告',
+    post_detail: '佈告詳細資料',
     password: '修改密碼',
     redirect: '重新導向中...',
     cal: '日曆瀏覽'

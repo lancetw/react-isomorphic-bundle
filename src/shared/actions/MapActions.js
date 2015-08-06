@@ -21,9 +21,10 @@ export function updateGeo ({ lat, lng }) {
   }
 }
 
-export function setPin ({ lat, lng, place }) {
+export function setPin ({ lat, lng, place }, reload=false) {
   return async dispatch => {
-    dispatch({ type: SET_MAP_PIN_STARTED })
+    if (reload)
+      dispatch({ type: SET_MAP_PIN_STARTED })
     return dispatch({
       type: SET_MAP_PIN_COMPLETED,
       lat: lat,

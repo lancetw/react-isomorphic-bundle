@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
+import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 
 export default class PostCard extends BaseComponent{
@@ -21,7 +22,9 @@ export default class PostCard extends BaseComponent{
     return (
       <div className="ui fluid orange card">
         <div className="content">
-          <div className="header">{card.title}</div>
+          <div className="header">
+            <Link to={`/wall/posts/${card.id}`}>{card.title}</Link>
+          </div>
           <div className="meta">
             <span className="right floated time">
               {toShortDate(card.startDate)}

@@ -22,13 +22,17 @@ const initialState = {
 
 const actionsMap = {
   [SET_MAP_PIN_STARTED]: () => (initialState),
-  [SET_MAP_PIN_COMPLETED]: (state, action) =>
-    ({
-      lat: action.lat,
-      lng: action.lng,
-      place: action.place,
-      center: [ action.lat, action.lng ]
-    }),
+  [SET_MAP_PIN_COMPLETED]: (state, action) => {
+    if (action.lat === null || action.lng === null)
+      return initialState
+    else
+      return {
+        lat: action.lat,
+        lng: action.lng,
+        place: action.place,
+        center: [ action.lat, action.lng ]
+      }
+  },
   [SET_MAP_PIN_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SET_MAP_GEO_COMPLETED]: (state, action) =>
