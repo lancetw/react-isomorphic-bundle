@@ -64,10 +64,12 @@ export default class Post extends BaseComponent {
           </div>
         </div>
         <div className="column">
+        { (content.lat && content.lat) &&
           <GMap
             ref="gmap"
             {...this.props.map}
           />
+        }
         </div>
       </main>
     )
