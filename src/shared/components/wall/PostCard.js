@@ -3,7 +3,7 @@ import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 
-export default class PostCard extends BaseComponent{
+export default class PostCard extends BaseComponent {
 
   static propTypes = {
     data: PropTypes.object
@@ -17,7 +17,6 @@ export default class PostCard extends BaseComponent{
   /* eslint-disable max-len */
   render () {
     const card = this.props.data
-
     const files = JSON.parse(card.file)
     return (
       <div className="ui fluid orange card">

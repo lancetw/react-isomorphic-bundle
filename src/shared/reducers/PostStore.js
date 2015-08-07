@@ -22,7 +22,8 @@ const initialState = {
   hasMore: false,
   content: {},
   count: [],
-  countStart: []
+  countStart: [],
+  detail: {}
 }
 
 const actionsMap = {
@@ -33,10 +34,10 @@ const actionsMap = {
     ({ errors: action.errors }),
   [SHOW_POST_STARTED]: () => ({
     errors: {},
-    content: {}
+    detail: {}
   }),
   [SHOW_POST_COMPLETED]: (state, action) =>
-    ({ errors: {}, content: action.content }),
+    ({ errors: {}, detail: action.detail }),
   [SHOW_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [LIST_POST_STARTED]: () => ({

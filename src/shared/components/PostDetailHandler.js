@@ -24,13 +24,12 @@ export default class PostDetailHandler extends React.Component {
       dispatch(PostActions.show(id))
     ]).then(() => {
       const map = {
-        place: getState().post.content.place,
-        lat: getState().post.content.lat,
-        lng: getState().post.content.lng
+        place: getState().post.detail.place,
+        lat: getState().post.detail.lat,
+        lng: getState().post.detail.lng
       }
       setTimeout(() => {
         dispatch(MapActions.setPin(map))
-        console.log(getState().map)
       }, 1000)
 
     })

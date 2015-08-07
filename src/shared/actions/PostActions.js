@@ -54,7 +54,7 @@ export function show (id) {
       if (typeof post !== 'undefined')
         return dispatch({
           type: SHOW_POST_COMPLETED,
-          content: post
+          detail: post
         })
       else
         return dispatch({

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
-import moment from 'moment'
 import counterpart from 'counterpart'
 import GMap from 'shared/components/addon/maps/gmap'
+import { isEmpty } from 'lodash'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -37,8 +37,10 @@ export default class Post extends BaseComponent {
 
   render () {
     const Translate = require('react-translate-component')
-    const { content } = this.props.post
-
+    const { detail } = this.props.post
+    const files = typeof detail.file !== 'undefined'
+      ? JSON.parse(detail.file)
+      : []
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
@@ -46,9 +48,31 @@ export default class Post extends BaseComponent {
             <div className="content">
               <i className="right floated like icon"></i>
               <i className="right floated star icon"></i>
-              <div className="header">{content.title}</div>
+              <div className="header">{detail.title}</div>
+              <div className="meta">
+                <span className="right floated time">
+                  {toShortDate(detail.startDate)}
+                    ~
+                  {toShortDate(detail.endDate)}
+                </span>
+                <span className="category">{detail.prop}</span>
+              </div>
               <div className="description">
-                <p>{content.content}</p>
+                <p>{detail.content}</p>
+                { files && !isEmpty(files)
+                  && <div className="ui divider"></div> }
+                {
+                  files && !isEmpty(files)
+                  && files.map(function (file, i) {
+                    return (
+                      <div key={i}>
+                        <a target="_blank" href={'/uploads/' + file}>
+                          { file }
+                        </a>
+                      </div>
+                    )
+                  })
+                }
               </div>
             </div>
             <div className="extra content">
@@ -64,7 +88,7 @@ export default class Post extends BaseComponent {
           </div>
         </div>
         <div className="column">
-        { (content.lat && content.lat) &&
+        { (detail.lat && detail.lat) &&
           <GMap
             ref="gmap"
             {...this.props.map}
@@ -76,3 +100,10 @@ export default class Post extends BaseComponent {
   }
 }
 
+function toShortDate (date) {
+  const moment = require('moment')
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
+    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
+
+  return 'ERR DATE'
+}
