@@ -42,6 +42,7 @@ export default {
         "window.jQuery": "jquery"
       }),
       new ExtractTextPlugin('[name].css'),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
