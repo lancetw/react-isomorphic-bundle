@@ -22,7 +22,7 @@ export default class Cal extends React.Component {
       date: moment(new Date()).startOf('day').valueOf(),
       selectedDay: new Date(),
       nextOffset: 0,
-      limit: 5
+      limit: 20
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -37,7 +37,7 @@ export default class Cal extends React.Component {
   handleDayClick (e, day) {
     const date = moment(day).valueOf()
     const reload = true
-    this.props.fetchList(0, 5, date, null, reload)
+    this.props.fetchList(0, 20, date, null, reload)
 
     this.setState({
       date: date,
