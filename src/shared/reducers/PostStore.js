@@ -33,14 +33,16 @@ const actionsMap = {
   [CREATE_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SHOW_POST_STARTED]: () => ({
+    loading: true,
     errors: {},
     detail: {}
   }),
   [SHOW_POST_COMPLETED]: (state, action) =>
-    ({ errors: {}, detail: action.detail }),
+    ({ errors: {}, detail: action.detail, loading: false }),
   [SHOW_POST_FAILED]: (state, action) =>
-    ({ errors: action.errors }),
+    ({ errors: action.errors, loading: false }),
   [LIST_POST_STARTED]: () => ({
+    loading: true,
     errors: {},
     posts: [],
     hasMore: false

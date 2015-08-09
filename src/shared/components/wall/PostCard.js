@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
+import { toShortDate } from 'shared/utils/date-utils'
+import { getfileExt } from 'shared/utils/file-utils'
 
 export default class PostCard extends BaseComponent {
 
@@ -37,8 +39,13 @@ export default class PostCard extends BaseComponent {
           {
             files && !isEmpty(files) && files.map(function (file, i) {
               return (
-                <div key={i}>
-                  <a target="_blank" href={'/uploads/' + file}>
+                <div
+                  className="fileName"
+                  key={i}
+                  data-filetype={getfileExt(file)}>
+                  <a
+                    target="_blank"
+                    href={'/uploads/' + file}>
                     { file }
                   </a>
                 </div>
@@ -63,12 +70,4 @@ export default class PostCard extends BaseComponent {
       </div>
     )
   }
-}
-
-function toShortDate (date) {
-  const moment = require('moment')
-  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
-    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
-
-  return 'ERR DATE'
 }

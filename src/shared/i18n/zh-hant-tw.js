@@ -92,6 +92,9 @@ export default {
       'geo': '尋找我的位置',
       'tips': '為您的地點取個名稱'
     },
+    detail: {
+      'nomap': '未提供位置資訊'
+    },
     submit: '張貼佈告',
     nodata: '查無資料'
   },

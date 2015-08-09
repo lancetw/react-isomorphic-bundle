@@ -16,7 +16,7 @@ export default class Wall extends React.Component {
 
   render () {
     const Translate = require('react-translate-component')
-
+    const { post, loadFunc } = this.props
     return (
       <main className="ui stackable page centered grid">
         <div className="column">
@@ -33,11 +33,11 @@ export default class Wall extends React.Component {
           <div className="ui horizontal divider" />
           <div className="row">
             <Cards
-              posts={this.props.post.posts}
-              loadFunc={this.props.loadFunc}
-              hasMore={this.props.post.hasMore}
+              posts={post.posts}
+              loadFunc={loadFunc}
+              hasMore={post.hasMore}
             />
-            {this.props.post.loading && (
+            {post.loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
                   <div className="ui large text loader">
@@ -46,7 +46,7 @@ export default class Wall extends React.Component {
                 </div>
               </div>
             )}
-            {isEmpty(this.props.post.posts) && (
+            {!post.loading && isEmpty(post.posts) && (
               <div className="ui segment basic center aligned">
                 <Translate content="post.nodata" />
               </div>

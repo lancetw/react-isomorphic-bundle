@@ -92,6 +92,9 @@ export default {
       'geo': 'find my place',
       'tips': 'Named  your place please'
     },
+    detail: {
+      'nomap': 'No map infomation'
+    },
     submit: 'Post it',
     nodata: 'No data'
   },

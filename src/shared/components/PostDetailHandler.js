@@ -16,13 +16,14 @@ export default class PostDetailHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
     const dispatch = context.store.dispatch
-    dispatch(updateTitle('title.post_detail'))
 
     const { getState } = context.store
     const id = props.params.id
     Promise.all([
       dispatch(PostActions.show(id))
     ]).then(() => {
+      const title = getState().post.detail.title
+      dispatch(updateTitle(title))
       const map = {
         place: getState().post.detail.place,
         lat: getState().post.detail.lat,
@@ -31,7 +32,6 @@ export default class PostDetailHandler extends React.Component {
       setTimeout(() => {
         dispatch(MapActions.setPin(map))
       }, 1000)
-
     })
   }
 
@@ -45,16 +45,22 @@ export default class PostDetailHandler extends React.Component {
     store: PropTypes.object.isRequired
   }
 
-  static async routerWillRun ({ dispatch, params }) {
+  static async routerWillRun ({ dispatch, params, getState }) {
     const id = params.id
     await dispatch(PostActions.show(id))
+
+    const title = getState().post.detail.title
+    await dispatch(updateTitle(title))
   }
 
   render () {
     const _t = require('counterpart')
     const { dispatch } = this.props
+    const { getState } = this.context.store
+    const title = getState().locale.title
+
     return (
-      <DocumentTitle title={_t('title.post_detail')}>
+      <DocumentTitle title={title}>
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
           {...bindActionCreators(MapActions, dispatch)}

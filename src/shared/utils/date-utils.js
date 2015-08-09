@@ -16,3 +16,11 @@ export function isBetween (d, d1, d2) {
   d2.setHours(0, 0, 0, 0)
   return d1 < d && d < d2
 }
+
+export function toShortDate (date) {
+  const moment = require('moment')
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
+    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
+
+  return 'ERR DATE'
+}

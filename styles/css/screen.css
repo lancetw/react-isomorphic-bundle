@@ -32,6 +32,32 @@ main.ui.stackable.page {
   }
 }
 
+.fileName {
+  color: #0066cc;
+  position: relative;
+  width: 300px;
+}
+.fileName a {
+  color: #0066cc;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.fileName:after {
+  content: attr(data-filetype);
+  position: absolute;
+  left: 100%;
+  top: 0;
+}
+
+.fileName:hover {
+  width: auto
+}
+.fileName:hover:after {
+  display: none;
+}
+
 #map {
   positive: relative;
   width: auto;

@@ -3,6 +3,8 @@ import { BaseComponent } from 'shared/components'
 import counterpart from 'counterpart'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
+import { toShortDate } from 'shared/utils/date-utils'
+import { getfileExt } from 'shared/utils/file-utils'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -41,7 +43,7 @@ export default class Post extends BaseComponent {
     const files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
       : []
-    return (
+    return detail.id ? (
       <main className="ui two column stackable centered page grid">
         <div className="column">
           <div className="ui fluid card">
@@ -65,8 +67,13 @@ export default class Post extends BaseComponent {
                   files && !isEmpty(files)
                   && files.map(function (file, i) {
                     return (
-                      <div key={i}>
-                        <a target="_blank" href={'/uploads/' + file}>
+                      <div
+                        className="fileName"
+                        key={i}
+                        data-filetype={getfileExt(file)}>
+                        <a
+                          target="_blank"
+                          href={'/uploads/' + file}>
                           { file }
                         </a>
                       </div>
@@ -94,16 +101,17 @@ export default class Post extends BaseComponent {
             {...this.props.map}
           />
         }
+        { (!detail.lat || !detail.lat) &&
+          <div className="ui orange center aligned segment">
+            <Translate content="post.detail.nomap" />
+          </div>
+        }
         </div>
       </main>
     )
+    : (
+      <div>
+      </div>
+    )
   }
-}
-
-function toShortDate (date) {
-  const moment = require('moment')
-  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
-    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
-
-  return 'ERR DATE'
 }

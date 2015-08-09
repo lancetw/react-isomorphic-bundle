@@ -13,7 +13,16 @@ import moment from 'moment'
 import counterpart from 'counterpart'
 import ImageUpload from 'shared/components/addon/image-upload'
 import GMap from 'shared/components/addon/maps/gmap'
-import { Tab, Tabs, TabList, TabPanel } from 'shared/components/addon/tabs'
+import {
+  Tab,
+  Tabs,
+  TabList,
+  TabPanel
+} from 'shared/components/addon/tabs'
+
+let sweetAlert
+if (process.env.BROWSER)
+  sweetAlert = require('sweetalert')
 
 const { CSSTransitionGroup } = React.addons
 
@@ -109,7 +118,7 @@ export default class Post extends BaseComponent {
       navigator.geolocation
         .getCurrentPosition(self.showPosition.bind(self), this.showError, optn)
 
-    } else alert('Geolocation is not supported in your browser')
+    } else sweetAlert('Geolocation is not supported in your browser')
   }
 
   showPosition (position) {
@@ -124,16 +133,16 @@ export default class Post extends BaseComponent {
   showError (error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        alert('User denied the request for Geolocation.')
+        sweetAlert('User denied the request for Geolocation.')
         break
       case error.POSITION_UNAVAILABLE:
-        alert('Location information is unavailable.')
+        sweetAlert('Location information is unavailable.')
         break
       case error.TIMEOUT:
-        alert('The request to get user location timed out.')
+        sweetAlert('The request to get user location timed out.')
         break
       case error.UNKNOWN_ERROR:
-        alert('An unknown error occurred.')
+        sweetAlert('An unknown error occurred.')
         break
       default:
         break

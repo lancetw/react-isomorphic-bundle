@@ -133,6 +133,7 @@
     "sequelize": "^3.4.1",
     "sqlite3": "^3.0.9",
     "superagent": "^1.2.0",
+    "sweetalert": "^1.1.0",
     "tcomb": "^2.0.0",
     "tcomb-form": "^0.6.2",
     "tcomb-validation": "^2.0.0",

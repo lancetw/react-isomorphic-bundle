@@ -84,7 +84,7 @@ export default class Cal extends React.Component {
     } else return 0
   }
 
-   renderDay (day) {
+  renderDay (day) {
     const date = day.getDate()
     const count = this.getTodayStartCount(date)
 
@@ -101,6 +101,7 @@ export default class Cal extends React.Component {
 
   render () {
     const Translate = require('react-translate-component')
+    const { post } = this.props
     const { locale } = this.state
     const { selectedDay } = this.state
     const modifiers = {
@@ -144,11 +145,11 @@ export default class Cal extends React.Component {
           </div>
           <div className="row">
             <Cards
-              posts={this.props.post.posts}
+              posts={post.posts}
               loadFunc={::this.loadFunc}
-              hasMore={this.props.post.hasMore}
+              hasMore={post.hasMore}
             />
-            {this.props.post.loading && (
+            {post.loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
                   <div className="ui large text loader">
@@ -157,7 +158,7 @@ export default class Cal extends React.Component {
                 </div>
               </div>
             )}
-            {isEmpty(this.props.post.posts) && (
+            {!post.loading && isEmpty(post.posts) && (
               <div className="ui segment basic center aligned">
                 <Translate content="post.nodata" />
               </div>
