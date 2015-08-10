@@ -39,8 +39,8 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
   left: 0;
   right: 0;
   padding: 0 .5rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .DayPicker-NavButton {
@@ -66,8 +66,10 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Caption {
   font-family: $font-head;
+  font-size: 2rem;
+  line-height: 2.3rem;
   display: table-caption;
-  height: 3.5rem;
+  height: 2.3rem;
   text-align: center;
 }
 
@@ -96,14 +98,57 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Day {
   display: table-cell;
-  padding: .1rem .6rem;
+  padding: 1rem 2rem;
   border: 1px solid color($grey lightness(86%));
+  background-color: $white;
+  font-size: 1.5rem;
   text-align: center;
   cursor: pointer;
   vertical-align: middle;
 
   &:focus {
     outline-width: 0;
+  }
+}
+
+/* iPad in portrait & landscape */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  {
+  .DayPicker-Day {
+    font-size: 1.5rem;
+    padding: .8rem 1.2rem;
+  }
+}
+
+/* iPad in portrait */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+  .DayPicker-Day {
+    font-size: 1rem;
+    padding: .3rem .7rem;
+  }
+}
+
+/* iPhone 2G-4S in portrait & landscape */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .DayPicker-Day {
+    font-size: 1rem;
+    padding: .3rem .7rem;
+  }
+}
+
+/* iPhone 6 in portrait & landscape  */
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+  .DayPicker-Day {
+    font-size: 1rem;
+    padding: .3rem .7rem;
   }
 }
 

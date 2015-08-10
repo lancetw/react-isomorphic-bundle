@@ -19,19 +19,20 @@ export default class Wall extends React.Component {
     const Translate = require('react-translate-component')
     const { post, loadFunc } = this.props
     return (
-      <main className="ui stackable page centered grid">
+      <main className="ui has-header grid">
         <div className="column">
           <div className="row">
-            <div className="ui orange inverted buttons">
-              <Link className="ui button" to='/wall/today'>
-                <Translate content="header.wall" />
-              </Link>
-              <Link className="ui button" to='/wall/cal'>
-                <Translate content="header.cal" />
-              </Link>
+            <div className="ui basic segment center aligned">
+              <div className="ui orange inverted buttons">
+                <Link className="ui button" to='/wall/today'>
+                  <Translate content="header.wall" />
+                </Link>
+                <Link className="ui button" to='/wall/cal'>
+                  <Translate content="header.cal" />
+                </Link>
+              </div>
             </div>
           </div>
-          <div className="ui horizontal divider" />
           <div className="row">
             <Cards
               posts={post.posts}

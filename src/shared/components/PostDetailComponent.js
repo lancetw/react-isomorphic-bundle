@@ -52,7 +52,7 @@ export default class Post extends BaseComponent {
       : classNames('content', 'hide')
 
     return (
-      <main className="ui two column stackable centered page grid">
+      <main className="ui two column stackable centered has-header grid">
         <div className="column">
           <div className="ui fluid card">
             <div className={detailClass}>
@@ -103,20 +103,6 @@ export default class Post extends BaseComponent {
           </div>
         </div>
         <div className="column">
-          <div className="ui basic center aligned segment">
-            <MediaQuery minDeviceWidth={769}>
-              <Ad
-                id="1L"
-                link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-              />
-            </MediaQuery>
-            <MediaQuery maxDeviceWidth={768}>
-              <Ad
-                id="1S"
-                link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-              />
-            </MediaQuery>
-          </div>
           { (detail.lat && detail.lat) &&
           <GMap
             ref="gmap"
@@ -128,6 +114,22 @@ export default class Post extends BaseComponent {
             <Translate content="post.detail.nomap" />
           </div>
           }
+          <div className="row">
+            <MediaQuery minDeviceWidth={769}>
+              <Ad
+                id="1L"
+                link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+              />
+            </MediaQuery>
+            <MediaQuery maxDeviceWidth={768}>
+              <div className="ui basic segment center aligned">
+                <Ad
+                  id="1S"
+                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+                />
+              </div>
+            </MediaQuery>
+          </div>
         </div>
       </main>
     )

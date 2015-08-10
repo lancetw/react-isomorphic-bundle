@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   font-size: 1rem;
+  overflow-x: hidden;
 }
 
 body {
@@ -20,7 +21,6 @@ select {
 }
 
 main.ui.stackable.page {
-  position: absolute;
   width: 100%;
   padding-top: 64px;
 }

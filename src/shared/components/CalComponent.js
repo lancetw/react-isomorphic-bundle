@@ -118,48 +118,31 @@ export default class Cal extends React.Component {
     }
 
     return (
-      <main className="ui stackable page grid">
+      <main className="ui stackable has-header grid">
         <div className="column">
           <div className="row">
-            <div className="ui orange inverted buttons">
-              <Link className="ui button" to='/wall/today'>
-                <Translate content="header.wall" />
-              </Link>
-              <Link className="ui button" to='/wall/cal'>
-                <Translate content="header.cal" />
-              </Link>
+            <div className="ui basic segment center aligned">
+              <div className="ui orange inverted buttons">
+                <Link className="ui button" to='/wall/today'>
+                  <Translate content="header.wall" />
+                </Link>
+                <Link className="ui button" to='/wall/cal'>
+                  <Translate content="header.cal" />
+                </Link>
+              </div>
             </div>
           </div>
           <div className="ui two column stackable grid">
             <div className="column">
-              <div className="ui horizontal divider" />
               <div className="row">
-                <div className="ui segment">
-                  <DayPicker className="ui centered row compact"
-                    renderDay={::this.renderDay}
-                    modifiers={modifiers}
-                    onDayClick={::this.handleDayClick}
-                    onMonthChange={::this.handleMonthChange}
-                    locale={locale}
-                    localeUtils={LocaleUtils}
-                  />
-                </div>
-                <div className="row">
-                  <div className="ui basic center aligned segment">
-                    <MediaQuery minDeviceWidth={769}>
-                      <Ad
-                        id="1L"
-                        link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-                      />
-                    </MediaQuery>
-                    <MediaQuery maxDeviceWidth={768}>
-                      <Ad
-                        id="1S"
-                        link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-                      />
-                    </MediaQuery>
-                  </div>
-                </div>
+                <DayPicker
+                  renderDay={::this.renderDay}
+                  modifiers={modifiers}
+                  onDayClick={::this.handleDayClick}
+                  onMonthChange={::this.handleMonthChange}
+                  locale={locale}
+                  localeUtils={LocaleUtils}
+                />
               </div>
             </div>
             <div className="column">
@@ -186,6 +169,25 @@ export default class Cal extends React.Component {
                     <Translate content="post.nodata" />
                   </div>
                 )}
+              </div>
+              <div className="ui horizontal hidden divider"></div>
+              <div className="row">
+                <MediaQuery minDeviceWidth={769}>
+                  <div className="ui basic segment center aligned">
+                    <Ad
+                      id="1L"
+                      link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+                    />
+                  </div>
+                </MediaQuery>
+                <MediaQuery maxDeviceWidth={768}>
+                  <div className="ui basic segment center aligned">
+                    <Ad
+                      id="1S"
+                      link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+                    />
+                  </div>
+                </MediaQuery>
               </div>
             </div>
           </div>
