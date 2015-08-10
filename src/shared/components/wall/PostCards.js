@@ -21,37 +21,39 @@ export default class PostCards extends BaseComponent {
   }
 
   handleInfiniteLoad (event) {
-    this.props.loadFunc()
-    this.setState({ shouldLoadFunc: true })
+    if (this.props.hasMore && !this.state.shouldLoadFunc)
+      setTimeout(() => this.props.loadFunc(), 1000)
   }
 
   elementInfiniteLoad () {
-    const Translate = require('react-translate-component')
-    return (
-      <div className="ui segment basic has-header">
-        <div className="ui active inverted dimmer">
-          <div className="ui large text loader">
-            <Translate content="wall.loading" />
+    if (this.props.hasMore) {
+      const Translate = require('react-translate-component')
+      return (
+        <div className="ui segment basic has-header">
+          <div className="ui active inverted dimmer">
+            <div className="ui large text loader">
+              <Translate content="wall.loading" />
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
   render () {
     const cards = this.props.posts
-    const containerHeight =
-      $(document).height()
-      - this.props.containerHeightDiff
 
-    if (process.env.BROWSER && this.props.posts.length > 0)
+    if (process.env.BROWSER && this.props.posts.length > 0) {
+      const containerHeight
+        = $(document).height() - this.props.containerHeightDiff
+
       return (
         <Infinite
           className="scroll-content"
           infiniteLoadBeginBottomOffset={$(document).height() * 0.6}
           containerHeight={containerHeight}
           onInfiniteLoad={::this.handleInfiniteLoad}
-          isInfiniteLoading={this.props.posts.hasMore}
+          isInfiniteLoading={!!this.props.posts.hasMore}
           loadingSpinnerDelegate={this.elementInfiniteLoad()}
           elementHeight={130}>
           {!isEmpty(cards) && cards.map(function (card) {
@@ -59,7 +61,7 @@ export default class PostCards extends BaseComponent {
           })}
         </Infinite>
       )
-    else return (
+    } else return (
       <div className="ui cards" ref="scrollable">
         {!isEmpty(cards) && cards.map(function (card) {
           return <Card key={card.id} data={card} />
