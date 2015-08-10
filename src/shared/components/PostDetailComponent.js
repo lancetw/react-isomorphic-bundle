@@ -104,10 +104,16 @@ export default class Post extends BaseComponent {
         </div>
         <div className="column">
           <MediaQuery minDeviceWidth={769}>
-            <Ad id="1L" link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40" />
+            <Ad
+              id="1L"
+              link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+            />
           </MediaQuery>
           <MediaQuery maxDeviceWidth={768}>
-            <Ad id="1S" link="http://mx1.hotrank.com.tw/script/oursweb/200x200" />
+            <Ad
+              id="1S"
+              link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+            />
           </MediaQuery>
           { (detail.lat && detail.lat) &&
           <GMap
