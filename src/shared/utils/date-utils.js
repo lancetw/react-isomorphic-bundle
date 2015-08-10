@@ -22,5 +22,5 @@ export function toShortDate (date) {
   if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
     return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
 
-  return 'ERR DATE'
+  return ''
 }

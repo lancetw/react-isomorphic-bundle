@@ -42,6 +42,10 @@ main.ui.stackable.page {
   }
 }
 
+.content.hide {
+  display: none;
+}
+
 .fileName {
   color: #0066cc;
   position: relative;

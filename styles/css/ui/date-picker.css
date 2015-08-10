@@ -98,7 +98,7 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Day {
   display: table-cell;
-  padding: .66rem 2rem;
+  padding: .5rem 1.6rem;
   border: 1px solid color($grey lightness(86%));
   background-color: $white;
   font-size: 1.8rem;
