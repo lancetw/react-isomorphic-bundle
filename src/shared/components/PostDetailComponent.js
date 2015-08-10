@@ -52,7 +52,7 @@ export default class Post extends BaseComponent {
       : classNames('content', 'hide')
 
     return (
-      <main className="ui two column stackable centered has-header grid">
+      <main className="ui two column stackable centered page grid">
         <div className="column">
           <div className="ui fluid card">
             <div className={detailClass}>
@@ -116,10 +116,12 @@ export default class Post extends BaseComponent {
           }
           <div className="row">
             <MediaQuery minDeviceWidth={769}>
-              <Ad
-                id="1L"
-                link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-              />
+              <div className="ui basic segment center aligned">
+                <Ad
+                  id="1L"
+                  link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+                />
+              </div>
             </MediaQuery>
             <MediaQuery maxDeviceWidth={768}>
               <div className="ui basic segment center aligned">

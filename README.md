@@ -101,3 +101,4 @@ $ npm install
 * [react-dropzone](https://github.com/paramaggarwal/react-dropzone)
 * [react-day-picker](https://github.com/gpbl/react-day-picker)
 * [google-map-react](https://github.com/istarkov/google-map-react)
+* [react-infinite](https://github.com/seatgeek/react-infinite)

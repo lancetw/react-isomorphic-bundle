@@ -84,7 +84,7 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 .DayPicker-Weekday {
   display: table-cell;
   padding: .5rem;
-  font-size: .875em;
+  font-size: 1em;
   text-align: center;
 }
 
@@ -98,10 +98,10 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Day {
   display: table-cell;
-  padding: 1rem 2rem;
+  padding: .66rem 2rem;
   border: 1px solid color($grey lightness(86%));
   background-color: $white;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   text-align: center;
   cursor: pointer;
   vertical-align: middle;

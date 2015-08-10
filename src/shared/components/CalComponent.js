@@ -24,7 +24,7 @@ export default class Cal extends React.Component {
       date: moment(new Date()).startOf('day').valueOf(),
       selectedDay: new Date(),
       nextOffset: 0,
-      limit: 20
+      limit: 10
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -39,7 +39,7 @@ export default class Cal extends React.Component {
   handleDayClick (e, day) {
     const date = moment(day).valueOf()
     const reload = true
-    this.props.fetchList(0, 20, date, null, reload)
+    this.props.fetchList(0, 10, date, null, reload)
 
     this.setState({
       date: date,
@@ -111,14 +111,12 @@ export default class Cal extends React.Component {
       'sunday': (day) => day.getDay() === 0,
       'saturday': (day) => day.getDay() === 6,
       'selected': (day) => isSameDay(selectedDay, day),
-      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) >= 10,
-      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) >= 5,
-      'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0,
-      'has-event-slv0': (day) => this.getTodayCount(day.getDate()) === 0
+      'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0
     }
+    const containerHeightDiff = 200
 
     return (
-      <main className="ui stackable has-header grid">
+      <main className="ui stackable page grid">
         <div className="column">
           <div className="row">
             <div className="ui basic segment center aligned">
@@ -144,33 +142,6 @@ export default class Cal extends React.Component {
                   localeUtils={LocaleUtils}
                 />
               </div>
-            </div>
-            <div className="column">
-              <div className="ui horizontal header divider">
-                { moment(selectedDay).format('LL') }
-              </div>
-              <div className="row">
-                <Cards
-                  posts={post.posts}
-                  loadFunc={::this.loadFunc}
-                  hasMore={post.hasMore}
-                />
-                {post.loading && (
-                  <div className="ui segment basic has-header">
-                    <div className="ui active inverted dimmer">
-                      <div className="ui large text loader">
-                        <Translate content="wall.loading" />
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {!post.loading && isEmpty(post.posts) && (
-                  <div className="ui segment basic center aligned">
-                    <Translate content="post.nodata" />
-                  </div>
-                )}
-              </div>
-              <div className="ui horizontal hidden divider"></div>
               <div className="row">
                 <MediaQuery minDeviceWidth={769}>
                   <div className="ui basic segment center aligned">
@@ -188,6 +159,33 @@ export default class Cal extends React.Component {
                     />
                   </div>
                 </MediaQuery>
+              </div>
+            </div>
+            <div className="column">
+              <div className="ui horizontal header divider">
+                { moment(selectedDay).format('LL') }
+              </div>
+              <div className="row">
+                <Cards
+                  posts={post.posts}
+                  loadFunc={::this.loadFunc}
+                  hasMore={post.hasMore}
+                  containerHeightDiff={containerHeightDiff}
+                />
+                {post.loading && (
+                  <div className="ui segment basic has-header">
+                    <div className="ui active inverted dimmer">
+                      <div className="ui large text loader">
+                        <Translate content="wall.loading" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!post.loading && isEmpty(post.posts) && (
+                  <div className="ui segment basic center aligned">
+                    <Translate content="post.nodata" />
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -18,27 +18,30 @@ export default class Wall extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { post, loadFunc } = this.props
+    const containerHeightDiff = 135
+
     return (
-      <main className="ui has-header grid">
+      <main className="ui stackable page grid">
         <div className="column">
-          <div className="row">
-            <div className="ui basic segment center aligned">
-              <div className="ui orange inverted buttons">
-                <Link className="ui button" to='/wall/today'>
-                  <Translate content="header.wall" />
-                </Link>
-                <Link className="ui button" to='/wall/cal'>
-                  <Translate content="header.cal" />
-                </Link>
-              </div>
+          <div className="row switch-btns">
+            <div className="ui orange inverted buttons">
+              <Link className="ui button" to='/wall/today'>
+                <Translate content="header.wall" />
+              </Link>
+              <Link className="ui button" to='/wall/cal'>
+                <Translate content="header.cal" />
+              </Link>
             </div>
           </div>
           <div className="row">
-            <Cards
-              posts={post.posts}
-              loadFunc={loadFunc}
-              hasMore={post.hasMore}
-            />
+            {!isEmpty(post.posts) && (
+              <Cards
+                posts={post.posts}
+                loadFunc={loadFunc}
+                hasMore={post.hasMore}
+                containerHeightDiff={containerHeightDiff}
+              />
+            )}
             {post.loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
