@@ -9,6 +9,7 @@ import moment from 'moment'
 import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
 import classNames from 'classnames'
+import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
 
 if (process.env.BROWSER)
@@ -143,10 +144,12 @@ export default class Cal extends React.Component {
                   />
                 </div>
                 <div className="row">
-                  <Ad
-                      id="1L"
-                      link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-                    />
+                  <MediaQuery minDeviceWidth={769}>
+                    <Ad id="1L" link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40" />
+                  </MediaQuery>
+                  <MediaQuery maxDeviceWidth={768}>
+                    <Ad id="1S" link="http://mx1.hotrank.com.tw/script/oursweb/200x200" />
+                  </MediaQuery>
                 </div>
               </div>
             </div>

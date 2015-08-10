@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash'
 import { toShortDate } from 'shared/utils/date-utils'
 import { getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
+import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
 
 const { CSSTransitionGroup } = React.addons
@@ -102,10 +103,12 @@ export default class Post extends BaseComponent {
           </div>
         </div>
         <div className="column">
-          <Ad
-            id="1L"
-            link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-          />
+          <MediaQuery minDeviceWidth={769}>
+            <Ad id="1L" link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40" />
+          </MediaQuery>
+          <MediaQuery maxDeviceWidth={768}>
+            <Ad id="1S" link="http://mx1.hotrank.com.tw/script/oursweb/200x200" />
+          </MediaQuery>
           { (detail.lat && detail.lat) &&
           <GMap
             ref="gmap"
