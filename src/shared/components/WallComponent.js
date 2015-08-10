@@ -18,7 +18,6 @@ export default class Wall extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { post, loadFunc } = this.props
-    const containerHeightDiff = 135
 
     return (
       <main className="ui stackable page grid">
@@ -39,7 +38,6 @@ export default class Wall extends React.Component {
                 posts={post.posts}
                 loadFunc={loadFunc}
                 hasMore={post.hasMore}
-                containerHeightDiff={containerHeightDiff}
               />
             )}
             {post.loading && (

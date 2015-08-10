@@ -280,6 +280,10 @@ export default class Post extends BaseComponent {
       React.findDOMNode(this.refs.lng).value = nextProps.map.lng
   }
 
+  componentDidMount () {
+    document.body.style.overflow = 'auto'
+  }
+
   componentWillUnmount () {
     if (this.op)
       clearTimeout(this.releaseTimeout)

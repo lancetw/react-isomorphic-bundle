@@ -113,7 +113,6 @@ export default class Cal extends React.Component {
       'selected': (day) => isSameDay(selectedDay, day),
       'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0
     }
-    const containerHeightDiff = 200
 
     return (
       <main className="ui stackable page grid">
@@ -168,7 +167,6 @@ export default class Cal extends React.Component {
                   posts={post.posts}
                   loadFunc={::this.loadFunc}
                   hasMore={post.hasMore}
-                  containerHeightDiff={containerHeightDiff}
                 />
                 {post.loading && (
                   <div className="ui segment basic has-header">

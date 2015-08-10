@@ -16,8 +16,7 @@ export default class PostCards extends BaseComponent {
   static propTypes = {
     posts: PropTypes.array.isRequired,
     loadFunc: PropTypes.func.isRequired,
-    hasMore: PropTypes.bool.isRequired,
-    containerHeightDiff: PropTypes.number
+    hasMore: PropTypes.bool.isRequired
   }
 
   handleInfiniteLoad (event) {
@@ -40,12 +39,15 @@ export default class PostCards extends BaseComponent {
     }
   }
 
+  componentDidMount () {
+    document.body.style.overflow = 'hidden'
+  }
+
   render () {
     const cards = this.props.posts
 
     if (process.env.BROWSER && this.props.posts.length > 0) {
-      const containerHeight
-        = $(document).height() - this.props.containerHeightDiff
+      const containerHeight = $(document).height()
 
       return (
         <Infinite
