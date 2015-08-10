@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 
