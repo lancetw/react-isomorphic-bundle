@@ -148,7 +148,7 @@ export default class ChangePassword extends BaseComponent {
         setTimeout(() => this.setState({ updated: false }), 5000)
 
     return (
-      <main className="ui two column stackable centered page grid">
+      <main className="ui three column stackable centered page grid">
         <div className="column">
           <CSSTransitionGroup transitionName="MessageTransition">
             {Message}

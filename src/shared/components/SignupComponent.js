@@ -137,7 +137,7 @@ export default class Signup extends BaseComponent {
     const Translate = require('react-translate-component')
 
     return (
-      <main className="ui two column stackable page grid">
+      <main className="ui three column centered stackable page grid">
         <div className="column">
           <div className="ui segment">
             <h2 className="ui header">

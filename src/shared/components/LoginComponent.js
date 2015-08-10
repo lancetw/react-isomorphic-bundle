@@ -126,7 +126,7 @@ export default class Login extends BaseComponent {
     const Translate = require('react-translate-component')
 
     return (
-      <main className="ui stackable page grid">
+      <main className="ui stackable two column centered page grid">
         <div className="column">
           <div className="
             ui two column middle aligned relaxed fitted stackable grid">

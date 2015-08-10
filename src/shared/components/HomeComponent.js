@@ -32,7 +32,7 @@ export default class HomeComponent extends BaseComponent {
     }
 
     return (
-      <main className="ui stackable page grid">
+      <main className="ui two column centered stackable page grid">
         <div className="column">
           <div className="ui segment">
             <h1><Translate content="home.jwt_header" /></h1>
