@@ -6,7 +6,7 @@ export default class Ad extends React.Component {
 
   constructor (props) {
     super(props)
-    this.releaseTimeout = undefined
+    this._releaseTimeout = undefined
     this.state = { released: false }
   }
 
@@ -17,7 +17,6 @@ export default class Ad extends React.Component {
 
   loadAd () {
     if (process.env.BROWSER) {
-
       require('postscribe/htmlParser/htmlParser.js')
       const postscribe = require('exports?postscribe!postscribe')
 
@@ -32,12 +31,12 @@ export default class Ad extends React.Component {
   }
 
   componentDidMount () {
-    this.releaseTimeout = setTimeout(() => this.loadAd(), 500)
+    this._releaseTimeout = setTimeout(() => this.loadAd(), 500)
   }
 
   componentWillUnmount () {
     if (this.op)
-      clearTimeout(this.releaseTimeout)
+      clearTimeout(this._releaseTimeout)
   }
 
   render () {

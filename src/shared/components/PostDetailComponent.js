@@ -4,7 +4,9 @@ import counterpart from 'counterpart'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
 import { toShortDate } from 'shared/utils/date-utils'
-import { getfileExt } from 'shared/utils/file-utils'
+import { getFileExt } from 'shared/utils/file-utils'
+import classNames from 'classnames'
+import Ad from 'shared/components/addon/ad'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -43,11 +45,16 @@ export default class Post extends BaseComponent {
     const files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
       : []
-    return detail.id ? (
+
+    const detailClass = detail.id
+      ? classNames('content')
+      : classNames('content', 'hide')
+
+    return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
           <div className="ui fluid card">
-            <div className="content">
+            <div className={detailClass}>
               <i className="right floated like icon"></i>
               <i className="right floated star icon"></i>
               <div className="header">{detail.title}</div>
@@ -70,7 +77,7 @@ export default class Post extends BaseComponent {
                       <div
                         className="fileName"
                         key={i}
-                        data-filetype={getfileExt(file)}>
+                        data-filetype={getFileExt(file)}>
                         <a
                           target="_blank"
                           href={'/uploads/' + file}>
@@ -95,23 +102,23 @@ export default class Post extends BaseComponent {
           </div>
         </div>
         <div className="column">
-        { (detail.lat && detail.lat) &&
+          <Ad
+            id="1L"
+            link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+          />
+          { (detail.lat && detail.lat) &&
           <GMap
             ref="gmap"
             {...this.props.map}
           />
-        }
-        { (!detail.lat || !detail.lat) &&
+          }
+          { (!detail.lat || !detail.lat) &&
           <div className="ui orange center aligned segment">
             <Translate content="post.detail.nomap" />
           </div>
-        }
+          }
         </div>
       </main>
-    )
-    : (
-      <div>
-      </div>
     )
   }
 }

@@ -1,3 +1,3 @@
-export function getfileExt (filename) {
+export function getFileExt (filename) {
   return filename.split('.').pop()
 }

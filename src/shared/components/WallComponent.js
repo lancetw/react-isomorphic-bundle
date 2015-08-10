@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
+import Ad from 'shared/components/addon/ad'
 
 export default class Wall extends React.Component {
 

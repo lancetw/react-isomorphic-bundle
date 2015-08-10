@@ -1,8 +1,6 @@
 /* eslint-disable max-len */
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
-import MediaQuery from 'react-responsive'
-import Ad from 'shared/components/addon/ad'
 
 export default class HomeComponent extends BaseComponent {
 
@@ -46,15 +44,6 @@ export default class HomeComponent extends BaseComponent {
                 <Translate content="home.key" />
               </div>
             </div>
-          </div>
-
-          <div className="ui basic center aligned segment">
-            <MediaQuery minDeviceWidth={769}>
-              <Ad id="1L" link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40" />
-            </MediaQuery>
-            <MediaQuery maxDeviceWidth={768}>
-              <Ad id="1S" link="http://mx1.hotrank.com.tw/script/oursweb/200x200" />
-            </MediaQuery>
           </div>
         </div>
       </main>

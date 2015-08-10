@@ -3,7 +3,7 @@ import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import { toShortDate } from 'shared/utils/date-utils'
-import { getfileExt } from 'shared/utils/file-utils'
+import { getFileExt } from 'shared/utils/file-utils'
 
 export default class PostCard extends BaseComponent {
 
@@ -42,7 +42,7 @@ export default class PostCard extends BaseComponent {
                 <div
                   className="fileName"
                   key={i}
-                  data-filetype={getfileExt(file)}>
+                  data-filetype={getFileExt(file)}>
                   <a
                     target="_blank"
                     href={'/uploads/' + file}>

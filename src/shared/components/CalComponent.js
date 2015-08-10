@@ -9,6 +9,7 @@ import moment from 'moment'
 import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
 import classNames from 'classnames'
+import Ad from 'shared/components/addon/ad'
 
 if (process.env.BROWSER)
   require('css/ui/date-picker')
@@ -115,7 +116,7 @@ export default class Cal extends React.Component {
     }
 
     return (
-      <main className="ui stackable page centered grid">
+      <main className="ui stackable page grid">
         <div className="column">
           <div className="row">
             <div className="ui orange inverted buttons">
@@ -127,42 +128,54 @@ export default class Cal extends React.Component {
               </Link>
             </div>
           </div>
-          <div className="ui horizontal divider" />
-          <div className="row">
-            <div className="ui segment">
-              <DayPicker className="ui centered row compact"
-                renderDay={::this.renderDay}
-                modifiers={modifiers}
-                onDayClick={::this.handleDayClick}
-                onMonthChange={::this.handleMonthChange}
-                locale={locale}
-                localeUtils={LocaleUtils}
-              />
-            </div>
-          </div>
-          <div className="ui horizontal header divider">
-            { moment(selectedDay).format('LL') }
-          </div>
-          <div className="row">
-            <Cards
-              posts={post.posts}
-              loadFunc={::this.loadFunc}
-              hasMore={post.hasMore}
-            />
-            {post.loading && (
-              <div className="ui segment basic has-header">
-                <div className="ui active inverted dimmer">
-                  <div className="ui large text loader">
-                    <Translate content="wall.loading" />
-                  </div>
+          <div className="ui two column stackable grid">
+            <div className="column">
+              <div className="ui horizontal divider" />
+              <div className="row">
+                <div className="ui segment">
+                  <DayPicker className="ui centered row compact"
+                    renderDay={::this.renderDay}
+                    modifiers={modifiers}
+                    onDayClick={::this.handleDayClick}
+                    onMonthChange={::this.handleMonthChange}
+                    locale={locale}
+                    localeUtils={LocaleUtils}
+                  />
+                </div>
+                <div className="row">
+                  <Ad
+                      id="1L"
+                      link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+                    />
                 </div>
               </div>
-            )}
-            {!post.loading && isEmpty(post.posts) && (
-              <div className="ui segment basic center aligned">
-                <Translate content="post.nodata" />
+            </div>
+            <div className="column">
+              <div className="ui horizontal header divider">
+                { moment(selectedDay).format('LL') }
               </div>
-            )}
+              <div className="row">
+                <Cards
+                  posts={post.posts}
+                  loadFunc={::this.loadFunc}
+                  hasMore={post.hasMore}
+                />
+                {post.loading && (
+                  <div className="ui segment basic has-header">
+                    <div className="ui active inverted dimmer">
+                      <div className="ui large text loader">
+                        <Translate content="wall.loading" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!post.loading && isEmpty(post.posts) && (
+                  <div className="ui segment basic center aligned">
+                    <Translate content="post.nodata" />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </main>
