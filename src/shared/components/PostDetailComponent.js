@@ -12,7 +12,6 @@ import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
 import { Link } from 'react-router'
-import swal from 'sweetalert'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -64,6 +63,8 @@ export default class Post extends BaseComponent {
   }
 
   deletePost () {
+    const swal = require('sweetalert')
+
     swal({
       title: '您確定嗎？',
       text: '佈告：「' + this.props.post.detail.title + '」將永久移除',

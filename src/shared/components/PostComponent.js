@@ -20,6 +20,8 @@ import {
   TabPanel
 } from 'shared/components/addon/tabs'
 import { toDate } from 'shared/utils/date-utils'
+import { getFileExt } from 'shared/utils/file-utils'
+import { each } from 'lodash'
 
 let sweetAlert
 if (process.env.BROWSER)
@@ -42,7 +44,7 @@ export default class Post extends BaseComponent {
     const { detail } = props.post
     this.state = {
       formInited: false,
-      form2Inited: false,
+      uploadInited: false,
       images: [],
       value: {
         type: '2',
@@ -73,6 +75,9 @@ export default class Post extends BaseComponent {
     modify: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     setPin: PropTypes.func.isRequired,
+    setImageFileName: PropTypes.func.isRequired,
+    setImagePreview: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     upload: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
@@ -190,7 +195,33 @@ export default class Post extends BaseComponent {
     this.setState({ regValue })
   }
 
-  handleSelected (index, last) {}
+  handleSelected (index, last) {
+    if (index === 2 && !this.state.uploadInited) {
+      const { detail } = this.props.post
+      const { user } = this.props.auth
+
+      const files = typeof detail.file !== 'undefined'
+      ? JSON.parse(detail.file)
+      : []
+
+      let src
+      let name
+      each(files, (filename, _index) => {
+        if (getFileExt(filename.toLowerCase()) === 'pdf') {
+          name = 'pdf.png'
+          src = user.aud + '/images/' + name
+        } else {
+          name = filename
+          src = user.aud + '/uploads/' + name
+        }
+
+        this.props.setImageFileName(name, _index)
+        this.props.setImagePreview(src, _index)
+      })
+
+      this.setState({ uploadInited: true })
+    }
+  }
 
   handleSubmit (evt) {
     evt.preventDefault()
