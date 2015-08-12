@@ -11,6 +11,12 @@ import {
   FIND_MAP_PLACE_FAILED
 } from 'shared/constants/ActionTypes'
 
+export function init () {
+  return async dispatch => {
+    return dispatch({ type: SET_MAP_PIN_STARTED })
+  }
+}
+
 export function updateGeo ({ lat, lng }) {
   return async dispatch => {
     return dispatch({

@@ -14,13 +14,27 @@ const Post = db.posts
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
-    const { offset, limit, start, end } = this.request.query
-    if (typeof start !== 'undefined')
-      this.body =
-        hashids.encodeJson(yield Post.fetch(offset, limit, start, end))
-    else
-      this.body =
-        hashids.encodeJson(yield Post.list(offset, limit))
+    const { offset, limit, start, end, user } = this.request.query
+
+    if (typeof user !== 'undefined') {
+      const uid = hashids.decode(user)
+      if (typeof start !== 'undefined')
+        this.body =
+          hashids.encodeJson(
+            yield Post.fetchWithUser(offset, limit, start, end, uid))
+      else
+        this.body =
+          hashids.encodeJson(
+            yield Post.listWithUser(offset, limit, uid))
+    } else {
+      if (typeof start !== 'undefined')
+        this.body =
+          hashids.encodeJson(yield Post.fetch(offset, limit, start, end))
+      else
+        this.body =
+          hashids.encodeJson(yield Post.list(offset, limit))
+    }
+
   },
   // POST /posts
   create: [ RestAuth, function *(next) {
@@ -33,6 +47,7 @@ export default new Resource('posts', {
       endDate: { type: 'int' },
       openDate: { type: 'int', required: false },
       closeDate: { type: 'int', required: false },
+      dateType: { type: 'int', required: false },
       title: { type: 'string' },
       content: { type: 'string' },
       lat: { type: 'number', required: false },
@@ -109,6 +124,7 @@ export default new Resource('posts', {
       prop: { type: 'string' },
       startDate: { type: 'date' },
       endDate: { type: 'date' },
+      dateType: { type: 'int', required: false },
       title: { type: 'string' },
       content: { type: 'string' },
       lat: { type: 'number', required: false },

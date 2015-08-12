@@ -70,12 +70,39 @@ export function show (id) {
   }
 }
 
-export function defaultList (offset=0, limit=5, reload) {
+export function defaultList (offset=0, limit=5, reload=false) {
   return async dispatch => {
     if (reload)
       dispatch({ type: LIST_POST_STARTED })
     try {
       const posts = await list(offset, limit)
+      if (isArray(posts))
+        return dispatch({
+          type: LIST_POST_COMPLETED,
+          posts: posts,
+          offset: offset,
+          limit: limit
+        })
+      else
+        return dispatch({
+          type: LIST_POST_FAILED,
+          errors: posts.errors ? posts.errors : posts
+        })
+    } catch (err) {
+      return dispatch({
+        type: LIST_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
+export function defaultListWithUser (offset=0, limit=5, user, reload=false) {
+  return async dispatch => {
+    if (reload)
+      dispatch({ type: LIST_POST_STARTED })
+    try {
+      const posts = await list(offset, limit, user)
       if (isArray(posts))
         return dispatch({
           type: LIST_POST_COMPLETED,
@@ -103,6 +130,29 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
       dispatch({ type: LIST_POST_STARTED })
     try {
       const posts = await fetch(offset, limit, start, end)
+      if (isArray(posts))
+        return dispatch({
+          type: LIST_POST_COMPLETED,
+          posts: posts
+        })
+      else
+        return dispatch({
+          type: LIST_POST_FAILED,
+          errors: posts.errors ? posts.errors : posts
+        })
+    } catch (err) {
+      return dispatch({
+        type: LIST_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
+export function fetchListWithUser (offset=0, limit=5, start, end, user) {
+  return async dispatch => {
+    try {
+      const posts = await fetch(offset, limit, start, end, user)
       if (isArray(posts))
         return dispatch({
           type: LIST_POST_COMPLETED,
@@ -193,12 +243,13 @@ async function get (id) {
 }
 
 
-async function list (offset, limit) {
+async function list (offset, limit, user) {
   return new Promise((resolve, reject) => {
     request
       .get(LOCAL_PATH + '/api/v1/posts')
       .query({ offset: offset })
       .query({ limit: limit })
+      .query({ user: user })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body)
@@ -209,7 +260,7 @@ async function list (offset, limit) {
   })
 }
 
-async function fetch (offset, limit, start, end) {
+async function fetch (offset, limit, start, end, user) {
   return new Promise((resolve, reject) => {
     request
       .get(LOCAL_PATH + '/api/v1/posts')
@@ -217,6 +268,7 @@ async function fetch (offset, limit, start, end) {
       .query({ limit: limit })
       .query({ start: start })
       .query({ end: end })
+      .query({ user: user })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body)

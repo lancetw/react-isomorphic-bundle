@@ -10,18 +10,26 @@ export default class PostCards extends BaseComponent {
 
   constructor (props) {
     super(props)
-    this.state = { shouldLoadFunc: false }
+    this.state = { isInfiniteLoading: false }
   }
 
   static propTypes = {
     posts: PropTypes.array.isRequired,
     loadFunc: PropTypes.func.isRequired,
-    hasMore: PropTypes.bool.isRequired
+    hasMore: PropTypes.bool.isRequired,
+    diff: PropTypes.number.isRequired
+  }
+
+  static defaultProps = {
+    diff: 0
   }
 
   handleInfiniteLoad (event) {
-    if (this.props.hasMore && !this.state.shouldLoadFunc)
-      setTimeout(() => this.props.loadFunc(), 1000)
+    this.setState({ isInfiniteLoading: true })
+    setTimeout(() => {
+      this.props.loadFunc()
+      this.setState({ isInfiniteLoading: false })
+    }, 2500)
   }
 
   elementInfiniteLoad () {
@@ -39,25 +47,21 @@ export default class PostCards extends BaseComponent {
     }
   }
 
-  componentDidMount () {
-    document.body.style.overflow = 'hidden'
-  }
-
   render () {
     const cards = this.props.posts
 
     if (process.env.BROWSER && this.props.posts.length > 0) {
-      const containerHeight = $(document).height()
-
+      const containerHeight = $(document).height() - this.props.diff
       return (
         <Infinite
           className="scroll-content"
-          infiniteLoadBeginBottomOffset={$(document).height() * 0.6}
+          infiniteLoadBeginBottomOffset={200}
           containerHeight={containerHeight}
           onInfiniteLoad={::this.handleInfiniteLoad}
-          isInfiniteLoading={!!this.props.posts.hasMore}
+          isInfiniteLoading={this.state.isInfiniteLoading}
           loadingSpinnerDelegate={this.elementInfiniteLoad()}
-          elementHeight={130}>
+          elementHeight={132}
+          timeScrollStateLastsForAfterUserScrolls={150}>
           {!isEmpty(cards) && cards.map(function (card) {
             return <Card key={card.id} data={card} />
           })}

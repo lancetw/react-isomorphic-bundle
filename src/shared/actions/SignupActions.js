@@ -6,10 +6,14 @@ import {
 }from 'shared/constants/ActionTypes'
 import { auth, save } from 'shared/actions/AuthActions'
 
+export function init () {
+  return async dispatch => {
+    return dispatch({ type: SIGNUP_USER_STARTED })
+  }
+}
+
 export function submit (form) {
   return async dispatch => {
-    dispatch({ type: SIGNUP_USER_STARTED })
-
     try {
       const res = await sendForm(form)
       if (res.email) {

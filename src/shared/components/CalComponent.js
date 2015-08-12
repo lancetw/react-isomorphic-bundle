@@ -67,7 +67,11 @@ export default class Cal extends React.Component {
 
   loadFunc () {
     const nextOffset = this.state.nextOffset + this.state.limit
-    this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
+    if (this.state.nextOffset === 0)
+      this.props
+        .fetchList(nextOffset - 1, this.state.limit, this.state.date, true)
+    else
+      this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
 
     this.setState({ nextOffset: nextOffset })
   }
@@ -105,6 +109,7 @@ export default class Cal extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { post } = this.props
+    const loading = post.loading || false
     const { locale } = this.state
     const { selectedDay } = this.state
     const modifiers = {
@@ -115,7 +120,7 @@ export default class Cal extends React.Component {
     }
 
     return (
-      <main className="ui stackable page grid">
+      <main className="ui stackable full page grid">
         <div className="column">
           <div className="row">
             <div className="ui orange inverted buttons">
@@ -140,19 +145,27 @@ export default class Cal extends React.Component {
                 />
               </div>
               <div className="row">
-                <MediaQuery minDeviceWidth={769}>
-                  <div className="ui basic segment center aligned">
-                    <Ad
-                      id="1L"
-                      link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-                    />
-                  </div>
-                </MediaQuery>
                 <MediaQuery maxDeviceWidth={768}>
                   <div className="ui basic segment center aligned">
                     <Ad
                       id="1S"
                       link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+                    />
+                  </div>
+                </MediaQuery>
+                <MediaQuery maxWidth={768}>
+                  <div className="ui basic segment center aligned">
+                    <Ad
+                      id="1S"
+                      link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+                    />
+                  </div>
+                </MediaQuery>
+                <MediaQuery minWidth={769} minDeviceWidth={769}>
+                  <div className="ui basic segment center aligned">
+                    <Ad
+                      id="1L"
+                      link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
                     />
                   </div>
                 </MediaQuery>
@@ -167,8 +180,9 @@ export default class Cal extends React.Component {
                   posts={post.posts}
                   loadFunc={::this.loadFunc}
                   hasMore={post.hasMore}
+                  diff={154}
                 />
-                {post.loading && (
+                {loading && (
                   <div className="ui segment basic has-header">
                     <div className="ui active inverted dimmer">
                       <div className="ui large text loader">
@@ -177,7 +191,7 @@ export default class Cal extends React.Component {
                     </div>
                   </div>
                 )}
-                {!post.loading && isEmpty(post.posts) && (
+                {!loading && isEmpty(post.posts) && (
                   <div className="ui segment basic center aligned">
                     <Translate content="post.nodata" />
                   </div>

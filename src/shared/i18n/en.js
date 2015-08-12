@@ -6,6 +6,7 @@ export default {
     login: 'Log In',
     logout: 'Log Out',
     signup: 'Sign Up',
+    manage: 'Manage',
     wall: 'All events',
     post: 'Post it!',
     post_detail: 'Detail',
@@ -15,6 +16,7 @@ export default {
   },
   header: {
     home: 'Home',
+    manage: 'Manage',
     wall: 'Wall',
     cal: 'Cal',
     post: 'Post',

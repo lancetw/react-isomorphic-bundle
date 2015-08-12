@@ -6,6 +6,7 @@ export default {
     login: '登入',
     logout: '登出',
     signup: '註冊',
+    manage: '管理',
     wall: '所有佈告',
     post: '張貼新佈告',
     post_detail: '佈告詳細資料',
@@ -15,6 +16,7 @@ export default {
   },
   header: {
     home: '首頁',
+    manage: '管理',
     wall: '佈告',
     cal: '日曆模式',
     post: '發表',

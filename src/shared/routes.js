@@ -8,6 +8,7 @@ import {
   Signup,
   Post,
   PostDetail,
+  Manage,
   Wall,
   Cal,
   ChangePassword,
@@ -32,6 +33,7 @@ export default function (store) {
         <Route path="posts/:id" component={PostDetail} />
       </Route>
       <Route path="/post" component={Post} store={store} onEnter={auth} />
+      <Route path="/manage" component={Manage} store={store} onEnter={auth} />
       <Route path="/password" component={ChangePassword}
         store={store} onEnter={auth} />
       <Route path="/sync/token" component={SyncToken} />

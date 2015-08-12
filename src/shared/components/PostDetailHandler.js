@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react'
 import PostDetail from './PostDetailComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
+  auth: state.auth,
   post: state.post,
   map: state.map
 }))
@@ -15,23 +17,21 @@ export default class PostDetailHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    const dispatch = context.store.dispatch
-
-    const { getState } = context.store
+    const { dispatch } = context.store
     const id = props.params.id
     Promise.all([
       dispatch(PostActions.show(id))
     ]).then(() => {
-      const title = getState().post.detail.title
+      const title = props.post.detail.title
       dispatch(updateTitle(title))
       const map = {
-        place: getState().post.detail.place,
-        lat: getState().post.detail.lat,
-        lng: getState().post.detail.lng
+        place: props.post.detail.place,
+        lat: props.post.detail.lat,
+        lng: props.post.detail.lng
       }
       setTimeout(() => {
         dispatch(MapActions.setPin(map))
-      }, 1000)
+      }, 3000)
     })
   }
 
@@ -46,6 +46,8 @@ export default class PostDetailHandler extends React.Component {
   }
 
   static async routerWillRun ({ dispatch, params, getState }) {
+    dispatch(AuthActions.showUser(getState().auth.token))
+
     const id = params.id
     await dispatch(PostActions.show(id))
 

@@ -3,7 +3,7 @@
 import models from 'src/server/db/models'
 import hashids from 'src/shared/utils/hashids-plus'
 import moment from 'moment'
-import { pluck, range, compact, reduce } from 'lodash'
+import { sortBy, uniq, pluck, range, compact, reduce } from 'lodash'
 
 const Sequelize = models.Sequelize
 const Post = models.posts
@@ -17,13 +17,15 @@ exports.create = function *(post) {
     'endDate',
     'openDate',
     'closeDate',
+    'dateType',
     'title',
     'content',
     'file',
     'lat',
     'lng',
     'place',
-    'url'
+    'url',
+    'status'
   ]
 
   return yield Post.create(post, { fields: fillable })
@@ -52,7 +54,94 @@ exports.list = function *(offset=0, limit=20) {
 }
 
 /* eslint-disable camelcase */
+exports.listWithUser = function *(offset=0, limit=20, uid) {
+  if (typeof uid === 'undefined') return []
+
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'end_date', 'DESC' ]],
+    where: {
+      uid: +uid
+    }
+  })
+}
+
+/* eslint-disable camelcase */
 exports.fetch = function *(offset=0, limit=20, start, end) {
+  let _start = start
+  let _end = end
+
+  if (typeof _start === 'undefined')
+    _start = moment().startOf('day').valueOf()
+  else
+    _start = +_start
+  if (typeof _end === 'undefined')
+    _end = moment(+_start).endOf('day').valueOf()
+  else
+    _end = +_end
+
+  const startItems = yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      start_date: {
+        $between: [
+          new Date(moment(_start).startOf('day')),
+          new Date(moment(_start).endOf('day'))
+        ]
+      }
+    },
+    raw: true
+  })
+
+  const endItems = yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      end_date: {
+        $between: [
+          new Date(moment(_end).startOf('day')),
+          new Date(moment(_end).endOf('day'))
+        ]
+      }
+    },
+    raw: true
+  })
+
+  const duringItems = yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      start_date: {
+        $lt:
+          new Date(moment(_start).startOf('day'))
+      },
+      end_date: {
+        $gt:
+          new Date(moment(_end).startOf('day'))
+      }
+    },
+    raw: true
+  })
+
+  let final = []
+  final = final.concat(startItems)
+  final = final.concat(endItems)
+  final = final.concat(duringItems)
+  final = uniq(final, (item, key, id) => item.id )
+  final = sortBy(final, 'startDate')
+
+  return final
+}
+
+/* eslint-disable camelcase */
+exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
+  if (typeof uid === 'undefined') return []
+
   let _start = start
   let _end = end
 
@@ -68,8 +157,9 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   return yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'ASC' ]],
+    order: [[ 'id', 'DESC' ]],
     where: {
+      uid: +uid,
       end_date: {
         $gte: new Date(moment(_start))
       }

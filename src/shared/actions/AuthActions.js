@@ -4,6 +4,8 @@ import {
   AUTH_USER_STARTED,
   AUTH_USER_COMPLETED,
   AUTH_USER_FAILED,
+  SHOW_USER_COMPLETED,
+  SHOW_USER_FAILED,
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
   SYNC_SERVER_USER_COMPLETED,
@@ -133,6 +135,29 @@ export function clearToken () {
   if (typeof localStorage !== 'undefined'
       && localStorage !== null)
     localStorage.setItem('token', '')
+}
+
+export function showUser (token) {
+  return async dispatch => {
+    try {
+      const decoded = jwtDecode(token)
+      const now = Math.round(+new Date() / 1000)  // Unix Timestamp
+      const expired = decoded.exp <= now
+      if (!expired)
+        return dispatch({
+          type: SHOW_USER_COMPLETED,
+          user: decoded
+        })
+      else
+        throw new Error('verification failed')
+
+    } catch (err) {
+      return dispatch({
+        type: SHOW_USER_FAILED,
+        errors: err.message
+      })
+    }
+  }
 }
 
 export async function auth (form) {

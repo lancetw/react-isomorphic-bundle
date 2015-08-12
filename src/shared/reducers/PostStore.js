@@ -44,8 +44,7 @@ const actionsMap = {
   [LIST_POST_STARTED]: () => ({
     loading: true,
     errors: {},
-    posts: [],
-    hasMore: false
+    posts: []
   }),
   [LIST_POST_COMPLETED]: (state, action) => {
     let hasMore = false

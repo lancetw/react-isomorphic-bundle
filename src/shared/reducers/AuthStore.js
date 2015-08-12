@@ -2,6 +2,8 @@ import {
   AUTH_USER_STARTED,
   AUTH_USER_COMPLETED,
   AUTH_USER_FAILED,
+  SHOW_USER_COMPLETED,
+  SHOW_USER_FAILED,
   REVOKE_USER_STARTED,
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
@@ -15,7 +17,8 @@ const initialState = {
   errors: {},
   token: null,
   isAuthenticated: false,
-  verified: false
+  verified: false,
+  user: {}
 }
 
 const actionsMap = {
@@ -24,8 +27,12 @@ const actionsMap = {
     ({ token: action.token, isAuthenticated: !!action.token }),
   [AUTH_USER_FAILED]: (state, action) =>
     ({ errors: action.errors, isAuthenticated: false }),
+  [SHOW_USER_COMPLETED]: (state, action) =>
+    ({ user: action.user }),
+  [SHOW_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors, isAuthenticated: false, verified: false }),
   [REVOKE_USER_COMPLETED]: (state, action) =>
-    ({ token: null, isAuthenticated: false }),
+    ({ token: null, isAuthenticated: false, user: {} }),
   [REVOKE_USER_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SYNC_CLIENT_USER_COMPLETED]: (state, action) =>

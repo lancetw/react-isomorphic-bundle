@@ -51,6 +51,14 @@ export default class Header extends React.Component {
         </Link>
       )
 
+    let ManageLink
+    if (this.props.auth.token)
+      ManageLink = (
+        <Link to='/manage' className="item">
+          <Translate content="header.manage" />
+        </Link>
+      )
+
     return (
       <header
         className="ui orange top pointing menu grid fixed top">
@@ -67,6 +75,7 @@ export default class Header extends React.Component {
               <Translate content="header.post" />
             </Link>
             {ChangePasswordLink}
+            {ManageLink}
           </div>
 
           <div className="right menu">

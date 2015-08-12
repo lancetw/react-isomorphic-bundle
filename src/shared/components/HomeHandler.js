@@ -16,6 +16,9 @@ export default class HomeHandler extends React.Component {
 
     const dispatch = context.store.dispatch
     dispatch(updateTitle('title.home'))
+
+    dispatch(AuthActions.sync())
+    dispatch(AuthActions.showUser(props.auth.token))
   }
 
   static contextTypes = {
@@ -28,11 +31,9 @@ export default class HomeHandler extends React.Component {
 
   render () {
     const _t = require('counterpart')
-    const { dispatch } = this.props
     return (
       <DocumentTitle title={_t('title.home')}>
         <Home
-          {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}
         />
       </DocumentTitle>

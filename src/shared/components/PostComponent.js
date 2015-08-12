@@ -340,7 +340,7 @@ export default class Post extends BaseComponent {
     : null
 
     return (
-      <main className="ui two column stackable centered page grid">
+      <main className="ui two column stackable centered full page grid">
         <div className="column">
           <GMap
             ref="gmap"

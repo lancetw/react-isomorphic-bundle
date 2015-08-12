@@ -31,7 +31,7 @@ export default class Ad extends React.Component {
   }
 
   componentDidMount () {
-    this._releaseTimeout = setTimeout(() => this.loadAd(), 500)
+    this._releaseTimeout = setTimeout(() => this.loadAd(), 0)
   }
 
   componentWillUnmount () {

@@ -16,6 +16,8 @@ export default class SignupHandler extends React.Component {
 
     const dispatch = context.store.dispatch
     dispatch(updateTitle('title.signup'))
+
+    dispatch(SignupActions.init())
   }
 
   static propTypes = {

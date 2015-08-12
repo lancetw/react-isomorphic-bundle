@@ -64,6 +64,11 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.DATE,
       field: 'close_date'
     },
+    dateType: {
+      defaultValue: 0,
+      type: Sequelize.INTEGER.UNSIGNED,
+      field: 'date_type'
+    },
     title: {
       allowNull: false,
       type: Sequelize.STRING
@@ -119,6 +124,10 @@ module.exports = function (sequelize, Sequelize) {
     file: {
       allowNull: true,
       type: Sequelize.TEXT
+    },
+    status: {
+      defaultValue: 0,
+      type: Sequelize.INTEGER.UNSIGNED
     }
   }, {
     classMethods: {

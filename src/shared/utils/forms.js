@@ -1,9 +1,7 @@
 const React = require('react')
-
 const t = require('tcomb-form/lib')
 const en = require('tcomb-form/lib/i18n/en')
 const semantic = require('./semantic-custom')
-
 t.form.Form.i18n = en
 t.form.Form.templates = semantic
 
@@ -166,12 +164,27 @@ exports.ChangePasswordFormOptions = function (locale) {
   return list[locale]
 }
 
-const PostTypeEn = t.enums({
+const PostTypeEnArray = {
   1: 'News',
   2: 'Event'
-})
+}
+const PostTypeEn = t.enums(PostTypeEnArray)
 
-const PostPropEn = t.enums({
+const PostTypeZhHantTWArray = {
+  1: '新聞',
+  2: '活動'
+}
+const PostTypeZhHantTW = t.enums(PostTypeZhHantTWArray)
+
+exports.PostTypeArray = function (locale) {
+  const list = {
+    'en': PostTypeEnArray,
+    'zh-hant-tw': PostTypeZhHantTWArray
+  }
+  return list[locale]
+}
+
+const PostPropEnArray = {
   1: 'General',
   2: 'Music',
   3: 'Communication',
@@ -179,13 +192,10 @@ const PostPropEn = t.enums({
   5: 'Special Groups',
   6: 'Health Care',
   7: 'Others'
-})
-const PostTypeZhHantTW = t.enums({
-  1: '新聞',
-  2: '活動'
-})
+}
+const PostPropEn = t.enums(PostPropEnArray)
 
-const PostPropZhHantTW = t.enums({
+const PostPropZhHantTWArray = {
   1: '一般',
   2: '音樂',
   3: '交流',
@@ -193,7 +203,17 @@ const PostPropZhHantTW = t.enums({
   5: '特殊群組',
   6: '健康',
   7: '其他'
-})
+}
+const PostPropZhHantTW = t.enums(PostPropZhHantTWArray)
+
+exports.PostPropArray = function (locale) {
+  const list = {
+    'en': PostPropEnArray,
+    'zh-hant-tw': PostPropZhHantTWArray
+  }
+  return list[locale]
+}
+
 const PostFormEn = t.subtype(t.struct({
   type: PostTypeEn,
   prop: PostPropEn,
@@ -206,6 +226,7 @@ const PostFormEn = t.subtype(t.struct({
     (value.startDate <= value.endDate)
   )
 })
+
 const PostFormZhHantTW = t.subtype(t.struct({
   type: PostTypeZhHantTW,
   prop: PostPropZhHantTW,
@@ -218,6 +239,7 @@ const PostFormZhHantTW = t.subtype(t.struct({
     (value.startDate <= value.endDate)
   )
 })
+
 exports.PostForm = function (locale) {
   const list = {
     'en': PostFormEn,

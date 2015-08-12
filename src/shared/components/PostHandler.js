@@ -20,6 +20,8 @@ export default class PostHandler extends React.Component {
 
     const dispatch = context.store.dispatch
     dispatch(updateTitle('title.post'))
+
+    dispatch(MapActions.init())
   }
 
   static propTypes = {

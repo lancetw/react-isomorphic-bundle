@@ -8,12 +8,7 @@ export default class HomeComponent extends BaseComponent {
   }
 
   static propTypes = {
-    sync: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-  }
-
-  componentWillMount () {
-    this.props.sync()
   }
 
   render () {
@@ -31,11 +26,16 @@ export default class HomeComponent extends BaseComponent {
       value: this.props.auth.token
     }
 
+    const { user } = this.props.auth
+
     return (
-      <main className="ui two column centered stackable page grid">
+      <main className="ui column centered stackable page grid">
         <div className="column">
           <div className="ui segment">
-            <h1><Translate content="home.jwt_header" /></h1>
+            <div className="ui orange label">登入身分 {user.email}</div>
+            <h2>
+              <Translate content="home.jwt_header" />
+            </h2>
             <div className="ui fluid right labeled left icon input">
               <i className="tags icon"></i>
               {TranslateProps(tokenProps)}
