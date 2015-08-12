@@ -165,7 +165,7 @@ export default new Resource('posts', {
   }],
   // DELETE /posts/:post
   destroy: [ RestAuth, function *(next) {
-    const post = yield Post.delete(this.params.post)
+    const post = yield Post.destroy(this.params.post)
     this.type = 'json'
     this.status = 200
     this.body = hashids.encodeJson(post)

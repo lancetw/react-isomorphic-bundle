@@ -10,6 +10,9 @@ import {
   UPDATE_POST_STARTED,
   UPDATE_POST_COMPLETED,
   UPDATE_POST_FAILED,
+  REMOVE_POST_STARTED,
+  REMOVE_POST_COMPLETED,
+  REMOVE_POST_FAILED,
   SHOW_POST_STARTED,
   SHOW_POST_COMPLETED,
   SHOW_POST_FAILED,
@@ -73,6 +76,29 @@ export function modify ({ id, value, regValue, upload, map }) {
     } catch (err) {
       return dispatch({
         type: UPDATE_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
+export function remove (id) {
+  return async dispatch => {
+    try {
+      const token = getToken()
+      const content = await destroy({ token, id })
+
+      if (content.uid)
+        return dispatch({
+          type: REMOVE_POST_COMPLETED
+        })
+      else return dispatch({
+        type: REMOVE_POST_FAILED,
+        errors: content.errors ? content.errors : content
+      })
+    } catch (err) {
+      return dispatch({
+        type: REMOVE_POST_FAILED,
         errors: err.message
       })
     }
@@ -284,6 +310,23 @@ async function update ({ token, id, value, regValue, upload, map }) {
       .set('Accept', 'application/json')
       .set('Authorization', 'JWT ' + token)
       .send(_form)
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}
+
+async function destroy ({ token, id }) {
+  return new Promise((resolve, reject) => {
+    const user = jwt.decode(token)
+    if (!user.id) reject('invalid token')
+    request
+      .del('/api/v1/posts/' + id)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'JWT ' + token)
       .end(function (err, res) {
         if (!err && res.body)
           resolve(res.body)

@@ -412,7 +412,7 @@ exports.update = function *(hid, post) {
   return yield p.update(post, { fields: fillable })
 }
 
-exports.delete = function *(hid) {
+exports.destroy = function *(hid) {
   const id = +hashids.decode(hid)
   let post = yield Post.findOne({ where: { id: id } })
   return yield post.destroy()

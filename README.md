@@ -56,12 +56,14 @@ $ npm install
 - [x] Restful API with JWT
 - [x] Change password
 - [x] Create post
+- [x] Modify post
+- [x] Delete post
 - [x] i18n / language switcher
 - [x] Files/Images uploader
 - [x] Ad script support
 - [x] Location Settings (Google maps with HTML5 Geolocation)
-- [x] Show list with Infinite scroll
-- [ ] Posts with Location/Category/Timeline view
+- [x] Posts with Infinite Scroll
+- [x] Posts with Calendar
 - [ ] Full text Search
 - [ ] Sitemap
 - [ ] Static archive pages

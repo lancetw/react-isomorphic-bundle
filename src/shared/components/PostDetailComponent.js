@@ -33,7 +33,8 @@ export default class Post extends BaseComponent {
     post: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
-    setPin: PropTypes.func.isRequired
+    setPin: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -64,18 +65,32 @@ export default class Post extends BaseComponent {
 
   deletePost () {
     const swal = require('sweetalert')
-
+    const { detail } = this.props.post
+    const { remove } = this.props
+    const { transitionTo } = this.context.router
     swal({
       title: '您確定嗎？',
-      text: '佈告：「' + this.props.post.detail.title + '」將永久移除',
+      text: '佈告：「' + detail.title + '」將永久移除',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
       confirmButtonText: '確定刪除',
       cancelButtonText: '按錯了，我要取消',
-      closeOnConfirm: false
-    }, function () {
-      swal('佈告已刪除！', '佈告成功刪除', 'success')
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true
+    }, () => {
+      Promise.all([
+       remove(detail.id)
+      ]).then(() => {
+        swal({
+          title: '佈告已刪除！',
+          text: '佈告成功刪除',
+          type: 'success',
+          confirmButtonText: '確定',
+          closeOnConfirm: true
+        }, () => {
+          transitionTo('/home')
+        })
+      })
     })
   }
 
