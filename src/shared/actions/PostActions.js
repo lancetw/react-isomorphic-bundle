@@ -7,6 +7,9 @@ import {
   CREATE_POST_STARTED,
   CREATE_POST_COMPLETED,
   CREATE_POST_FAILED,
+  UPDATE_POST_STARTED,
+  UPDATE_POST_COMPLETED,
+  UPDATE_POST_FAILED,
   SHOW_POST_STARTED,
   SHOW_POST_COMPLETED,
   SHOW_POST_FAILED,
@@ -20,9 +23,14 @@ import {
 import { getToken } from 'shared/actions/AuthActions'
 import { clearUpload } from 'shared/actions/UploadActions'
 
+export function init () {
+  return async dispatch => {
+    return dispatch({ type: CREATE_POST_STARTED })
+  }
+}
+
 export function submit ({ value, regValue, upload, map }) {
   return async dispatch => {
-    dispatch({ type: CREATE_POST_STARTED })
     try {
       const token = getToken()
       const content = await create({ token, value, regValue, upload, map })
@@ -40,6 +48,31 @@ export function submit ({ value, regValue, upload, map }) {
     } catch (err) {
       return dispatch({
         type: CREATE_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
+export function modify ({ id, value, regValue, upload, map }) {
+  return async dispatch => {
+    try {
+      const token = getToken()
+      const content = await update({ token, id, value, regValue, upload, map })
+
+      if (content.uid) {
+        dispatch(clearUpload())
+        return dispatch({
+          type: UPDATE_POST_COMPLETED,
+          content: content
+        })
+      } else return dispatch({
+        type: UPDATE_POST_FAILED,
+        errors: content.errors ? content.errors : content
+      })
+    } catch (err) {
+      return dispatch({
+        type: UPDATE_POST_FAILED,
         errors: err.message
       })
     }
@@ -216,6 +249,38 @@ async function create ({ token, value, regValue, upload, map }) {
     _form.file = _upload
     request
       .post('/api/v1/posts')
+      .set('Accept', 'application/json')
+      .set('Authorization', 'JWT ' + token)
+      .send(_form)
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}
+
+async function update ({ token, id, value, regValue, upload, map }) {
+  const _upload = compact(upload)
+  return new Promise((resolve, reject) => {
+    const user = jwt.decode(token)
+    if (!user.id) reject('invalid token')
+    const _form = clone(value)
+    _form.uid = user.id
+    _form.startDate = moment(_form.startDate).valueOf()
+    _form.endDate = moment(_form.endDate).valueOf()
+    _form.openDate = moment(regValue.openDate).valueOf()
+    _form.closeDate = moment(regValue.closeDate).valueOf()
+    _form.url = regValue.url
+    if (map && typeof map.lat !== undefined && typeof map.lng !== undefined) {
+      _form.lat = map.lat
+      _form.lng = map.lng
+      _form.place = map.place
+    }
+    _form.file = _upload
+    request
+      .put('/api/v1/posts/' + id)
       .set('Accept', 'application/json')
       .set('Authorization', 'JWT ' + token)
       .send(_form)

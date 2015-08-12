@@ -10,7 +10,11 @@ export default class PostCards extends BaseComponent {
 
   constructor (props) {
     super(props)
-    this.state = { isInfiniteLoading: false }
+    this.state = {
+      isInfiniteLoading: false,
+      windowWidth: typeof window !== 'undefined' && window.innerWidth,
+      windowHeight: typeof window !== 'undefined' && window.innerHeight
+    }
   }
 
   static propTypes = {
@@ -22,6 +26,12 @@ export default class PostCards extends BaseComponent {
 
   static defaultProps = {
     diff: 0
+  }
+
+  handleResize (event) {
+    this.setState({
+      windowWidth: window.innerWidth, windowHeight: window.innerHeight
+    })
   }
 
   handleInfiniteLoad (event) {
@@ -38,7 +48,7 @@ export default class PostCards extends BaseComponent {
       return (
         <div className="ui segment basic has-header">
           <div className="ui active inverted dimmer">
-            <div className="ui large text loader">
+            <div className="ui small indeterminate text loader">
               <Translate content="wall.loading" />
             </div>
           </div>
@@ -47,11 +57,20 @@ export default class PostCards extends BaseComponent {
     }
   }
 
+  componentDidMount () {
+    window.addEventListener('resize', ::this.handleResize)
+    React.initializeTouchEvents(true)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
   render () {
     const cards = this.props.posts
 
     if (process.env.BROWSER && this.props.posts.length > 0) {
-      const containerHeight = $(document).height() - this.props.diff
+      const containerHeight = this.state.windowHeight - this.props.diff
       return (
         <Infinite
           className="scroll-content"

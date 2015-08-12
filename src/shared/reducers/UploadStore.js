@@ -22,8 +22,7 @@ const initialState = {
 }
 
 const actionsMap = {
-  [UPLOAD_FILE_STARTED]: () =>
-    ({ response: null, errors: null }),
+  [UPLOAD_FILE_STARTED]: () => (initialState),
   [UPLOAD_FILE_COMPLETED]: (state, action) =>
     ({ response: action.response }),
   [UPLOAD_FILE_FAILED]: (state, action) =>

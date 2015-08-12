@@ -19,6 +19,7 @@ import {
   TabList,
   TabPanel
 } from 'shared/components/addon/tabs'
+import { toDate } from 'shared/utils/date-utils'
 
 let sweetAlert
 if (process.env.BROWSER)
@@ -36,11 +37,12 @@ export default class Post extends BaseComponent {
       'handleChange',
       'handleRegChange'
     )
-
-    const today = moment().format('YYYY-M-D').split('-')
-    today[1] = today[1] - 1
     this.releaseTimeout = undefined
+    const today = this.dateToArray(moment().format('YYYY-M-D'))
+    const { detail } = props.post
     this.state = {
+      formInited: false,
+      form2Inited: false,
       images: [],
       value: {
         type: '2',
@@ -68,15 +70,23 @@ export default class Post extends BaseComponent {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
+    modify: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     setPin: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     upload: PropTypes.object.isRequired,
-    map: PropTypes.object.isRequired
+    map: PropTypes.object.isRequired,
+    params: PropTypes.object
   }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
+  }
+
+  dateToArray (date) {
+    let _date = date.split('-')
+    _date[1] = _date[1] - 1
+    return _date
   }
 
   handleLocaleChange (newLocale) {
@@ -203,7 +213,12 @@ export default class Post extends BaseComponent {
       const regValue = this.state.regValue
 
       setTimeout(() => {
-        this.props.submit({ value, regValue, upload, map })
+        const { id } = this.props.params
+        if (id)
+          this.props.modify({ id, value, regValue, upload, map })
+        else
+          this.props.submit({ value, regValue, upload, map })
+
       }, 1000)
     }
   }
@@ -270,7 +285,45 @@ export default class Post extends BaseComponent {
     }
   }
 
+  initForm (detail) {
+    if (!isEmpty(detail)) {
+      const startDate = this.dateToArray(toDate(detail.startDate))
+      const endDate = this.dateToArray(toDate(detail.endDate))
+      const openDate = this.dateToArray(toDate(detail.openDate))
+      const closeDate = this.dateToArray(toDate(detail.closeDate))
+      this.setState({
+        value: {
+          type: detail.type.toString(),
+          prop: detail.prop.toString(),
+          startDate: startDate,
+          endDate: endDate,
+          title: detail.title,
+          content: detail.content
+        },
+        regValue: {
+          openDate: openDate,
+          closeDate: closeDate,
+          url: isEmpty(detail.url) ? undefined : detail.url
+        }
+      })
+
+      const map = {
+        lat: detail.lat,
+        lng: detail.lng,
+        place: detail.ocname || detail.place
+      }
+      this.props.setPin(map)
+
+      return true
+    }
+    return false
+  }
+
   componentWillReceiveProps (nextProps) {
+    if (!this.state.formInited)
+      if (this.initForm(nextProps.post.detail))
+        this.setState({ formInited: true })
+
     this.validation(nextProps.post.errors)
     this.checkSubmited(nextProps.post.content)
 
@@ -278,10 +331,6 @@ export default class Post extends BaseComponent {
       React.findDOMNode(this.refs.lat).value = nextProps.map.lat
     if (this.refs.lng)
       React.findDOMNode(this.refs.lng).value = nextProps.map.lng
-  }
-
-  componentDidMount () {
-    document.body.style.overflow = 'auto'
   }
 
   componentWillUnmount () {

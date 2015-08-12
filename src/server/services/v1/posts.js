@@ -8,33 +8,27 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import moment from 'moment'
+import { isEmpty } from 'lodash'
 
 const Post = db.posts
 
+/* eslint-disable max-len */
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
     const { offset, limit, start, end, user } = this.request.query
-
+    let data
     if (typeof user !== 'undefined') {
       const uid = hashids.decode(user)
-      if (typeof start !== 'undefined')
-        this.body =
-          hashids.encodeJson(
-            yield Post.fetchWithUser(offset, limit, start, end, uid))
-      else
-        this.body =
-          hashids.encodeJson(
-            yield Post.listWithUser(offset, limit, uid))
-    } else {
-      if (typeof start !== 'undefined')
-        this.body =
-          hashids.encodeJson(yield Post.fetch(offset, limit, start, end))
-      else
-        this.body =
-          hashids.encodeJson(yield Post.list(offset, limit))
-    }
+      data = typeof start !== 'undefined'
+      ? yield Post.fetchWithUser(offset, limit, start, end, uid)
+      : yield Post.listWithUser(offset, limit, uid)
+    } else
+    data = typeof start !== 'undefined'
+    ? yield Post.fetch(offset, limit, start, end)
+    : yield Post.list(offset, limit)
 
+    this.body = hashids.encodeJson(data)
   },
   // POST /posts
   create: [ RestAuth, function *(next) {
@@ -122,14 +116,26 @@ export default new Resource('posts', {
       uid: { type: 'string' },
       type: { type: 'string' },
       prop: { type: 'string' },
-      startDate: { type: 'date' },
-      endDate: { type: 'date' },
+      startDate: { type: 'int' },
+      endDate: { type: 'int' },
+      openDate: { type: 'int', required: false },
+      closeDate: { type: 'int', required: false },
       dateType: { type: 'int', required: false },
       title: { type: 'string' },
       content: { type: 'string' },
       lat: { type: 'number', required: false },
       lng: { type: 'number', required: false },
-      place: { type: 'string', required: false }
+      place: { type: 'string', required: false },
+      file: {
+        required: false,
+        type: 'array',
+        itemType: 'string',
+        rule: { type: 'string', allowEmpty: true }
+      },
+      url: {
+        required: false,
+        type: 'url'
+      }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -139,7 +145,19 @@ export default new Resource('posts', {
       return
     }
 
-    body.uid = hashids.decode(body.uid)
+    // body.uid = hashids.decode(body.uid)
+    body.startDate = moment(body.startDate).format()
+    body.endDate = moment(body.endDate).format()
+    if (typeof body.openDate === 'undefined')
+      body.openDate = body.startDate
+    else
+      body.openDate = moment(body.openDate).format()
+    if (typeof body.closeDate === 'undefined')
+      body.closeDate = body.endDate
+    else
+      body.closeDate = moment(body.closeDate).endOf('day').format()
+    body.file = JSON.stringify(body.file)
+
     const post = yield Post.update(this.params.post, body)
     this.type = 'json'
     this.status = 201

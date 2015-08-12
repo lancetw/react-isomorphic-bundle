@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react'
 import Wall from './WallComponent'
 import { connect } from 'react-redux'
+import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 
 @connect(state => ({
+  auth: state.auth,
   post: state.post
 }))
 export default class WallHandler extends React.Component {
@@ -15,6 +17,8 @@ export default class WallHandler extends React.Component {
     const { dispatch } = context.store
     dispatch(PostActions.defaultList(0, 10, true))
     dispatch(updateTitle('title.wall'))
+
+    dispatch(AuthActions.showUser(props.auth.token))
     this.state = { limit: 10, nextOffset: 0 }
   }
 
@@ -26,8 +30,9 @@ export default class WallHandler extends React.Component {
     store: PropTypes.object.isRequired
   }
 
-  static async routerWillRun ({ dispatch }) {
-    return await dispatch(PostActions.defaultList(0, 10, true))
+  static async routerWillRun ({ dispatch, getState }) {
+    await dispatch(PostActions.defaultList(0, 10, true))
+    await dispatch(AuthActions.showUser(getState().auth.token))
   }
 
   loadFunc () {

@@ -21,6 +21,8 @@ export default class PostHandler extends React.Component {
     const dispatch = context.store.dispatch
     dispatch(updateTitle('title.post'))
 
+    dispatch(PostActions.init())
+    dispatch(UploadActions.init())
     dispatch(MapActions.init())
   }
 

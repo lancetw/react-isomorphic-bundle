@@ -391,12 +391,19 @@ exports.update = function *(hid, post) {
   const fillable = [
     'type',
     'prop',
-    'start_date',
-    'end_date',
-    'open_date',
-    'close_date',
+    'startDate',
+    'endDate',
+    'openDate',
+    'closeDate',
+    'dateType',
     'title',
-    'content'
+    'content',
+    'file',
+    'lat',
+    'lng',
+    'place',
+    'url',
+    'status'
   ]
   const id = +hashids.decode(hid)
   let p = yield Post.findOne({

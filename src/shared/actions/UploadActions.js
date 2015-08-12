@@ -13,6 +13,12 @@ import {
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 
+export function init () {
+  return async dispatch => {
+    return dispatch({ type: CLEAR_UPLOAD_COMPLETED })
+  }
+}
+
 export function setPercent (percent, index) {
   return async dispatch => {
     return dispatch({
@@ -25,7 +31,6 @@ export function setPercent (percent, index) {
 
 export function send (filename, file, index) {
   return async dispatch => {
-    dispatch({ type: UPLOAD_FILE_STARTED })
     dispatch(setImagePreview(null, index))
     const token = getToken()
     const user = jwt.decode(token)
@@ -48,7 +53,7 @@ export function send (filename, file, index) {
         if (!err && res.body && res.body.response) {
           dispatch(setImageFileName(res.body.response.name, index))
 
-          if (res.body.response.ext === 'pdf')
+          if (res.body.response.ext.toLowerCase() === 'pdf')
             dispatch(setImagePreview('/images/pdf.png', index))
           else
             dispatch(setImagePreview(file.preview, index))

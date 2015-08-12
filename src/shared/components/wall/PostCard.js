@@ -55,7 +55,7 @@ export default class PostCard extends BaseComponent {
 
     const eventDate = (card.startDate === card.endDate)
     ? toShortDate(card.endDate)
-    : toShortDate(card.startDate) + '-' + toShortDate(card.endDate)
+    : toShortDate(card.startDate) + ' - ' + toShortDate(card.endDate)
 
     const cardProp = this.getCardProp(card.prop)
 
@@ -70,25 +70,6 @@ export default class PostCard extends BaseComponent {
               {eventDate}
             </span>
             <span className="ui tag label category">{cardProp}</span>
-          </div>
-          <div className="description">
-          { files && !isEmpty(files) && <div className="ui divider"></div> }
-          {
-            files && !isEmpty(files) && files.map(function (file, i) {
-              return (
-                <div
-                  className="fileName"
-                  key={i}
-                  data-filetype={getFileExt(file)}>
-                  <a
-                    target="_blank"
-                    href={'/uploads/' + file}>
-                    { file }
-                  </a>
-                </div>
-              )
-            })
-          }
           </div>
         </div>
         <div className="extra content">

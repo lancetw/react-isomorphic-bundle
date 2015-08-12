@@ -2,6 +2,9 @@ import {
   CREATE_POST_STARTED,
   CREATE_POST_COMPLETED,
   CREATE_POST_FAILED,
+  UPDATE_POST_STARTED,
+  UPDATE_POST_COMPLETED,
+  UPDATE_POST_FAILED,
   SHOW_POST_STARTED,
   SHOW_POST_COMPLETED,
   SHOW_POST_FAILED,
@@ -31,6 +34,11 @@ const actionsMap = {
   [CREATE_POST_COMPLETED]: (state, action) =>
     ({ content: action.content }),
   [CREATE_POST_FAILED]: (state, action) =>
+    ({ errors: action.errors }),
+  [UPDATE_POST_STARTED]: () => (initialState),
+  [UPDATE_POST_COMPLETED]: (state, action) =>
+    ({ content: action.content }),
+  [UPDATE_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SHOW_POST_STARTED]: () => ({
     loading: true,

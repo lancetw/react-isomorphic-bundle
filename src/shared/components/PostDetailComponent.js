@@ -11,6 +11,8 @@ import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
+import { Link } from 'react-router'
+import swal from 'sweetalert'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -61,6 +63,21 @@ export default class Post extends BaseComponent {
     return at(PostPropArray(this.originLocaleName(this.state.locale)), index)
   }
 
+  deletePost () {
+    swal({
+      title: '您確定嗎？',
+      text: '佈告：「' + this.props.post.detail.title + '」將永久移除',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: '確定刪除',
+      cancelButtonText: '按錯了，我要取消',
+      closeOnConfirm: false
+    }, function () {
+      swal('佈告已刪除！', '佈告成功刪除', 'success')
+    })
+  }
+
   componentWillUnmount () {
     if (this.op)
       clearTimeout(this.releaseTimeout)
@@ -84,7 +101,7 @@ export default class Post extends BaseComponent {
 
     const eventDate = (detail.startDate === detail.endDate)
     ? toShortDate(detail.endDate)
-    : toShortDate(detail.startDate) + '-' + toShortDate(detail.endDate)
+    : toShortDate(detail.startDate) + ' - ' + toShortDate(detail.endDate)
 
     const detailProp = this.getDetailProp(detail.prop)
 
@@ -99,13 +116,14 @@ export default class Post extends BaseComponent {
                     {eventDate}
                   </span>
                 </div>
-                <div className="header">{detail.title}</div>
-                <span className="ui tag label category">{detailProp}</span>
-                <div className="ui divider"></div>
+                <h1 className="header">{detail.title}</h1>
                 <div className="description">
                   {finalContent}
                   { files && !isEmpty(files)
-                    && <div className="ui divider"></div> }
+                    &&
+                    <h4 className="ui horizontal divider header">
+                      提供附件下載
+                    </h4> }
                   {
                     files && !isEmpty(files)
                     && files.map(function (file, i) {
@@ -124,35 +142,30 @@ export default class Post extends BaseComponent {
                     })
                   }
                 </div>
+                <div className="taglist right aligned">
+                  <span
+                    className="ui tag label category">
+                    {detailProp}
+                  </span>
+                </div>
               </div>
+              {this.props.auth.user.id === detail.uid &&
               <div className="extra content">
-                <span className="left floated like">
-                  <i className="like icon"></i>
-                  Like
-                </span>
-                <span className="right floated star">
-                  <i className="star icon"></i>
-                  Favorite
-                </span>
+                <div className="ui two buttons">
+                  <Link
+                    className="ui basic green button"
+                    to={`/post/${detail.id}/edit`}>
+                    編輯內容</Link>
+                  <a
+                    className="ui basic red button"
+                    onClick={::this.deletePost}>
+                    刪除
+                  </a>
+                </div>
               </div>
+              }
             </div>
           </div>
-          <div className="ui hidden divider"></div>
-          {this.props.auth.user.id === detail.uid &&
-          <div className="row">
-            <div className="ui orange icon buttons right floated">
-              <button className="ui button">
-                <i className="edit icon"></i> 編輯內容
-              </button>
-              <button className="ui button">
-                <i className="map icon"></i> 修改地圖
-              </button>
-              <button className="ui button">
-                <i className="delete icon"></i> 刪除佈告
-              </button>
-            </div>
-          </div>
-          }
         </div>
         <div className="column">
           { (detail.lat && detail.lat) &&

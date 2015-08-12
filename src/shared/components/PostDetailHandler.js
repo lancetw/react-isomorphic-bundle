@@ -17,22 +17,26 @@ export default class PostDetailHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    const { dispatch } = context.store
-    const id = props.params.id
-    Promise.all([
-      dispatch(PostActions.show(id))
-    ]).then(() => {
-      const title = props.post.detail.title
-      dispatch(updateTitle(title))
-      const map = {
-        place: props.post.detail.place,
-        lat: props.post.detail.lat,
-        lng: props.post.detail.lng
-      }
-      setTimeout(() => {
-        dispatch(MapActions.setPin(map))
-      }, 3000)
-    })
+    const { dispatch, getState } = context.store
+
+    const title = props.post.detail.title
+    dispatch(updateTitle(title))
+
+    const { id } = props.params
+    if (id)
+      Promise.all([
+        dispatch(PostActions.show(id))
+      ]).then(() => {
+        setTimeout(() => {
+          const { detail } = getState().post
+          const map = {
+            place: detail.place,
+            lat: detail.lat,
+            lng: detail.lng
+          }
+          dispatch(MapActions.setPin(map))
+        }, 1000)
+      })
   }
 
   static propTypes = {
@@ -46,10 +50,17 @@ export default class PostDetailHandler extends React.Component {
   }
 
   static async routerWillRun ({ dispatch, params, getState }) {
-    dispatch(AuthActions.showUser(getState().auth.token))
+    await dispatch(AuthActions.showUser(getState().auth.token))
 
     const id = params.id
     await dispatch(PostActions.show(id))
+
+    const map = {
+      place: getState().post.detail.place,
+      lat: getState().post.detail.lat,
+      lng: getState().post.detail.lng
+    }
+    await dispatch(MapActions.setPin(map))
 
     const title = getState().post.detail.title
     await dispatch(updateTitle(title))
