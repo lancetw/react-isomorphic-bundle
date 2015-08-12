@@ -3,7 +3,7 @@
 import models from 'src/server/db/models'
 import hashids from 'src/shared/utils/hashids-plus'
 import moment from 'moment'
-import { sortBy, uniq, pluck, range, compact, reduce } from 'lodash'
+import { sortBy, uniq, pluck, range, compact, reduce, isEmpty } from 'lodash'
 
 const Sequelize = models.Sequelize
 const Post = models.posts
@@ -283,7 +283,7 @@ exports.countPerDayInMonth = function *(year, month) {
     let _diff = moment(new Date(item.endDate))
       .diff(new Date(item.startDate), 'days')
 
-    if (_diff > 0)
+    if (_diff >= 0)
       for (let i of range(start, start + _diff + 1)) {
         if (typeof out[i] === 'undefined')
           out[i] = 1
@@ -304,7 +304,7 @@ exports.countPerDayInMonth = function *(year, month) {
     let _diff = moment(new Date(item.endDate))
       .diff(moment(new Date(item.endDate)).startOf('month'), 'days')
 
-    if (_diff > 0)
+    if (_diff >= 0)
       for (let i of range(start, start + _diff + 1))
         if (typeof out[i] === 'undefined')
           out[i] = 1
@@ -326,7 +326,7 @@ exports.countPerDayInMonth = function *(year, month) {
       })
       , 'days')
 
-    if (_diff > 0)
+    if (_diff >= 0)
       for (let i of range(start, start + _diff + 1))
         if (typeof out[i] === 'undefined')
           out[i] = 1
