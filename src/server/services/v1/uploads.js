@@ -10,8 +10,6 @@ import multer from 'koa-multer'
 import fs from 'fs'
 import { include, isEmpty } from 'lodash'
 
-const Post = db.posts
-
 const mimeTypes = [
   'image/jpeg',
   'image/png',

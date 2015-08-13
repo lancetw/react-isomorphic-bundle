@@ -46,10 +46,20 @@ export default new Resource('users', {
   },
   // GET /users/:user
   show: [ RestAuth, function *(next) {
-    const user = yield User.load(this.params.user)
-    this.type = 'json'
-    this.status = 200
-    this.body = hashids.encodeJson(user)
+    try {
+      if (hashids.decode(this.params.user) !== this.user.id)
+        throw new Error('user check failed')
+
+      const user = yield User.load(this.params.user)
+
+      this.type = 'json'
+      this.status = 200
+      this.body = hashids.encodeJson(user)
+    } catch (err) {
+      this.type = 'josn'
+      this.status = 404
+      this.body = err
+    }
   }],
   // GET /users/:user/edit
   edit: function *(next) {
@@ -72,16 +82,35 @@ export default new Resource('users', {
       return
     }
 
-    const user = yield User.update(this.params.user, body)
-    this.type = 'json'
-    this.status = 201
-    this.body = hashids.encodeJson(user)
+    try {
+      if (hashids.decode(this.params.user) !== this.user.id)
+        throw new Error('user check failed')
+
+      const user = yield User.update(this.params.user, body)
+      this.type = 'json'
+      this.status = 201
+      this.body = hashids.encodeJson(user)
+    } catch (err) {
+      this.type = 'josn'
+      this.status = 404
+      this.body = err
+    }
   }],
   // DELETE /users/:user
   destroy: [ RestAuth, function *(next) {
-    const user = yield User.delete(this.params.user)
-    this.type = 'json'
-    this.status = 200
-    this.body = hashids.encodeJson(user)
+    try {
+      const body = yield User.load(this.params.user)
+      if (hashids.decode(this.params.user) !== this.user.id)
+        throw new Error('user check failed')
+
+      const user = yield User.delete(this.params.user)
+      this.type = 'json'
+      this.status = 200
+      this.body = hashids.encodeJson(user)
+    } catch (err) {
+      this.type = 'josn'
+      this.status = 404
+      this.body = err
+    }
   }]
 })

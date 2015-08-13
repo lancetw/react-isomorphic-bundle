@@ -9,9 +9,13 @@ export default function *(next) {
     'jwt',
     { session: false },
     function *(err, user, info) {
-    if (err || !user) {
-      ctx.status = 401
-      ctx.body = {}
-    } else yield* next
-  }).call(this, next)
+      if (err || !user) {
+        ctx.status = 401
+        ctx.body = {}
+      } else {
+        ctx.user = user
+        ctx.info = info
+        yield next
+      }
+    }).call(this, next)
 }

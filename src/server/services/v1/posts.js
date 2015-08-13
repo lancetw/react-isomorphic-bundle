@@ -68,6 +68,10 @@ export default new Resource('posts', {
 
     try {
       body.uid = hashids.decode(body.uid)
+
+      if (body.uid !== this.user.id)
+        throw new Error('user check failed')
+
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
       if (typeof body.openDate === 'undefined')
@@ -145,29 +149,49 @@ export default new Resource('posts', {
       return
     }
 
-    // body.uid = hashids.decode(body.uid)
-    body.startDate = moment(body.startDate).format()
-    body.endDate = moment(body.endDate).format()
-    if (typeof body.openDate === 'undefined')
-      body.openDate = body.startDate
-    else
-      body.openDate = moment(body.openDate).format()
-    if (typeof body.closeDate === 'undefined')
-      body.closeDate = body.endDate
-    else
-      body.closeDate = moment(body.closeDate).endOf('day').format()
-    body.file = JSON.stringify(body.file)
+    try {
+      body.uid = hashids.decode(body.uid)
 
-    const post = yield Post.update(this.params.post, body)
-    this.type = 'json'
-    this.status = 201
-    this.body = hashids.encodeJson(post)
+      if (body.uid !== this.user.id)
+        throw new Error('user check failed')
+
+      body.startDate = moment(body.startDate).format()
+      body.endDate = moment(body.endDate).format()
+      if (typeof body.openDate === 'undefined')
+        body.openDate = body.startDate
+      else
+        body.openDate = moment(body.openDate).format()
+      if (typeof body.closeDate === 'undefined')
+        body.closeDate = body.endDate
+      else
+        body.closeDate = moment(body.closeDate).endOf('day').format()
+      body.file = JSON.stringify(body.file)
+
+      const post = yield Post.update(this.params.post, body)
+      this.type = 'json'
+      this.status = 201
+      this.body = hashids.encodeJson(post)
+    } catch (err) {
+      this.type = 'josn'
+      this.status = 200
+      this.body = err
+    }
   }],
   // DELETE /posts/:post
   destroy: [ RestAuth, function *(next) {
-    const post = yield Post.destroy(this.params.post)
-    this.type = 'json'
-    this.status = 200
-    this.body = hashids.encodeJson(post)
+    try {
+      const body = yield Post.load(this.params.post)
+      if (body.uid !== this.user.id)
+        throw new Error('user check failed')
+
+      const post = yield Post.destroy(this.params.post)
+      this.type = 'json'
+      this.status = 200
+      this.body = hashids.encodeJson(post)
+    } catch (err) {
+      this.type = 'josn'
+      this.status = 200
+      this.body = err
+    }
   }]
 })
