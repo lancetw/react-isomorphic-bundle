@@ -120,7 +120,7 @@ export default class Cal extends React.Component {
     }
 
     return (
-      <main className="ui stackable full page grid">
+      <main className="ui has-header grid container">
         <div className="column">
           <div className="row switch-btns">
             <div className="ui orange inverted buttons">
@@ -134,7 +134,7 @@ export default class Cal extends React.Component {
           </div>
         </div>
         <div className="ui two columns stackable grid">
-          <div className="column">
+          <div className="eight wide computer sixteen wide tablet column">
             <DayPicker
               renderDay={::this.renderDay}
               modifiers={modifiers}
@@ -143,15 +143,7 @@ export default class Cal extends React.Component {
               locale={locale}
               localeUtils={LocaleUtils}
             />
-            <MediaQuery maxWidth={768} maxDeviceWidth={768}>
-              <div className="ui basic segment center aligned">
-                <Ad
-                  id="1S"
-                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-                />
-              </div>
-            </MediaQuery>
-            <MediaQuery minWidth={769} minDeviceWidth={769}>
+            <MediaQuery minDeviceWidth={1224}>
               <div className="ui basic segment center aligned">
                 <Ad
                   id="1L"
@@ -159,34 +151,42 @@ export default class Cal extends React.Component {
                 />
               </div>
             </MediaQuery>
+            <MediaQuery maxDeviceWidth={1224}>
+              <div className="ui basic segment center aligned">
+                <Ad
+                  id="1S"
+                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+                />
+              </div>
+            </MediaQuery>
           </div>
 
-          <div className="column">
-          <div className="ui horizontal header divider">
-            { moment(selectedDay).format('LL') }
-          </div>
-          <div className="row">
-            <Cards
-              posts={post.posts}
-              loadFunc={::this.loadFunc}
-              hasMore={post.hasMore}
-              diff={154}
-            />
-            {loading && (
-              <div className="ui segment basic has-header">
-                <div className="ui active inverted dimmer">
-                  <div className="ui medium indeterminate text loader">
-                    <Translate content="wall.loading" />
+          <div className="eight wide computer sixteen wide tablet column">
+            <div className="ui horizontal header divider">
+              { moment(selectedDay).format('LL') }
+            </div>
+            <div className="row">
+              <Cards
+                posts={post.posts}
+                loadFunc={::this.loadFunc}
+                hasMore={post.hasMore}
+                diff={154}
+              />
+              {loading && (
+                <div className="ui segment basic has-header">
+                  <div className="ui active inverted dimmer">
+                    <div className="ui medium indeterminate text loader">
+                      <Translate content="wall.loading" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-            {!loading && isEmpty(post.posts) && (
-              <div className="ui segment basic center aligned">
-                <Translate content="post.nodata" />
-              </div>
-            )}
-          </div>
+              )}
+              {!loading && isEmpty(post.posts) && (
+                <div className="ui segment basic center aligned">
+                  <Translate content="post.nodata" />
+                </div>
+              )}
+            </div>
           </div>
 
         </div>

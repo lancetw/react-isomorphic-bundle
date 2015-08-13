@@ -58,6 +58,10 @@ select {
   overflow-y: auto !important;
 }
 
+.switch-btns {
+  margin-left: 20px;
+}
+
 main.ui.stackable.full.page {
   width: 100%;
   margin-left: 0;
@@ -127,8 +131,6 @@ and (max-width : 480px) {
     height: 180px;
   }
 }
-
-/* iPhone 2G-4S in portrait & landscape */
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
@@ -145,12 +147,44 @@ and (max-width : 667px) {
     height: 180px;
   }
 }
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+  #map {
+    height: 180px;
+  }
+}
 
 /* iPhone 6 in portrait & landscape  */
+@media only screen
+and (min-width : 375px)
+and (max-width : 667px) {
+  #map {
+    height: 300px;
+  }
+}
 @media only screen
 and (min-device-width : 375px)
 and (max-device-width : 667px) {
   #map {
     height: 300px;
+  }
+}
+
+/* iPad in portrait */
+@media only screen
+and (min-width : 768px)
+and (max-width : 1024px)
+and (orientation : portrait) {
+  .post.detail > .column {
+    width: 100% !important;
+  }
+}
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+  .post.detail > .column {
+    width: 100% !important;
   }
 }

@@ -14,7 +14,7 @@ export default class TabList extends React.Component {
 
   render () {
     return (
-      <div className="ui top orange menu">
+      <div className="ui top orange stackable container menu">
         {React.Children.map(this.props.children, (child, index) => {
           return index === this.props.selectedIndex ?
             React.cloneElement(child, {

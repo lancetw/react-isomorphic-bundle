@@ -421,7 +421,7 @@ export default class Post extends BaseComponent {
     : null
 
     return (
-      <main className="ui two column stackable centered full page grid">
+      <main className="ui two column stackable has-header grid container">
         <div className="column">
           <GMap
             ref="gmap"
@@ -466,7 +466,7 @@ export default class Post extends BaseComponent {
                 <div className="ui hidden divider" />
                 <button
                   type="submit"
-                  className="ui orange labeled icon large button"
+                  className="ui fluid orange labeled icon large button"
                   disabled={this.state.submited}>
                   <Translate content="post.submit" />
                   <i className="add icon"></i>

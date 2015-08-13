@@ -21,7 +21,7 @@ export default class Wall extends React.Component {
     const loading = post.loading || false
 
     return (
-      <main className="ui stackable full page grid">
+      <main className="ui has-header grid container">
         <div className="column">
           <div className="row switch-btns">
             <div className="ui orange inverted buttons">

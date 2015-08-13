@@ -122,7 +122,9 @@ export default class Post extends BaseComponent {
     const detailProp = this.getDetailProp(detail.prop)
 
     return (
-      <main className="ui two column stackable centered full page grid">
+      <main
+        className="
+          ui two column post detail stackable has-header grid container">
         <div className="column">
           <div className="row">
             <div className="ui fluid detail card">
@@ -196,27 +198,19 @@ export default class Post extends BaseComponent {
           </div>
           }
           <div className="row">
-            <MediaQuery maxDeviceWidth={768}>
-              <div className="ui basic segment center aligned">
-                <Ad
-                  id="1S"
-                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-                />
-              </div>
-            </MediaQuery>
-            <MediaQuery maxWidth={768}>
-              <div className="ui basic segment center aligned">
-                <Ad
-                  id="1S"
-                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-                />
-              </div>
-            </MediaQuery>
-            <MediaQuery minWidth={769} minDeviceWidth={769}>
+            <MediaQuery minDeviceWidth={1224}>
               <div className="ui basic segment center aligned">
                 <Ad
                   id="1L"
                   link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+                />
+              </div>
+            </MediaQuery>
+            <MediaQuery maxDeviceWidth={1224}>
+              <div className="ui basic segment center aligned">
+                <Ad
+                  id="1S"
+                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
                 />
               </div>
             </MediaQuery>

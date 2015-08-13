@@ -97,7 +97,8 @@ export default class Login extends BaseComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.validation(nextProps.auth.errors)
+    if (this.state.submited)
+      this.validation(nextProps.auth.errors)
   }
 
   componentWillUnmount () {
@@ -145,7 +146,7 @@ export default class Login extends BaseComponent {
                 <div className="ui hidden divider" />
                 <button
                   type="submit"
-                  className="ui orange large button"
+                  className="ui fluid orange large button"
                   disabled={this.state.ok}>
                   <Translate content="header.login" />
                 </button>
