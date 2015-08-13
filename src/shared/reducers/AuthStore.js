@@ -12,6 +12,7 @@ import {
   CHECK_TOKEN_COMPLETED,
   CHECK_TOKEN_FAILED
 } from 'shared/constants/ActionTypes'
+import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   errors: {},
@@ -21,7 +22,7 @@ const initialState = {
   user: {}
 }
 
-const actionsMap = {
+export default createReducer(initialState, {
   [AUTH_USER_STARTED]: () => (initialState),
   [AUTH_USER_COMPLETED]: (state, action) =>
     ({ token: action.token, isAuthenticated: !!action.token }),
@@ -61,11 +62,5 @@ const actionsMap = {
     ({ verified: true }),
   [CHECK_TOKEN_FAILED]: (state, action) =>
     ({ errors: action.errors, verified: false })
-}
+})
 
-export default function auth (state = initialState, action) {
-  const reduceFn = actionsMap[action.type]
-  if (!reduceFn) return state
-
-  return Object.assign({}, state, reduceFn(state, action))
-}

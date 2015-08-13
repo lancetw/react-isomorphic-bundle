@@ -9,6 +9,7 @@ import {
   SET_UPLOAD_ERROR_MESSAGE_COMPLETED,
   CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED
 } from 'shared/constants/ActionTypes'
+import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   images: [],
@@ -21,7 +22,7 @@ const initialState = {
   errorId: null
 }
 
-const actionsMap = {
+export default createReducer(initialState, {
   [UPLOAD_FILE_STARTED]: () => (initialState),
   [UPLOAD_FILE_COMPLETED]: (state, action) =>
     ({ response: action.response }),
@@ -69,11 +70,4 @@ const actionsMap = {
       errorId: null
     }
   }
-}
-
-export default function upload (state = initialState, action) {
-  const reduceFn = actionsMap[action.type]
-  if (!reduceFn) return state
-
-  return Object.assign({}, state, reduceFn(state, action))
-}
+})

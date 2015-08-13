@@ -18,6 +18,7 @@ import {
   COUNT_POST_IN_MONTH_COMPLETED,
   COUNT_POST_IN_MONTH_FAILED
 } from 'shared/constants/ActionTypes'
+import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   loading: true,
@@ -32,7 +33,7 @@ const initialState = {
   detail: {}
 }
 
-const actionsMap = {
+export default createReducer(initialState, {
   [CREATE_POST_STARTED]: () => (initialState),
   [CREATE_POST_COMPLETED]: (state, action) =>
     ({ content: action.content }),
@@ -84,11 +85,4 @@ const actionsMap = {
     ({ count: action.cals.count, countStart: action.cals.countStart }),
   [COUNT_POST_IN_MONTH_FAILED]: (state, action) =>
     ({ errors: action.errors })
-}
-
-export default function post (state = initialState, action) {
-  const reduceFn = actionsMap[action.type]
-  if (!reduceFn) return state
-
-  return Object.assign({}, state, reduceFn(state, action))
-}
+})

@@ -3,23 +3,17 @@ import {
   SIGNUP_USER_COMPLETED,
   SIGNUP_USER_FAILED
 } from 'shared/constants/ActionTypes'
+import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   response: {},
   errors: {}
 }
 
-const actionsMap = {
+export default createReducer(initialState, {
   [SIGNUP_USER_STARTED]: () => (initialState),
   [SIGNUP_USER_COMPLETED]: (state, action) =>
     ({ response: action.response }),
   [SIGNUP_USER_FAILED]: (state, action) =>
     ({ errors: action.errors })
-}
-
-export default function signup (state = initialState, action) {
-  const reduceFn = actionsMap[action.type]
-  if (!reduceFn) return state
-
-  return Object.assign({}, state, reduceFn(state, action))
-}
+})

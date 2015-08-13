@@ -9,6 +9,7 @@ import {
   FIND_MAP_PLACE_COMPLETED,
   FIND_MAP_PLACE_FAILED
 } from 'shared/constants/ActionTypes'
+import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   lat: 25.018536,
@@ -20,7 +21,7 @@ const initialState = {
   errors: null
 }
 
-const actionsMap = {
+export default createReducer(initialState, {
   [SET_MAP_PIN_STARTED]: () => (initialState),
   [SET_MAP_PIN_COMPLETED]: (state, action) => {
     if (action.lat === null || action.lng === null)
@@ -51,11 +52,4 @@ const actionsMap = {
     }),
   [FIND_MAP_PLACE_FAILED]: (state, action) =>
     ({ errors: action.errors })
-}
-
-export default function map (state = initialState, action) {
-  const reduceFn = actionsMap[action.type]
-  if (!reduceFn) return state
-
-  return Object.assign({}, state, reduceFn(state, action))
-}
+})

@@ -39,7 +39,7 @@ export default class Manage extends React.Component {
             {loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
-                  <div className="ui large text loader">
+                  <div className="ui medium indeterminate text loader">
                     <Translate content="wall.loading" />
                   </div>
                 </div>

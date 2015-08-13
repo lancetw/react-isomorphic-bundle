@@ -3,13 +3,14 @@ import {
   SYNC_CLIENT_LOCALE_COMPLETED,
   UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
+import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   locale: '',
   title: ''
 }
 
-const actionsMap = {
+export default createReducer(initialState, {
   [SYNC_CLIENT_LOCALE_COMPLETED]: (state, action) =>
     ({
       token:
@@ -26,11 +27,4 @@ const actionsMap = {
     }),
   [UPDATE_TITLE_COMPLETED]: (state, action) =>
     ({ title: action.title })
-}
-
-export default function locale (state = initialState, action) {
-  const reduceFn = actionsMap[action.type]
-  if (!reduceFn) return state
-
-  return Object.assign({}, state, reduceFn(state, action))
-}
+})
