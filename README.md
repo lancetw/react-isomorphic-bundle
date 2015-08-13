@@ -1,4 +1,4 @@
-# React Universal (isomorphic) bundle [WIP]
+# React Redux Universal (isomorphic) bundle
 
 [![Build Status](https://travis-ci.org/lancetw/react-isomorphic-bundle.svg)](https://travis-ci.org/lancetw/react-isomorphic-bundle)
 [![Dependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle)
@@ -6,14 +6,11 @@
 [![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
 [![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
 
-Working in process
-
 DEMO: http://react.deliverwork.co
 
 Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
 
 ```
-io.js only
 
 $ npm install -g nodemon
 
@@ -27,7 +24,7 @@ $ npm install
 
 `npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
 
-**Press "Ctrl + ]" to open redux devtools**
+**Press "Ctrl + h" to open redux devtools**
 
 * open `http://127.0.0.1:3000`
 * open `http://127.0.0.1:3002` (BrowserSync)
