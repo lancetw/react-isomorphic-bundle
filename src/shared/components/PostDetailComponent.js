@@ -127,12 +127,12 @@ export default class Post extends BaseComponent {
           <div className="row">
             <div className="ui fluid detail card">
               <div className={detailClass}>
+                <h1 className="header left floated">{detail.title}</h1>
                 <div className="meta">
-                  <span className="ui orange label large right floated time">
+                  <div className="ui orange label large right floated time">
                     {eventDate}
-                  </span>
+                  </div>
                 </div>
-                <h1 className="header">{detail.title}</h1>
                 <div className="description">
                   {finalContent}
                   { files && !isEmpty(files)

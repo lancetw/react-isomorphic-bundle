@@ -7,6 +7,8 @@ import * as UploadActions from '../actions/UploadActions'
 import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { getFileExt } from 'shared/utils/file-utils'
+import { each } from 'lodash'
 
 @connect(state => ({
   auth: state.auth,
@@ -26,6 +28,7 @@ export default class PostEditHandler extends React.Component {
 
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)
+    this.uploadActions = bindActionCreators(UploadActions, dispatch)
 
     const { id } = props.params
     if (id) {
@@ -38,6 +41,24 @@ export default class PostEditHandler extends React.Component {
           lng: detail.lng
         }
         resolver.resolve(this.mapActions.setPin, map)
+
+        const { user } = getState().auth
+        const files = typeof detail.file !== 'undefined'
+        ? JSON.parse(detail.file)
+        : []
+
+        let src, name
+        each(files, (filename, _index) => {
+          if (getFileExt(filename.toLowerCase()) === 'pdf') {
+            name = 'pdf.png'
+            src = user.aud + '/images/' + name
+          } else {
+            name = filename
+            src = user.aud + '/uploads/' + name
+          }
+
+          resolver.resolve(this.uploadActions.setImageFileName, name, _index)
+        })
       }, 1500)
     }
   }

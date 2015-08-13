@@ -205,8 +205,7 @@ export default class Post extends BaseComponent {
       ? JSON.parse(detail.file)
       : []
 
-      let src
-      let name
+      let src, name
       each(files, (filename, _index) => {
         if (getFileExt(filename.toLowerCase()) === 'pdf') {
           name = 'pdf.png'
@@ -216,7 +215,6 @@ export default class Post extends BaseComponent {
           src = user.aud + '/uploads/' + name
         }
 
-        this.props.setImageFileName(name, _index)
         this.props.setImagePreview(src, _index)
       })
 
