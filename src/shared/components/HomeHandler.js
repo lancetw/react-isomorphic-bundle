@@ -13,12 +13,13 @@ export default class HomeHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
+    const { dispatch, resolver } = context.store
 
-    const dispatch = context.store.dispatch
     dispatch(updateTitle('title.home'))
 
-    dispatch(AuthActions.sync())
-    dispatch(AuthActions.showUser(props.auth.token))
+    this.authActions = bindActionCreators(AuthActions, dispatch)
+    resolver.resolve(this.authActions.sync)
+    resolver.resolve(this.authActions.showUser, props.auth.token)
   }
 
   static contextTypes = {

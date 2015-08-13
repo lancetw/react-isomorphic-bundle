@@ -15,10 +15,12 @@ export default class CalHandler extends React.Component {
   constructor (props, context) {
     super(props, context)
     const date = moment(new Date()).startOf('day').valueOf()
-    const dispatch = context.store.dispatch
-    dispatch(PostActions.countPostsWithCal())
-    dispatch(PostActions.fetchList(0, 10, date, null, true))
+    const { dispatch, resolver } = context.store
     dispatch(updateTitle('title.cal'))
+
+    this.postActions = bindActionCreators(PostActions, dispatch)
+    resolver.resolve(this.postActions.countPostsWithCal)
+    resolver.resolve(this.postActions.fetchList, 0, 10, date, null, true)
   }
 
   static propTypes = {
@@ -27,12 +29,6 @@ export default class CalHandler extends React.Component {
 
   static contextTypes = {
     store: PropTypes.object.isRequired
-  }
-
-  static async routerWillRun ({ dispatch }) {
-    const date = moment(new Date()).startOf('day').valueOf()
-    await dispatch(PostActions.countPostsWithCal())
-    return await dispatch(PostActions.fetchList(0, 10, date, null, true))
   }
 
   render () {

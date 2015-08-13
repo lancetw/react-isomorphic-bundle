@@ -15,9 +15,9 @@ import nunjucks from 'nunjucks'
 import DocumentTitle from 'shared/components/addon/document-title'
 import * as AuthActions from 'shared/actions/AuthActions'
 import url from 'url'
-import runStaticMethod from 'shared/utils/runStaticMethod'
 import AppContainer from 'shared/components/AppContainer'
 import route from 'koa-route'
+import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
 const Translator = require('counterpart').Instance
 
@@ -43,9 +43,12 @@ export default function (app) {
       const reducer = combineReducers(reducers)
       const finalCreateStore = applyMiddleware(
         thunk,
-        reduxPromise,
+        reduxPromise
       )(createStore)
       const store = finalCreateStore(reducer)
+      const resolver = new ReduxUniversalResolver()
+      store.resolver = resolver
+
       const location = new Location(this.path, this.query)
       // save session token to store
       if (this.session.token && this.session.token !== null)
@@ -77,21 +80,7 @@ export default function (app) {
         if (!initialState && transition.isCancelled)
           return this.redirect(url.format(transition.redirectInfo))
 
-        try {
-          yield runStaticMethod(
-            initialState.components,
-            'routerWillRun',
-            {
-              dispatch: store.dispatch,
-              params: initialState.params,
-              getState: store.getState
-            }
-          )
-        } catch (err) {
-          throw err
-        }
-
-        appString = React.renderToString(
+        const elements = (
           <AppContainer translator={translator}>
             {() =>
               <Provider store={store}>
@@ -102,6 +91,10 @@ export default function (app) {
             }
           </AppContainer>
         )
+
+        React.renderToString(elements)  // need this line to collect data
+        yield resolver.dispatch()
+        appString = React.renderToString(elements)
 
         title = DocumentTitle.rewind()
 
@@ -138,6 +131,7 @@ export default function (app) {
         stateFromServer: serverState
       })
 
+      resolver.clear()
     }
   })
 }

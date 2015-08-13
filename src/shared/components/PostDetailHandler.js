@@ -17,26 +17,30 @@ export default class PostDetailHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    const { dispatch, getState } = context.store
+    const { dispatch, resolver, getState } = context.store
 
     const title = props.post.detail.title
     dispatch(updateTitle(title))
 
+    this.authActions = bindActionCreators(AuthActions, dispatch)
+    this.postActions = bindActionCreators(PostActions, dispatch)
+    this.mapActions = bindActionCreators(MapActions, dispatch)
+
+    resolver.resolve(this.authActions.showUser, props.auth.token)
+
     const { id } = props.params
-    if (id)
-      Promise.all([
-        dispatch(PostActions.show(id))
-      ]).then(() => {
-        setTimeout(() => {
-          const { detail } = getState().post
-          const map = {
-            place: detail.place,
-            lat: detail.lat,
-            lng: detail.lng
-          }
-          dispatch(MapActions.setPin(map))
-        }, 1000)
-      })
+    if (id) {
+      resolver.resolve(this.postActions.show, id)
+      setTimeout(() => {
+        const { detail } = getState().post
+        const map = {
+          place: detail.place,
+          lat: detail.lat,
+          lng: detail.lng
+        }
+        resolver.resolve(this.mapActions.setPin, map)
+      }, 1500)
+    }
   }
 
   static propTypes = {
@@ -47,23 +51,6 @@ export default class PostDetailHandler extends React.Component {
 
   static contextTypes = {
     store: PropTypes.object.isRequired
-  }
-
-  static async routerWillRun ({ dispatch, params, getState }) {
-    await dispatch(AuthActions.showUser(getState().auth.token))
-
-    const id = params.id
-    await dispatch(PostActions.show(id))
-
-    const map = {
-      place: getState().post.detail.place,
-      lat: getState().post.detail.lat,
-      lng: getState().post.detail.lng
-    }
-    await dispatch(MapActions.setPin(map))
-
-    const title = getState().post.detail.title
-    await dispatch(updateTitle(title))
   }
 
   render () {

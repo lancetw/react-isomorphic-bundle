@@ -18,29 +18,28 @@ export default class PostEditHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    const { dispatch, getState } = context.store
+    const { dispatch, resolver, getState } = context.store
 
     dispatch(updateTitle('title.post'))
 
     dispatch(UploadActions.init())
 
-    const { id } = props.params
-    if (id)
-      Promise.all([
-        dispatch(PostActions.show(id))
-      ]).then(() => {
-        setTimeout(() => {
-          const { detail } = getState().post
-          const { user } = getState().auth
+    this.postActions = bindActionCreators(PostActions, dispatch)
+    this.mapActions = bindActionCreators(MapActions, dispatch)
 
-          const map = {
-            place: detail.place,
-            lat: detail.lat,
-            lng: detail.lng
-          }
-          dispatch(MapActions.setPin(map))
-        }, 500)
-      })
+    const { id } = props.params
+    if (id) {
+      resolver.resolve(this.postActions.show, id)
+      setTimeout(() => {
+        const { detail } = getState().post
+        const map = {
+          place: detail.place,
+          lat: detail.lat,
+          lng: detail.lng
+        }
+        resolver.resolve(this.mapActions.setPin, map)
+      }, 1500)
+    }
   }
 
   static propTypes = {
@@ -51,21 +50,6 @@ export default class PostEditHandler extends React.Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
   }
-
-  static async routerWillRun ({ dispatch, params, getState }) {
-    const { id } = params
-    if (id) {
-      await dispatch(UploadActions.init())
-      await dispatch(PostActions.show(id))
-      const map = {
-        place: getState().post.detail.place,
-        lat: getState().post.detail.lat,
-        lng: getState().post.detail.lng
-      }
-      await dispatch(MapActions.setPin(map))
-    }
-  }
-
 
   render () {
     const _t = require('counterpart')

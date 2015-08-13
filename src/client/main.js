@@ -9,11 +9,11 @@ import * as reducers from 'shared/reducers'
 import { Provider } from 'react-redux'
 import routes from 'shared/routes'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
-import runStaticMethod from 'shared/utils/runStaticMethod'
 import url from 'url'
 import AppContainer from 'shared/components/AppContainer'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
+import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
 (async () => {
   require('react-a11y')(React)
@@ -38,7 +38,9 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
     debug.enable('dev,koa')
 
     const {
-      DevTools
+      DevTools,
+      DebugPanel,
+      LogMonitor
     } = require('redux-devtools/lib/react')
 
     const DiffMonitor = require('redux-devtools-diff-monitor')
@@ -47,7 +49,7 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
     finalCreateStore = compose(
       applyMiddleware(
         thunk,
-        reduxPromise,
+        reduxPromise
       ),
       devTools(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
@@ -55,6 +57,9 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
     )
 
     const store = finalCreateStore(reducer, initialState)
+    const resolver = new ReduxUniversalResolver()
+    store.resolver = resolver
+
     const history = new BrowserHistory()
     React.render((
       <div>
@@ -70,17 +75,20 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
       </div>
     ), document.getElementById('app'))
 
+    resolver.clear()
 
   } else {
     finalCreateStore = compose(
       applyMiddleware(
         thunk,
-        reduxPromise,
+        reduxPromise
       ),
       createStore
     )
 
     const store = finalCreateStore(reducer, initialState)
+    const resolver = new ReduxUniversalResolver()
+    store.resolver = resolver
     const history = new BrowserHistory()
     React.render((
       <Provider store={store}>
@@ -92,6 +100,8 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
         }
       </Provider>
     ), document.getElementById('app'))
+
+    resolver.clear()
   }
 
 })()

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Manage from './ManageComponent'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PostActions from '../actions/PostActions'
 import * as AuthActions from '../actions/AuthActions'
@@ -14,11 +15,17 @@ export default class ManageHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    const { dispatch } = context.store
-    dispatch(AuthActions.showUser(props.auth.token))
-    const user = props.auth.user.id
-    dispatch(PostActions.defaultListWithUser(0, 10, user, true))
+    const { dispatch, resolver } = context.store
+
     dispatch(updateTitle('title.manage'))
+
+    this.authActions = bindActionCreators(AuthActions, dispatch)
+    this.postActions = bindActionCreators(PostActions, dispatch)
+
+    resolver.resolve(this.authActions.showUser, props.auth.token)
+    const user = props.auth.user.id
+    resolver.resolve(this.postActions.defaultListWithUser, 0, 10, user, true)
+
     this.state = { limit: 10, nextOffset: 0 }
   }
 
@@ -39,12 +46,6 @@ export default class ManageHandler extends React.Component {
       .defaultListWithUser(nextOffset - 1, this.state.limit, user))
 
     this.setState({ nextOffset: nextOffset })
-  }
-
-  static async routerWillRun ({ dispatch, getState }) {
-    await dispatch(AuthActions.showUser(getState().auth.token))
-    const user = getState().auth.user.id
-    await dispatch(PostActions.defaultListWithUser(0, 10, user, true))
   }
 
   render () {

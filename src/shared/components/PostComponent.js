@@ -22,6 +22,7 @@ import {
 import { toDate } from 'shared/utils/date-utils'
 import { getFileExt } from 'shared/utils/file-utils'
 import { each } from 'lodash'
+import $ from 'jquery'
 
 let sweetAlert
 if (process.env.BROWSER)
@@ -225,6 +226,7 @@ export default class Post extends BaseComponent {
 
   handleSubmit (evt) {
     evt.preventDefault()
+    $('html, body').animate({ scrollTop: 0 }, 'slow')
 
     let value = this.refs.form.getValue()
     if (value) {
@@ -372,8 +374,9 @@ export default class Post extends BaseComponent {
   render () {
     if (process.env.BROWSER)
       if (!isEmpty(this.props.post.content))
-        this.releaseTimeout =
-          setTimeout(() => this.context.router.replaceWith('/wall/today'), 1000)
+        this.releaseTimeout = setTimeout(() => {
+          this.context.router.replaceWith('/wall/today')
+        }, 1000)
 
     const Translate = require('react-translate-component')
 

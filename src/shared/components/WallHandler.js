@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Wall from './WallComponent'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
@@ -14,11 +15,14 @@ export default class WallHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    const { dispatch } = context.store
-    dispatch(PostActions.defaultList(0, 10, true))
+    const { dispatch, resolver } = context.store
+
     dispatch(updateTitle('title.wall'))
 
-    dispatch(AuthActions.showUser(props.auth.token))
+    this.postActions = bindActionCreators(PostActions, dispatch)
+    resolver.resolve(this.postActions.defaultList, 0, 10, true)
+    this.authActions = bindActionCreators(AuthActions, dispatch)
+    resolver.resolve(this.authActions.showUser, props.auth.token)
     this.state = { limit: 10, nextOffset: 0 }
   }
 
@@ -28,11 +32,6 @@ export default class WallHandler extends React.Component {
 
   static contextTypes = {
     store: PropTypes.object.isRequired
-  }
-
-  static async routerWillRun ({ dispatch, getState }) {
-    await dispatch(PostActions.defaultList(0, 10, true))
-    await dispatch(AuthActions.showUser(getState().auth.token))
   }
 
   loadFunc () {

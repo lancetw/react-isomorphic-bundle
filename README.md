@@ -1,4 +1,4 @@
-# React flummox isomorphic bundle [WIP]
+# React Universal (isomorphic) bundle [WIP]
 
 [![Build Status](https://travis-ci.org/lancetw/react-isomorphic-bundle.svg)](https://travis-ci.org/lancetw/react-isomorphic-bundle)
 [![Dependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle)
@@ -64,6 +64,7 @@ $ npm install
 - [x] Location Settings (Google maps with HTML5 Geolocation)
 - [x] Posts with Infinite Scroll
 - [x] Posts with Calendar
+- [x] Serverside Async data-fetching (thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
 - [ ] Full text Search
 - [ ] Sitemap
 - [ ] Static archive pages
@@ -78,6 +79,7 @@ $ npm install
 * [redux-devtools-diff-monitor](https://github.com/whetstone/redux-devtools-diff-monitor)
 * [flummox](https://github.com/acdlite/flummox)
 * [react-router](https://github.com/rackt/react-router)
+* [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate)
 * [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate)
 * [tcomb-form](https://github.com/gcanti/tcomb-form)
 * [parameter](https://github.com/node-modules/parameter)

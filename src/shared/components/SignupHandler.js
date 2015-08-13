@@ -13,8 +13,7 @@ export default class SignupHandler extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-
-    const dispatch = context.store.dispatch
+    const { dispatch } = context.store
     dispatch(updateTitle('title.signup'))
 
     dispatch(SignupActions.init())
