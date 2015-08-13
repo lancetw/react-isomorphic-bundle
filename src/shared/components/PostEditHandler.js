@@ -59,7 +59,7 @@ export default class PostEditHandler extends React.Component {
 
           resolver.resolve(this.uploadActions.setImageFileName, name, _index)
         })
-      }, 1500)
+      }, 2500)
     }
   }
 

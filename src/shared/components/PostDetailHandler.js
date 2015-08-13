@@ -39,7 +39,7 @@ export default class PostDetailHandler extends React.Component {
           lng: detail.lng
         }
         resolver.resolve(this.mapActions.setPin, map)
-      }, 1500)
+      }, 2500)
     }
   }
 
