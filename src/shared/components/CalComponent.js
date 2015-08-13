@@ -133,7 +133,7 @@ export default class Cal extends React.Component {
             </div>
           </div>
         </div>
-        <div className="ui two columns grid">
+        <div className="ui two columns stackable grid">
           <div className="column">
             <DayPicker
               renderDay={::this.renderDay}
