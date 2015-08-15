@@ -38,12 +38,9 @@ select {
 
 .ui.detail {
   .content > .header {
-    font-size: 1.6rem !important;
+    font-size: 1.1rem !important;
     color: #0066cc;
     display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
   }
 
   .description {
