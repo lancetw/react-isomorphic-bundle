@@ -30,6 +30,8 @@ export default class PostEditHandler extends React.Component {
     this.mapActions = bindActionCreators(MapActions, dispatch)
     this.uploadActions = bindActionCreators(UploadActions, dispatch)
 
+    resolver.resolve(this.mapActions.reload)
+
     const { id } = props.params
     if (id) {
       resolver.resolve(this.postActions.show, id)

@@ -1,4 +1,5 @@
 import {
+  MAP_INITED,
   SET_MAP_PIN_STARTED,
   SET_MAP_PIN_COMPLETED,
   SET_MAP_PIN_FAILED,
@@ -12,18 +13,23 @@ import {
 import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
-  lat: null,
-  lng: null,
-  lat_: null,
-  lng_: null,
+  lat: 25.018536,
+  lng: 121.529146,
+  lat_: 25.018536,
+  lng_: 121.529146,
   place: null,
-  center: [ null, null ],
+  center: [ 25.018536, 121.529146 ],
   errors: null,
-  loading: true
+  loading: false
 }
 
 export default createReducer(initialState, {
-  [SET_MAP_PIN_STARTED]: () => (initialState),
+  [MAP_INITED]: () => (initialState),
+  [SET_MAP_PIN_STARTED]: () => (
+    {
+      ...initialState,
+      loading: true
+    }),
   [SET_MAP_PIN_COMPLETED]: (state, action) => {
     if (action.lat === null || action.lng === null)
       return initialState

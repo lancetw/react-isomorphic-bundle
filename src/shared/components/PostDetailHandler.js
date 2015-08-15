@@ -26,7 +26,7 @@ export default class PostDetailHandler extends React.Component {
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)
 
-    resolver.resolve(this.mapActions.init)
+    resolver.resolve(this.mapActions.reload)
     resolver.resolve(this.authActions.showUser, props.auth.token)
 
     const { id } = props.params

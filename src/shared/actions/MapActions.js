@@ -1,5 +1,6 @@
 import request from 'superagent'
 import {
+  MAP_INITED,
   SET_MAP_PIN_STARTED,
   SET_MAP_PIN_COMPLETED,
   SET_MAP_PIN_FAILED,
@@ -12,6 +13,12 @@ import {
 } from 'shared/constants/ActionTypes'
 
 export function init () {
+  return async dispatch => {
+    return dispatch({ type: MAP_INITED })
+  }
+}
+
+export function reload () {
   return async dispatch => {
     return dispatch({ type: SET_MAP_PIN_STARTED })
   }
@@ -27,10 +34,8 @@ export function updateGeo ({ lat, lng }) {
   }
 }
 
-export function setPin ({ lat, lng, place }, reload=false) {
+export function setPin ({ lat, lng, place }) {
   return async dispatch => {
-    if (reload)
-      dispatch({ type: SET_MAP_PIN_STARTED })
     return dispatch({
       type: SET_MAP_PIN_COMPLETED,
       lat: lat,
