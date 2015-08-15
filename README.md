@@ -103,3 +103,4 @@ $ npm install
 * [react-day-picker](https://github.com/gpbl/react-day-picker)
 * [google-map-react](https://github.com/istarkov/google-map-react)
 * [react-infinite](https://github.com/seatgeek/react-infinite)
+* [Css Shake](http://elrumordelaluz.github.io/csshake/)

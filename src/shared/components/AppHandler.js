@@ -8,6 +8,7 @@ if (process.env.BROWSER) {
   require('css/ui/base')
   require('css/animation')
   require('css/screen')
+  require('css/addon/csshake.min')
 }
 
 export default class AppHandler extends React.Component {

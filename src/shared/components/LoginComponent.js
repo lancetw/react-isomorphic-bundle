@@ -22,6 +22,7 @@ export default class Login extends BaseComponent {
       'fillFormAllErrors'
     )
     this.releaseTimeout = undefined
+    this.shakeTimeout = undefined
     this.state = {
       submited: false,
       ok: false,
@@ -94,6 +95,11 @@ export default class Login extends BaseComponent {
     if (!isEmpty(errors)) {
       this.fillFormAllErrors()
       this.setState({ submited: false })
+      this.setState({ errorShake: true })
+      this.shakeTimeout = setTimeout(() => {
+        this.setState({ errorShake: false })
+        this.clearFormErrors()
+      }, 500)
     }
   }
 
@@ -108,8 +114,10 @@ export default class Login extends BaseComponent {
   }
 
   componentWillUnmount () {
-    if (this.op)
+    if (this.op) {
       clearTimeout(this.releaseTimeout)
+      clearTimeout(this.shakeTimeout)
+    }
   }
 
   render () {
@@ -140,9 +148,16 @@ export default class Login extends BaseComponent {
       }
     }
 
-    let Loading = this.state.submited && !(this.state.ok) ?
-      classNames('ui', 'orange', 'form', 'segment', 'loading') :
-      classNames('ui', 'orange', 'form', 'segment')
+    const LoginClasses = classNames(
+      'ui',
+      'orange',
+      'form',
+      'segment',
+      { 'loading': this.state.submited && !this.state.ok },
+      { 'shake': this.state.errorShake },
+      { 'shake-slow': this.state.errorShake },
+      { 'shake-horizontal': this.state.errorShake }
+    )
 
     return (
       <main className="ui stackable column centered page grid">
@@ -154,7 +169,7 @@ export default class Login extends BaseComponent {
                 {Message}
               </CSSTransitionGroup>
               <form
-                className={Loading}
+                className={LoginClasses}
                 action="/auth/login"
                 method="post"
                 onSubmit={this.handleSubmit}>
