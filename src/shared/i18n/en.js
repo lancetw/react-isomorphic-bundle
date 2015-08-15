@@ -42,7 +42,10 @@ export default {
     password: 'Password',
     facebook: 'Sign In with Facebook',
     signup: 'Sign Up',
-    or: 'or'
+    or: 'or',
+    need: {
+      title: 'Please log in first'
+    }
   },
   register: {
     hello: 'Hello folks!',

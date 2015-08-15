@@ -25,6 +25,7 @@ export default class Gmap extends Component {
     place: PropTypes.string,
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
     className: PropTypes.string
   }
 
@@ -34,12 +35,11 @@ export default class Gmap extends Component {
     lat: 25.018536,
     lng: 121.529146,
     place: counterpart('post.map.my'),
-    className: 'ui segment'
+    className: 'ui segment',
+    loading: true
   }
 
-    handleLocaleChange (newLocale) {
-
-    }
+  handleLocaleChange (newLocale) {}
 
   _onBoundsChange = (center, zoom, bounds, marginBounds) => {
     if (this.props.onBoundsChange)
@@ -55,22 +55,34 @@ export default class Gmap extends Component {
 
   /* eslint-disable max-len */
   render () {
+    const Translate = require('react-translate-component')
 
-    return (
-      <div id="map" className={this.props.className}>
-        <GoogleMap
-          ref="gmap"
-          onBoundsChange={this._onBoundsChange}
-          onChildClick={this._onChildClick}
-          center={this.props.center}
-          zoom={this.props.zoom}>
-          <Pin
-            lat={this.props.lat}
-            lng={this.props.lng}
-            place={this.props.place} />
-        </GoogleMap>
-      </div>
-    )
+    if (!!this.props.loading)
+      return (
+        <div className="ui segment basic has-header">
+          <div className="ui active inverted dimmer">
+            <div className="ui small indeterminate text loader">
+              <Translate content="wall.loading" />
+            </div>
+          </div>
+        </div>
+      )
+    else
+      return (
+        <div id="map" className={this.props.className}>
+          <GoogleMap
+            ref="gmap"
+            onBoundsChange={this._onBoundsChange}
+            onChildClick={this._onChildClick}
+            center={this.props.center}
+            zoom={this.props.zoom}>
+            <Pin
+              lat={this.props.lat}
+              lng={this.props.lng}
+              place={this.props.place} />
+          </GoogleMap>
+        </div>
+      )
   }
 }
 

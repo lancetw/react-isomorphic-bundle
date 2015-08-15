@@ -10,6 +10,7 @@ import {
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
+const { CSSTransitionGroup } = React.addons
 
 export default class Login extends BaseComponent {
 
@@ -99,6 +100,11 @@ export default class Login extends BaseComponent {
   componentWillReceiveProps (nextProps) {
     if (this.state.submited)
       this.validation(nextProps.auth.errors)
+
+    const { state } = this.context.router
+    const { nextPathname } = state.location.state
+    if (nextPathname)
+      this.setState({ pleaseLogin: true })
   }
 
   componentWillUnmount () {
@@ -107,24 +113,36 @@ export default class Login extends BaseComponent {
   }
 
   render () {
-    if (process.env.BROWSER)
+    const Translate = require('react-translate-component')
+
+    let Message = this.state.pleaseLogin
+      ? (
+        <div className="ui warning message">
+          <div className="header">
+            <Translate content="login.need.title" />
+          </div>
+        </div> )
+      : null
+
+    if (process.env.BROWSER) {
+      const { state } = this.context.router
+      const { nextPathname } = state.location.state
+
       if (this.props.auth.isAuthenticated) {
-        const { state } = this.context.router.state.location
         let path
-        if (state && state.nextPathname)
-          path = state.nextPathname
+        if (nextPathname)
+          path = nextPathname
         else
           path = '/home'
 
         this.releaseTimeout =
           setTimeout(() => this.context.router.replaceWith(path), 1000)
       }
+    }
 
     let Loading = this.state.submited && !(this.state.ok) ?
       classNames('ui', 'orange', 'form', 'segment', 'loading') :
       classNames('ui', 'orange', 'form', 'segment')
-
-    const Translate = require('react-translate-component')
 
     return (
       <main className="ui stackable column centered page grid">
@@ -132,6 +150,9 @@ export default class Login extends BaseComponent {
           <div className="
             ui two column middle aligned relaxed fitted stackable grid">
             <div className="column">
+              <CSSTransitionGroup transitionName="MessageTransition">
+                {Message}
+              </CSSTransitionGroup>
               <form
                 className={Loading}
                 action="/auth/login"

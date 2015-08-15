@@ -115,6 +115,8 @@ router
 
 router
   .get('/auth/facebook', function *(next) {
+    // [TODO]: get param to set nextPage
+
     yield passport.authenticate('facebook', { scope: ['email'] })
   })
 
@@ -142,14 +144,11 @@ router
         let sess = ctx.session
         sess.token = token
 
-        ctx.redirect('/sync/token?token=' + token)
-      } else {
-        // need email
-        debug('dev')('error', err)
-        debug('dev')('info', info)
+        // [TODO]: get param to set nextPage
 
-        ctx.redirect('/auth/facebook/request/email')
-      }
+        ctx.redirect('/sync/token?token=' + token)
+
+      } else ctx.redirect('/auth/facebook/request/email')
     })
   })
 

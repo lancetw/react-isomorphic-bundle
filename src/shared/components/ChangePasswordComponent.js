@@ -7,8 +7,8 @@ import {
 } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
-const { CSSTransitionGroup } = React.addons
 import counterpart from 'counterpart'
+const { CSSTransitionGroup } = React.addons
 
 export default class ChangePassword extends BaseComponent {
 

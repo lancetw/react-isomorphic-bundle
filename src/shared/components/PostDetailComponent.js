@@ -74,7 +74,7 @@ export default class Post extends BaseComponent {
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: '確定刪除',
-      cancelButtonText: '按錯了，我要取消',
+      cancelButtonText: '取消',
       closeOnConfirm: false,
       showLoaderOnConfirm: true
     }, () => {

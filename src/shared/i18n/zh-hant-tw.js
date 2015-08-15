@@ -42,7 +42,10 @@ export default {
     password: '密碼',
     facebook: '透過 Facebook 登入',
     signup: '註冊新帳號',
-    or: '或'
+    or: '或',
+    need: {
+      title: '請先登入'
+    }
   },
   register: {
     hello: '歡迎註冊',

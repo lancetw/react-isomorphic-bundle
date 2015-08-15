@@ -12,13 +12,14 @@ import {
 import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
-  lat: 25.018536,
-  lng: 121.529146,
-  lat_: 25.018536,
-  lng_: 121.529146,
+  lat: null,
+  lng: null,
+  lat_: null,
+  lng_: null,
   place: null,
-  center: [ 25.018536, 121.529146 ],
-  errors: null
+  center: [ null, null ],
+  errors: null,
+  loading: true
 }
 
 export default createReducer(initialState, {
@@ -31,7 +32,8 @@ export default createReducer(initialState, {
         lat: action.lat,
         lng: action.lng,
         place: action.place,
-        center: [ action.lat, action.lng ]
+        center: [ action.lat, action.lng ],
+        loading: false
       }
   },
   [SET_MAP_PIN_FAILED]: (state, action) =>
