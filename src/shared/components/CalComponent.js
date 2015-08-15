@@ -120,8 +120,8 @@ export default class Cal extends React.Component {
     }
 
     return (
-      <main className="ui has-header grid container">
-        <div className="column">
+      <main className="ui two column has-header stackable grid container">
+        <div className="eight wide computer sixteen wide tablet column">
           <div className="row switch-btns">
             <div className="ui orange inverted buttons">
               <Link className="ui button" to='/wall/today'>
@@ -132,63 +132,57 @@ export default class Cal extends React.Component {
               </Link>
             </div>
           </div>
-        </div>
-        <div className="ui two columns stackable grid">
-          <div className="eight wide computer sixteen wide tablet column">
-            <DayPicker
-              renderDay={::this.renderDay}
-              modifiers={modifiers}
-              onDayClick={::this.handleDayClick}
-              onMonthChange={::this.handleMonthChange}
-              locale={locale}
-              localeUtils={LocaleUtils}
-            />
-            <MediaQuery minDeviceWidth={1224}>
-              <div className="ui basic segment center aligned">
-                <Ad
-                  id="1L"
-                  link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-                />
-              </div>
-            </MediaQuery>
-            <MediaQuery maxDeviceWidth={1224}>
-              <div className="ui basic segment center aligned">
-                <Ad
-                  id="1S"
-                  link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-                />
-              </div>
-            </MediaQuery>
-          </div>
-
-          <div className="eight wide computer sixteen wide tablet column">
-            <div className="ui horizontal header divider">
-              { moment(selectedDay).format('LL') }
-            </div>
-            <div className="row">
-              <Cards
-                posts={post.posts}
-                loadFunc={::this.loadFunc}
-                hasMore={post.hasMore}
-                diff={154}
+          <DayPicker
+            renderDay={::this.renderDay}
+            modifiers={modifiers}
+            onDayClick={::this.handleDayClick}
+            onMonthChange={::this.handleMonthChange}
+            locale={locale}
+            localeUtils={LocaleUtils}
+          />
+          <MediaQuery minDeviceWidth={1224}>
+            <div className="ui basic segment center aligned">
+              <Ad
+                id="1L"
+                link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
               />
-              {loading && (
-                <div className="ui segment basic has-header">
-                  <div className="ui active inverted dimmer">
-                    <div className="ui medium indeterminate text loader">
-                      <Translate content="wall.loading" />
-                    </div>
+            </div>
+          </MediaQuery>
+          <MediaQuery maxDeviceWidth={1224}>
+            <div className="ui basic segment center aligned">
+              <Ad
+                id="1S"
+                link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
+              />
+            </div>
+          </MediaQuery>
+        </div>
+        <div className="eight wide computer sixteen wide tablet column">
+          <div className="ui horizontal header divider">
+            { moment(selectedDay).format('LL') }
+          </div>
+          <div className="row">
+            <Cards
+              posts={post.posts}
+              loadFunc={::this.loadFunc}
+              hasMore={post.hasMore}
+              diff={154}
+            />
+            {loading && (
+              <div className="ui segment basic has-header">
+                <div className="ui active inverted dimmer">
+                  <div className="ui medium indeterminate text loader">
+                    <Translate content="wall.loading" />
                   </div>
                 </div>
-              )}
-              {!loading && isEmpty(post.posts) && (
-                <div className="ui segment basic center aligned">
-                  <Translate content="post.nodata" />
-                </div>
-              )}
-            </div>
+              </div>
+            )}
+            {!loading && isEmpty(post.posts) && (
+              <div className="ui segment basic center aligned">
+                <Translate content="post.nodata" />
+              </div>
+            )}
           </div>
-
         </div>
       </main>
     )
