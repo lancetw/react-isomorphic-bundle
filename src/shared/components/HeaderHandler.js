@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react'
 import Header from './HeaderComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as AuthActions from '../actions/AuthActions'
+import * as AuthActions from 'shared/actions/AuthActions'
+import * as SearchActions from 'shared/actions/SearchActions'
 
 const Translate = require('react-translate-component')
 
 @connect(state => ({
-  auth: state.auth
+  auth: state.auth,
+  search: state.search
 }))
 export default class HeaderHandler extends React.Component {
 
@@ -16,7 +18,7 @@ export default class HeaderHandler extends React.Component {
   }
 
   static propTypes = {
-    dispatch: PropTypes.func
+    dispatch: PropTypes.func.isRequired
   }
 
   render () {
@@ -24,6 +26,7 @@ export default class HeaderHandler extends React.Component {
     return (
       <Header
         {...bindActionCreators(AuthActions, dispatch)}
+        {...bindActionCreators(SearchActions, dispatch)}
         {...this.props}
       />
     )

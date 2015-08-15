@@ -18,6 +18,8 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 (async () => {
   require('react-a11y')(React)
 
+  React.initializeTouchEvents(true)
+
   const lang = LocaleActions.getLocale()
   counterpart.registerTranslations(
     'en',

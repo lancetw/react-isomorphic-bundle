@@ -22,6 +22,7 @@ clean:
 
 clean-db:
 	rm -rf storage/*.sqlite
+	rm -rf storage/leveldb/*
 
 clean-stats:
 	rm -rf storage/webpack-stats.json

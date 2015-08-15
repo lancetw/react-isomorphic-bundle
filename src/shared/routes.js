@@ -14,7 +14,8 @@ import {
   Cal,
   ChangePassword,
   SyncToken,
-  Direct
+  Direct,
+  Search
 } from './components'
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
@@ -24,6 +25,7 @@ export default function (store) {
     <Route component={App}>
       <Route path="/" component={Home} />
       <Route path="/home" component={Home} />
+      <Route path="/search" component={Search} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
       <Route path="/signup" component={Signup} />

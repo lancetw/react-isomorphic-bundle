@@ -62,7 +62,7 @@ $ npm install
 - [x] Posts with Infinite Scroll
 - [x] Posts with Calendar
 - [x] Serverside Async data-fetching (thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
-- [ ] Full text Search
+- [x] Full text Search
 - [ ] Sitemap
 - [ ] Static archive pages
 - [ ] Testing suite

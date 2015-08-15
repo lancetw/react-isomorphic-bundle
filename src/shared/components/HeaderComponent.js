@@ -6,22 +6,50 @@ export default class Header extends React.Component {
 
   constructor (props) {
     super(props)
-    props.sync()
+
+    this.releaseTimeout = undefined
   }
 
   static propTypes = {
     dispatch: PropTypes.func,
+    searchPost: PropTypes.func.isRequired,
     sync: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    search: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
+  handleSearchSubmit (event) {
+    event.preventDefault()
+    const pattern = React.findDOMNode(this.refs.search).value
+    if (!pattern) return
+
+    this.props.searchPost(pattern, null, null, true)
+
+    if (process.env.BROWSER)
+      this.releaseTimeout =
+        setTimeout(() => this.context.router.replaceWith('/search'), 500)
+  }
+
+  componentWillUnmount () {
+    if (this.op)
+      clearTimeout(this.releaseTimeout)
   }
 
   render () {
+    const { dispatch, auth } = this.props
+
     const Translate = require('react-translate-component')
     const TranslateProps = React.createFactory(Translate)
+
     const searchProps = {
       component: 'input',
       type: 'search',
       name: 'q',
+      ref: 'search',
       scope: 'search_input',
       attributes: {
         placeholder: 'placeholder',
@@ -30,7 +58,7 @@ export default class Header extends React.Component {
     }
 
     let AuthLink
-    if (!this.props.auth.token)
+    if (!auth.token)
       AuthLink = (
         <Link to='/login' className="item">
           <Translate content="header.login" />
@@ -44,7 +72,7 @@ export default class Header extends React.Component {
       )
 
     let ChangePasswordLink
-    if (this.props.auth.token)
+    if (auth.token)
       ChangePasswordLink = (
         <Link to='/password' className="item">
           <Translate content="header.password" />
@@ -52,7 +80,7 @@ export default class Header extends React.Component {
       )
 
     let ManageLink
-    if (this.props.auth.token)
+    if (auth.token)
       ManageLink = (
         <Link to='/manage' className="item">
           <Translate content="header.manage" />
@@ -79,12 +107,15 @@ export default class Header extends React.Component {
           </div>
 
           <div className="right menu">
-            <LocaleSwitcher dispatch={this.props.dispatch} />
+            <LocaleSwitcher dispatch={dispatch} />
             <div className="item">
+              <form
+                onSubmit={::this.handleSearchSubmit}>
               <div className="ui transparent icon input">
                 {TranslateProps(searchProps)}
                 <i className="search icon"></i>
               </div>
+              </form>
             </div>
           </div>
         </div>
@@ -96,9 +127,7 @@ export default class Header extends React.Component {
             <Link to='/post' className="item">
               <Translate content="header.post" />
             </Link>
-          </div>
-          <div className="right menu">
-            <LocaleSwitcher dispatch={this.props.dispatch} />
+            <LocaleSwitcher dispatch={dispatch} />
             {AuthLink}
           </div>
         </div>

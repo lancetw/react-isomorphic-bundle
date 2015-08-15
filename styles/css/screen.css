@@ -20,6 +20,10 @@ select {
   appearance: none;
 }
 
+.ui.menu.fixed.top {
+  font-size: 96%;
+}
+
 .ui.post.card {
   max-height: 132px;
   min-height: 132px;

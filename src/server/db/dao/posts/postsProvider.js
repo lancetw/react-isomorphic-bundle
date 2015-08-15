@@ -443,3 +443,26 @@ exports.updateAttachments = function *(hid, attach) {
   })
   return yield p.update(attach, { fields: fillable })
 }
+
+/* eslint-disable camelcase */
+exports.search = function *(pattern, offset=0, limit=20) {
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'ASC' ]],
+    where: {
+      $or: [
+        {
+          title: {
+            $like: '%' + pattern + '%'
+          }
+        },
+        {
+          content: {
+            $like: '%' + pattern + '%'
+          }
+        }
+      ]
+    }
+  })
+}

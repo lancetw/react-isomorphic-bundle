@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export default {
   title: {
-    site: 'Isomorphic redux 範例',
+    site: 'Universal Redux 範例',
     home: '首頁',
     login: '登入',
     logout: '登出',
@@ -12,7 +12,8 @@ export default {
     post_detail: '佈告詳細資料',
     password: '修改密碼',
     redirect: '重新導向中...',
-    cal: '日曆瀏覽'
+    cal: '日曆瀏覽',
+    search: '搜尋'
   },
   header: {
     home: '首頁',
@@ -103,5 +104,9 @@ export default {
   wall: {
     loading: '載入中...',
     header: '所有活動'
+  },
+  search: {
+    loading: '載入中...',
+    nodata: '查無資料'
   }
 }

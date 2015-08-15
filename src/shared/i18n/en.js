@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export default {
   title: {
-    site: 'Isomorphic redux demo',
+    site: 'Universal Redux Demo',
     home: 'Home',
     login: 'Log In',
     logout: 'Log Out',
@@ -12,7 +12,8 @@ export default {
     post_detail: 'Detail',
     password: 'Change My Password',
     redirect: 'Redirecting...',
-    cal: 'Calendar view'
+    cal: 'Calendar view',
+    search: 'Search'
   },
   header: {
     home: 'Home',
@@ -103,5 +104,9 @@ export default {
   wall: {
     loading: 'Loading...',
     header: 'All events'
+  },
+  search: {
+    loading: 'Loading...',
+    nodata: 'No data'
   }
 }

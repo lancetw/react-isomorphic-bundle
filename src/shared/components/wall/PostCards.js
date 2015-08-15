@@ -59,7 +59,6 @@ export default class PostCards extends BaseComponent {
 
   componentDidMount () {
     window.addEventListener('resize', ::this.handleResize)
-    React.initializeTouchEvents(true)
   }
 
   componentWillUnmount () {
