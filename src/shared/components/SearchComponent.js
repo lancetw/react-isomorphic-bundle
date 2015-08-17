@@ -12,8 +12,6 @@ export default class Search extends React.Component {
 
   constructor (props) {
     super(props)
-
-    counterpart.setLocale(props.defaultLocale)
   }
 
   render () {
@@ -34,6 +32,7 @@ export default class Search extends React.Component {
                 loadFunc={loadFunc}
                 hasMore={search.hasMore}
                 diff={126}
+                defaultLocale={this.props.defaultLocale}
               />
             )}
             {loading && (
