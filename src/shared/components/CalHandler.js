@@ -6,11 +6,12 @@ import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import moment from 'moment'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   post: state.post
 }))
-export default class CalHandler extends React.Component {
+export default class CalHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -28,14 +29,16 @@ export default class CalHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.cal')
+    const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={_t('title.cal')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Cal
           {...this.props}
           {...bindActionCreators(PostActions, dispatch)}

@@ -43,6 +43,9 @@ export default class Post extends BaseComponent {
     this.releaseTimeout = undefined
     const today = this.dateToArray(moment().format('YYYY-M-D'))
     const { detail } = props.post
+
+    counterpart.setLocale(props.defaultLocale)
+
     this.state = {
       formInited: false,
       uploadInited: false,
@@ -82,7 +85,8 @@ export default class Post extends BaseComponent {
     post: PropTypes.object.isRequired,
     upload: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
-    params: PropTypes.object
+    params: PropTypes.object,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
@@ -426,6 +430,7 @@ export default class Post extends BaseComponent {
           <GMap
             ref="gmap"
             {...this.props.map}
+            defaultLocale={this.props.defaultLocale}
             onBoundsChange={::this.handleBoundsChange}
           />
         </div>

@@ -6,12 +6,13 @@ import * as PostActions from '../actions/PostActions'
 import * as AuthActions from '../actions/AuthActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth,
   post: state.post
 }))
-export default class ManageHandler extends React.Component {
+export default class ManageHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -35,7 +36,8 @@ export default class ManageHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   loadFunc () {
@@ -49,11 +51,11 @@ export default class ManageHandler extends React.Component {
   }
 
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.manage')
+    const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
-
     return (
-      <DocumentTitle title={_t('title.manage')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Manage
           {...this.props}
           loadFunc={::this.loadFunc}

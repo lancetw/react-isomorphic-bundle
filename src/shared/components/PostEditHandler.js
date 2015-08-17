@@ -9,6 +9,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { getFileExt } from 'shared/utils/file-utils'
 import { each } from 'lodash'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth,
@@ -16,7 +17,7 @@ import { each } from 'lodash'
   upload: state.upload,
   map: state.map
 }))
-export default class PostEditHandler extends React.Component {
+export default class PostEditHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -71,19 +72,22 @@ export default class PostEditHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.post')
+    const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={_t('title.post')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Post
           {...bindActionCreators(PostActions, dispatch)}
           {...bindActionCreators(UploadActions, dispatch)}
           {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
+          defaultLocale={this.getLocale()}
         />
       </DocumentTitle>
     )

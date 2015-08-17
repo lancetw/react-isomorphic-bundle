@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth
 }))
-export default class HomeHandler extends React.Component {
+export default class HomeHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -22,18 +23,20 @@ export default class HomeHandler extends React.Component {
     resolver.resolve(this.authActions.showUser, props.auth.token)
   }
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
   static propTypes = {
     dispatch: PropTypes.func
   }
 
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.home')
+    const defaultTitle = this._T('title.site')
     return (
-      <DocumentTitle title={_t('title.home')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Home
           {...this.props}
         />

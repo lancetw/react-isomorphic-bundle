@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
-import DocumentTitle from 'shared/components/addon/document-title'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import { connect } from 'react-redux'
 
@@ -28,7 +27,10 @@ export default class LocaleSwitcher extends React.Component {
     )
     const title = counterpart(this.props.locale.title)
     const defaultTitle = counterpart('title.site')
-    document.title = `${title} | ${defaultTitle}`
+    if (defaultTitle)
+      document.title = `${title} | ${defaultTitle}`
+    else
+      document.title = `${title}`
   }
 
   render () {

@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import * as SignupActions from '../actions/SignupActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   signup: state.signup
 }))
-export default class SignupHandler extends React.Component {
+export default class SignupHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -24,14 +25,16 @@ export default class SignupHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.signup')
+    const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={_t('title.signup')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Signup
           {...bindActionCreators(SignupActions, dispatch)}
           {...this.props}

@@ -12,12 +12,13 @@ import counterpart from 'counterpart'
 import moment from 'moment'
 import 'moment/locale/zh-tw'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth,
   post: state.post
 }))
-export default class WallHandler extends React.Component {
+export default class WallHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -52,7 +53,8 @@ export default class WallHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   loadFunc () {
@@ -79,16 +81,15 @@ export default class WallHandler extends React.Component {
   }
 
   render () {
-    const _t = require('counterpart')
     const { dispatch, params } = this.props
     const { cprop } = params
-
+    const defaultTitle = this._T('title.site')
     const title = cprop > 0
-      ? ::this.getCardProp(cprop) + _t('title.wall_cprop')
-      : _t('title.wall')
+      ? ::this.getCardProp(cprop) + this._T('title.wall_cprop')
+      : this._T('title.wall')
 
     return (
-      <DocumentTitle title={title}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Wall
           {...this.props}
           loadFunc={::this.loadFunc}

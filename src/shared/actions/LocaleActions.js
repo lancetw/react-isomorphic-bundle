@@ -9,13 +9,13 @@ import { fixLocaleName } from 'shared/utils/locale-utils'
 export function sync (locale) {
   return async dispatch => {
     if (process.env.BROWSER) {
+      await send(locale)
       setLocale(locale)
       return dispatch({
         type: SYNC_CLIENT_LOCALE_COMPLETED,
         locale: getLocale()
       })
     } else {
-      send(locale)
       setLocale(locale)
       return dispatch({
         type: SYNC_SERVER_LOCALE_COMPLETED,

@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { save } from '../actions/AuthActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
-export default class SyncTokenHandler extends React.Component {
+export default class SyncTokenHandler extends BaseComponent {
 
   constructor (props) {
     super(props)
@@ -16,7 +17,8 @@ export default class SyncTokenHandler extends React.Component {
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   componentDidMount () {
@@ -36,14 +38,15 @@ export default class SyncTokenHandler extends React.Component {
 
   render () {
     const Translate = require('react-translate-component')
-    const _t = require('counterpart')
+    const title = this._T('title.redirect')
+    const defaultTitle = this._T('title.site')
 
     const msg = this.state.isClient
       ? <Translate content="redirect.msg" />
       : <div><a href="/"><Translate content="redirect.click" /></a></div>
 
     return (
-      <DocumentTitle title={_t('title.redirect')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <main className="ui stackable page grid">
           <div className="column">
             { msg }

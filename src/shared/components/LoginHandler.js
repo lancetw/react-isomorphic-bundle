@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth
 }))
-export default class LoginHandler extends React.Component {
+export default class LoginHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -23,14 +24,16 @@ export default class LoginHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.login')
+    const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={_t('title.login')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Login
           {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}

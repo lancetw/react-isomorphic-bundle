@@ -15,23 +15,33 @@ function extractTitle (propsList) {
     return innermostProps.title
 }
 
+function extractDefaultTitle (propsList) {
+  const innermostProps = propsList[propsList.length - 1]
+  if (innermostProps)
+    return innermostProps.defaultTitle
+}
+
 let _serverTitle = null
-let defaultTitle = counterpart('title.site')
 let tmp = null
 
 export default createSideEffect(
   function handleChange (propsList) {
 
-    defaultTitle = counterpart('title.site')
-
     const title = extractTitle(propsList)
+    const defaultTitle = extractDefaultTitle(propsList)
 
     if (!title) return
 
     if (process.env.BROWSER)
-      document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
+      if (defaultTitle)
+        document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
+      else
+        document.title = title ? `${title}` : 'Untitled Document'
     else
-      _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle
+      if (defaultTitle)
+        _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle
+      else
+        _serverTitle = title ? `${title}` : 'Untitled Document'
 
     tmp = title ? `${title} | ${defaultTitle}` : defaultTitle
 
@@ -40,7 +50,12 @@ export default createSideEffect(
   displayName: 'DocumentTitle',
 
   propTypes: {
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.string.isRequired,
+    locale: React.PropTypes.string
+  },
+
+  contextTypes: {
+    defaultTitle: React.PropTypes.string
   },
 
   statics: {

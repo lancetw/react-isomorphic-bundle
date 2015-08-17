@@ -21,6 +21,8 @@ export default class Post extends BaseComponent {
   constructor (props) {
     super(props)
 
+    counterpart.setLocale(props.defaultLocale)
+
     this.state = {
       locale: fixLocaleName(counterpart.getLocale())
     }
@@ -35,7 +37,8 @@ export default class Post extends BaseComponent {
     map: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     setPin: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired
+    remove: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
@@ -179,6 +182,7 @@ export default class Post extends BaseComponent {
           <GMap
             ref="gmap"
             {...this.props.map}
+            defaultLocale={this.props.defaultLocale}
           />
           }
           { (!detail.lat || !detail.lat) &&

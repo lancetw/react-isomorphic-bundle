@@ -9,7 +9,7 @@ export default class Gmap extends Component {
 
   constructor (props) {
     super(props)
-
+    counterpart.setLocale(props.defaultLocale)
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
@@ -26,7 +26,8 @@ export default class Gmap extends Component {
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    defaultLocale: PropTypes.string
   }
 
   static defaultProps = {
@@ -34,7 +35,7 @@ export default class Gmap extends Component {
     zoom: 16,
     lat: 25.018536,
     lng: 121.529146,
-    place: counterpart('post.map.my'),
+    place: '???',
     className: 'ui segment',
     loading: true
   }
@@ -59,8 +60,8 @@ export default class Gmap extends Component {
 
     if (!!this.props.loading)
       return (
-        <div className="ui segment basic has-header">
-          <div className="ui active inverted dimmer">
+        <div className="ui inverted segment has-header">
+          <div className="ui active dimmer">
             <div className="ui small indeterminate text loader">
               <Translate content="wall.loading" />
             </div>
@@ -79,7 +80,7 @@ export default class Gmap extends Component {
             <Pin
               lat={this.props.lat}
               lng={this.props.lng}
-              place={this.props.place} />
+              place={this.props.place || counterpart('post.map.my')} />
           </GoogleMap>
         </div>
       )

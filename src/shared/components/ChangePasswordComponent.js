@@ -23,7 +23,7 @@ export default class ChangePassword extends BaseComponent {
     this.releaseTimeout = undefined
     this.state = {
       value: { password: '', passwordCheck: '' },
-      options: ChangePasswordFormOptions(counterpart.getLocale()),
+      options: ChangePasswordFormOptions(props.defaultLocale),
       submited: false,
       updated: false
     }
@@ -33,7 +33,8 @@ export default class ChangePassword extends BaseComponent {
 
   static propTypes = {
     changePassword: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   handleLocaleChange (newLocale) {

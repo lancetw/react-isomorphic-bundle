@@ -7,13 +7,14 @@ import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth,
   post: state.post,
   map: state.map
 }))
-export default class PostDetailHandler extends React.Component {
+export default class PostDetailHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -51,20 +52,22 @@ export default class PostDetailHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   render () {
     const { dispatch } = this.props
     const { getState } = this.context.store
     const title = getState().locale.title
-
+    const defaultTitle = this._T('title.site')
     return (
-      <DocumentTitle title={title}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
           {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
+          defaultLocale={this.getLocale()}
         />
       </DocumentTitle>
     )

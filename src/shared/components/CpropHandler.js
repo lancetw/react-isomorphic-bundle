@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
+import { BaseComponent } from 'shared/components'
 
-export default class CpropHandler extends React.Component {
+export default class CpropHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -18,14 +19,16 @@ export default class CpropHandler extends React.Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   render () {
-    const _t = require('counterpart')
+    const title = this._T('title.home')
+    const defaultTitle = this._T('title.cprop')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={_t('title.cprop')}>
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Cprop
           {...this.props}
         />
