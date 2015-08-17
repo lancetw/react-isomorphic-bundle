@@ -203,7 +203,7 @@ export default class Post extends BaseComponent {
           confirmButtonText: _t('post.detail.delete.ok.confirm'),
           closeOnConfirm: true
         }, () => {
-          transitionTo('/home')
+          transitionTo('/manage')
         })
       })
     })
