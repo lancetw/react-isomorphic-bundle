@@ -18,17 +18,6 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
   React.initializeTouchEvents(true)
 
-  const lang = LocaleActions.getLocale()
-  counterpart.registerTranslations(
-    'en',
-    require('shared/i18n/en')
-  )
-  counterpart.registerTranslations(
-    'zh-hant-tw',
-    require('shared/i18n/zh-hant-tw')
-  )
-  counterpart.setLocale(lang || 'zh-hant-tw')
-
   const initialState = window.STATE_FROM_SERVER
   const reducer = combineReducers(reducers)
 
@@ -59,6 +48,20 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     const store = finalCreateStore(reducer, initialState)
     const resolver = new ReduxUniversalResolver()
     store.resolver = resolver
+
+    counterpart.registerTranslations(
+      'en',
+      require('shared/i18n/en')
+    )
+    counterpart.registerTranslations(
+      'zh-hant-tw',
+      require('shared/i18n/zh-hant-tw')
+    )
+
+    counterpart.setFallbackLocale('zh-hant-tw')
+
+    const { locale } = store.getState().locale
+    counterpart.setLocale(locale || 'zh-hant-tw')
 
     const history = new BrowserHistory()
     React.render((

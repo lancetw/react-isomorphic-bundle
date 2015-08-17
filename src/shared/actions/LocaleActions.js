@@ -4,6 +4,8 @@ import {
   SYNC_SERVER_LOCALE_COMPLETED,
   UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
+import { originLocaleName } from 'shared/utils/locale-utils'
+import { isEmpty } from 'lodash'
 
 export function setLocale (locale) {
   if (typeof localStorage !== 'undefined' && localStorage !== null) {
@@ -48,7 +50,6 @@ export function sync (locale) {
         locale: getLocale()
       })
     } else {
-      setLocale(locale)
       return dispatch({
         type: SYNC_SERVER_LOCALE_COMPLETED,
         locale: locale

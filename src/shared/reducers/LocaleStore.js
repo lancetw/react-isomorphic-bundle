@@ -13,14 +13,14 @@ const initialState = {
 export default createReducer(initialState, {
   [SYNC_CLIENT_LOCALE_COMPLETED]: (state, action) =>
     ({
-      token:
+      locale:
         typeof action.locale !== 'undefined'
         ? action.locale
         : state.locale
     }),
   [SYNC_SERVER_LOCALE_COMPLETED]: (state, action) =>
     ({
-      token:
+      locale:
         typeof action.locale !== 'undefined'
         ? action.locale
         : state.locale

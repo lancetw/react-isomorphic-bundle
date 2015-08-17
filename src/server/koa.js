@@ -17,12 +17,15 @@ import co from 'co'
 import favicon from 'koa-favicon'
 import services from 'src/server/services'
 import models from 'src/server/db/models'
+import locale from 'koa-locale'
 
 const debug = require('debug')
 const leveldb = level('./storage/leveldb')
 
 const app = koa()
 const env = process.env.NODE_ENV || 'development'
+
+locale(app, 'lang')
 
 // ES7 async
 app.experimental = true

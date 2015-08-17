@@ -17,6 +17,7 @@ import url from 'url'
 import AppContainer from 'shared/components/AppContainer'
 import route from 'koa-route'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
+import { originLocaleName } from 'shared/utils/locale-utils'
 
 const Translator = require('counterpart').Instance
 
@@ -65,13 +66,17 @@ export default function (app) {
         require('shared/i18n/en'))
       translator.registerTranslations('zh-hant-tw',
         require('shared/i18n/zh-hant-tw'))
+      translator.setFallbackLocale('zh-hant-tw')
 
-      if (this.session.locale !== null) {
-        translator.setLocale(this.session.locale)
-        store.dispatch(LocaleActions.sync(this.session.locale))
+      let lang
+      const { locale } = this.session
+      if (locale) {
+        lang = locale
       } else {
-        translator.setLocale('en')
+        lang = originLocaleName(this.getLocaleFromHeader())
       }
+      store.dispatch(LocaleActions.sync(lang || 'zh-hant-tw'))
+      translator.setLocale(lang || 'zh-hant-tw')
 
       let appString
       let assets
