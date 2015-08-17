@@ -17,7 +17,8 @@ export default class Login extends BaseComponent {
     login: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
     sync: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
@@ -26,6 +27,9 @@ export default class Login extends BaseComponent {
 
   constructor (props) {
     super(props)
+
+    counterpart.setLocale(props.defaultLocale)
+
     this._bind(
       'handleSubmit',
       'clearFormErrors',

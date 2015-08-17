@@ -38,6 +38,8 @@ export default class SignupHandler extends BaseComponent {
         <Signup
           {...bindActionCreators(SignupActions, dispatch)}
           {...this.props}
+          defaultLocale={this.getLocale()}
+
         />
       </DocumentTitle>
     )

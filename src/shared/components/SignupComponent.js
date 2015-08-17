@@ -9,7 +9,8 @@ export default class Signup extends BaseComponent {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
-    signup: PropTypes.object.isRequired
+    signup: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
@@ -18,6 +19,9 @@ export default class Signup extends BaseComponent {
 
   constructor (props) {
     super(props)
+
+    counterpart.setLocale(props.defaultLocale)
+
     this._bind(
       'handleSubmit',
       'validation',

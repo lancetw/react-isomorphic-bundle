@@ -37,6 +37,7 @@ export default class LoginHandler extends BaseComponent {
         <Login
           {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}
+          defaultLocale={this.getLocale()}
         />
       </DocumentTitle>
     )
