@@ -14,6 +14,7 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import DocumentTitle from 'shared/components/addon/document-title'
 import * as AuthActions from 'shared/actions/AuthActions'
+import * as LocaleActions from 'shared/actions/LocaleActions'
 import url from 'url'
 import AppContainer from 'shared/components/AppContainer'
 import route from 'koa-route'
@@ -59,7 +60,11 @@ export default function (app) {
         require('shared/i18n/en'))
       translator.registerTranslations('zh-hant-tw',
         require('shared/i18n/zh-hant-tw'))
-      translator.setLocale('zh-hant-tw')
+
+      if (this.session.locale !== null) {
+        translator.setLocale(this.session.locale)
+        store.dispatch(LocaleActions.sync(this.session.locale))
+      } else translator.setLocale('zh-hant-tw')
 
       let appString, assets, title
       try {

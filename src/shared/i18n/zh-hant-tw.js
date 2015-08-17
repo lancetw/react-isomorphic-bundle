@@ -8,18 +8,21 @@ export default {
     signup: '註冊',
     manage: '管理',
     wall: '所有佈告',
+    wall_cprop: '佈告',
     post: '張貼新佈告',
     post_detail: '佈告詳細資料',
     password: '修改密碼',
     redirect: '重新導向中...',
-    cal: '日曆瀏覽',
+    cal: '月曆瀏覽',
+    cprop: '類別瀏覽',
     search: '搜尋'
   },
   header: {
     home: '首頁',
     manage: '管理',
     wall: '佈告',
-    cal: '日曆模式',
+    cal: '月曆',
+    cprop: '類別',
     post: '發表',
     login: '登入',
     logout: '登出',
@@ -99,10 +102,26 @@ export default {
       'tips': '為您的地點取個名稱'
     },
     detail: {
-      'nomap': '未提供位置資訊'
+      'nomap': '未提供位置資訊',
+      'attachments': '提供附件下載',
+      'edit': '編輯',
+      'delete': {
+        title: '您確定嗎？',
+        text: '將永久移除這則佈告',
+        confirm: '刪除',
+        cancel: '取消',
+        ok: {
+          title: '佈告已刪除！',
+          text: '佈告成功刪除',
+          confirm: '確定'
+        }
+      }
     },
     submit: '張貼佈告',
     nodata: '查無資料'
+  },
+  manage: {
+    header: '%(user)s 所發表的佈告'
   },
   wall: {
     loading: '載入中...',

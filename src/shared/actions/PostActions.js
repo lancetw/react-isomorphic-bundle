@@ -183,6 +183,33 @@ export function defaultListWithUser (offset=0, limit=5, user, reload=false) {
   }
 }
 
+export function cpropList (cprop, offset=0, limit=5, reload=false) {
+  return async dispatch => {
+    if (reload)
+      dispatch({ type: LIST_POST_STARTED })
+    try {
+      const posts = await listWithCprop(cprop, offset, limit)
+      if (isArray(posts))
+        return dispatch({
+          type: LIST_POST_COMPLETED,
+          posts: posts,
+          offset: offset,
+          limit: limit
+        })
+      else
+        return dispatch({
+          type: LIST_POST_FAILED,
+          errors: posts.errors ? posts.errors : posts
+        })
+    } catch (err) {
+      return dispatch({
+        type: LIST_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
 export function fetchList (offset=0, limit=5, start, end, reload) {
   return async dispatch => {
     if (reload)
@@ -367,6 +394,24 @@ async function list (offset, limit, user) {
       })
   })
 }
+
+async function listWithCprop (cprop, offset, limit) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(LOCAL_PATH + '/api/v1/posts')
+      .query({ offset: offset })
+      .query({ limit: limit })
+      .query({ cprop: cprop })
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body)
+          resolve(res.body)
+        else
+          reject(err)
+      })
+  })
+}
+
 
 async function fetch (offset, limit, start, end, user) {
   return new Promise((resolve, reject) => {

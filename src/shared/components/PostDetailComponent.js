@@ -12,6 +12,7 @@ import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
 import { Link } from 'react-router'
+import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -21,7 +22,7 @@ export default class Post extends BaseComponent {
     super(props)
 
     this.state = {
-      locale: this.fixLocaleName(counterpart.getLocale())
+      locale: fixLocaleName(counterpart.getLocale())
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -45,36 +46,23 @@ export default class Post extends BaseComponent {
 
   }
 
-  fixLocaleName (locale) {
-    if (locale === 'zh-hant-tw')
-      return 'zh-TW'
-
-    return locale
-  }
-
-  originLocaleName (locale) {
-    if (locale === 'zh-TW')
-      return 'zh-hant-tw'
-
-    return locale
-  }
-
   getDetailProp (index) {
-    return at(PostPropArray(this.originLocaleName(this.state.locale)), index)
+    return at(PostPropArray(originLocaleName(this.state.locale)), index)
   }
 
   deletePost () {
+    const _t = require('counterpart')
     const swal = require('sweetalert')
     const { detail } = this.props.post
     const { remove } = this.props
     const { transitionTo } = this.context.router
     swal({
-      title: '您確定嗎？',
-      text: '佈告：「' + detail.title + '」將永久移除',
+      title: _t('post.detail.delete.title'),
+      text: _t('post.detail.delete.text'),
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: '確定刪除',
-      cancelButtonText: '取消',
+      confirmButtonText: _t('post.detail.delete.confirm'),
+      cancelButtonText: _t('post.detail.delete.cancel'),
       closeOnConfirm: false,
       showLoaderOnConfirm: true
     }, () => {
@@ -82,10 +70,10 @@ export default class Post extends BaseComponent {
        remove(detail.id)
       ]).then(() => {
         swal({
-          title: '佈告已刪除！',
-          text: '佈告成功刪除',
+          title: _t('post.detail.delete.ok.title'),
+          text: _t('post.detail.delete.ok.text'),
           type: 'success',
-          confirmButtonText: '確定',
+          confirmButtonText: _t('post.detail.delete.ok.confirm'),
           closeOnConfirm: true
         }, () => {
           transitionTo('/home')
@@ -140,7 +128,7 @@ export default class Post extends BaseComponent {
                   { files && !isEmpty(files)
                     &&
                     <h4 className="ui horizontal divider header">
-                      提供附件下載
+                      <Translate content="post.detail.attachments" />
                     </h4> }
                   {
                     files && !isEmpty(files)
@@ -173,11 +161,12 @@ export default class Post extends BaseComponent {
                   <Link
                     className="ui basic green button"
                     to={`/post/${detail.id}/edit`}>
-                    編輯內容</Link>
+                    <Translate content="post.detail.edit" />
+                  </Link>
                   <a
                     className="ui basic red button"
                     onClick={::this.deletePost}>
-                    刪除
+                    <Translate content="post.detail.delete.confirm" />
                   </a>
                 </div>
               </div>

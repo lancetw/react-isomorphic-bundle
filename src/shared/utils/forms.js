@@ -171,7 +171,7 @@ const PostTypeEnArray = {
 const PostTypeEn = t.enums(PostTypeEnArray)
 
 const PostTypeZhHantTWArray = {
-  1: '新聞',
+  1: '公告',
   2: '活動'
 }
 const PostTypeZhHantTW = t.enums(PostTypeZhHantTWArray)

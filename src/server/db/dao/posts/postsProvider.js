@@ -54,6 +54,20 @@ exports.list = function *(offset=0, limit=20) {
 }
 
 /* eslint-disable camelcase */
+exports.listWithCprop = function *(cprop, offset=0, limit=20) {
+  if (typeof cprop === 'undefined') return []
+
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'end_date', 'DESC' ]],
+    where: {
+      prop: +cprop
+    }
+  })
+}
+
+/* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
   if (typeof uid === 'undefined') return []
 

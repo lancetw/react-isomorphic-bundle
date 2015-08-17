@@ -2,12 +2,11 @@
 
 import React from 'react'
 import createSideEffect from 'react-side-effect'
-import _t from 'counterpart'
+import counterpart from 'counterpart'
 
-_t.setLocale('zh-hant-tw')
-_t.registerTranslations('en',
+counterpart.registerTranslations('en',
   require('shared/i18n/en'))
-_t.registerTranslations('zh-hant-tw',
+counterpart.registerTranslations('zh-hant-tw',
   require('shared/i18n/zh-hant-tw'))
 
 function extractTitle (propsList) {
@@ -17,13 +16,13 @@ function extractTitle (propsList) {
 }
 
 let _serverTitle = null
-let defaultTitle = _t('title.site')
+let defaultTitle = counterpart('title.site')
 let tmp = null
 
 export default createSideEffect(
   function handleChange (propsList) {
 
-    defaultTitle = _t('title.site')
+    defaultTitle = counterpart('title.site')
 
     const title = extractTitle(propsList)
 

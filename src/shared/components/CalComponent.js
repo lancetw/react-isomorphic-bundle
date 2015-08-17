@@ -11,6 +11,8 @@ import counterpart from 'counterpart'
 import classNames from 'classnames'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
+import WallButtons from 'shared/components/wall/WallButtons'
+import { fixLocaleName } from 'shared/utils/locale-utils'
 
 if (process.env.BROWSER)
   require('css/ui/date-picker')
@@ -20,7 +22,7 @@ export default class Cal extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      locale: this.fixLocaleName(counterpart.getLocale()),
+      locale: fixLocaleName(counterpart.getLocale()),
       date: moment(new Date()).startOf('day').valueOf(),
       selectedDay: new Date(),
       nextOffset: 0,
@@ -53,16 +55,9 @@ export default class Cal extends React.Component {
   }
 
   handleLocaleChange (newLocale) {
-    const locale = this.fixLocaleName(newLocale)
+    const locale = fixLocaleName(newLocale)
     moment.locale(locale)
     this.setState({ locale })
-  }
-
-  fixLocaleName (locale) {
-    if (locale === 'zh-hant-tw')
-      return 'zh-TW'
-
-    return locale
   }
 
   loadFunc () {
@@ -122,16 +117,7 @@ export default class Cal extends React.Component {
     return (
       <main className="ui two column has-header stackable grid container">
         <div className="eight wide computer sixteen wide tablet column">
-          <div className="row switch-btns">
-            <div className="ui orange inverted buttons">
-              <Link className="ui button" to='/wall/today'>
-                <Translate content="header.wall" />
-              </Link>
-              <Link className="ui button" to='/wall/cal'>
-                <Translate content="header.cal" />
-              </Link>
-            </div>
-          </div>
+          <WallButtons />
           <DayPicker
             renderDay={::this.renderDay}
             modifiers={modifiers}

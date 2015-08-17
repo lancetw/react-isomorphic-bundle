@@ -7,19 +7,22 @@ export default {
     logout: 'Log Out',
     signup: 'Sign Up',
     manage: 'Manage',
-    wall: 'All events',
-    post: 'Post it!',
+    wall: 'All Events',
+    wall_cprop: '',
+    post: 'Post It!',
     post_detail: 'Detail',
     password: 'Change My Password',
     redirect: 'Redirecting...',
-    cal: 'Calendar view',
+    cal: 'Calendar View',
+    cprop: 'Property View',
     search: 'Search'
   },
   header: {
     home: 'Home',
     manage: 'Manage',
     wall: 'Wall',
-    cal: 'Cal',
+    cal: 'Calendar',
+    cprop: 'Property',
     post: 'Post',
     login: 'Log In',
     logout: 'Log Out',
@@ -99,10 +102,26 @@ export default {
       'tips': 'Named  your place please'
     },
     detail: {
-      'nomap': 'No map infomation'
+      'nomap': 'No map infomation',
+      'attachments': 'Attachments',
+      'edit': 'Edit',
+      'delete': {
+        title: 'Are you sure?',
+        text: 'This post will be remove forever.',
+        confirm: 'Delete',
+        cancel: 'Cancel',
+        ok: {
+          title: 'This post was deleted!',
+          text: 'The post is deleted successfully.',
+          confirm: 'Done'
+        }
+      }
     },
     submit: 'Post it',
     nodata: 'No data'
+  },
+  manage: {
+    header: 'Posts by %(user)s'
   },
   wall: {
     loading: 'Loading...',

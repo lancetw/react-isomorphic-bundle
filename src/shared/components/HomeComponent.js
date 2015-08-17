@@ -32,7 +32,7 @@ export default class HomeComponent extends BaseComponent {
       <main className="ui column centered stackable page grid">
         <div className="column">
           <div className="ui segment">
-            <div className="ui orange label">登入身分 {user.email}</div>
+            {user.email && <div className="ui orange label">{user.email}</div>}
             <h2>
               <Translate content="home.jwt_header" />
             </h2>

@@ -12,6 +12,7 @@ import {
   Manage,
   Wall,
   Cal,
+  Cprop,
   ChangePassword,
   SyncToken,
   Direct,
@@ -33,6 +34,9 @@ export default function (store) {
       <Route path="/wall">
         <Route path="today" component={Wall} />
         <Route path="cal" component={Cal} />
+        <Route path="cprop" component={Cprop} />
+        <Route path="cprop/:cprop" component={Wall} />
+        <Redirect from="posts" to="/wall" />
         <Route path="posts/:id" component={PostDetail} />
       </Route>
       <Route path="/post" component={Post} store={store} onEnter={auth}/>

@@ -16,17 +16,21 @@ const Post = db.posts
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
-    const { offset, limit, start, end, user } = this.request.query
+    const { cprop, offset, limit, start, end, user } = this.request.query
     let data
-    if (typeof user !== 'undefined') {
+    if (user) {
       const uid = hashids.decode(user)
-      data = typeof start !== 'undefined'
+      data = typeof start !== null
       ? yield Post.fetchWithUser(offset, limit, start, end, uid)
       : yield Post.listWithUser(offset, limit, uid)
-    } else
-    data = typeof start !== 'undefined'
-    ? yield Post.fetch(offset, limit, start, end)
-    : yield Post.list(offset, limit)
+    } else {
+      if (cprop)
+        data = yield Post.listWithCprop(cprop, offset, limit)
+      else
+        data = typeof start !== null
+        ? yield Post.fetch(offset, limit, start, end)
+        : yield Post.list(offset, limit)
+    }
 
     this.body = hashids.encodeJson(data)
   },

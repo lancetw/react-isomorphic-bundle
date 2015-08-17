@@ -8,6 +8,7 @@ import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
+import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 
 export default class PostCard extends BaseComponent {
 
@@ -18,38 +19,26 @@ export default class PostCard extends BaseComponent {
   constructor (props) {
     super(props)
     this.state = {
-      locale: this.fixLocaleName(counterpart.getLocale())
+      locale: fixLocaleName(counterpart.getLocale())
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   handleLocaleChange (newLocale) {
-    const locale = this.fixLocaleName(newLocale)
+    const locale = fixLocaleName(newLocale)
     moment.locale(locale)
     this.setState({ locale })
   }
 
-  fixLocaleName (locale) {
-    if (locale === 'zh-hant-tw')
-      return 'zh-TW'
-
-    return locale
-  }
-
-  originLocaleName (locale) {
-    if (locale === 'zh-TW')
-      return 'zh-hant-tw'
-
-    return locale
-  }
-
   getCardProp (index) {
-    return at(PostPropArray(this.originLocaleName(this.state.locale)), index)
+    return at(PostPropArray(originLocaleName(this.state.locale)), index)
   }
 
   /* eslint-disable max-len */
   render () {
+    const Translate = require('react-translate-component')
+
     const card = this.props.data
     const files = JSON.parse(card.file)
 
@@ -80,7 +69,7 @@ export default class PostCard extends BaseComponent {
             { card.place ? (
                 <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>{card.place}</a>
               )
-              : `未提供位置資訊` }
+              : <Translate content="post.detail.nomap" /> }
           </span>
         </div>
       </div>

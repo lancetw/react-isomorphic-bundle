@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 import Ad from 'shared/components/addon/ad'
+import counterpart from 'counterpart'
 
 export default class Manage extends React.Component {
 
@@ -20,12 +21,14 @@ export default class Manage extends React.Component {
     const Translate = require('react-translate-component')
     const { post, auth, loadFunc } = this.props
     const loading = post.loading || false
-    const { user } = auth
+
     return (
       <main className="ui stackable page grid">
         <div className="column">
           <div className="row">
-            <h1>{user.email} 發表的佈告</h1>
+            <h1>
+              <Translate content="manage.header" user={auth.user.email} />
+            </h1>
           </div>
           <div className="row">
             {!isEmpty(post.posts) && (

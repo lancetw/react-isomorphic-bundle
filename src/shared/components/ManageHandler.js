@@ -51,6 +51,7 @@ export default class ManageHandler extends React.Component {
   render () {
     const _t = require('counterpart')
     const { dispatch } = this.props
+
     return (
       <DocumentTitle title={_t('title.manage')}>
         <Manage

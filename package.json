@@ -65,7 +65,7 @@
     "co-bcrypt": "^1.0.0",
     "co-body": "^2.0.0",
     "config": "^1.14.0",
-    "counterpart": "^0.16.7",
+    "counterpart": "^0.16.9",
     "del": "^1.2.0",
     "dotenv": "^1.1.0",
     "es6-promise": "^2.2.0",

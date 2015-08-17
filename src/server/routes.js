@@ -114,6 +114,13 @@ router
   })
 
 router
+  .post('/auth/locale', function *(next) {
+    let body = yield parse(this)
+    this.session.locale = body.locale
+    this.body = { locale: body.locale }
+  })
+
+router
   .get('/auth/facebook', function *(next) {
     // [TODO]: get param to set nextPage
 

@@ -55,7 +55,6 @@ export default class PostDetailHandler extends React.Component {
   }
 
   render () {
-    const _t = require('counterpart')
     const { dispatch } = this.props
     const { getState } = this.context.store
     const title = getState().locale.title
