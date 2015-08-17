@@ -5,20 +5,18 @@ import { connect } from 'react-redux'
 import * as AuthActions from 'shared/actions/AuthActions'
 import * as SearchActions from 'shared/actions/SearchActions'
 
-const Translate = require('react-translate-component')
-
 @connect(state => ({
   auth: state.auth,
   search: state.search
 }))
 export default class HeaderHandler extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   render () {

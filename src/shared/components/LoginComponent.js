@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { BaseComponent } from 'shared/components'
 import {
-  Tcomb,
   Form,
   LoginForm,
   LoginFormOptions
@@ -13,6 +12,17 @@ import counterpart from 'counterpart'
 const { CSSTransitionGroup } = React.addons
 
 export default class Login extends BaseComponent {
+
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired,
+    sync: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
 
   constructor (props) {
     super(props)
@@ -32,85 +42,16 @@ export default class Login extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
-  static propTypes = {
-    login: PropTypes.func.isRequired,
-    save: PropTypes.func.isRequired,
-    sync: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
-  }
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
-  handleLocaleChange (newLocale) {
-    this.setState({
-      options: LoginFormOptions(newLocale)
-    })
-  }
-
-  handleSubmit (evt) {
-    evt.preventDefault()
-    const value = this.refs.form.getValue()
-    if (value) {
-      let saved = clone(value)
-      saved = omit(saved, 'password')
-      this.setState({ value: saved })
-      this.setState({ submited: true })
-      this.clearFormErrors()
-
-      setTimeout(() => this.props.login(value), 100)
-    }
-  }
-
-  clearFormErrors () {
-    let options = clone(this.state.options)
-    options.fields = clone(options.fields)
-
-    for (let key in options.fields) {
-      if (options.fields.hasOwnProperty(key)) {
-        options.fields[key] = clone(options.fields[key])
-        if (options.fields[key].hasOwnProperty('hasError'))
-          options.fields[key].hasError = false
-      }
-    }
-    this.setState({ options: options })
-  }
-
-  fillFormAllErrors () {
-    let options = clone(this.state.options)
-    options.fields = clone(options.fields)
-
-    for (let key in options.fields) {
-      if (options.fields.hasOwnProperty(key)) {
-        options.fields[key] = clone(options.fields[key])
-        if (options.fields[key].hasOwnProperty('hasError'))
-          options.fields[key].hasError = true
-      }
-    }
-    this.setState({ options: options })
-  }
-
-  validation (errors) {
-    if (!isEmpty(errors)) {
-      this.fillFormAllErrors()
-      this.setState({ submited: false })
-      this.setState({ errorShake: true })
-      this.shakeTimeout = setTimeout(() => {
-        this.setState({ errorShake: false })
-        this.clearFormErrors()
-      }, 500)
-    }
-  }
-
   componentWillReceiveProps (nextProps) {
-    if (this.state.submited)
+    if (this.state.submited) {
       this.validation(nextProps.auth.errors)
+    }
 
     const { state } = this.context.router
     const { nextPathname } = state.location.state
-    if (nextPathname)
+    if (nextPathname) {
       this.setState({ pleaseLogin: true })
+    }
   }
 
   componentWillUnmount () {
@@ -123,7 +64,7 @@ export default class Login extends BaseComponent {
   render () {
     const Translate = require('react-translate-component')
 
-    let Message = this.state.pleaseLogin
+    const Message = this.state.pleaseLogin
       ? (
         <div className="ui warning message">
           <div className="header">
@@ -138,10 +79,11 @@ export default class Login extends BaseComponent {
 
       if (this.props.auth.isAuthenticated) {
         let path
-        if (nextPathname)
+        if (nextPathname) {
           path = nextPathname
-        else
+        } else {
           path = '/home'
+        }
 
         this.releaseTimeout =
           setTimeout(() => this.context.router.replaceWith(path), 1000)
@@ -209,5 +151,70 @@ export default class Login extends BaseComponent {
       </main>
     )
   }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      this.setState({
+        options: LoginFormOptions(newLocale)
+      })
+    }
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+    const value = this.refs.form.getValue()
+    if (value) {
+      let saved = clone(value)
+      saved = omit(saved, 'password')
+      this.setState({ value: saved })
+      this.setState({ submited: true })
+      this.clearFormErrors()
+
+      setTimeout(() => this.props.login(value), 100)
+    }
+  }
+
+  clearFormErrors () {
+    const options = clone(this.state.options)
+    options.fields = clone(options.fields)
+
+    for (const key in options.fields) {
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError')) {
+          options.fields[key].hasError = false
+        }
+      }
+    }
+    this.setState({ options: options })
+  }
+
+  fillFormAllErrors () {
+    const options = clone(this.state.options)
+    options.fields = clone(options.fields)
+
+    for (const key in options.fields) {
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError')) {
+          options.fields[key].hasError = true
+        }
+      }
+    }
+    this.setState({ options: options })
+  }
+
+  validation (errors) {
+    if (!isEmpty(errors)) {
+      this.fillFormAllErrors()
+      this.setState({ submited: false })
+      this.setState({ errorShake: true })
+      this.shakeTimeout = setTimeout(() => {
+        this.setState({ errorShake: false })
+        this.clearFormErrors()
+      }, 500)
+    }
+  }
+
 }
 

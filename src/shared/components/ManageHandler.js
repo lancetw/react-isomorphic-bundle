@@ -14,6 +14,16 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class ManageHandler extends BaseComponent {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   constructor (props, context) {
     super(props, context)
     const { dispatch, resolver } = context.store
@@ -30,14 +40,19 @@ export default class ManageHandler extends BaseComponent {
     this.state = { limit: 10, nextOffset: 0 }
   }
 
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
-  }
+  render () {
+    const title = this._T('title.manage')
+    const defaultTitle = this._T('title.site')
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    return (
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+        <Manage
+          {...this.props}
+          loadFunc={::this.loadFunc}
+          defaultLocale={this.getLocale()}
+        />
+      </DocumentTitle>
+    )
   }
 
   loadFunc () {
@@ -50,17 +65,4 @@ export default class ManageHandler extends BaseComponent {
     this.setState({ nextOffset: nextOffset })
   }
 
-  render () {
-    const title = this._T('title.manage')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
-    return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
-        <Manage
-          {...this.props}
-          loadFunc={::this.loadFunc}
-        />
-      </DocumentTitle>
-    )
-  }
 }

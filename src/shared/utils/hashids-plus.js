@@ -1,5 +1,4 @@
 // ref: http://www.ajostrow.me/articles/recursive-hashids
-'use strict'
 
 const traverse = require('traverse')
 const _ = require('lodash')
@@ -18,10 +17,11 @@ exports.decode = function (str) {
 
 exports.encodeJson = function (object) {
   return traverse(object).map(function () {
-    if (_.endsWith(this.key, 'id') && _.isNumber(this.node))
+    if (_.endsWith(this.key, 'id') && _.isNumber(this.node)) {
       return hashids.encode(this.node * BASEID, SEED)
-    else
+    } else {
       return this.node
+    }
   })
 }
 
@@ -29,9 +29,10 @@ exports.decodeJson = function (object) {
   return traverse(object).map(function () {
     if (_.endsWith(this.key, 'id') &&
         _.isString(this.node) &&
-        this.node.length === 8)
+        this.node.length === 8) {
       return hashids.decode(this.node)[0] / BASEID
-    else
+    } else {
       return this.node
+    }
   })
 }

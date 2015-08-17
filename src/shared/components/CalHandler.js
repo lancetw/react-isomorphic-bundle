@@ -13,6 +13,15 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class CalHandler extends BaseComponent {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   constructor (props, context) {
     super(props, context)
     const date = moment(new Date()).startOf('day').valueOf()
@@ -24,15 +33,6 @@ export default class CalHandler extends BaseComponent {
     resolver.resolve(this.postActions.fetchList, 0, 10, date, null, true)
   }
 
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
-  }
-
   render () {
     const title = this._T('title.cal')
     const defaultTitle = this._T('title.site')
@@ -40,8 +40,9 @@ export default class CalHandler extends BaseComponent {
     return (
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Cal
-          {...this.props}
           {...bindActionCreators(PostActions, dispatch)}
+          {...this.props}
+          defaultLocale={this.getLocale()}
         />
       </DocumentTitle>
     )

@@ -2,14 +2,14 @@ import React, { PropTypes } from 'react'
 
 export default class TabList extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     children: PropTypes.any,
     onSelect: PropTypes.func,
     selectedIndex: PropTypes.number
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   render () {

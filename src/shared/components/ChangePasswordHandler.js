@@ -12,13 +12,6 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class ChangePasswordHandler extends BaseComponent {
 
-  constructor (props, context) {
-    super(props, context)
-
-    const dispatch = context.store.dispatch
-    dispatch(updateTitle('title.password'))
-  }
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }
@@ -26,6 +19,13 @@ export default class ChangePasswordHandler extends BaseComponent {
   static contextTypes = {
     store: PropTypes.object.isRequired,
     translator: PropTypes.object
+  }
+
+  constructor (props, context) {
+    super(props, context)
+
+    const dispatch = context.store.dispatch
+    dispatch(updateTitle('title.password'))
   }
 
   render () {

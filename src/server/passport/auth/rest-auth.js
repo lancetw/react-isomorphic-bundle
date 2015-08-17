@@ -1,10 +1,8 @@
-'use strict'
-
 import passport from 'koa-passport'
 import debug from 'debug'
 
 export default function *(next) {
-  let ctx = this
+  const ctx = this
   yield* passport.authenticate(
     'jwt',
     { session: false },

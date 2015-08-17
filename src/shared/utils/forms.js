@@ -206,7 +206,7 @@ const PostPropZhHantTWArray = {
 }
 const PostPropZhHantTW = t.enums(PostPropZhHantTWArray)
 
-exports.PostPropArray = function (locale) {
+exports.postPropArray = function (locale) {
   const list = {
     'en': PostPropEnArray,
     'zh-hant-tw': PostPropZhHantTWArray

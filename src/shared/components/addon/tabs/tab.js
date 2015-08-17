@@ -3,10 +3,6 @@ import classNames from 'classnames'
 
 export default class Tab extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     children: PropTypes.any,
     active: PropTypes.bool,
@@ -14,14 +10,16 @@ export default class Tab extends React.Component {
     index: PropTypes.number
   }
 
+  constructor (props) {
+    super(props)
+  }
+
   render () {
-    const status = this.props.active ?
-      classNames('item', 'active') :
-      classNames('item')
+    const statusClass = classNames('item', { 'active': !!this.props.active })
 
     return (
       <a
-        className={status}
+        className={statusClass}
         onClick={::this.props.onSelect.bind(this, this.props.index)}>
         {this.props.children}
       </a>

@@ -19,6 +19,16 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class PostEditHandler extends BaseComponent {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   constructor (props, context) {
     super(props, context)
     const { dispatch, resolver, getState } = context.store
@@ -45,35 +55,21 @@ export default class PostEditHandler extends BaseComponent {
         }
         resolver.resolve(this.mapActions.setPin, map)
 
-        const { user } = getState().auth
         const files = typeof detail.file !== 'undefined'
         ? JSON.parse(detail.file)
         : []
 
-        let src, name
+        let name
         each(files, (filename, _index) => {
           if (getFileExt(filename.toLowerCase()) === 'pdf') {
             name = 'pdf.png'
-            src = user.aud + '/images/' + name
           } else {
             name = filename
-            src = user.aud + '/uploads/' + name
           }
-
           resolver.resolve(this.uploadActions.setImageFileName, name, _index)
         })
       }, 2500)
     }
-  }
-
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
   }
 
   render () {

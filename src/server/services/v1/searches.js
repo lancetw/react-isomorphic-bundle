@@ -1,5 +1,3 @@
-'use strict'
-
 import Resource from 'koa-resource-router'
 import parse from 'co-body'
 import db from 'src/server/db'
@@ -16,6 +14,5 @@ export default new Resource('searches', {
       const { offset, limit } = this.request.query
       this.body = hashids.encodeJson(yield Post.search(pattern, offset, limit))
     }
-
   }
 })

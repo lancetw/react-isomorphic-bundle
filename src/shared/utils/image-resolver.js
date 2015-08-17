@@ -1,7 +1,7 @@
 export default (imagePath) => {
-  if (process.env.BROWSER)
+  if (process.env.BROWSER) {
     throw new Error('image-resolver called on browser')
-  else {
+  } else {
     let images
     if (process.env.NODE_ENV === 'development') {
       const fs = require('fs')
@@ -16,8 +16,9 @@ export default (imagePath) => {
     const regex = new RegExp(`${imagePath}$`)
     const image = images.find(img => regex.test(img.original))
 
-    if (image)
+    if (image) {
       return image.compiled
+    }
 
     return ''
   }

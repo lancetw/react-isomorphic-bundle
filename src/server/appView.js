@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import { Router } from 'react-router'
 import Location from 'react-router/lib/Location'
@@ -26,8 +24,14 @@ nunjucks.configure('views', {
   autoescape: true
 })
 
-export default function (app) {
+// thunkify stat
+function stat (file) {
+  return function (done) {
+    fs.stat(file, done)
+  }
+}
 
+export default function (app) {
   app.use(route.get('/uploads/*', function *() {
     const location = path.join(__dirname, '../../', decodeURI(this.path))
     const fstat = yield stat(location)
@@ -52,8 +56,9 @@ export default function (app) {
 
       const location = new Location(this.path, this.query)
       // save session token to store
-      if (this.session.token && this.session.token !== null)
+      if (this.session.token && this.session.token !== null) {
         store.dispatch(AuthActions.sync(this.session.token))
+      }
 
       const translator = new Translator()
       translator.registerTranslations('en',
@@ -64,9 +69,13 @@ export default function (app) {
       if (this.session.locale !== null) {
         translator.setLocale(this.session.locale)
         store.dispatch(LocaleActions.sync(this.session.locale))
-      } else translator.setLocale('en')
+      } else {
+        translator.setLocale('en')
+      }
 
-      let appString, assets, title
+      let appString
+      let assets
+      let title
       try {
         const { error, initialState, transition, handler }
         = yield new Promise((resolve) => {
@@ -82,8 +91,9 @@ export default function (app) {
           })
         })
 
-        if (!initialState && transition.isCancelled)
+        if (!initialState && transition.isCancelled) {
           return this.redirect(url.format(transition.redirectInfo))
+        }
 
         const elements = (
           <AppContainer translator={translator}>
@@ -109,12 +119,13 @@ export default function (app) {
             path.resolve(__dirname, '../../storage/webpack-stats.json')
           )
           assets = JSON.parse(assets)
+        } else {
+          assets = require('storage/webpack-stats.json')
         }
-        else assets = require('storage/webpack-stats.json')
-
       } catch (error) {
-        if (error.redirect)
+        if (error.redirect) {
           return this.redirect(error.redirect)
+        }
 
         throw error
       }
@@ -139,11 +150,4 @@ export default function (app) {
       resolver.clear()
     }
   })
-}
-
-// thunkify stat
-function stat (file) {
-  return function (done) {
-    fs.stat(file, done)
-  }
 }

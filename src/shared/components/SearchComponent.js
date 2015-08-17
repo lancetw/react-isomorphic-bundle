@@ -1,23 +1,21 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 
 export default class Search extends React.Component {
 
+  static propTypes = {
+    loadFunc: PropTypes.func.isRequired,
+    search: PropTypes.object.isRequired
+  }
+
   constructor (props) {
     super(props)
   }
 
-  static propTypes = {
-    loadFunc: PropTypes.func.isRequired,
-    searchPost: PropTypes.func.isRequired,
-    search: PropTypes.object.isRequired
-  }
-
   render () {
     const Translate = require('react-translate-component')
-    const { searchPost, search, loadFunc } = this.props
+    const { search, loadFunc } = this.props
     const loading = search.loading || false
 
     return (

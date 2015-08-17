@@ -1,7 +1,4 @@
-'use strict'
-
-import { Router } from 'react-router'
-import { sync, checkToken, showUser, logout } from 'shared/actions/AuthActions'
+import { checkToken, showUser, logout } from 'shared/actions/AuthActions'
 
 export default function (nextState, transition) {
   const { dispatch, getState } = this.store
@@ -11,12 +8,13 @@ export default function (nextState, transition) {
 
   dispatch(showUser(getState().auth.token))
 
-  if (!isAuthenticated)
+  if (!isAuthenticated) {
     transition.to(
       '/login',
       null,
       { nextPathname: nextState.location.pathname }
     )
+  }
 
   if (process.env.BROWSER && !verified) {
     this.store.dispatch(logout())

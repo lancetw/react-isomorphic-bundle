@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react/addons'
 import Header from './HeaderHandler'
-import counterpart from 'counterpart'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -13,12 +12,12 @@ if (process.env.BROWSER) {
 
 export default class AppHandler extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     children: PropTypes.any
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   componentDidMount () {

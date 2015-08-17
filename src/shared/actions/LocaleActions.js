@@ -4,7 +4,39 @@ import {
   SYNC_SERVER_LOCALE_COMPLETED,
   UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
-import { fixLocaleName } from 'shared/utils/locale-utils'
+
+export function setLocale (locale) {
+  if (typeof localStorage !== 'undefined' && localStorage !== null) {
+    if (locale && locale !== 'undefined') {
+      localStorage.setItem('locale', locale)
+    }
+  }
+}
+
+export function getLocale () {
+  let locale = ''
+  if (typeof localStorage !== 'undefined' && localStorage !== null) {
+    locale = localStorage.getItem('locale')
+  }
+
+  return locale
+}
+
+export async function send (locale) {
+  return new Promise((resolve, reject) => {
+    request
+      .post('/auth/locale')
+      .set('Accept', 'application/json')
+      .send({ locale: locale })
+      .end(function (err, res) {
+        if (!err && res.body) {
+          resolve(res.body)
+        } else {
+          reject(err)
+        }
+      })
+  })
+}
 
 export function sync (locale) {
   return async dispatch => {
@@ -32,35 +64,4 @@ export function updateTitle (title) {
       title: title
     })
   }
-}
-
-export function setLocale (locale) {
-  if (typeof localStorage !== 'undefined'
-      && localStorage !== null)
-    if (locale && locale !== 'undefined')
-      localStorage.setItem('locale', locale)
-}
-
-export function getLocale () {
-  let locale = ''
-  if (typeof localStorage !== 'undefined'
-      && localStorage !== null)
-    locale = localStorage.getItem('locale')
-
-  return locale
-}
-
-export async function send (locale) {
-  return new Promise((resolve, reject) => {
-    request
-      .post('/auth/locale')
-      .set('Accept', 'application/json')
-      .send({ locale: locale })
-      .end(function (err, res) {
-        if (!err && res.body)
-          resolve(res.body)
-        else
-          reject(err)
-      })
-  })
 }

@@ -6,7 +6,7 @@ import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
-import { PostPropArray } from 'shared/utils/forms'
+import { postPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
@@ -19,6 +19,16 @@ import { BaseComponent } from 'shared/components'
   post: state.post
 }))
 export default class WallHandler extends BaseComponent {
+
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
 
   constructor (props, context) {
     super(props, context)
@@ -47,41 +57,13 @@ export default class WallHandler extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
-  }
-
-  loadFunc () {
-    const { dispatch, params } = this.props
-    const { cprop } = params
-    const nextOffset = this.state.nextOffset + this.state.limit
-    if (cprop > 0)
-      dispatch(PostActions.cpropList(cprop, nextOffset - 1, this.state.limit))
-    else
-      dispatch(PostActions.defaultList(nextOffset - 1, this.state.limit))
-
-    this.setState({ nextOffset: nextOffset })
-  }
-
-  handleLocaleChange (newLocale) {
-    const locale = fixLocaleName(newLocale)
-    moment.locale(locale)
-    this.setState({ locale })
-  }
-
   getCardProp (index) {
     const _lang = originLocaleName(this.state.locale)
-    return at(PostPropArray(_lang), index)
+    return at(postPropArray(_lang), index)
   }
 
   render () {
-    const { dispatch, params } = this.props
+    const { params } = this.props
     const { cprop } = params
     const defaultTitle = this._T('title.site')
     const title = cprop > 0
@@ -92,9 +74,33 @@ export default class WallHandler extends BaseComponent {
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Wall
           {...this.props}
+          defaultLocale={this.getLocale()}
           loadFunc={::this.loadFunc}
         />
       </DocumentTitle>
     )
   }
+
+  loadFunc () {
+    const { dispatch, params } = this.props
+    const { cprop } = params
+    const nextOffset = this.state.nextOffset + this.state.limit
+    if (cprop > 0) {
+      dispatch(PostActions.cpropList(cprop, nextOffset - 1, this.state.limit))
+    } else {
+      dispatch(PostActions.defaultList(nextOffset - 1, this.state.limit))
+    }
+
+    this.setState({ nextOffset: nextOffset })
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      const locale = fixLocaleName(newLocale)
+      moment.locale(locale)
+      this.setState({ locale })
+    }
+  }
+
 }
+

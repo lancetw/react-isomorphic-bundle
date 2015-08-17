@@ -1,5 +1,3 @@
-'use strict'
-
 const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
@@ -27,8 +25,9 @@ fs
 
 Object.keys(db).forEach(function (modelName) {
   /* istanbul ignore else */
-  if ('associate' in db[modelName])
+  if ('associate' in db[modelName]) {
     db[modelName].associate(db)
+  }
 })
 
 db.sequelize = sequelize

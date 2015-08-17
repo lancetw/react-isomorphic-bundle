@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import { Router } from 'react-router'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
@@ -78,7 +76,6 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     ), document.getElementById('app'))
 
     resolver.clear()
-
   } else {
     finalCreateStore = compose(
       applyMiddleware(
@@ -105,5 +102,4 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
     resolver.clear()
   }
-
 })()

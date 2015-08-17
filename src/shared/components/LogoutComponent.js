@@ -3,13 +3,6 @@ import { BaseComponent } from 'shared/components'
 
 export default class Logout extends BaseComponent {
 
-  constructor (props) {
-    super(props)
-    this.releaseTimeout = undefined
-    this.state = { isClient: false }
-    props.logout()
-  }
-
   static propTypes = {
     logout: PropTypes.func.isRequired
   }
@@ -18,19 +11,28 @@ export default class Logout extends BaseComponent {
     router: PropTypes.object.isRequired
   }
 
+  constructor (props) {
+    super(props)
+    this.releaseTimeout = undefined
+    this.state = { isClient: false }
+    props.logout()
+  }
+
   componentDidMount () {
     this.setState({ isClient: true })
   }
 
   componentWillUnmount () {
-    if (this.op)
+    if (this.op) {
       clearTimeout(this.releaseTimeout)
+    }
   }
 
   render () {
-    if (process.env.BROWSER)
+    if (process.env.BROWSER) {
       this.releaseTimeout =
         setTimeout(() => this.context.router.replaceWith('/'), 1000)
+    }
 
     const Translate = require('react-translate-component')
 

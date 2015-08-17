@@ -16,6 +16,17 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class PostDetailHandler extends BaseComponent {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   constructor (props, context) {
     super(props, context)
     const { dispatch, resolver, getState } = context.store
@@ -43,17 +54,6 @@ export default class PostDetailHandler extends BaseComponent {
         resolver.resolve(this.mapActions.setPin, map)
       }, 2500)
     }
-  }
-
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
   }
 
   render () {

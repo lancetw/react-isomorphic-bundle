@@ -6,6 +6,22 @@ import {
 }from 'shared/constants/ActionTypes'
 import { auth, save } from 'shared/actions/AuthActions'
 
+async function sendForm (form) {
+  return new Promise((resolve, reject) => {
+    request
+      .post('/api/v1/users')
+      .send(form)
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body) {
+          resolve(res.body)
+        } else {
+          reject(err)
+        }
+      })
+  })
+}
+
 export function init () {
   return async dispatch => {
     return dispatch({ type: SIGNUP_USER_STARTED })
@@ -23,10 +39,12 @@ export function submit (form) {
           type: SIGNUP_USER_COMPLETED,
           response: response
         })
-      } else return dispatch({
-        type: SIGNUP_USER_FAILED,
-        errors: res.errors ? res.errors : res
-      })
+      } else {
+        return dispatch({
+          type: SIGNUP_USER_FAILED,
+          errors: res.errors ? res.errors : res
+        })
+      }
     } catch (err) {
       return dispatch({
         type: SIGNUP_USER_FAILED,
@@ -34,19 +52,4 @@ export function submit (form) {
       })
     }
   }
-}
-
-async function sendForm (form) {
-  return new Promise((resolve, reject) => {
-    request
-      .post('/api/v1/users')
-      .send(form)
-      .set('Accept', 'application/json')
-      .end(function (err, res) {
-        if (!err && res.body)
-          resolve(res.body)
-        else
-          reject(err)
-      })
-  })
 }

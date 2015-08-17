@@ -1,5 +1,3 @@
-'use strict'
-
 import Resource from 'koa-resource-router'
 import validate from 'parameter'
 import parse from 'co-body'
@@ -21,21 +19,23 @@ export default new Resource('posts', {
     if (user) {
       const uid = hashids.decode(user)
       data = start !== null
-      ? yield Post.fetchWithUser(offset, limit, start, end, uid)
-      : yield Post.listWithUser(offset, limit, uid)
-    } else
-    if (cprop)
-      data = yield Post.listWithCprop(cprop, offset, limit)
-    else
-    data = start !== null
-    ? yield Post.fetch(offset, limit, start, end)
-    : yield Post.list(offset, limit)
+        ? yield Post.fetchWithUser(offset, limit, start, end, uid)
+        : yield Post.listWithUser(offset, limit, uid)
+    } else {
+      if (cprop) {
+        data = yield Post.listWithCprop(cprop, offset, limit)
+      } else {
+        data = start !== null
+        ? yield Post.fetch(offset, limit, start, end)
+        : yield Post.list(offset, limit)
+      }
+    }
 
     this.body = hashids.encodeJson(data)
   },
   // POST /posts
   create: [ RestAuth, function *(next) {
-    let body = yield parse(this)
+    const body = yield parse(this)
     const rule = {
       uid: { type: 'string' },
       type: { type: 'string' },
@@ -72,19 +72,22 @@ export default new Resource('posts', {
     try {
       body.uid = hashids.decode(body.uid)
 
-      if (body.uid !== this.user.id)
+      if (body.uid !== this.user.id) {
         throw new Error('user check failed')
+      }
 
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
-      if (typeof body.openDate === 'undefined')
+      if (typeof body.openDate === 'undefined') {
         body.openDate = body.startDate
-      else
+      } else {
         body.openDate = moment(body.openDate).format()
-      if (typeof body.closeDate === 'undefined')
+      }
+      if (typeof body.closeDate === 'undefined') {
         body.closeDate = body.endDate
-      else
+      } else {
         body.closeDate = moment(body.closeDate).endOf('day').format()
+      }
 
       body.file = JSON.stringify(body.file)
 
@@ -97,7 +100,6 @@ export default new Resource('posts', {
       this.status = 200
       this.body = err
     }
-
   }],
   // GET /posts/:post
   show: function *(next) {
@@ -117,7 +119,7 @@ export default new Resource('posts', {
   },
   // PUT /posts/:post
   update: [ RestAuth, function *(next) {
-    let body = yield parse(this)
+    const body = yield parse(this)
 
     const rule = {
       uid: { type: 'string' },
@@ -155,19 +157,22 @@ export default new Resource('posts', {
     try {
       body.uid = hashids.decode(body.uid)
 
-      if (body.uid !== this.user.id)
+      if (body.uid !== this.user.id) {
         throw new Error('user check failed')
+      }
 
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
-      if (typeof body.openDate === 'undefined')
+      if (typeof body.openDate === 'undefined') {
         body.openDate = body.startDate
-      else
+      } else {
         body.openDate = moment(body.openDate).format()
-      if (typeof body.closeDate === 'undefined')
+      }
+      if (typeof body.closeDate === 'undefined') {
         body.closeDate = body.endDate
-      else
+      } else {
         body.closeDate = moment(body.closeDate).endOf('day').format()
+      }
       body.file = JSON.stringify(body.file)
 
       const post = yield Post.update(this.params.post, body)
@@ -184,8 +189,9 @@ export default new Resource('posts', {
   destroy: [ RestAuth, function *(next) {
     try {
       const body = yield Post.load(this.params.post)
-      if (body.uid !== this.user.id)
+      if (body.uid !== this.user.id) {
         throw new Error('user check failed')
+      }
 
       const post = yield Post.destroy(this.params.post)
       this.type = 'json'

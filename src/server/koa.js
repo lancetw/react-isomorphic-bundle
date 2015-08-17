@@ -1,5 +1,3 @@
-'use strict'
-
 import koa from 'koa'
 import mount from 'koa-mount'
 import helmet from 'koa-helmet'
@@ -65,15 +63,16 @@ if (env === 'development') {
       require('koa-proxy')({ host: 'http://0.0.0.0:3000' })
     )
   )
-}
-else app.use(
-  mount('/assets',
-    staticCache(
-      path.join(__dirname, '../../public/assets'),
-      cacheOpts
+} else {
+  app.use(
+    mount('/assets',
+      staticCache(
+        path.join(__dirname, '../../public/assets'),
+        cacheOpts
+      )
     )
   )
-)
+}
 
 app.use(mount('/images',
   staticCache(

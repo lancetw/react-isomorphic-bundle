@@ -12,6 +12,15 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class HomeHandler extends BaseComponent {
 
+  static propTypes = {
+    dispatch: PropTypes.func
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   constructor (props, context) {
     super(props, context)
     const { dispatch, resolver } = context.store
@@ -21,15 +30,6 @@ export default class HomeHandler extends BaseComponent {
     this.authActions = bindActionCreators(AuthActions, dispatch)
     resolver.resolve(this.authActions.sync)
     resolver.resolve(this.authActions.showUser, props.auth.token)
-  }
-
-  static propTypes = {
-    dispatch: PropTypes.func
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
   }
 
   render () {

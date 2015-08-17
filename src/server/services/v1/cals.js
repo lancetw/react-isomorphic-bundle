@@ -1,5 +1,3 @@
-'use strict'
-
 import Resource from 'koa-resource-router'
 import parse from 'co-body'
 import db from 'src/server/db'
@@ -15,6 +13,5 @@ export default new Resource('cals', {
       const { year, month } = this.request.query
       this.body = yield Post.countPerDayInMonth(year, month)
     }
-
   }
 })

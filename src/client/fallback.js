@@ -1,3 +1,3 @@
-'use strict'
-if (process.env.BROWSER)
+if (process.env.BROWSER) {
   require('css/ui/checkbox')
+}

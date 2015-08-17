@@ -1,17 +1,12 @@
 import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import * as UploadActions from 'shared/actions/UploadActions'
 
 @connect(state => ({
   upload: state.upload
 }))
 export default class ImageUpload extends React.Component {
-
-  constructor (props) {
-    super(props)
-  }
 
   static propTypes = {
     index: PropTypes.number.isRequired,
@@ -25,32 +20,23 @@ export default class ImageUpload extends React.Component {
     src: '/images/image.png'
   }
 
-  handleDrop (files) {
-    const sizeLimit = 1024 * 1024 * 3
-    const { dispatch } = this.props
-    const file = files[0]
-    if (file.size > sizeLimit) {
-      dispatch(UploadActions.setErrorMessage('1', 'too large'))
-      return
-    }
-
-    if (typeof file.preview !== 'undefined') {
-      dispatch(UploadActions.clearErrorMessage())
-      dispatch(UploadActions.send(file.name, file, this.props.index))
-    }
+  constructor (props) {
+    super(props)
   }
 
   render () {
     let img
-    if (typeof this.props.upload.images !== 'undefined')
+    if (typeof this.props.upload.images !== 'undefined') {
       img = this.props.upload.images[this.props.index]
+    }
 
-    let percentage = this.props.upload.percentages[this.props.index]
+    const percentage = this.props.upload.percentages[this.props.index]
 
-    if (this.props.upload.errorId)
+    if (this.props.upload.errorId) {
       setTimeout(() => {
         this.props.dispatch(UploadActions.clearErrorMessage())
       }, 3000)
+    }
 
     return (
       <Dropzone
@@ -68,5 +54,20 @@ export default class ImageUpload extends React.Component {
         }
       </Dropzone>
     )
+  }
+
+  handleDrop (files) {
+    const sizeLimit = 1024 * 1024 * 3
+    const { dispatch } = this.props
+    const file = files[0]
+    if (file.size > sizeLimit) {
+      dispatch(UploadActions.setErrorMessage('1', 'too large'))
+      return
+    }
+
+    if (typeof file.preview !== 'undefined') {
+      dispatch(UploadActions.clearErrorMessage())
+      dispatch(UploadActions.send(file.name, file, this.props.index))
+    }
   }
 }

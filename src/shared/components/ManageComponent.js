@@ -1,20 +1,18 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
-import Ad from 'shared/components/addon/ad'
-import counterpart from 'counterpart'
 
 export default class Manage extends React.Component {
-
-  constructor (props) {
-    super(props)
-  }
 
   static propTypes = {
     post: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
-    loadFunc: PropTypes.func.isRequired
+    loadFunc: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   render () {
@@ -37,6 +35,7 @@ export default class Manage extends React.Component {
                 loadFunc={loadFunc}
                 hasMore={post.hasMore}
                 diff={126}
+                defaultLocale={this.props.defaultLocale}
               />
             )}
             {loading && (

@@ -3,10 +3,8 @@ import {
   SET_MAP_PIN_STARTED,
   SET_MAP_PIN_COMPLETED,
   SET_MAP_PIN_FAILED,
-  SET_MAP_GEO_STARTED,
   SET_MAP_GEO_COMPLETED,
   SET_MAP_GEO_FAILED,
-  FIND_MAP_PLACE_STARTED,
   FIND_MAP_PLACE_COMPLETED,
   FIND_MAP_PLACE_FAILED
 } from 'shared/constants/ActionTypes'
@@ -31,9 +29,9 @@ export default createReducer(initialState, {
       loading: true
     }),
   [SET_MAP_PIN_COMPLETED]: (state, action) => {
-    if (action.lat === null || action.lng === null)
+    if (action.lat === null || action.lng === null) {
       return initialState
-    else
+    } else {
       return {
         lat: action.lat,
         lng: action.lng,
@@ -41,6 +39,7 @@ export default createReducer(initialState, {
         center: [ action.lat, action.lng ],
         loading: false
       }
+    }
   },
   [SET_MAP_PIN_FAILED]: (state, action) =>
     ({ errors: action.errors }),

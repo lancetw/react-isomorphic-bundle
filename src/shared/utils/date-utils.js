@@ -1,5 +1,5 @@
 export function isPastDay (d) {
-  let today = new Date()
+  const today = new Date()
   today.setHours(0, 0, 0, 0)
   return d < today
 }
@@ -19,16 +19,18 @@ export function isBetween (d, d1, d2) {
 
 export function toDate (date) {
   const moment = require('moment')
-  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid()) {
     return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('YYYY-M-D')
+  }
 
   return ''
 }
 
 export function toShortDate (date) {
   const moment = require('moment')
-  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid())
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid()) {
     return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
+  }
 
   return ''
 }

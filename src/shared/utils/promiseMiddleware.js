@@ -1,3 +1,13 @@
+function onError (err) {
+  setTimeout(function () {
+    throw err
+  }, 0)
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
 export default (store) => {
   return function (next) {
     return function (action) {
@@ -6,15 +16,4 @@ export default (store) => {
         : next(action)
     }
   }
-}
-
-function onError (err) {
-  setTimeout(function () {
-    throw err
-  }, 0)
-}
-
-
-function isPromise (val) {
-  return val && typeof val.then === 'function'
 }

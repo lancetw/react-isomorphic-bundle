@@ -3,12 +3,12 @@ import { BaseComponent } from 'shared/components'
 
 export default class HomeComponent extends BaseComponent {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     auth: PropTypes.object.isRequired
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   render () {

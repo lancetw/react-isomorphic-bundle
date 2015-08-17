@@ -1,12 +1,22 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { BaseComponent } from 'shared/components'
-import { isEmpty, throttle } from 'lodash'
+import { isEmpty } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import $ from 'jquery'
 import Infinite from 'react-infinite'
 
-export default class PostCards extends BaseComponent {
+export default class PostCards extends Component {
+
+  static propTypes = {
+    posts: PropTypes.array.isRequired,
+    loadFunc: PropTypes.func.isRequired,
+    hasMore: PropTypes.bool.isRequired,
+    diff: PropTypes.number.isRequired,
+    defaultLocale: PropTypes.string.isRequired
+  }
+
+  static defaultProps = {
+    diff: 0
+  }
 
   constructor (props) {
     super(props)
@@ -17,24 +27,58 @@ export default class PostCards extends BaseComponent {
     }
   }
 
-  static propTypes = {
-    posts: PropTypes.array.isRequired,
-    loadFunc: PropTypes.func.isRequired,
-    hasMore: PropTypes.bool.isRequired,
-    diff: PropTypes.number.isRequired
+  componentDidMount () {
+    window.addEventListener('resize', ::this.handleResize)
   }
 
-  static defaultProps = {
-    diff: 0
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize)
   }
 
-  handleResize (event) {
+  render () {
+    const cards = this.props.posts
+    const defaultLocale = this.props.defaultLocale
+
+    if (process.env.BROWSER && this.props.posts.length > 0) {
+      const containerHeight = this.state.windowHeight - this.props.diff
+      return (
+        <Infinite
+          className="scroll-content"
+          infiniteLoadBeginBottomOffset={200}
+          containerHeight={containerHeight}
+          onInfiniteLoad={::this.handleInfiniteLoad}
+          isInfiniteLoading={this.state.isInfiniteLoading}
+          loadingSpinnerDelegate={this.elementInfiniteLoad()}
+          elementHeight={132}
+          timeScrollStateLastsForAfterUserScrolls={150}>
+          {!isEmpty(cards) && cards.map(function (card) {
+            return (
+              <Card
+                key={card.id}
+                data={card}
+                defaultLocale={defaultLocale}
+              />)
+          })}
+        </Infinite>
+      )
+    } else {
+      return (
+        <div className="ui cards" ref="scrollable">
+          {!isEmpty(cards) && cards.map(function (card) {
+            return <Card key={card.id} data={card} />
+          })}
+        </div>
+      )
+    }
+  }
+
+  handleResize () {
     this.setState({
       windowWidth: window.innerWidth, windowHeight: window.innerHeight
     })
   }
 
-  handleInfiniteLoad (event) {
+  handleInfiniteLoad () {
     this.setState({ isInfiniteLoading: true })
     setTimeout(() => {
       this.props.loadFunc()
@@ -57,40 +101,4 @@ export default class PostCards extends BaseComponent {
     }
   }
 
-  componentDidMount () {
-    window.addEventListener('resize', ::this.handleResize)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this.handleResize)
-  }
-
-  render () {
-    const cards = this.props.posts
-
-    if (process.env.BROWSER && this.props.posts.length > 0) {
-      const containerHeight = this.state.windowHeight - this.props.diff
-      return (
-        <Infinite
-          className="scroll-content"
-          infiniteLoadBeginBottomOffset={200}
-          containerHeight={containerHeight}
-          onInfiniteLoad={::this.handleInfiniteLoad}
-          isInfiniteLoading={this.state.isInfiniteLoading}
-          loadingSpinnerDelegate={this.elementInfiniteLoad()}
-          elementHeight={132}
-          timeScrollStateLastsForAfterUserScrolls={150}>
-          {!isEmpty(cards) && cards.map(function (card) {
-            return <Card key={card.id} data={card} />
-          })}
-        </Infinite>
-      )
-    } else return (
-      <div className="ui cards" ref="scrollable">
-        {!isEmpty(cards) && cards.map(function (card) {
-          return <Card key={card.id} data={card} />
-        })}
-      </div>
-    )
-  }
 }

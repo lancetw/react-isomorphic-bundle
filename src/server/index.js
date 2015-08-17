@@ -1,4 +1,3 @@
-'use strict'
 delete process.env.BROWSER
 
 const env = process.env.NODE_ENV || 'development'
@@ -8,10 +7,11 @@ const modulePath = require('app-module-path')
 
 modulePath.addPath(path.join(__dirname, '../../'))
 
-if (env !== 'production')
+if (env !== 'production') {
   modulePath.addPath(path.join(__dirname, '../../src'))
-else
+} else {
   modulePath.addPath(path.join(__dirname, '../../lib'))
+}
 
 modulePath.addPath(path.join(__dirname, '../../styles'))
 

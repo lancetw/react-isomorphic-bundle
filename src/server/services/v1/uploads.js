@@ -1,5 +1,3 @@
-'use strict'
-
 import Resource from 'koa-resource-router'
 import validate from 'parameter'
 import parse from 'co-body'

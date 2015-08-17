@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
-import { isEmpty } from 'lodash'
 import { toShortDate } from 'shared/utils/date-utils'
-import { getFileExt } from 'shared/utils/file-utils'
-import { PostPropArray } from 'shared/utils/forms'
+import { postPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
@@ -13,11 +11,15 @@ import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 export default class PostCard extends BaseComponent {
 
   static propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
     super(props)
+
+    counterpart.setLocale(props.defaultLocale)
+
     this.state = {
       locale: fixLocaleName(counterpart.getLocale())
     }
@@ -25,22 +27,14 @@ export default class PostCard extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
-  handleLocaleChange (newLocale) {
-    const locale = fixLocaleName(newLocale)
-    moment.locale(locale)
-    this.setState({ locale })
-  }
-
   getCardProp (index) {
-    return at(PostPropArray(originLocaleName(this.state.locale)), index)
+    return at(postPropArray(originLocaleName(this.state.locale)), index)
   }
-
   /* eslint-disable max-len */
   render () {
     const Translate = require('react-translate-component')
 
     const card = this.props.data
-    const files = JSON.parse(card.file)
 
     const eventDate = (card.startDate === card.endDate)
     ? toShortDate(card.endDate)
@@ -74,5 +68,13 @@ export default class PostCard extends BaseComponent {
         </div>
       </div>
     )
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      const locale = fixLocaleName(newLocale)
+      moment.locale(locale)
+      this.setState({ locale })
+    }
   }
 }

@@ -12,6 +12,12 @@ const { CSSTransitionGroup } = React.addons
 
 export default class ChangePassword extends BaseComponent {
 
+  static propTypes = {
+    changePassword: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
+  }
+
   constructor (props) {
     super(props)
     this._bind(
@@ -31,110 +37,29 @@ export default class ChangePassword extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
-  static propTypes = {
-    changePassword: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
-  }
-
-  handleLocaleChange (newLocale) {
-    this.setState({
-      options: ChangePasswordFormOptions(newLocale)
-    })
-  }
-
-  handleChange (value, path) {
-    const pass = this.refs.form.getComponent('password')
-    const check = this.refs.form.getComponent('passwordCheck')
-
-    if (path[0] === 'passwordCheck')
-      if (pass.state.value !== check.state.value)
-        check.setState({ hasError: true })
-      else
-        check.setState({ hasError: false })
-
-    if (path[0] === 'password')
-      if (pass.state.value.length < 6)
-        pass.setState({ hasError: true })
-      else
-        pass.setState({ hasError: false })
-  }
-
-  handleSubmit (evt) {
-    evt.preventDefault()
-
-    let value = this.refs.form.getValue()
-
-    if (value
-        && (value.password === value.passwordCheck)
-      ) {
-      this.clearFormErrors()
-      this.setState({ submited: true })
-
-      this.releaseTimeout =
-        setTimeout(() => this.props.changePassword(value), 1000)
-    } else {
-      const pass = this.refs.form.getComponent('password')
-      const check = this.refs.form.getComponent('passwordCheck')
-
-      if (pass.state.value !== check.state.value)
-        check.setState({ hasError: true })
-      else
-        check.setState({ hasError: false })
-
-
-      if (pass.state.value.length < 6)
-        pass.setState({ hasError: true })
-      else
-        pass.setState({ hasError: false })
-    }
-  }
-
-  clearFormErrors () {
-    let options = clone(this.state.options)
-    options.fields = clone(options.fields)
-
-    for (let key in options.fields) {
-      if (options.fields.hasOwnProperty(key)) {
-        options.fields[key] = clone(options.fields[key])
-        if (options.fields[key].hasOwnProperty('hasError'))
-          options.fields[key].hasError = false
-      }
-    }
-    this.setState({ options: options })
-  }
-
-  validation (errors) {
-    if (!isEmpty(errors))
-      this.setState({ submited: false })
-  }
-
-  checkSubmited (info) {
-    if (!isEmpty(info)) {
-      this.setState({ submited: false })
-      if (info.email)
-        this.setState({ updated: true })
-    }
-  }
-
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.user.errors)
     this.checkSubmited(nextProps.user.info)
   }
 
   componentWillUnmount () {
-    if (this.op)
+    if (this.op) {
       clearTimeout(this.releaseTimeout)
+    }
   }
 
   render () {
     const Translate = require('react-translate-component')
 
-    let Loading = this.state.submited
-      ? classNames('ui', 'orange', 'form', 'segment', 'loading')
-      : classNames('ui', 'orange', 'form', 'segment')
+    const LoadingClass = classNames(
+      'ui',
+      'orange',
+      'form',
+      'segment',
+      {'loading': !!this.state.submited }
+    )
 
-    let Message = this.state.updated
+    const Message = this.state.updated
       ? (
         <div className="ui success message">
           <div className="header">
@@ -144,9 +69,10 @@ export default class ChangePassword extends BaseComponent {
         </div> )
       : null
 
-    if (this.state.updated)
+    if (this.state.updated) {
       this.messageTimeout =
         setTimeout(() => this.setState({ updated: false }), 3000)
+    }
 
     return (
       <main className="ui two column stackable centered page grid">
@@ -155,7 +81,7 @@ export default class ChangePassword extends BaseComponent {
             {Message}
           </CSSTransitionGroup>
           <form
-            className={Loading}
+            className={LoadingClass}
             action="/auth/changePassword"
             method="post"
             onSubmit={this.handleSubmit}>
@@ -178,4 +104,93 @@ export default class ChangePassword extends BaseComponent {
       </main>
     )
   }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      this.setState({
+        options: ChangePasswordFormOptions(newLocale)
+      })
+    }
+  }
+
+  handleChange (value, path) {
+    const pass = this.refs.form.getComponent('password')
+    const check = this.refs.form.getComponent('passwordCheck')
+
+    if (path[0] === 'passwordCheck') {
+      if (pass.state.value !== check.state.value) {
+        check.setState({ hasError: true })
+      } else {
+        check.setState({ hasError: false })
+      }
+    }
+
+    if (path[0] === 'password') {
+      if (pass.state.value.length < 6) {
+        pass.setState({ hasError: true })
+      } else {
+        pass.setState({ hasError: false })
+      }
+    }
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+
+    const value = this.refs.form.getValue()
+
+    if (value && (value.password === value.passwordCheck)) {
+      this.clearFormErrors()
+      this.setState({ submited: true })
+
+      this.releaseTimeout =
+        setTimeout(() => this.props.changePassword(value), 1000)
+    } else {
+      const pass = this.refs.form.getComponent('password')
+      const check = this.refs.form.getComponent('passwordCheck')
+
+      if (pass.state.value !== check.state.value) {
+        check.setState({ hasError: true })
+      } else {
+        check.setState({ hasError: false })
+      }
+
+      if (pass.state.value.length < 6) {
+        pass.setState({ hasError: true })
+      } else {
+        pass.setState({ hasError: false })
+      }
+    }
+  }
+
+  clearFormErrors () {
+    const options = clone(this.state.options)
+    options.fields = clone(options.fields)
+
+    for (const key in options.fields) {
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError')) {
+          options.fields[key].hasError = false
+        }
+      }
+    }
+    this.setState({ options: options })
+  }
+
+  validation (errors) {
+    if (!isEmpty(errors)) {
+      this.setState({ submited: false })
+    }
+  }
+
+  checkSubmited (info) {
+    if (!isEmpty(info)) {
+      this.setState({ submited: false })
+      if (info.email) {
+        this.setState({ updated: true })
+      }
+    }
+  }
+
 }

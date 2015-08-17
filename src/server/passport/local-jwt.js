@@ -1,5 +1,3 @@
-'use strict'
-
 import passport from 'koa-passport'
 import db from 'src/server/db'
 import co from 'co'
@@ -9,7 +7,7 @@ import debug from 'debug'
 const JwtStrategy = require('passport-jwt').Strategy
 const User = db.users
 
-let opts = {}
+const opts = {}
 opts.secretOrKey = config.jwt.SECRET_OR_KEY
 opts.algorithm = config.jwt.OPTIONS.ALG
 opts.expiresInMinutes = config.jwt.OPTIONS.EXP
@@ -20,10 +18,11 @@ export default passport.use(new JwtStrategy(opts, function (payload, done) {
   co(function* () {
     try {
       const user = yield User.loadByEmail(payload.email)
-      if (!user)
-         throw new Error('no user')
-      else
+      if (!user) {
+        throw new Error('no user')
+      } else {
         return user
+      }
     } catch (err) {
       throw new Error(err)
     }

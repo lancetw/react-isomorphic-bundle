@@ -10,13 +10,14 @@ export default class ReduxResolver {
 
   resolve (action) {
     const [, ...args] = arguments
-    if (process.env.BROWSER && !this.firstRending)
+    if (process.env.BROWSER && !this.firstRending) {
       return action(...args)
-    else
+    } else {
       this.pending = [
         ...this.pending,
         { action, args }
       ]
+    }
   }
 
   async dispatch () {

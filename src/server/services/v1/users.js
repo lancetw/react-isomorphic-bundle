@@ -1,5 +1,3 @@
-'use strict'
-
 import Resource from 'koa-resource-router'
 import validate from 'parameter'
 import parse from 'co-body'
@@ -17,7 +15,7 @@ export default new Resource('users', {
   },
   // POST /users
   create: function *(next) {
-    let body = yield parse(this)
+    const body = yield parse(this)
     const rule = {
       name: { type: 'string', required: false, allowEmpty: true },
       password: { type: 'password', compare: 'passwordCheck' },
@@ -42,13 +40,13 @@ export default new Resource('users', {
       this.status = 200
       this.body = err
     }
-
   },
   // GET /users/:user
   show: [ RestAuth, function *(next) {
     try {
-      if (hashids.decode(this.params.user) !== this.user.id)
+      if (hashids.decode(this.params.user) !== this.user.id) {
         throw new Error('user check failed')
+      }
 
       const user = yield User.load(this.params.user)
 
@@ -67,7 +65,7 @@ export default new Resource('users', {
   },
   // PUT /users/:user
   update: [ RestAuth, function *(next) {
-    let body = yield parse(this)
+    const body = yield parse(this)
 
     const rule = {
       name: { type: 'string', required: false, allowEmpty: true },
@@ -83,8 +81,9 @@ export default new Resource('users', {
     }
 
     try {
-      if (hashids.decode(this.params.user) !== this.user.id)
+      if (hashids.decode(this.params.user) !== this.user.id) {
         throw new Error('user check failed')
+      }
 
       const user = yield User.update(this.params.user, body)
       this.type = 'json'
@@ -100,8 +99,9 @@ export default new Resource('users', {
   destroy: [ RestAuth, function *(next) {
     try {
       const body = yield User.load(this.params.user)
-      if (hashids.decode(this.params.user) !== this.user.id)
+      if (hashids.decode(this.params.user) !== this.user.id) {
         throw new Error('user check failed')
+      }
 
       const user = yield User.delete(this.params.user)
       this.type = 'json'

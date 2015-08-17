@@ -2,12 +2,6 @@ import React, { PropTypes } from 'react'
 
 export default class Tabs extends React.Component {
 
-  constructor (props) {
-    super(props)
-    this.state = { index: this.props.selectedIndex }
-    this.handleSelect = ::this.handleSelect
-  }
-
   static propTypes = {
     children: PropTypes.any,
     onSelect: PropTypes.func,
@@ -19,13 +13,10 @@ export default class Tabs extends React.Component {
     selectedIndex: 0
   }
 
-  handleSelect (index) {
-    this.setState({ index })
-    if (typeof this.props.onSelect === 'function')
-      this.props.onSelect(
-        index || this.props.selectedIndex,
-        React.Children.count(this.props.children) - 2
-      )
+  constructor (props) {
+    super(props)
+    this.state = { index: this.props.selectedIndex }
+    this.handleSelect = ::this.handleSelect
   }
 
   render () {
@@ -42,4 +33,15 @@ export default class Tabs extends React.Component {
       </div>
     )
   }
+
+  handleSelect (index) {
+    this.setState({ index })
+    if (typeof this.props.onSelect === 'function') {
+      this.props.onSelect(
+        index || this.props.selectedIndex,
+        React.Children.count(this.props.children) - 2
+      )
+    }
+  }
+
 }

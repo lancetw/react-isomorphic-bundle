@@ -16,6 +16,15 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class PostHandler extends BaseComponent {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
+  }
+
   constructor (props, context) {
     super(props, context)
 
@@ -25,15 +34,6 @@ export default class PostHandler extends BaseComponent {
     dispatch(PostActions.init())
     dispatch(UploadActions.init())
     dispatch(MapActions.init())
-  }
-
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
   }
 
   render () {

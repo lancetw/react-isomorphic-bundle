@@ -1,5 +1,3 @@
-'use strict'
-
 const bcrypt = require('co-bcrypt')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
@@ -55,7 +53,7 @@ exports.update = function *(hid, user) {
   const id = +hashids.decode(hid)
   const salt = yield bcrypt.genSalt(10)
   user.passwd = yield bcrypt.hash(user.password, salt)
-  let u = yield models.users.findOne({
+  const u = yield models.users.findOne({
     where: { id: id }
   })
   return yield u.update(user, { fields: fillable })
@@ -63,7 +61,7 @@ exports.update = function *(hid, user) {
 
 exports.delete = function *(hid) {
   const id = +hashids.decode(hid)
-  let user = yield models.users.findOne({ where: { id: id } })
+  const user = yield models.users.findOne({ where: { id: id } })
   return yield user.destroy()
 }
 
@@ -72,16 +70,20 @@ exports.auth = function *(email, password) {
     where: { email: email }
   })
 
-  if (!user)
+  if (!user) {
     return false
-  if (!user.passwd)
+  }
+  if (!user.passwd) {
     return false
-  if (email !== user.email)
+  }
+  if (email !== user.email) {
     return false
+  }
 
   const pass = yield bcrypt.compare(password, user.passwd)
-  if (pass)
+  if (pass) {
     return user
-  else
+  } else {
     return null
+  }
 }

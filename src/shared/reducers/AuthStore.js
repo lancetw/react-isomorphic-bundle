@@ -4,7 +4,6 @@ import {
   AUTH_USER_FAILED,
   SHOW_USER_COMPLETED,
   SHOW_USER_FAILED,
-  REVOKE_USER_STARTED,
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
   SYNC_SERVER_USER_COMPLETED,
@@ -32,7 +31,7 @@ export default createReducer(initialState, {
     ({ user: action.user }),
   [SHOW_USER_FAILED]: (state, action) =>
     ({ errors: action.errors, isAuthenticated: false, verified: false }),
-  [REVOKE_USER_COMPLETED]: (state, action) =>
+  [REVOKE_USER_COMPLETED]: () =>
     ({ token: null, isAuthenticated: false, user: {} }),
   [REVOKE_USER_FAILED]: (state, action) =>
     ({ errors: action.errors }),
@@ -58,7 +57,7 @@ export default createReducer(initialState, {
         ? !!action.token
         : state.isAuthenticated
     }),
-  [CHECK_TOKEN_COMPLETED]: (state, action) =>
+  [CHECK_TOKEN_COMPLETED]: () =>
     ({ verified: true }),
   [CHECK_TOKEN_FAILED]: (state, action) =>
     ({ errors: action.errors, verified: false })

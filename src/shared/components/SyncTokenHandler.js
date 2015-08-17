@@ -1,15 +1,9 @@
 import React, { PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
 import { save } from '../actions/AuthActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
 export default class SyncTokenHandler extends BaseComponent {
-
-  constructor (props) {
-    super(props)
-    this.state = { isClient: false }
-  }
 
   static propTypes = {
     location: PropTypes.object.isRequired
@@ -19,6 +13,11 @@ export default class SyncTokenHandler extends BaseComponent {
     store: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired,
     translator: PropTypes.object
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = { isClient: false }
   }
 
   componentDidMount () {
@@ -32,8 +31,9 @@ export default class SyncTokenHandler extends BaseComponent {
       setTimeout(() => {
         resolve('ok')
       }, 1000)
-
-    }).then(() => this.context.router.transitionTo('/home'))
+    }).then(() => {
+      this.context.router.transitionTo('/home')
+    })
   }
 
   render () {
@@ -55,4 +55,5 @@ export default class SyncTokenHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
+
 }

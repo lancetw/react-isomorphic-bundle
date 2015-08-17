@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 import DayPicker from 'react-day-picker'
@@ -8,19 +7,27 @@ import { isSameDay } from 'shared/utils/date-utils'
 import moment from 'moment'
 import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
-import classNames from 'classnames'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { fixLocaleName } from 'shared/utils/locale-utils'
 
-if (process.env.BROWSER)
+if (process.env.BROWSER) {
   require('css/ui/date-picker')
+}
 
 export default class Cal extends React.Component {
 
+  static propTypes = {
+    fetchList: PropTypes.func.isRequired,
+    countPostsWithCal: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
+  }
+
   constructor (props) {
     super(props)
+
     this.state = {
       locale: fixLocaleName(counterpart.getLocale()),
       date: moment(new Date()).startOf('day').valueOf(),
@@ -32,57 +39,22 @@ export default class Cal extends React.Component {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
-  static propTypes = {
-    fetchList: PropTypes.func.isRequired,
-    countPostsWithCal: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
-  }
-
-  handleDayClick (e, day) {
-    const date = moment(day).valueOf()
-    const reload = true
-    this.props.fetchList(0, 10, date, null, reload)
-
-    this.setState({
-      date: date,
-      selectedDay: day,
-      nextOffset: 0
-    })
-  }
-
-  handleMonthChange (day) {
-    this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
-  }
-
-  handleLocaleChange (newLocale) {
-    const locale = fixLocaleName(newLocale)
-    moment.locale(locale)
-    this.setState({ locale })
-  }
-
-  loadFunc () {
-    const nextOffset = this.state.nextOffset + this.state.limit
-    if (this.state.nextOffset === 0)
-      this.props
-        .fetchList(nextOffset - 1, this.state.limit, this.state.date, true)
-    else
-      this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
-
-    this.setState({ nextOffset: nextOffset })
-  }
-
   getTodayCount (date) {
     if (typeof date !== 'undefined') {
       const count = this.props.post.count[date]
       return typeof count !== 'undefined' && count !== null ? count : 0
-    } else return 0
+    } else {
+      return 0
+    }
   }
 
   getTodayStartCount (date) {
     if (typeof date !== 'undefined') {
       const count = this.props.post.countStart[date]
       return typeof count !== 'undefined' && count !== null ? count : 0
-    } else return 0
+    } else {
+      return 0
+    }
   }
 
   renderDay (day) {
@@ -153,6 +125,7 @@ export default class Cal extends React.Component {
               loadFunc={::this.loadFunc}
               hasMore={post.hasMore}
               diff={154}
+              defaultLocale={this.props.defaultLocale}
             />
             {loading && (
               <div className="ui segment basic has-header">
@@ -173,4 +146,41 @@ export default class Cal extends React.Component {
       </main>
     )
   }
+
+  handleDayClick (e, day) {
+    const date = moment(day).valueOf()
+    const reload = true
+    this.props.fetchList(0, 10, date, null, reload)
+
+    this.setState({
+      date: date,
+      selectedDay: day,
+      nextOffset: 0
+    })
+  }
+
+  handleMonthChange (day) {
+    this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      const locale = fixLocaleName(newLocale)
+      moment.locale(locale)
+      this.setState({ locale })
+    }
+  }
+
+  loadFunc () {
+    const nextOffset = this.state.nextOffset + this.state.limit
+    if (this.state.nextOffset === 0) {
+      this.props
+        .fetchList(nextOffset - 1, this.state.limit, this.state.date, true)
+    } else {
+      this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
+    }
+
+    this.setState({ nextOffset: nextOffset })
+  }
+
 }

@@ -1,8 +1,14 @@
 /* eslint-disable max-len */
 // ref: https://gist.github.com/Ambroos/734933c4d3d11c3af847
 import React, { PropTypes } from 'react'
+import { BaseComponent } from 'shared/components'
 
-export default class Ad extends React.Component {
+export default class Ad extends BaseComponent {
+
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired
+  }
 
   constructor (props) {
     super(props)
@@ -10,9 +16,20 @@ export default class Ad extends React.Component {
     this.state = { released: false }
   }
 
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired
+  componentDidMount () {
+    this._releaseTimeout = setTimeout(() => this.loadAd(), 0)
+  }
+
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this._releaseTimeout)
+    }
+  }
+
+  render () {
+    return (
+      <div id={`hotrank-container-${this.props.id}`}></div>
+    )
   }
 
   loadAd () {
@@ -30,18 +47,4 @@ export default class Ad extends React.Component {
     }
   }
 
-  componentDidMount () {
-    this._releaseTimeout = setTimeout(() => this.loadAd(), 0)
-  }
-
-  componentWillUnmount () {
-    if (this.op)
-      clearTimeout(this._releaseTimeout)
-  }
-
-  render () {
-    return (
-      <div id={`hotrank-container-${this.props.id}`}></div>
-    )
-  }
 }

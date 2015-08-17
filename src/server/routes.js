@@ -1,5 +1,3 @@
-'use strict'
-
 import jwtHelper from './jwt-helper'
 import { verifyJwt } from './jwt-helper'
 import passport from 'koa-passport'
@@ -14,27 +12,29 @@ const User = db.users
 
 router
   .post('/auth/login', function *(next) {
-    let user = yield parse(this)
+    const user = yield parse(this)
 
     const rule = {
       password: 'password',
       email: 'email'
     }
     const errors = validate(rule, user)
-    if (errors)
+    if (errors) {
       this.redirect('/login')
+    }
 
     try {
       const profile = yield User.auth(user.email, user.password)
 
-      if (!profile)
+      if (!profile) {
         throw new Error('no user')
+      }
 
       // response JSON web token
       const token = jwtHelper(profile)
 
       // set session token
-      let sess = this.session
+      const sess = this.session
       sess.token = token
 
       this.redirect('/sync/token')
@@ -52,7 +52,7 @@ router
 
 router
   .post('/auth/register', function *(next) {
-    let user = yield parse(this)
+    const user = yield parse(this)
 
     const rule = {
       email: 'email',
@@ -61,27 +61,28 @@ router
     }
 
     const errors = validate(rule, user)
-    if (errors)
+    if (errors) {
       this.redirect('/signup')
-    else
+    } else {
       try {
         const profile = yield User.create(user)
 
-        if (!profile)
-           throw new Error('no user')
+        if (!profile) {
+          throw new Error('no user')
+        }
 
         // response JSON web token
         const token = jwtHelper(profile)
 
         // set session token
-        let sess = this.session
+        const sess = this.session
         sess.token = token
 
         this.redirect('/sync/token?token=' + token)
       } catch (err) {
         this.redirect('/signup')
       }
-
+    }
   })
 
 router
@@ -95,7 +96,7 @@ router
         const token = jwtHelper(profile)
 
         // set session token
-        let sess = ctx.session
+        const sess = ctx.session
         sess.token = token
 
         ctx.body = { token: token }
@@ -115,7 +116,7 @@ router
 
 router
   .post('/auth/locale', function *(next) {
-    let body = yield parse(this)
+    const body = yield parse(this)
     this.session.locale = body.locale
     this.body = { locale: body.locale }
   })
@@ -140,7 +141,7 @@ router
 
 router
   .get('/auth/facebook/callback', function *(next) {
-    let ctx = this
+    const ctx = this
     yield passport.authenticate('facebook', {
       failureRedirect: '/login'
     }, function*(err, profile, info) {
@@ -148,20 +149,20 @@ router
         const token = jwtHelper(profile)
 
         // set session token
-        let sess = ctx.session
+        const sess = ctx.session
         sess.token = token
 
         // [TODO]: get param to set nextPage
-
         ctx.redirect('/sync/token?token=' + token)
-
-      } else ctx.redirect('/auth/facebook/request/email')
+      } else {
+        ctx.redirect('/auth/facebook/request/email')
+      }
     })
   })
 
 router
   .post('/auth/token/verify', function *(next) {
-    let body = yield parse(this)
+    const body = yield parse(this)
     const rule = {
       token: 'string'
     }
@@ -170,22 +171,23 @@ router
     if (errors) {
       this.status = 400
       this.set('WWW-Authenticate',
-               'JWT realm="users", error="invalid_token", error_description="'
-               + JSON.stringify(errors) + '"')
+        'JWT realm="users", error="invalid_token", error_description="'
+        + JSON.stringify(errors) + '"')
       this.body = errors
     }
 
     try {
       const verified = yield verifyJwt(body.token)
-      if (verified)
+      if (verified) {
         this.body = { response: true }
-      else
+      } else {
         this.body = { response: false }
+      }
     } catch (err) {
       this.status = 401
       this.set('WWW-Authenticate',
-               'JWT realm="users",error="invalid_token",error_description="'
-               + JSON.stringify(err) + '"')
+        'JWT realm="users",error="invalid_token",error_description="'
+        + JSON.stringify(err) + '"')
       this.body = err
     }
   })

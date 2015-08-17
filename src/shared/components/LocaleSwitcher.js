@@ -8,29 +8,15 @@ import { connect } from 'react-redux'
 }))
 export default class LocaleSwitcher extends React.Component {
 
-  constructor (props) {
-    super(props)
-
-    this.handleChange = ::this.handleChange
-  }
-
   static propTypes = {
     locale: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
-  handleChange (e) {
-    const lang = e.target.getAttribute('value')
-    counterpart.setLocale(lang)
-    this.props.dispatch(
-      LocaleActions.sync(lang)
-    )
-    const title = counterpart(this.props.locale.title)
-    const defaultTitle = counterpart('title.site')
-    if (defaultTitle)
-      document.title = `${title} | ${defaultTitle}`
-    else
-      document.title = `${title}`
+  constructor (props) {
+    super(props)
+
+    this.handleChange = ::this.handleChange
   }
 
   render () {
@@ -55,4 +41,20 @@ export default class LocaleSwitcher extends React.Component {
       </div>
     )
   }
+
+  handleChange (e) {
+    const lang = e.target.getAttribute('value')
+    counterpart.setLocale(lang)
+    this.props.dispatch(
+      LocaleActions.sync(lang)
+    )
+    const title = counterpart(this.props.locale.title)
+    const defaultTitle = counterpart('title.site')
+    if (defaultTitle) {
+      document.title = `${title} | ${defaultTitle}`
+    } else {
+      document.title = `${title}`
+    }
+  }
+
 }

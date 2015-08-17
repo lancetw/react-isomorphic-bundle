@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = function (sequelize, Sequelize) {
   return sequelize.define('posts', {
     id: {
@@ -137,15 +135,16 @@ module.exports = function (sequelize, Sequelize) {
     },
     validate: {
       bothCoordsOrNone: function () {
-        if ((this.lat === null) !== (this.lng === null))
+        if ((this.lat === null) !== (this.lng === null)) {
           throw new Error(
             'Require either both latitude and longitude or neither'
           )
+        }
       }
     },
     instanceMethods: {
       toJSON: function () {
-        let values = this.get()
+        const values = this.get()
         delete values.created_at
         delete values.updated_at
         delete values.deleted_at

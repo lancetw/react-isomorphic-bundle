@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import Search from './SearchComponent'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as SearchActions from '../actions/SearchActions'
 import { updateTitle } from '../actions/LocaleActions'
@@ -12,14 +11,6 @@ import { BaseComponent } from 'shared/components'
 }))
 export default class SearchHandler extends BaseComponent {
 
-  constructor (props, context) {
-    super(props, context)
-    const { dispatch } = context.store
-    dispatch(updateTitle('title.search'))
-
-    this.state = { limit: 10, nextOffset: 0 }
-  }
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     search: PropTypes.object.isRequired
@@ -28,6 +19,28 @@ export default class SearchHandler extends BaseComponent {
   static contextTypes = {
     store: PropTypes.object.isRequired,
     translator: PropTypes.object
+  }
+
+  constructor (props, context) {
+    super(props, context)
+    const { dispatch } = context.store
+    dispatch(updateTitle('title.search'))
+
+    this.state = { limit: 10, nextOffset: 0 }
+  }
+
+  render () {
+    const title = this._T('title.search')
+    const defaultTitle = this._T('title.site')
+
+    return (
+      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+        <Search
+          {...this.props}
+          loadFunc={::this.loadFunc}
+        />
+      </DocumentTitle>
+    )
   }
 
   loadFunc () {
@@ -39,17 +52,4 @@ export default class SearchHandler extends BaseComponent {
     this.setState({ nextOffset: nextOffset })
   }
 
-  render () {
-    const title = this._T('title.search')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
-    return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
-        <Search
-          {...this.props}
-          loadFunc={::this.loadFunc}
-        />
-      </DocumentTitle>
-    )
-  }
 }

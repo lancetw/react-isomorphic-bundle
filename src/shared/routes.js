@@ -15,7 +15,6 @@ import {
   Cprop,
   ChangePassword,
   SyncToken,
-  Direct,
   Search
 } from './components'
 import NotFound from './pages/NotFound'

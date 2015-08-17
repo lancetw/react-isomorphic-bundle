@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = function (sequelize, Sequelize) {
   return sequelize.define('users', {
     id: {
@@ -35,7 +33,7 @@ module.exports = function (sequelize, Sequelize) {
     },
     instanceMethods: {
       toJSON: function () {
-        let values = this.get()
+        const values = this.get()
         delete values.id
         delete values.passwd
         delete values.password

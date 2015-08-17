@@ -7,29 +7,13 @@ import { getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
-import { PostPropArray } from 'shared/utils/forms'
+import { postPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
-import moment from 'moment'
 import { Link } from 'react-router'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 
-const { CSSTransitionGroup } = React.addons
-
 export default class Post extends BaseComponent {
-
-  constructor (props) {
-    super(props)
-
-    counterpart.setLocale(props.defaultLocale)
-
-    this.state = {
-      locale: fixLocaleName(counterpart.getLocale())
-    }
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
-    this.releaseTimeout = undefined
-  }
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -45,49 +29,27 @@ export default class Post extends BaseComponent {
     router: PropTypes.object.isRequired
   }
 
-  handleLocaleChange (newLocale) {
+  constructor (props) {
+    super(props)
 
-  }
+    counterpart.setLocale(props.defaultLocale)
 
-  getDetailProp (index) {
-    return at(PostPropArray(originLocaleName(this.state.locale)), index)
-  }
+    this.state = {
+      locale: fixLocaleName(counterpart.getLocale())
+    }
 
-  deletePost () {
-    const _t = require('counterpart')
-    const swal = require('sweetalert')
-    const { detail } = this.props.post
-    const { remove } = this.props
-    const { transitionTo } = this.context.router
-    swal({
-      title: _t('post.detail.delete.title'),
-      text: _t('post.detail.delete.text'),
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: _t('post.detail.delete.confirm'),
-      cancelButtonText: _t('post.detail.delete.cancel'),
-      closeOnConfirm: false,
-      showLoaderOnConfirm: true
-    }, () => {
-      Promise.all([
-       remove(detail.id)
-      ]).then(() => {
-        swal({
-          title: _t('post.detail.delete.ok.title'),
-          text: _t('post.detail.delete.ok.text'),
-          type: 'success',
-          confirmButtonText: _t('post.detail.delete.ok.confirm'),
-          closeOnConfirm: true
-        }, () => {
-          transitionTo('/home')
-        })
-      })
-    })
+    counterpart.onLocaleChange(::this.handleLocaleChange)
+    this.releaseTimeout = undefined
   }
 
   componentWillUnmount () {
-    if (this.op)
+    if (this.op) {
       clearTimeout(this.releaseTimeout)
+    }
+  }
+
+  getDetailProp (index) {
+    return at(postPropArray(originLocaleName(this.state.locale)), index)
   }
 
   render () {
@@ -212,4 +174,39 @@ export default class Post extends BaseComponent {
       </main>
     )
   }
+
+  handleLocaleChange () {}
+
+  deletePost () {
+    const _t = require('counterpart')
+    const swal = require('sweetalert')
+    const { detail } = this.props.post
+    const { remove } = this.props
+    const { transitionTo } = this.context.router
+    swal({
+      title: _t('post.detail.delete.title'),
+      text: _t('post.detail.delete.text'),
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: _t('post.detail.delete.confirm'),
+      cancelButtonText: _t('post.detail.delete.cancel'),
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true
+    }, () => {
+      Promise.all([
+        remove(detail.id)
+      ]).then(() => {
+        swal({
+          title: _t('post.detail.delete.ok.title'),
+          text: _t('post.detail.delete.ok.text'),
+          type: 'success',
+          confirmButtonText: _t('post.detail.delete.ok.confirm'),
+          closeOnConfirm: true
+        }, () => {
+          transitionTo('/home')
+        })
+      })
+    })
+  }
+
 }

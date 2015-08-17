@@ -19,17 +19,19 @@ export default class BaseComponent extends React.Component {
   }
 
   _T (key) {
-    if (typeof this.context.translator !== 'undefined')
+    if (typeof this.context.translator !== 'undefined') {
       return this.context.translator.translate(key)
-    else
+    } else {
       return counterpart(key)
+    }
   }
 
   getLocale () {
-    if (typeof this.context.translator !== 'undefined')
+    if (typeof this.context.translator !== 'undefined') {
       return this.context.translator.getLocale()
-    else
+    } else {
       return counterpart.getLocale()
+    }
   }
 
 }
