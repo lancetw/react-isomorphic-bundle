@@ -61,6 +61,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     counterpart.setFallbackLocale('zh-hant-tw')
 
     const { locale } = store.getState().locale
+    console.log(locale)
     counterpart.setLocale(locale || 'zh-hant-tw')
 
     const history = new BrowserHistory()
