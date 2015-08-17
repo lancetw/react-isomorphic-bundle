@@ -35,7 +35,6 @@ export default class Gmap extends Component {
     zoom: 16,
     lat: 25.018536,
     lng: 121.529146,
-    place: '???',
     className: 'ui segment',
     loading: true
   }
