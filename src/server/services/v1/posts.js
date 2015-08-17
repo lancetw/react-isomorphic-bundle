@@ -20,17 +20,16 @@ export default new Resource('posts', {
     let data
     if (user) {
       const uid = hashids.decode(user)
-      data = typeof start !== null
+      data = start !== null
       ? yield Post.fetchWithUser(offset, limit, start, end, uid)
       : yield Post.listWithUser(offset, limit, uid)
-    } else {
-      if (cprop)
-        data = yield Post.listWithCprop(cprop, offset, limit)
-      else
-        data = typeof start !== null
-        ? yield Post.fetch(offset, limit, start, end)
-        : yield Post.list(offset, limit)
-    }
+    } else
+    if (cprop)
+      data = yield Post.listWithCprop(cprop, offset, limit)
+    else
+    data = start !== null
+    ? yield Post.fetch(offset, limit, start, end)
+    : yield Post.list(offset, limit)
 
     this.body = hashids.encodeJson(data)
   },
