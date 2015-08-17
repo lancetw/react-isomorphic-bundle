@@ -37,6 +37,7 @@ export default class SearchHandler extends BaseComponent {
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Search
           {...this.props}
+          defaultLocale={this.getLocale()}
           loadFunc={::this.loadFunc}
         />
       </DocumentTitle>

@@ -6,11 +6,14 @@ export default class Search extends React.Component {
 
   static propTypes = {
     loadFunc: PropTypes.func.isRequired,
-    search: PropTypes.object.isRequired
+    search: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
     super(props)
+
+    counterpart.setLocale(props.defaultLocale)
   }
 
   render () {
