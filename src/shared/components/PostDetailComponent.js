@@ -2,16 +2,17 @@ import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
-import { toShortDate } from 'shared/utils/date-utils'
+import { toShortDate, toYear } from 'shared/utils/date-utils'
 import { getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
-import { postPropArray } from 'shared/utils/forms'
+import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import { Link } from 'react-router'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
+import AutoLinkText from 'react-autolink-text'
 
 export default class Post extends BaseComponent {
 
@@ -49,7 +50,7 @@ export default class Post extends BaseComponent {
   }
 
   getDetailProp (index) {
-    return at(postPropArray(originLocaleName(this.state.locale)), index)
+    return at(PostPropArray(originLocaleName(this.state.locale)), index)
   }
 
   render () {
@@ -60,17 +61,27 @@ export default class Post extends BaseComponent {
       ? JSON.parse(detail.file)
       : []
 
-    const detailClass = detail.id
-      ? classNames('content')
-      : classNames('content', 'hide')
+    const detailClass = classNames('content', { hide: !detail.id })
 
-    const finalContent = content && content.split('\n').map((t) => {
-      return t === '' ? <br /> : <p>{t}</p>
-    })
+    const finalContent = this.parseContent(content)
 
     const eventDate = (detail.startDate === detail.endDate)
     ? toShortDate(detail.endDate)
     : toShortDate(detail.startDate) + ' - ' + toShortDate(detail.endDate)
+
+    let eventEndYear =
+      toYear(detail.endDate) > toYear(new Date())
+      ? toYear(detail.endDate)
+      : null
+
+    const eventStartYear =
+      toYear(detail.startDate) < toYear(new Date())
+      ? toYear(detail.startDate)
+      : null
+
+    if (eventStartYear && toYear(detail.endDate) === toYear(new Date())) {
+      eventEndYear = toYear(detail.endDate)
+    }
 
     const detailProp = this.getDetailProp(detail.prop)
 
@@ -82,12 +93,28 @@ export default class Post extends BaseComponent {
           <div className="row">
             <div className="ui fluid detail card">
               <div className={detailClass}>
-                <h1 className="header left floated">{detail.title}</h1>
-                <div className="meta">
-                  <div className="ui orange label large right floated time">
-                    {eventDate}
-                  </div>
+                <div className="ui left floated">
+                {eventDate && (
+                    <span className="ui orange label">
+                      {eventDate}
+                    </span>
+                  )}
                 </div>
+                <div className="ui right floated">
+                 {eventStartYear && eventEndYear && (
+                    <span className="ui large grey label">
+                      {eventStartYear} - {eventEndYear}
+                    </span>
+                  )}
+                </div>
+                <div className="ui hidden divider" />
+                <h1>
+                  <Link
+                    className="ui blue small header"
+                    to={`/wall/posts/${detail.id}`}>
+                    {detail.title}
+                  </Link>
+                </h1>
                 <div className="description">
                   {finalContent}
                   { files && !isEmpty(files)
@@ -207,6 +234,19 @@ export default class Post extends BaseComponent {
         })
       })
     })
+  }
+
+  parseContent (content) {
+    const ent = require('ent')
+    if (content) {
+      return (
+        content.replace(/^\"|\"$/g, '').split('\n').map((t) => {
+          return t === ''
+            ? <br />
+            : <p><AutoLinkText text={ent.decode(t)}/></p>
+        })
+      )
+    }
   }
 
 }

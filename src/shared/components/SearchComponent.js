@@ -23,7 +23,7 @@ export default class Search extends React.Component {
       <main className="ui stackable page grid">
         <div className="column">
           <div className="row">
-            <h1>搜尋「{search.pattern}」的結果</h1>
+            {search.pattern && (<h1>搜尋「{search.pattern}」的結果</h1>)}
           </div>
           <div className="row">
             {!isEmpty(search.data) && (
@@ -38,7 +38,7 @@ export default class Search extends React.Component {
             {loading && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
-                  <div className="ui medium indeterminate text loader">
+                  <div className="ui large text loader">
                     <Translate content="wall.loading" />
                   </div>
                 </div>

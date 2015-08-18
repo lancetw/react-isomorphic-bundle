@@ -31,13 +31,13 @@ export default class Wall extends React.Component {
             posts={post.posts}
             loadFunc={loadFunc}
             hasMore={post.hasMore}
-            diff={126}
+            diff={121}
             defaultLocale={this.props.defaultLocale}
           />
           {loading && (
             <div className="ui segment basic has-header">
               <div className="ui active inverted dimmer">
-                <div className="ui medium indeterminate text loader">
+                <div className="ui indeterminate text loader">
                   <Translate content="wall.loading" />
                 </div>
               </div>

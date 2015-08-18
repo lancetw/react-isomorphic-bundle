@@ -6,7 +6,7 @@ import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
-import { postPropArray } from 'shared/utils/forms'
+import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
@@ -59,7 +59,7 @@ export default class WallHandler extends BaseComponent {
 
   getCardProp (index) {
     const _lang = originLocaleName(this.state.locale)
-    return at(postPropArray(_lang), index)
+    return at(PostPropArray(_lang), index)
   }
 
   render () {

@@ -32,5 +32,15 @@ export function toShortDate (date) {
     return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('MM/DD')
   }
 
-  return ''
+  return moment(new Date()).format('MM/DD')
 }
+
+export function toYear (date) {
+  const moment = require('moment')
+  if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid()) {
+    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('YYYY')
+  }
+
+  return moment(new Date()).format('YYYY')
+}
+

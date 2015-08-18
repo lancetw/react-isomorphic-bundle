@@ -98,7 +98,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   const startItems = yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'ASC' ]],
+    order: [[ 'end_date', 'ASC' ]],
     where: {
       start_date: {
         $between: [
@@ -113,7 +113,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   const endItems = yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'ASC' ]],
+    order: [[ 'end_date', 'ASC' ]],
     where: {
       end_date: {
         $between: [
@@ -128,7 +128,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   const duringItems = yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'ASC' ]],
+    order: [[ 'end_date', 'ASC' ]],
     where: {
       start_date: {
         $lt:
@@ -147,7 +147,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   final = final.concat(endItems)
   final = final.concat(duringItems)
   final = uniq(final, (item, key, id) => item.id )
-  final = sortBy(final, 'startDate')
+  final = sortBy(final, 'endDate')
 
   return final
 }

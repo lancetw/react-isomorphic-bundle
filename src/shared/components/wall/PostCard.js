@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
-import { toShortDate } from 'shared/utils/date-utils'
-import { postPropArray } from 'shared/utils/forms'
+import { toShortDate, toYear } from 'shared/utils/date-utils'
+import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
@@ -28,9 +28,29 @@ export default class PostCard extends BaseComponent {
   }
 
   getCardProp (index) {
-    return at(postPropArray(originLocaleName(this.state.locale)), index)
+    return at(PostPropArray(originLocaleName(this.state.locale)), index)
   }
-  /* eslint-disable max-len */
+
+  renderLocationInfo (card) {
+    const Translate = require('react-translate-component')
+
+    if (card.place) {
+      if (card.lat && card.lng) {
+        return (
+          <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>
+            {card.place}
+          </a>
+        )
+      } else {
+        return (
+          <span>{card.place}</span>
+        )
+      }
+    }
+
+    return <Translate content="post.detail.nomap" />
+  }
+
   render () {
     const Translate = require('react-translate-component')
 
@@ -40,6 +60,20 @@ export default class PostCard extends BaseComponent {
     ? toShortDate(card.endDate)
     : toShortDate(card.startDate) + ' - ' + toShortDate(card.endDate)
 
+    let eventEndYear =
+      toYear(card.endDate) > toYear(new Date())
+        ? toYear(card.endDate)
+        : null
+
+    const eventStartYear =
+      toYear(card.startDate) < toYear(new Date())
+        ? toYear(card.startDate)
+        : null
+
+    if (eventStartYear && toYear(card.endDate) === toYear(new Date())) {
+      eventEndYear = '今年'
+    }
+
     const cardProp = this.getCardProp(card.prop)
 
     return (
@@ -47,23 +81,29 @@ export default class PostCard extends BaseComponent {
         <div className="content">
           <div className="header">
             <Link to={`/wall/posts/${card.id}`}>{card.title}</Link>
+            {eventDate && (
+              <div className="ui orange right ribbon label">
+                {eventDate}
+              </div>
+            )}
           </div>
-          <div className="meta">
-            <span className="ui orange label large right floated time">
-              {eventDate}
+          <div className="ui small header">
+          {eventStartYear && (
+            <span className="ui pointing label">
+              {eventStartYear} 開始
             </span>
-            <span className="ui tag label category">{cardProp}</span>
+          )}
+          {eventEndYear && (
+            <span className="ui green pointing label">
+              將結束於 {eventEndYear}
+            </span>
+          )}
           </div>
         </div>
         <div className="extra content">
-          <span className="left floated">
-          </span>
           <span className="right floated like">
             <i className="like icon"></i>
-            { card.place ? (
-                <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>{card.place}</a>
-              )
-              : <Translate content="post.detail.nomap" /> }
+            {this.renderLocationInfo(card)}
           </span>
         </div>
       </div>

@@ -185,28 +185,40 @@ exports.PostTypeArray = function (locale) {
 }
 
 const PostPropEnArray = {
+  0: 'Others',
   1: 'General',
   2: 'Music',
   3: 'Communication',
   4: 'Group Community',
   5: 'Special Groups',
-  6: 'Health Care',
-  7: 'Others'
+  6: 'Missions',
+  7: 'Evangelism',
+  8: 'Sermon',
+  9: 'Training',
+  10: 'Welfare',
+  11: 'Health Care',
+  12: 'Counseling'
 }
 const PostPropEn = t.enums(PostPropEnArray)
 
 const PostPropZhHantTWArray = {
+  0: '其他',
   1: '一般',
   2: '音樂',
   3: '交流',
   4: '社群',
-  5: '特殊群組',
-  6: '健康',
-  7: '其他'
+  5: '特殊群體',
+  6: '宣教',
+  7: '福音',
+  8: '佈道',
+  9: '培訓',
+  10: '社福',
+  11: '醫療',
+  12: '諮商'
 }
 const PostPropZhHantTW = t.enums(PostPropZhHantTWArray)
 
-exports.postPropArray = function (locale) {
+exports.PostPropArray = function (locale) {
   const list = {
     'en': PostPropEnArray,
     'zh-hant-tw': PostPropZhHantTWArray
