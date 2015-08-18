@@ -53,7 +53,7 @@ exports.list = function *(offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithCprop = function *(cprop, offset=0, limit=20) {
-  if (cprop === null) return []
+  if (typeof cprop === 'undefined' || cprop === null) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -67,7 +67,7 @@ exports.listWithCprop = function *(cprop, offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
-  if (uid === null) return []
+  if (typeof uid === 'undefined' || uid === null) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -81,18 +81,18 @@ exports.listWithUser = function *(offset=0, limit=20, uid) {
 
 /* eslint-disable camelcase */
 exports.fetch = function *(offset=0, limit=20, start, end) {
-  let _start = start
-  let _end = end
+  let _start
+  let _end
 
-  if (_start !== null) {
+  if (typeof _start !== 'undefined') {
     _start = moment().startOf('day').valueOf()
   } else {
-    _start = +_start
+    _start = +start
   }
-  if (_end !== null) {
+  if (typeof _end !== 'undefined') {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
-    _end = +_end
+    _end = +end
   }
 
   const startItems = yield Post.findAll({
@@ -154,20 +154,20 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 
 /* eslint-disable camelcase */
 exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
-  if (!uid) return []
+  if (typeof uid === 'undefined' || uid === null) return []
 
-  let _start = start
-  let _end = end
+  let _start
+  let _end
 
-  if (_start !== null) {
+  if (typeof _start !== 'undefined') {
     _start = moment().startOf('day').valueOf()
   } else {
-    _start = +_start
+    _start = +start
   }
-  if (_end !== null) {
+  if (typeof _end !== 'undefined') {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
-    _end = +_end
+    _end = +end
   }
 
   return yield Post.findAll({
@@ -187,11 +187,11 @@ exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
 exports.countPerDayInMonth = function *(year, month) {
   const out = []
   const startDateOut = []
-  let _year = year
-  let _month = month
+  let _year
+  let _month
   let totalDays
 
-  if (_year !== null && _month !== null) {
+  if (typeof year !== 'undefined' && typeof month !== 'undefined') {
     totalDays = moment({
       year: _year,
       month: _month - 1,
