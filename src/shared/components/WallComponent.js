@@ -44,8 +44,11 @@ export default class Wall extends React.Component {
             </div>
           )}
           {!loading && isEmpty(post.posts) && (
-            <div className="ui segment basic center aligned">
-              <Translate content="post.nodata" />
+            <div>
+              <div className="ui hidden divider"></div>
+              <div className="ui segment basic has-header center aligned">
+                <Translate content="post.nodata" />
+              </div>
             </div>
           )}
         </div>
