@@ -84,12 +84,12 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   let _start
   let _end
 
-  if (typeof _start !== 'undefined') {
+  if (typeof start !== 'undefined') {
     _start = moment().startOf('day').valueOf()
   } else {
     _start = +start
   }
-  if (typeof _end !== 'undefined') {
+  if (typeof end !== 'undefined') {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
     _end = +end
@@ -159,12 +159,12 @@ exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
   let _start
   let _end
 
-  if (typeof _start !== 'undefined') {
+  if (typeof start !== 'undefined') {
     _start = moment().startOf('day').valueOf()
   } else {
     _start = +start
   }
-  if (typeof _end !== 'undefined') {
+  if (typeof end !== 'undefined') {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
     _end = +end
