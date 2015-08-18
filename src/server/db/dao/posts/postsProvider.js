@@ -53,7 +53,7 @@ exports.list = function *(offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithCprop = function *(cprop, offset=0, limit=20) {
-  if (!cprop) return []
+  if (cprop === null) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -67,7 +67,7 @@ exports.listWithCprop = function *(cprop, offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
-  if (!uid) return []
+  if (uid === null) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -84,12 +84,12 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   let _start = start
   let _end = end
 
-  if (!_start) {
+  if (_start !== null) {
     _start = moment().startOf('day').valueOf()
   } else {
     _start = +_start
   }
-  if (!_end) {
+  if (_end !== null) {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
     _end = +_end
@@ -159,12 +159,12 @@ exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
   let _start = start
   let _end = end
 
-  if (_start) {
+  if (_start !== null) {
     _start = moment().startOf('day').valueOf()
   } else {
     _start = +_start
   }
-  if (_end) {
+  if (_end !== null) {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
     _end = +_end
@@ -191,7 +191,7 @@ exports.countPerDayInMonth = function *(year, month) {
   let _month = month
   let totalDays
 
-  if ( _year !== null && _month !== null) {
+  if (_year !== null && _month !== null) {
     totalDays = moment({
       year: _year,
       month: _month - 1,
