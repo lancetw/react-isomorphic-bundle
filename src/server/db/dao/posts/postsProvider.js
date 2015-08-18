@@ -53,7 +53,7 @@ exports.list = function *(offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithCprop = function *(cprop, offset=0, limit=20) {
-  if (typeof cprop === 'undefined' || cprop === null) return []
+  if (cprop === null) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -67,7 +67,7 @@ exports.listWithCprop = function *(cprop, offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
-  if (typeof uid === 'undefined' || uid === null) return []
+  if (uid === null) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -84,15 +84,15 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   let _start = start
   let _end = end
 
-  if (typeof start !== 'undefined') {
+  if (_start !== null) {
     _start = moment().startOf('day').valueOf()
   } else {
-    _start = +start
+    _start = +_start
   }
-  if (typeof end !== 'undefined') {
+  if (_end !== null) {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
-    _end = +end
+    _end = +_end
   }
 
   const startItems = yield Post.findAll({
@@ -154,20 +154,20 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 
 /* eslint-disable camelcase */
 exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
-  if (typeof uid === 'undefined' || uid === null) return []
+  if (!uid) return []
 
   let _start = start
   let _end = end
 
-  if (typeof start !== 'undefined') {
+  if (_start !== null) {
     _start = moment().startOf('day').valueOf()
   } else {
-    _start = +start
+    _start = +_start
   }
-  if (typeof end !== 'undefined') {
+  if (_end !== null) {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
-    _end = +end
+    _end = +_end
   }
 
   return yield Post.findAll({
@@ -191,7 +191,7 @@ exports.countPerDayInMonth = function *(year, month) {
   let _month = month
   let totalDays
 
-  if (typeof year !== 'undefined' && typeof month !== 'undefined') {
+  if (_year !== null && _month !== null) {
     totalDays = moment({
       year: _year,
       month: _month - 1,
