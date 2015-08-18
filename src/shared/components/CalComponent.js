@@ -177,10 +177,11 @@ export default class Cal extends React.Component {
   loadFunc () {
     const nextOffset = this.state.nextOffset + this.state.limit
     if (this.state.nextOffset === 0) {
-      this.props
-        .fetchList(nextOffset - 1, this.state.limit, this.state.date, true)
+      this.props.fetchList(
+        nextOffset - 1, this.state.limit, this.state.date, null, true)
     } else {
-      this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
+      this.props.fetchList(
+        nextOffset - 1, this.state.limit, this.state.date)
     }
 
     this.setState({ nextOffset: nextOffset })

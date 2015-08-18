@@ -53,7 +53,7 @@ exports.list = function *(offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithCprop = function *(cprop, offset=0, limit=20) {
-  if (typeof cprop === 'undefined') return []
+  if (!cprop) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -67,7 +67,7 @@ exports.listWithCprop = function *(cprop, offset=0, limit=20) {
 
 /* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
-  if (typeof uid === 'undefined') return []
+  if (!uid) return []
 
   return yield Post.findAll({
     offset: offset,
@@ -84,12 +84,12 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
   let _start = start
   let _end = end
 
-  if (typeof _start === 'undefined') {
+  if (!_start) {
     _start = moment().startOf('day').valueOf()
   } else {
     _start = +_start
   }
-  if (typeof _end === 'undefined') {
+  if (!_end) {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
     _end = +_end
@@ -154,17 +154,17 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 
 /* eslint-disable camelcase */
 exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
-  if (typeof uid === 'undefined') return []
+  if (!uid) return []
 
   let _start = start
   let _end = end
 
-  if (typeof _start === 'undefined') {
+  if (_start) {
     _start = moment().startOf('day').valueOf()
   } else {
     _start = +_start
   }
-  if (typeof _end === 'undefined') {
+  if (_end) {
     _end = moment(+_start).endOf('day').valueOf()
   } else {
     _end = +_end
@@ -191,7 +191,7 @@ exports.countPerDayInMonth = function *(year, month) {
   let _month = month
   let totalDays
 
-  if (typeof _year !== 'undefined' && typeof _month !== 'undefined') {
+  if ( _year !== null && _month !== null) {
     totalDays = moment({
       year: _year,
       month: _month - 1,
