@@ -81,8 +81,8 @@ exports.listWithUser = function *(offset=0, limit=20, uid) {
 
 /* eslint-disable camelcase */
 exports.fetch = function *(offset=0, limit=20, start, end) {
-  let _start
-  let _end
+  let _start = start
+  let _end = end
 
   if (typeof start !== 'undefined') {
     _start = moment().startOf('day').valueOf()
@@ -156,8 +156,8 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
   if (typeof uid === 'undefined' || uid === null) return []
 
-  let _start
-  let _end
+  let _start = start
+  let _end = end
 
   if (typeof start !== 'undefined') {
     _start = moment().startOf('day').valueOf()
@@ -187,8 +187,8 @@ exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
 exports.countPerDayInMonth = function *(year, month) {
   const out = []
   const startDateOut = []
-  let _year
-  let _month
+  let _year = year
+  let _month = month
   let totalDays
 
   if (typeof year !== 'undefined' && typeof month !== 'undefined') {
