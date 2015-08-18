@@ -191,7 +191,7 @@ exports.countPerDayInMonth = function *(year, month) {
   let _month = month
   let totalDays
 
-  if (_year !== 'undefined' && _month !== 'undefined') {
+  if (typeof _year !== 'undefined' && typeof _month !== 'undefined') {
     totalDays = moment({
       year: _year,
       month: _month - 1,
