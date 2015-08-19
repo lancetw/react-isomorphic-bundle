@@ -58,7 +58,7 @@ export default class ManageHandler extends BaseComponent {
     const { dispatch, auth, post } = this.props
     const user = auth.user.id
     dispatch(PostActions
-      .defaultListWithUser(post.offset, post.limit, user))
+      .manageList(post.offset, post.limit, user))
   }
 
 }

@@ -72,7 +72,7 @@ exports.listWithUser = function *(offset=0, limit=20, uid) {
   return yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
+    order: [[ 'id', 'DESC' ]],
     where: {
       uid: +uid
     }

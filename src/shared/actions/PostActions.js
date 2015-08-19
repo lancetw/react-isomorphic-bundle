@@ -360,7 +360,7 @@ export function overviewList (offset=0, limit=5, reload=false) {
   }
 }
 
-export function defaultListWithUser (offset=0, limit=5, user, reload=false) {
+export function manageList (offset=0, limit=5, user, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
     const cached = getState().manage.posts
