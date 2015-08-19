@@ -45,7 +45,8 @@ export default class Post extends BaseComponent {
     upload: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
     params: PropTypes.object,
-    defaultLocale: PropTypes.string.isRequired
+    defaultLocale: PropTypes.string.isRequired,
+    disableSubmit: PropTypes.bool.isRequired
   }
 
   static contextTypes = {
@@ -87,7 +88,8 @@ export default class Post extends BaseComponent {
       updated: false,
       locale: counterpart.getLocale(),
       placeError: false,
-      latlngError: false
+      latlngError: false,
+      disableSubmit: props.disableSubmit
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -127,6 +129,17 @@ export default class Post extends BaseComponent {
     }
 
     const Translate = require('react-translate-component')
+
+    const submitClass = classNames(
+      'ui',
+      'fluid',
+      'orange',
+      'labeled',
+      'icon',
+      'large',
+      'button',
+      { 'disabled': this.props.disableSubmit }
+    )
 
     const Loading = classNames(
       'ui',
@@ -222,7 +235,7 @@ export default class Post extends BaseComponent {
                 <div className="ui hidden divider" />
                 <button
                   type="submit"
-                  className="ui fluid orange labeled icon large button"
+                  className={submitClass}
                   disabled={this.state.submited}>
                   <Translate content="post.submit" />
                   <i className="add icon"></i>
@@ -327,6 +340,9 @@ export default class Post extends BaseComponent {
     )
   }
 
+  static defaultPropTypes = {
+    disableSubmit: false
+  }
 
   dateToArray (date) {
     const _date = date.split('-')
@@ -520,6 +536,8 @@ export default class Post extends BaseComponent {
 
   validation (errors) {
     if (typeof errors !== 'undefined' && !isEmpty(errors)) {
+      this.setState({ disableSubmit: false })
+
       const options = clone(this.state.options)
       options.fields = clone(options.fields)
       const regOptions = clone(this.state.regOptions)
@@ -556,8 +574,13 @@ export default class Post extends BaseComponent {
           }
         })
       }
-      this.setState({ submited: false })
-      this.setState({ options, regOptions })
+
+      this.setState({
+        options,
+        regOptions,
+        submited: false,
+        disableSubmit: true
+      })
     }
   }
 

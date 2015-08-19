@@ -31,6 +31,9 @@ export default class PostEditHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
+
+    this.state = { disableSubmit: true }
+
     const { dispatch, resolver, getState } = context.store
 
     dispatch(updateTitle('title.post'))
@@ -68,6 +71,8 @@ export default class PostEditHandler extends BaseComponent {
           }
           resolver.resolve(this.uploadActions.setImageFileName, name, _index)
         })
+
+        this.setState({ disableSubmit: false })
       }, 2500)
     }
   }
@@ -84,6 +89,7 @@ export default class PostEditHandler extends BaseComponent {
           {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
           defaultLocale={this.getLocale()}
+          disableSubmit={this.state.disableSubmit}
         />
       </DocumentTitle>
     )
