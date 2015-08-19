@@ -17,7 +17,7 @@ export default class Search extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { search, loadFunc } = this.props
-    const loading = search.isFetching || false
+    const loading = !!search.isFetching
 
     return (
       <main className="ui stackable page grid">
@@ -26,15 +26,13 @@ export default class Search extends React.Component {
             {search.pattern && (<h1>搜尋「{search.pattern}」的結果</h1>)}
           </div>
           <div className="row">
-            {!isEmpty(search.data) && (
-              <Cards
-                posts={search.data}
-                loadFunc={loadFunc}
-                hasMore={search.hasMore}
-                diff={126}
-                defaultLocale={this.props.defaultLocale}
-              />
-            )}
+            <Cards
+              posts={search.data}
+              loadFunc={loadFunc}
+              hasMore={search.hasMore}
+              diff={126}
+              defaultLocale={this.props.defaultLocale}
+            />
             {loading && isEmpty(search.data) && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">

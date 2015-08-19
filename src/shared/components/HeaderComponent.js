@@ -132,7 +132,7 @@ export default class Header extends React.Component {
     const pattern = React.findDOMNode(this.refs.search).value
     if (!pattern) return
 
-    this.props.searchPost(pattern, null, null, true)
+    this.props.searchPost(pattern, 0, 10, true)
 
     if (process.env.BROWSER) {
       this.releaseTimeout =

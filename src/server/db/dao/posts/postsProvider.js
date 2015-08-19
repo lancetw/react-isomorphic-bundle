@@ -412,7 +412,7 @@ exports.search = function *(pattern, offset=0, limit=20) {
   return yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'ASC' ]],
+    order: [[ 'start_date', 'DESC' ]],
     where: {
       $or: [
         {

@@ -43,6 +43,7 @@ export default class SearchHandler extends BaseComponent {
 
   loadFunc () {
     const { dispatch, search } = this.props
+
     dispatch(SearchActions
       .searchPost(search.pattern, search.offset, search.limit))
   }
