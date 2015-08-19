@@ -36,7 +36,7 @@ export default class ManageHandler extends BaseComponent {
 
     resolver.resolve(this.authActions.showUser, props.auth.token)
     const user = props.auth.user.id
-    resolver.resolve(this.postActions.defaultListWithUser, 0, 10, user)
+    resolver.resolve(this.postActions.manageList, 0, 10, user)
   }
 
   render () {
