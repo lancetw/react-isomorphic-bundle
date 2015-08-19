@@ -15,6 +15,10 @@ export default class PostCard extends BaseComponent {
     defaultLocale: PropTypes.string.isRequired
   }
 
+  static defaultProps = {
+    defaultLocale: 'en'
+  }
+
   constructor (props) {
     super(props)
 

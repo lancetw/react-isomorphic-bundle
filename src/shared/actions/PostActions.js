@@ -1,7 +1,7 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
 import jwt from 'jsonwebtoken'
-import { isArray, clone, compact } from 'lodash'
+import { isArray, clone, compact, isEmpty } from 'lodash'
 import moment from 'moment'
 import {
   CREATE_POST_STARTED,
@@ -14,9 +14,22 @@ import {
   SHOW_POST_STARTED,
   SHOW_POST_COMPLETED,
   SHOW_POST_FAILED,
+  LIST_POST_RELOADED,
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
   LIST_POST_FAILED,
+  LIST_MANAGE_POST_RELOADED,
+  LIST_MANAGE_POST_STARTED,
+  LIST_MANAGE_POST_COMPLETED,
+  LIST_MANAGE_POST_FAILED,
+  LIST_OVERVIEW_POST_RELOADED,
+  LIST_OVERVIEW_POST_STARTED,
+  LIST_OVERVIEW_POST_COMPLETED,
+  LIST_OVERVIEW_POST_FAILED,
+  LIST_CPROP_POST_RELOADED,
+  LIST_CPROP_POST_STARTED,
+  LIST_CPROP_POST_COMPLETED,
+  LIST_CPROP_POST_FAILED,
   COUNT_POST_IN_MONTH_STARTED,
   COUNT_POST_IN_MONTH_COMPLETED,
   COUNT_POST_IN_MONTH_FAILED
@@ -309,29 +322,38 @@ export function show (id) {
   }
 }
 
-export function defaultList (offset=0, limit=5, reload=false) {
-  return async dispatch => {
-    if (reload) {
-      dispatch({ type: LIST_POST_STARTED })
+export function overviewList (offset=0, limit=5, reload=false) {
+  return async (dispatch, getState) => {
+    /* cache service */
+    const cached = getState().overview.posts
+    if (!reload && offset <= 0 && !isEmpty(cached)) {
+      return null
     }
+
+    if (reload) {
+      dispatch({ type: LIST_OVERVIEW_POST_RELOADED })
+    }
+
+    dispatch({ type: LIST_OVERVIEW_POST_STARTED })
+
     try {
       const posts = await list(offset, limit)
       if (isArray(posts)) {
         return dispatch({
-          type: LIST_POST_COMPLETED,
+          type: LIST_OVERVIEW_POST_COMPLETED,
           posts: posts,
           offset: offset,
           limit: limit
         })
       } else {
         return dispatch({
-          type: LIST_POST_FAILED,
+          type: LIST_OVERVIEW_POST_FAILED,
           errors: posts.errors ? posts.errors : posts
         })
       }
     } catch (err) {
       return dispatch({
-        type: LIST_POST_FAILED,
+        type: LIST_OVERVIEW_POST_FAILED,
         errors: err.message
       })
     }
@@ -339,28 +361,37 @@ export function defaultList (offset=0, limit=5, reload=false) {
 }
 
 export function defaultListWithUser (offset=0, limit=5, user, reload=false) {
-  return async dispatch => {
-    if (reload) {
-      dispatch({ type: LIST_POST_STARTED })
+  return async (dispatch, getState) => {
+    /* cache service */
+    const cached = getState().manage.posts
+    if (!reload && offset <= 0 && !isEmpty(cached)) {
+      return null
     }
+
+    if (reload) {
+      dispatch({ type: LIST_MANAGE_POST_RELOADED })
+    }
+
+    dispatch({ type: LIST_MANAGE_POST_STARTED })
+
     try {
       const posts = await list(offset, limit, user)
       if (isArray(posts)) {
         return dispatch({
-          type: LIST_POST_COMPLETED,
+          type: LIST_MANAGE_POST_COMPLETED,
           posts: posts,
           offset: offset,
           limit: limit
         })
       } else {
         return dispatch({
-          type: LIST_POST_FAILED,
+          type: LIST_MANAGE_POST_FAILED,
           errors: posts.errors ? posts.errors : posts
         })
       }
     } catch (err) {
       return dispatch({
-        type: LIST_POST_FAILED,
+        type: LIST_MANAGE_POST_FAILED,
         errors: err.message
       })
     }
@@ -368,69 +399,76 @@ export function defaultListWithUser (offset=0, limit=5, user, reload=false) {
 }
 
 export function cpropList (cprop, offset=0, limit=5, reload=false) {
-  return async dispatch => {
-    if (reload) {
-      dispatch({ type: LIST_POST_STARTED })
+  return async (dispatch, getState) => {
+    /* cache service */
+    const cached = getState().cprop.posts
+    if (!reload
+      && offset <= 0
+      && !isEmpty(cached)
+      && cprop === getState().cprop.cprop) {
+      return null
     }
+
+    if (reload || cprop !== getState().cprop.cprop) {
+      dispatch({ type: LIST_CPROP_POST_RELOADED })
+    }
+
+    dispatch({ type: LIST_CPROP_POST_STARTED })
+
     try {
       const posts = await listWithCprop(cprop, offset, limit)
       if (isArray(posts)) {
         return dispatch({
-          type: LIST_POST_COMPLETED,
+          type: LIST_CPROP_POST_COMPLETED,
           posts: posts,
           offset: offset,
-          limit: limit
+          limit: limit,
+          cprop: cprop
         })
       } else {
         return dispatch({
-          type: LIST_POST_FAILED,
-          errors: posts.errors ? posts.errors : posts
+          type: LIST_CPROP_POST_FAILED,
+          errors: posts.errors ? posts.errors : posts,
+          cprop: cprop
         })
       }
     } catch (err) {
       return dispatch({
-        type: LIST_POST_FAILED,
-        errors: err.message
+        type: LIST_CPROP_POST_FAILED,
+        errors: err.message,
+        cprop: cprop
       })
     }
   }
 }
 
 export function fetchList (offset=0, limit=5, start, end, reload) {
-  return async dispatch => {
-    if (reload) {
-      dispatch({ type: LIST_POST_STARTED })
+  return async (dispatch, getState) => {
+    /* cache service */
+    const cached = getState().post.posts
+    const _start = getState().post.start
+    const _end = getState().post.end
+    if (!reload && offset <= 0 && !isEmpty(cached)
+      && start === _start && end === _end) {
+      return null
     }
+
+    if (reload) {
+      dispatch({ type: LIST_POST_RELOADED })
+    }
+
+    dispatch({ type: LIST_POST_STARTED })
+
     try {
       const posts = await fetch(offset, limit, start, end)
       if (isArray(posts)) {
         return dispatch({
           type: LIST_POST_COMPLETED,
-          posts: posts
-        })
-      } else {
-        return dispatch({
-          type: LIST_POST_FAILED,
-          errors: posts.errors ? posts.errors : posts
-        })
-      }
-    } catch (err) {
-      return dispatch({
-        type: LIST_POST_FAILED,
-        errors: err.message
-      })
-    }
-  }
-}
-
-export function fetchListWithUser (offset=0, limit=5, start, end, user) {
-  return async dispatch => {
-    try {
-      const posts = await fetch(offset, limit, start, end, user)
-      if (isArray(posts)) {
-        return dispatch({
-          type: LIST_POST_COMPLETED,
-          posts: posts
+          posts: posts,
+          offset: offset,
+          limit: limit,
+          start: start,
+          end: end
         })
       } else {
         return dispatch({
@@ -448,14 +486,24 @@ export function fetchListWithUser (offset=0, limit=5, start, end, user) {
 }
 
 export function countPostsWithCal (year, month) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    /* cache service */
+    const _year = getState().post.year
+    const _month = getState().post.month
+    if (year === _year && month === _month) {
+      return null
+    }
+
     dispatch({ type: COUNT_POST_IN_MONTH_STARTED })
+
     try {
       const cals = await countPostInMonth(year, month)
       if (cals && isArray(cals.count)) {
         return dispatch({
           type: COUNT_POST_IN_MONTH_COMPLETED,
-          cals: cals
+          cals: cals,
+          year: year,
+          month: month
         })
       } else {
         return dispatch({

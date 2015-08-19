@@ -11,6 +11,7 @@ import {
   SHOW_POST_STARTED,
   SHOW_POST_COMPLETED,
   SHOW_POST_FAILED,
+  LIST_POST_RELOADED,
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
   LIST_POST_FAILED,
@@ -21,7 +22,7 @@ import {
 import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
-  loading: true,
+  isFetching: false,
   errors: {},
   posts: [],
   offset: 0,
@@ -30,7 +31,11 @@ const initialState = {
   content: {},
   count: [],
   countStart: [],
-  detail: {}
+  detail: {},
+  year: null,
+  month: null,
+  start: null,
+  end: null
 }
 
 export default createReducer(initialState, {
@@ -50,18 +55,20 @@ export default createReducer(initialState, {
   [REMOVE_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SHOW_POST_STARTED]: () => ({
-    loading: true,
-    errors: {},
-    detail: {}
+    isFetching: true
   }),
   [SHOW_POST_COMPLETED]: (state, action) =>
-    ({ errors: {}, detail: action.detail, loading: false }),
+    ({ errors: {}, detail: action.detail, isFetching: false }),
   [SHOW_POST_FAILED]: (state, action) =>
-    ({ errors: action.errors, loading: false }),
-  [LIST_POST_STARTED]: () => ({
-    loading: true,
+    ({ errors: action.errors, isFetching: false }),
+  [LIST_POST_RELOADED]: () => ({
+    posts: [],
     errors: {},
-    posts: []
+    offset: 0,
+    limit: 0
+  }),
+  [LIST_POST_STARTED]: () => ({
+    isFetching: true
   }),
   [LIST_POST_COMPLETED]: (state, action) => {
     let hasMore = false
@@ -74,16 +81,23 @@ export default createReducer(initialState, {
       content: {},
       loading: false,
       posts: posts,
-      offset: action.offset,
+      offset: state.offset + action.limit,
       limit: action.limit,
-      hasMore: hasMore
+      hasMore: hasMore,
+      start: action.start,
+      end: action.end
     }
   },
   [LIST_POST_FAILED]: (state, action) =>
-    ({ loading: false, errors: action.errors }),
+    ({ isFetching: false, errors: action.errors }),
   [COUNT_POST_IN_MONTH_STARTED]: () => ({ count: [], countStart: [] }),
   [COUNT_POST_IN_MONTH_COMPLETED]: (state, action) =>
-    ({ count: action.cals.count, countStart: action.cals.countStart }),
+    ({
+      count: action.cals.count,
+      countStart: action.cals.countStart,
+      year: action.year,
+      month: action.month
+    }),
   [COUNT_POST_IN_MONTH_FAILED]: (state, action) =>
     ({ errors: action.errors })
 })

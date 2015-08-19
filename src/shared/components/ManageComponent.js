@@ -18,7 +18,7 @@ export default class Manage extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { post, auth, loadFunc } = this.props
-    const loading = post.loading || false
+    const loading = !!post.isFetching
 
     return (
       <main className="ui stackable page grid">
@@ -29,27 +29,28 @@ export default class Manage extends React.Component {
             </h1>
           </div>
           <div className="row">
-            {!isEmpty(post.posts) && (
-              <Cards
-                posts={post.posts}
-                loadFunc={loadFunc}
-                hasMore={post.hasMore}
-                diff={126}
-                defaultLocale={this.props.defaultLocale}
-              />
-            )}
-            {loading && (
+            <Cards
+              posts={post.posts}
+              loadFunc={loadFunc}
+              hasMore={post.hasMore}
+              diff={126}
+              defaultLocale={this.props.defaultLocale}
+            />
+            {loading && isEmpty(post.posts) && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
-                  <div className="ui medium indeterminate text loader">
+                  <div className="ui indeterminate text loader">
                     <Translate content="wall.loading" />
                   </div>
                 </div>
               </div>
             )}
             {!loading && isEmpty(post.posts) && (
-              <div className="ui segment basic center aligned">
-                <Translate content="post.nodata" />
+              <div>
+                <div className="ui hidden divider"></div>
+                <div className="ui segment basic has-header center aligned">
+                  <Translate content="post.nodata" />
+                </div>
               </div>
             )}
           </div>

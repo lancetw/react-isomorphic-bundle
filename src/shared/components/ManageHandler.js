@@ -10,13 +10,14 @@ import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth,
-  post: state.post
+  post: state.manage
 }))
 export default class ManageHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -35,9 +36,7 @@ export default class ManageHandler extends BaseComponent {
 
     resolver.resolve(this.authActions.showUser, props.auth.token)
     const user = props.auth.user.id
-    resolver.resolve(this.postActions.defaultListWithUser, 0, 10, user, true)
-
-    this.state = { limit: 10, nextOffset: 0 }
+    resolver.resolve(this.postActions.defaultListWithUser, 0, 10, user)
   }
 
   render () {
@@ -56,13 +55,10 @@ export default class ManageHandler extends BaseComponent {
   }
 
   loadFunc () {
-    const { dispatch, auth } = this.props
+    const { dispatch, auth, post } = this.props
     const user = auth.user.id
-    const nextOffset = this.state.nextOffset + this.state.limit
     dispatch(PostActions
-      .defaultListWithUser(nextOffset - 1, this.state.limit, user))
-
-    this.setState({ nextOffset: nextOffset })
+      .defaultListWithUser(post.offset, post.limit, user))
   }
 
 }

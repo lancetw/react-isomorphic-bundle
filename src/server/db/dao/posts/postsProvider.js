@@ -1,7 +1,7 @@
 import models from 'src/server/db/models'
 import hashids from 'src/shared/utils/hashids-plus'
 import moment from 'moment'
-import { sortBy, uniq, pluck, range, compact, reduce, isEmpty } from 'lodash'
+import { sortByOrder, uniq, pluck, range, compact, reduce, isEmpty } from 'lodash'
 
 const Sequelize = models.Sequelize
 const Post = models.posts
@@ -95,61 +95,44 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
     _end = +_end
   }
 
-  const startItems = yield Post.findAll({
+  const items = yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
     where: {
-      start_date: {
-        $between: [
-          new Date(moment(_start).startOf('day')),
-          new Date(moment(_start).endOf('day'))
-        ]
-      }
+      $or: [
+        {
+          start_date: {
+            $between: [
+              new Date(moment(_start).startOf('day')),
+              new Date(moment(_start).endOf('day'))
+            ]
+          }
+        },
+        {
+          end_date: {
+            $between: [
+              new Date(moment(_end).startOf('day')),
+              new Date(moment(_end).endOf('day'))
+            ]
+          }
+        },
+        {
+          start_date: {
+            $lt:
+              new Date(moment(_start).startOf('day'))
+          },
+          end_date: {
+            $gt:
+              new Date(moment(_end).startOf('day'))
+          }
+        }
+      ]
     },
     raw: true
   })
 
-  const endItems = yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
-    where: {
-      end_date: {
-        $between: [
-          new Date(moment(_end).startOf('day')),
-          new Date(moment(_end).endOf('day'))
-        ]
-      }
-    },
-    raw: true
-  })
-
-  const duringItems = yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
-    where: {
-      start_date: {
-        $lt:
-          new Date(moment(_start).startOf('day'))
-      },
-      end_date: {
-        $gt:
-          new Date(moment(_end).startOf('day'))
-      }
-    },
-    raw: true
-  })
-
-  let final = []
-  final = final.concat(startItems)
-  final = final.concat(endItems)
-  final = final.concat(duringItems)
-  final = uniq(final, (item, key, id) => item.id )
-  final = sortBy(final, 'endDate')
-
-  return final
+  return items
 }
 
 /* eslint-disable camelcase */

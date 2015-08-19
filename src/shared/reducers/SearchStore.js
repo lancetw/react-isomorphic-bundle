@@ -1,4 +1,5 @@
 import {
+  SEARCH_POST_RELOADED,
   SEARCH_POST_STARTED,
   SEARCH_POST_COMPLETED,
   SEARCH_POST_FAILED
@@ -10,7 +11,9 @@ const initialState = {
   pattern: '',
   data: [],
   loading: true,
-  hasMore: false
+  hasMore: false,
+  offset: 0,
+  limit: 0
 }
 
 export default createReducer(initialState, {
@@ -25,7 +28,7 @@ export default createReducer(initialState, {
       errors: {},
       loading: false,
       data: data,
-      offset: action.offset,
+      offset: state.offset + action.limit,
       limit: action.limit,
       hasMore: hasMore,
       pattern: action.pattern
@@ -35,11 +38,8 @@ export default createReducer(initialState, {
     return {
       errors: action.errors,
       loading: false,
-      data: [],
-      offset: action.offset,
-      limit: action.limit,
       hasMore: false,
-      pattern: ''
+      pattern: action.pattern
     }
   }
 })

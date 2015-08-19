@@ -34,9 +34,7 @@ export default class Cal extends React.Component {
     this.state = {
       locale: fixLocaleName(counterpart.getLocale()),
       date: moment(new Date()).startOf('day').valueOf(),
-      selectedDay: new Date(),
-      nextOffset: 0,
-      limit: 10
+      selectedDay: new Date()
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -79,7 +77,7 @@ export default class Cal extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { post } = this.props
-    const loading = post.loading || false
+    const loading = post.isFetching || false
     const { locale } = this.state
     const { selectedDay } = this.state
     const modifiers = {
@@ -130,18 +128,21 @@ export default class Cal extends React.Component {
               diff={113}
               defaultLocale={this.props.defaultLocale}
             />
-            {loading && (
+            {loading && isEmpty(post.posts) && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
-                  <div className="ui medium indeterminate text loader">
+                  <div className="ui indeterminate text loader">
                     <Translate content="wall.loading" />
                   </div>
                 </div>
               </div>
             )}
             {!loading && isEmpty(post.posts) && (
-              <div className="ui segment basic center aligned">
-                <Translate content="post.nodata" />
+              <div>
+                <div className="ui hidden divider"></div>
+                <div className="ui segment basic has-header center aligned">
+                  <Translate content="post.nodata" />
+                </div>
               </div>
             )}
           </div>
@@ -157,8 +158,7 @@ export default class Cal extends React.Component {
 
     this.setState({
       date: date,
-      selectedDay: day,
-      nextOffset: 0
+      selectedDay: day
     })
   }
 
@@ -175,10 +175,8 @@ export default class Cal extends React.Component {
   }
 
   loadFunc () {
-    const nextOffset = this.state.nextOffset + this.state.limit
-    this.props.fetchList(nextOffset - 1, this.state.limit, this.state.date)
-
-    this.setState({ nextOffset: nextOffset })
+    const { post } = this.props
+    this.props.fetchList(post.offset, post.limit, this.state.date)
   }
 
 }

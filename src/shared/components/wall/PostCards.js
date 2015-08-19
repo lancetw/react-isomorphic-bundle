@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { BaseComponent } from 'shared/components'
-import { isEmpty } from 'lodash'
+import { isEmpty, debounce } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
 import Infinite from 'react-infinite'
 
@@ -15,7 +15,8 @@ export default class PostCards extends Component {
   }
 
   static defaultProps = {
-    diff: 0
+    diff: 0,
+    defaultLocale: 'en'
   }
 
   constructor (props) {
@@ -46,10 +47,10 @@ export default class PostCards extends Component {
           className="scroll-content"
           infiniteLoadBeginBottomOffset={200}
           containerHeight={containerHeight}
-          onInfiniteLoad={::this.handleInfiniteLoad}
+          onInfiniteLoad={debounce(::this.handleInfiniteLoad, 3000)}
           isInfiniteLoading={this.state.isInfiniteLoading}
           loadingSpinnerDelegate={this.elementInfiniteLoad()}
-          elementHeight={132}
+          elementHeight={148}
           timeScrollStateLastsForAfterUserScrolls={150}>
           {!isEmpty(cards) && cards.map(function (card) {
             return (
@@ -79,11 +80,8 @@ export default class PostCards extends Component {
   }
 
   handleInfiniteLoad () {
-    this.setState({ isInfiniteLoading: true })
-    setTimeout(() => {
-      this.props.loadFunc()
-      this.setState({ isInfiniteLoading: false })
-    }, 2500)
+    this.props.loadFunc()
+    this.setState({ isInfiniteLoading: false })
   }
 
   elementInfiniteLoad () {

@@ -30,7 +30,7 @@ export default class CalHandler extends BaseComponent {
 
     this.postActions = bindActionCreators(PostActions, dispatch)
     resolver.resolve(this.postActions.countPostsWithCal)
-    resolver.resolve(this.postActions.fetchList, 0, 10, date, null, true)
+    resolver.resolve(this.postActions.fetchList, 0, 10, date, null)
   }
 
   render () {

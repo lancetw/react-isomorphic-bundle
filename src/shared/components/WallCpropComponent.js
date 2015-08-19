@@ -4,7 +4,7 @@ import Cards from 'shared/components/wall/PostCards'
 import WallButtons from 'shared/components/wall/WallButtons'
 import counterpart from 'counterpart'
 
-export default class Wall extends React.Component {
+export default class WallCprop extends React.Component {
 
   static propTypes = {
     post: PropTypes.object.isRequired,

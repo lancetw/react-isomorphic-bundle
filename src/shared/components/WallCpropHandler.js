@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Wall from './WallComponent'
+import WallCprop from './WallCpropComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
@@ -16,9 +16,9 @@ import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
   auth: state.auth,
-  post: state.overview
+  post: state.cprop
 }))
-export default class WallHandler extends BaseComponent {
+export default class WallCpropHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -45,8 +45,8 @@ export default class WallHandler extends BaseComponent {
     resolver.resolve(this.authActions.showUser, props.auth.token)
     const { cprop } = props.params
 
-    dispatch(updateTitle('title.wall'))
-    resolver.resolve(this.postActions.overviewList, 0, 10)
+    dispatch(updateTitle(::this.getCardProp(cprop)))
+    resolver.resolve(this.postActions.cpropList, cprop, 0, 10)
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
@@ -61,12 +61,12 @@ export default class WallHandler extends BaseComponent {
     const { cprop } = params
     const defaultTitle = this._T('title.site')
     const title = cprop > 0
-      ? ::this.getCardProp(cprop) + this._T('title.wall_cprop')
+      ? ::this.getCardProp(cprop)
       : this._T('title.wall')
 
     return (
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
-        <Wall
+        <WallCprop
           {...this.props}
           defaultLocale={this.getLocale()}
           loadFunc={::this.loadFunc}
@@ -78,7 +78,7 @@ export default class WallHandler extends BaseComponent {
   loadFunc () {
     const { dispatch, params, post } = this.props
     const { cprop } = params
-    dispatch(PostActions.overviewList(post.offset, post.limit))
+    dispatch(PostActions.cpropList(cprop, post.offset, post.limit))
   }
 
   handleLocaleChange (newLocale) {

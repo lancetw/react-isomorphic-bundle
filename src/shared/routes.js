@@ -11,6 +11,7 @@ import {
   PostEdit,
   Manage,
   Wall,
+  WallCprop,
   Cal,
   Cprop,
   ChangePassword,
@@ -34,7 +35,7 @@ export default function (store) {
         <Route path="today" component={Wall} />
         <Route path="cal" component={Cal} />
         <Route path="cprop" component={Cprop} />
-        <Route path="cprop/:cprop" component={Wall} />
+        <Route path="cprop/:cprop" component={WallCprop} />
         <Redirect from="posts" to="/wall" />
         <Route path="posts/:id" component={PostDetail} />
       </Route>
