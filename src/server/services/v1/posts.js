@@ -16,19 +16,19 @@ export default new Resource('posts', {
   index: function *(next) {
     const { cprop, offset, limit, start, end, user } = this.request.query
     let data
-    if (user) {
-      const uid = hashids.decode(user)
-      data = start !== null
-        ? yield Post.fetchWithUser(offset, limit, start, end, uid)
-        : yield Post.listWithUser(offset, limit, uid)
-    } else {
-      if (cprop) {
-        data = yield Post.listWithCprop(cprop, offset, limit)
+    if (!user) {
+      if (!cprop) {
+        data = !start
+        ? yield Post.list(offset, limit)
+        : yield Post.fetch(offset, limit, start, end)
       } else {
-        data = start !== null
-        ? yield Post.fetch(offset, limit, start, end)
-        : yield Post.list(offset, limit)
+        data = yield Post.listWithCprop(cprop, offset, limit)
       }
+    } else {
+      const uid = hashids.decode(user)
+      data = !start
+        ? yield Post.listWithUser(offset, limit, uid)
+        : yield Post.fetchWithUser(offset, limit, start, end, uid)
     }
 
     this.body = hashids.encodeJson(data)
@@ -78,12 +78,12 @@ export default new Resource('posts', {
 
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
-      if (typeof body.openDate === 'undefined') {
+      if (!body.openDate) {
         body.openDate = body.startDate
       } else {
         body.openDate = moment(body.openDate).format()
       }
-      if (typeof body.closeDate === 'undefined') {
+      if (!body.closeDate) {
         body.closeDate = body.endDate
       } else {
         body.closeDate = moment(body.closeDate).endOf('day').format()
@@ -163,19 +163,23 @@ export default new Resource('posts', {
 
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
+
       if (typeof body.openDate === 'undefined') {
         body.openDate = body.startDate
       } else {
         body.openDate = moment(body.openDate).format()
       }
+
       if (typeof body.closeDate === 'undefined') {
         body.closeDate = body.endDate
       } else {
         body.closeDate = moment(body.closeDate).endOf('day').format()
       }
+
       body.file = JSON.stringify(body.file)
 
       const post = yield Post.update(this.params.post, body)
+
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(post)

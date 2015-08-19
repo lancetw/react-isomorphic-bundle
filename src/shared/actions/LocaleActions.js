@@ -8,8 +8,12 @@ import { originLocaleName } from 'shared/utils/locale-utils'
 import { isEmpty } from 'lodash'
 
 export function setLocale (locale) {
-  if (typeof localStorage !== 'undefined' && localStorage !== null) {
-    if (locale && locale !== 'undefined') {
+  if (!localStorage) {
+    throw Error('no localStorage')
+  } else {
+    if (!locale) {
+      throw Error('localStorage data is falsy')
+    } else {
       localStorage.setItem('locale', locale)
     }
   }
@@ -17,7 +21,9 @@ export function setLocale (locale) {
 
 export function getLocale () {
   let locale = ''
-  if (typeof localStorage !== 'undefined' && localStorage !== null) {
+  if (!localStorage) {
+    throw Error('no localStorage')
+  } else {
     locale = localStorage.getItem('locale')
   }
 
