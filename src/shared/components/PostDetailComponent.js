@@ -85,10 +85,9 @@ export default class Post extends BaseComponent {
 
     const detailProp = this.getDetailProp(detail.prop)
 
+    /* eslint-disable max-len */
     return (
-      <main
-        className="
-          ui two column post detail stackable has-header grid container">
+      <main className="ui two column post detail stackable has-header grid container">
         <div className="column">
           <div className="row">
             <div className="ui fluid detail card">
@@ -251,10 +250,15 @@ export default class Post extends BaseComponent {
         content.replace(/^\"|\"$/g, '').split('\n').map((t) => {
           return t === ''
             ? <br />
-            : <p><AutoLinkText text={ent.decode(t)}/></p>
+            : <p><AutoLinkText text={ent.decode(this.removeTags(t))}/></p>
         })
       )
     }
+  }
+
+  removeTags (html) {
+    const pattern = /(<([^>]+)>)/ig;
+    return html.replace(pattern , '')
   }
 
 }
