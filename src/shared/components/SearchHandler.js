@@ -17,16 +17,13 @@ export default class SearchHandler extends BaseComponent {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props, context) {
     super(props, context)
     const { dispatch } = context.store
     dispatch(updateTitle('title.search'))
-
-    this.state = { limit: 10, nextOffset: 0 }
   }
 
   render () {

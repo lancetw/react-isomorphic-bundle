@@ -17,7 +17,7 @@ export default class Search extends React.Component {
   render () {
     const Translate = require('react-translate-component')
     const { search, loadFunc } = this.props
-    const loading = search.loading || false
+    const loading = search.isFetching || false
 
     return (
       <main className="ui stackable page grid">
@@ -35,7 +35,7 @@ export default class Search extends React.Component {
                 defaultLocale={this.props.defaultLocale}
               />
             )}
-            {loading && (
+            {loading && isEmpty(search.data) && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
                   <div className="ui large text loader">

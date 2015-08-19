@@ -28,10 +28,10 @@ async function search (scope, pattern, offset, limit) {
 }
 
 export function searchPost (pattern, offset=0, limit=10, reload=false) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().search.data
-    if (!reload && offset <= 0 && !isEmpty(cached)) {
+    const _pattern = getState().search.pattern
+    if (!reload && offset <= 0 && _pattern === pattern) {
       return null
     }
 
@@ -40,7 +40,6 @@ export function searchPost (pattern, offset=0, limit=10, reload=false) {
     }
 
     dispatch({ type: SEARCH_POST_STARTED })
-
     try {
       const data = await search('post', pattern, offset, limit)
       if (isArray(data)) {

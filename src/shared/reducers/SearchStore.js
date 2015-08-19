@@ -10,14 +10,22 @@ const initialState = {
   errors: {},
   pattern: '',
   data: [],
-  loading: true,
+  isFetching: false,
   hasMore: false,
   offset: 0,
   limit: 0
 }
 
 export default createReducer(initialState, {
-  [SEARCH_POST_STARTED]: () => (initialState),
+  [SEARCH_POST_RELOADED]: () => ({
+    errors: {},
+    data: [],
+    offset: 0,
+    limit: 0
+  }),
+  [SEARCH_POST_STARTED]: () => ({
+    isFetching: true
+  }),
   [SEARCH_POST_COMPLETED]: (state, action) => {
     let hasMore = false
     if (action.data.length > 0) {
@@ -26,7 +34,7 @@ export default createReducer(initialState, {
     const data = state.data.concat(action.data)
     return {
       errors: {},
-      loading: false,
+      isFetching: false,
       data: data,
       offset: state.offset + action.limit,
       limit: action.limit,
@@ -37,7 +45,7 @@ export default createReducer(initialState, {
   [SEARCH_POST_FAILED]: (state, action) => {
     return {
       errors: action.errors,
-      loading: false,
+      isFetching: false,
       hasMore: false,
       pattern: action.pattern
     }
