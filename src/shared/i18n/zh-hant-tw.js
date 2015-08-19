@@ -21,6 +21,7 @@ export default {
     home: '首頁',
     manage: '管理',
     wall: '佈告',
+    overview: '總覽',
     cal: '月曆',
     cprop: '類別',
     post: '發表',

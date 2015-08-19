@@ -21,6 +21,7 @@ export default {
     home: 'Home',
     manage: 'Manage',
     wall: 'Wall',
+    overview: 'Overview',
     cal: 'Calendar',
     cprop: 'Property',
     post: 'Post',

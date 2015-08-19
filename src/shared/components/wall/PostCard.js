@@ -90,7 +90,7 @@ export default class PostCard extends BaseComponent {
           <div className="ui small header">
           {eventStartYear && (
             <span className="ui pointing label">
-              {eventStartYear} 開始
+              {eventStartYear} { eventEndYear && `開始` }
             </span>
           )}
           {eventEndYear && (

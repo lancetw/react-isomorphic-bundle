@@ -15,7 +15,7 @@ export default class WallButtons extends React.Component {
       <div className="switch-btns">
         <div className="ui orange inverted buttons">
           <Link className="ui button" to="/wall/today">
-            <Translate content="header.wall" />
+            <Translate content="header.overview" />
           </Link>
           <Link className="ui button" to="/wall/cal">
             <Translate content="header.cal" />
