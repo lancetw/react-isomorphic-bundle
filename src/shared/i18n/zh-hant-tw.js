@@ -89,7 +89,7 @@ export default {
       },
       msg: {
         upload: '您可以上傳圖片或是 PDF（請拖拉至此或是點擊選擇檔案）：',
-        limit: '每個檔案大小上限 3 MB（行動裝置尚未支援）',
+        limit: '每個檔案大小上限 3 MB',
         urltips: '網址必須以 http:// 開頭'
       }
     },

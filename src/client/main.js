@@ -16,7 +16,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 (async () => {
   require('react-a11y')(React)
 
-  React.initializeTouchEvents(true)
+  // React.initializeTouchEvents(true)
 
   counterpart.registerTranslations(
     'en',
