@@ -105,11 +105,11 @@ export default class Login extends BaseComponent {
       { 'shake-horizontal': this.state.errorShake }
     )
 
+    /* eslint-disable max-len */
     return (
       <main className="ui stackable column centered page grid">
         <div className="column">
-          <div className="
-            ui two column middle aligned relaxed fitted stackable grid">
+          <div className="ui two column middle aligned relaxed fitted stackable grid">
             <div className="column">
               <CSSTransitionGroup transitionName="MessageTransition">
                 {Message}

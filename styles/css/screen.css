@@ -23,6 +23,10 @@ select {
   appearance: none;
 }
 
+input.hide-submit {
+  position: absolute; left: -9999px
+}
+
 .ui.menu.fixed.top {
   font-size: 96%;
 }

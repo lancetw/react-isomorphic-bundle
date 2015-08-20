@@ -19,6 +19,8 @@ export default class Header extends React.Component {
   constructor (props) {
     super(props)
 
+    this.state = { userInput: '' }
+
     this.releaseTimeout = undefined
   }
 
@@ -87,7 +89,6 @@ export default class Header extends React.Component {
             <Link to="/home" className="item">
               <Translate content="header.home" />
             </Link>
-            {AuthLink}
             <Link to="/wall" className="item">
               <Translate content="header.wall" />
             </Link>
@@ -99,14 +100,25 @@ export default class Header extends React.Component {
           </div>
 
           <div className="right menu">
+            {AuthLink}
             <LocaleSwitcher dispatch={dispatch} />
             <div className="item">
               <form
+                action=""
+                method="post"
                 onSubmit={::this.handleSearchSubmit}>
-              <div className="ui transparent icon input">
-                {TranslateProps(searchProps)}
-                <i className="search icon"></i>
-              </div>
+                <div className="ui transparent icon input">
+                  <input
+                    type="search"
+                    ref="search"
+                    onChange={::this.handleChange}
+                    onFocus={::this.handleFocus}
+                    onKeyDown={::this.handleSubmit}
+                    value={this.state.userInput}
+                  />
+                  <i className="search link icon"></i>
+                  <input type="submit" className="hide-submit" />
+                </div>
               </form>
             </div>
           </div>
@@ -127,17 +139,36 @@ export default class Header extends React.Component {
     )
   }
 
-  handleSearchSubmit (event) {
-    event.preventDefault()
-    const pattern = React.findDOMNode(this.refs.search).value
+  handleChange (event) {
+    this.setState({ userInput: event.target.value })
+  }
+
+  handleFocus () {
+    this.setState({ userInput: '' })
+  }
+
+  doSubmit () {
+    const pattern = this.state.userInput
     if (!pattern) return
 
-    this.props.searchPost(pattern, 0, 10, true)
-
     if (process.env.BROWSER) {
+      this.props.searchPost(pattern, 0, 10, true)
       this.releaseTimeout =
         setTimeout(() => this.context.router.replaceWith('/search'), 500)
     }
+
+    React.findDOMNode(this.refs.search).blur()
   }
 
+  handleSubmit (event) {
+    if (event.which === 13) {
+      event.preventDefault()
+      this.doSubmit()
+    }
+  }
+
+  handleSearchSubmit (event) {
+    event.preventDefault()
+    this.doSubmit()
+  }
 }
