@@ -7,8 +7,6 @@ import { isSameDay } from 'shared/utils/date-utils'
 import moment from 'moment'
 import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
-import MediaQuery from 'react-responsive'
-import Ad from 'shared/components/addon/ad'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { fixLocaleName } from 'shared/utils/locale-utils'
 
@@ -99,22 +97,6 @@ export default class Cal extends React.Component {
             locale={locale}
             localeUtils={LocaleUtils}
           />
-          <MediaQuery minDeviceWidth={1224}>
-            <div className="ui basic segment center aligned">
-              <Ad
-                id="1L"
-                link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
-              />
-            </div>
-          </MediaQuery>
-          <MediaQuery maxDeviceWidth={1224}>
-            <div className="ui basic segment center aligned">
-              <Ad
-                id="1S"
-                link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-              />
-            </div>
-          </MediaQuery>
         </div>
         <div className="eight wide computer sixteen wide tablet column">
           <div className="ui horizontal header divider">
