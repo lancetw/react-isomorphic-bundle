@@ -55,12 +55,18 @@ export default createReducer(initialState, {
   [REMOVE_POST_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SHOW_POST_STARTED]: () => ({
-    isFetching: true
+    isFetching: true,
+    detail: {}
   }),
-  [SHOW_POST_COMPLETED]: (state, action) =>
-    ({ errors: {}, detail: action.detail, isFetching: false }),
-  [SHOW_POST_FAILED]: (state, action) =>
-    ({ errors: action.errors, isFetching: false }),
+  [SHOW_POST_COMPLETED]: (state, action) => ({
+    errors: {},
+    detail: action.detail,
+    isFetching: false
+  }),
+  [SHOW_POST_FAILED]: (state, action) => ({
+    errors: action.errors,
+    isFetching: false
+  }),
   [LIST_POST_RELOADED]: () => ({
     posts: [],
     errors: {},
