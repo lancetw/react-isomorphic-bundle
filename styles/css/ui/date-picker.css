@@ -126,7 +126,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)  {
   .DayPicker-Day {
     font-size: 1.2rem;
-    padding: .6rem 1rem;
+    padding: .6rem 1.5rem;
   }
 }
 

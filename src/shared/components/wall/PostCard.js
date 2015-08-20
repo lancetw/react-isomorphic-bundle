@@ -93,22 +93,24 @@ export default class PostCard extends BaseComponent {
           </div>
           <div className="ui small header">
           {eventStartYear && (
-            <span className="ui pointing label">
+            <span className="ui small grey label">
               {eventStartYear} { eventEndYear && `開始` }
             </span>
           )}
           {eventEndYear && (
-            <span className="ui green pointing label">
+            <span className="ui small teal label">
               將結束於 {eventEndYear}
             </span>
           )}
           </div>
         </div>
         <div className="extra content">
-          <span className="right floated like">
-            <i className="like icon"></i>
-            {this.renderLocationInfo(card)}
-          </span>
+          <div className="ui location">
+            <span className="right floated like">
+              <i className="like icon"></i>
+                {this.renderLocationInfo(card)}
+            </span>
+          </div>
         </div>
       </div>
     )

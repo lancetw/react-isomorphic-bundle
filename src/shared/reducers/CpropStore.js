@@ -12,7 +12,7 @@ const initialState = {
   posts: [],
   offset: 0,
   limit: 0,
-  hasMore: false,
+  hasMore: true,
   cprop: 0
 }
 
@@ -40,7 +40,8 @@ export default createReducer(initialState, {
       offset: state.offset + action.limit,
       limit: action.limit,
       hasMore: hasMore,
-      cprop: action.cprop
+      cprop: action.cprop,
+      isFetching: false
     }
   },
   [LIST_CPROP_POST_FAILED]: (state, action) =>

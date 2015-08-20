@@ -30,6 +30,7 @@ export default class Search extends React.Component {
               posts={search.data}
               loadFunc={loadFunc}
               hasMore={search.hasMore}
+              isFetching={loading}
               diff={126}
               defaultLocale={this.props.defaultLocale}
             />

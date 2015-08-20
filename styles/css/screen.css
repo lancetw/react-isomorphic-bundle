@@ -23,6 +23,10 @@ select {
   appearance: none;
 }
 
+.disable-pointer {
+  pointer-events: none !important;
+}
+
 input.hide-submit {
   position: absolute; left: -9999px
 }
@@ -34,13 +38,20 @@ input.hide-submit {
 .ui.post.card {
   max-height: 132px;
   min-height: 132px;
+  margin: 0 0 60px 0;
 
   .content > .header > a {
+    font-size: 1.5rem;
     display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
   }
+}
+
+.ui.location > .floated {
+  font-size: 1rem;
+  padding-bottom: 20px;
 }
 
 .ui.detail {
@@ -60,10 +71,11 @@ input.hide-submit {
   margin-top: 10px;
 }
 
-.scroll-content {
+.scrollable {
   margin: 0;
-  padding: 2px;
+  padding: 20px;
   overflow-y: auto !important;
+  user-select: none;
 }
 
 .switch-btns {

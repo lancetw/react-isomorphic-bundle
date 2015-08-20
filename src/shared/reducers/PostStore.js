@@ -27,7 +27,7 @@ const initialState = {
   posts: [],
   offset: 0,
   limit: 0,
-  hasMore: false,
+  hasMore: true,
   content: {},
   count: [],
   countStart: [],
@@ -91,7 +91,8 @@ export default createReducer(initialState, {
       limit: action.limit,
       hasMore: hasMore,
       start: action.start,
-      end: action.end
+      end: action.end,
+      isFetching: false
     }
   },
   [LIST_POST_FAILED]: (state, action) =>

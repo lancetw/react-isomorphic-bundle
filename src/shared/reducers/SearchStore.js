@@ -11,7 +11,7 @@ const initialState = {
   pattern: '',
   data: [],
   isFetching: false,
-  hasMore: false,
+  hasMore: true,
   offset: 0,
   limit: 0
 }

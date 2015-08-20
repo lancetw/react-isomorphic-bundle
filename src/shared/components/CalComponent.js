@@ -107,6 +107,7 @@ export default class Cal extends React.Component {
               posts={post.posts}
               loadFunc={::this.loadFunc}
               hasMore={post.hasMore}
+              isFetching={loading}
               diff={113}
               defaultLocale={this.props.defaultLocale}
             />
