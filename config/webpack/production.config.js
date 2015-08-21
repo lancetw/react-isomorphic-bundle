@@ -103,7 +103,7 @@ export default {
         },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss') },
         { test: /\.less$/,
-          loader: ExtractTextPlugin.extract('style', 'css!postcss!less?noIeCompat')}
+          loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss!less?noIeCompat')}
       ]
     },
     postcss: {
