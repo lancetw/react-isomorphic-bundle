@@ -81,37 +81,41 @@ export default class PostCard extends BaseComponent {
     const cardProp = this.getCardProp(card.prop)
 
     return (
-      <div className="ui fluid orange post card">
-        <div className="content">
-          <div className="header">
-            <Link to={`/wall/posts/${card.id}`}>{card.title}</Link>
+      <div>
+        <div className="ui post card divider"></div>
+        <div className="ui fluid orange post card">
+          <div className="content">
+            <h2 className="title">
+              <Link to={`/wall/posts/${card.id}`}>{card.title}</Link>
+            </h2>
             {eventDate && (
-              <div className="ui orange right ribbon label">
+              <div className="ui orange huge right ribbon label">
                 {eventDate}
               </div>
             )}
+            <div className="date list">
+            {eventStartYear && (
+              <span className="ui medium grey label">
+                {eventStartYear} { eventEndYear && `開始` }
+              </span>
+            )}
+            {eventEndYear && (
+              <span className="ui medium teal label">
+                將結束於 {eventEndYear}
+              </span>
+            )}
+            </div>
           </div>
-          <div className="ui small header">
-          {eventStartYear && (
-            <span className="ui small grey label">
-              {eventStartYear} { eventEndYear && `開始` }
-            </span>
-          )}
-          {eventEndYear && (
-            <span className="ui small teal label">
-              將結束於 {eventEndYear}
-            </span>
-          )}
+          <div className="extra content">
+            <div className="ui location">
+              <span className="right floated like">
+                <i className="like icon"></i>
+                  {this.renderLocationInfo(card)}
+              </span>
+            </div>
           </div>
         </div>
-        <div className="extra content">
-          <div className="ui location">
-            <span className="right floated like">
-              <i className="like icon"></i>
-                {this.renderLocationInfo(card)}
-            </span>
-          </div>
-        </div>
+        <div className="ui post card divider"></div>
       </div>
     )
   }

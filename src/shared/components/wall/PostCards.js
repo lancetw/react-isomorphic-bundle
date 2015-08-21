@@ -2,12 +2,15 @@ import React, { PropTypes, Component } from 'react'
 import { BaseComponent } from 'shared/components'
 import { isEmpty, debounce } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
-import ReactList from 'react-list'
 import classNames from 'classnames'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 
 let $
+let ReactList
 if (process.env.BROWSER) {
+  ReactList = require('react-list')
   $ = require('jquery')
+  require('css/ui/spinkit')
 }
 
 export default class PostCards extends Component {
@@ -31,18 +34,20 @@ export default class PostCards extends Component {
     super(props)
     this.state = {
       disablePointer: false,
-      firstLoad: true,
-      isInfiniteLoading: false,
+      triggered: false,
       windowWidth: typeof window !== 'undefined' && window.innerWidth,
       windowHeight: typeof window !== 'undefined' && window.innerHeight
     }
 
-    const disablePointerTimeout = null
+    this.disablePointerTimeout = null
+    this.triggerTimeout = null
   }
 
   componentDidMount () {
     window.addEventListener('resize', ::this.handleResize)
   }
+
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
@@ -66,7 +71,7 @@ export default class PostCards extends Component {
       = classNames(
         'ui',
         'scrollable',
-        {'disable-pointer': this.state.disablePointer}
+        {'disable-pointer': this.disablePointer}
       )
 
     if (process.env.BROWSER && cards.length > 0) {
@@ -75,18 +80,19 @@ export default class PostCards extends Component {
         <div
           className={scrollClass}
           ref="scroll"
-          onScroll={debounce(::this.handleScroll, 100)}
+          onScroll={debounce(::this.handleScroll, 500)}
           style={{
             maxHeight: containerHeight
           }}>
           <ReactList
             ref="scrollList"
             threshold={150}
-            pageSize={25}
+            pageSize={10}
             initialIndex={0}
             itemRenderer={::this.renderItem}
             length={cards.length}
-            type="uniform" />
+            type="variable" />
+          {this.elementInfiniteLoad}
         </div>
       )
     } else {
@@ -101,16 +107,16 @@ export default class PostCards extends Component {
   }
 
   handleScroll (event) {
-    this.setState({ disablePointer: true })
-    if (this.props.hasMore) {
+    if (!!this.props.hasMore) {
+      this.setState({disablePointer: true })
       this.handleInfiniteLoad()
+      if (this.disablePointerTimeout !== null) {
+        clearTimeout(this.disablePointerTimeout)
+      }
+      this.disablePointerTimeout = setTimeout(() => {
+        this.setState({disablePointer: false })
+      }, 1000)
     }
-    if (this.disablePointerTimeout !== null) {
-      clearTimeout(this.disablePointerTimeout)
-    }
-    this.disablePointerTimeout = setTimeout(() => {
-      this.setState({ disablePointer: false })
-    }, 50)
   }
 
   handleResize () {
@@ -122,39 +128,30 @@ export default class PostCards extends Component {
   handleInfiniteLoad () {
     const nodeScroll = React.findDOMNode(this.refs.scroll)
     const nodeList = React.findDOMNode(this.refs.scrollList)
+    const contentHeight = $(nodeList).height() - $(nodeScroll).height()
+    const scrollTop = nodeScroll.scrollTop
     const loading = this.props.isFetching
     const threshold = 1000
+    const checkPoint = (contentHeight - threshold) > 0
+      ? contentHeight - threshold
+      : contentHeight
 
-    if (this.state.firstLoad) {
-      this.setState({ firstLoad: false })
-    }
+    /* eslint-disable max-len */
+    if (!this.state.triggered && nodeScroll.scrollTop > checkPoint) {
+      $('<div id="overlay"><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.scrollable')
+      this.setState({ triggered: true })
 
-    if (!loading && !this.state.isInfiniteLoading) {
-      setTimeout(() => {
-        if ($(nodeScroll).scrollTop() > $(nodeList).innerHeight() - threshold) {
-          this.setState({ isInfiniteLoading: true })
-          console.log('loading')
-          this.props.loadFunc()
-          setTimeout(() => {
-            this.setState({ isInfiniteLoading: false })
-          }, 3000)
-        }
-      }, 1000)
-    }
-  }
+      this.props.loadFunc()
 
-  elementInfiniteLoad () {
-    if (this.props.hasMore) {
-      const Translate = require('react-translate-component')
-      return (
-        <div className="ui segment basic has-header">
-          <div className="ui active inverted dimmer">
-            <div className="ui indeterminate text loader">
-              <Translate content="wall.loading" />
-            </div>
-          </div>
-        </div>
-      )
+      if (this.triggerTimeout !== null) {
+        clearTimeout(this.triggerTimeout)
+      }
+
+      this.triggerTimeout = setTimeout(() => {
+        this.setState({ triggered: false })
+        $('#overlay').remove()
+      }, 3000)
     }
   }
+
 }

@@ -94,30 +94,29 @@ export default class Post extends BaseComponent {
               <div className={detailClass}>
                 <div className="ui left floated">
                 {eventDate && (
-                    <span className="ui ribbon orange label">
+                    <span className="ui large orange ribbon label">
                       {eventDate}
                     </span>
                   )}
                 </div>
-                <div className="ui right floated">
+                <div className="ui large right floated">
                   {eventStartYear && (
-                    <span className="ui blue right ribbon label">
+                    <span className="ui right ribbon label">
                       {eventStartYear} { eventEndYear && `開始` }
                     </span>
                   )}
                   {eventEndYear && (
                     <div>
                       <div className="ui hidden divider"></div>
-                      <span className="ui green right ribbon label">
+                      <span className="ui large teal right ribbon label">
                         將結束於 {eventEndYear}
                       </span>
                     </div>
                   )}
                 </div>
                 <div className="ui hidden divider" />
-                <h1>
+                <h1 className="title">
                   <Link
-                    className="ui blue small header"
                     to={`/wall/posts/${detail.id}`}>
                     {detail.title}
                   </Link>
@@ -149,7 +148,7 @@ export default class Post extends BaseComponent {
                 </div>
                 <div className="taglist right aligned">
                   <span
-                    className="ui tag label category">
+                    className="ui large tag label category">
                     {detailProp}
                   </span>
                 </div>

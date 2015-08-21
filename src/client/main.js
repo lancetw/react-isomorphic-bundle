@@ -14,7 +14,7 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
 (async () => {
-  require('react-a11y')(React)
+  // require('react-a11y')(React)
 
   // React.initializeTouchEvents(true)
 

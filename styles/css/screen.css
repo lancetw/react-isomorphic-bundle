@@ -1,10 +1,20 @@
 html, body {
+  position: relative;
   height: 100%;
   font-size: 1rem;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  position: relative;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.25),
+only screen and ( min-device-pixel-ratio: 1.25),
+only screen and ( min-resolution: 200dpi),
+only screen and ( min-resolution: 1.25dppx)
+{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -35,35 +45,64 @@ input.hide-submit {
   font-size: 96%;
 }
 
-.ui.post.card {
-  max-height: 132px;
-  min-height: 132px;
-  margin: 0 0 60px 0;
+.ui.post.card.divider {
+  width: 100%;
+  height: 30px;
+  border: none;
+  box-shadow: none !important;
+  background: transparent;
+}
 
-  .content > .header > a {
-    font-size: 1.5rem;
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.ui.post.card {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  border: none;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+  .content {
+    .title > a {
+      text-shadow: 0 0 0;
+      font-size: 1.6rem;
+      line-height: 2.1rem;
+      padding: 0 !important;
+      margin: 0 !important;
+      color: #3399cc;
+      display: block;
+    }
+
+    .date.list {
+      position: relative;
+      top: -42px;
+    }
   }
 }
 
 .ui.location > .floated {
-  font-size: 1rem;
-  padding-bottom: 20px;
+  text-shadow: 0 0 0;
+  font-size: 1.3rem;
 }
 
 .ui.detail {
-  .content > .header {
-    font-size: 1.1rem !important;
-    color: #0066cc;
+  opacity: 0.95;
+  filter: alpha(opacity=95);
+  margin-left: 5px;
+  .content > .title > a {
+    font-size: 2rem !important;
+    line-height: 2.5rem;
+    padding: 10px 0 0 0 !important;
+    margin: 0 !important;
+    color: #3399cc;
     display: block;
   }
 
   .description {
     word-wrap: break-word;
     padding: 1rem;
+    text-shadow: 0 0 0;
+    > div, span {
+      line-height: 2rem;
+    }
   }
 }
 
@@ -73,9 +112,10 @@ input.hide-submit {
 
 .scrollable {
   margin: 0;
-  padding: 20px;
+  padding: 0 40px;
   overflow-y: auto !important;
   user-select: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .switch-btns {
