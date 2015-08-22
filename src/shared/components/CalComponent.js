@@ -9,30 +9,30 @@ import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { fixLocaleName } from 'shared/utils/locale-utils'
+import { BaseComponent } from 'shared/components'
 
 if (process.env.BROWSER) {
   require('css/ui/date-picker')
 }
 
-export default class Cal extends React.Component {
+export default class Cal extends BaseComponent {
 
   static propTypes = {
     fetchList: PropTypes.func.isRequired,
     countPostsWithCal: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    post: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-    moment.locale(fixLocaleName(counterpart.getLocale()))
+    counterpart.setLocale(this.getLocale())
+    moment.locale(fixLocaleName(this.getLocale()))
 
     this.state = {
-      locale: fixLocaleName(counterpart.getLocale()),
       date: moment(new Date()).startOf('day').valueOf(),
-      selectedDay: new Date()
+      selectedDay: new Date(),
+      locale: fixLocaleName(this.getLocale())
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -76,8 +76,7 @@ export default class Cal extends React.Component {
     const Translate = require('react-translate-component')
     const { post } = this.props
     const loading = post.isFetching || false
-    const { locale } = this.state
-    const { selectedDay } = this.state
+    const { selectedDay, locale } = this.state
     const modifiers = {
       'sunday': (day) => day.getDay() === 0,
       'saturday': (day) => day.getDay() === 6,
@@ -109,7 +108,6 @@ export default class Cal extends React.Component {
               hasMore={post.hasMore}
               isFetching={loading}
               diff={113}
-              defaultLocale={this.props.defaultLocale}
             />
             {loading && isEmpty(post.posts) && (
               <div className="ui segment basic has-header">

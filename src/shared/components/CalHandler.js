@@ -18,8 +18,7 @@ export default class CalHandler extends BaseComponent {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props, context) {
@@ -42,7 +41,6 @@ export default class CalHandler extends BaseComponent {
         <Cal
           {...bindActionCreators(PostActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()}
         />
       </DocumentTitle>
     )

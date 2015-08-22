@@ -29,7 +29,6 @@ export default class CpropHandler extends BaseComponent {
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
         <Cprop
           {...this.props}
-          defaultLocale={this.getLocale()}
         />
       </DocumentTitle>
     )

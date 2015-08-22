@@ -23,7 +23,10 @@ export default class Search extends React.Component {
       <main className="ui stackable page grid">
         <div className="column">
           <div className="row">
-            {search.pattern && (<h1>搜尋「{search.pattern}」的結果</h1>)}
+            {search.pattern
+              && (<h1>
+                <Translate content="search.title" keyword={search.pattern}/>
+              </h1>)}
           </div>
           <div className="row">
             <Cards

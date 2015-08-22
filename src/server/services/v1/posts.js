@@ -7,6 +7,7 @@ import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import moment from 'moment'
 import { isEmpty } from 'lodash'
+import queryType from 'query-types'
 
 const Post = db.posts
 
@@ -14,7 +15,24 @@ const Post = db.posts
 export default new Resource('posts', {
   // GET /posts
   index: function *(next) {
-    const { cprop, offset, limit, start, end, user } = this.request.query
+    const body = queryType.parseObject(this.request.query)
+    const rule = {
+      cprop: { type: 'number', required: false },
+      offset: { type: 'number', required: false },
+      limit: { type: 'number', required: false },
+      start: { type: 'number', required: false },
+      end: { type: 'number', required: false },
+      user: { type: 'string', required: false }
+    }
+    const errors = validate(rule, body)
+    if (errors) {
+      this.type = 'json'
+      this.status = 200
+      this.body = { errors: errors }
+      return
+    }
+
+    const { cprop, offset, limit, start, end, user } = body
     let data
     if (!user) {
       if (!cprop) {

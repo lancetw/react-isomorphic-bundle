@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
 
 export default class BaseComponent extends React.Component {
+
+  static contextTypes = {
+    translator: PropTypes.object
+  }
+
+  constructor (props, context) {
+    super(props, context)
+  }
 
   _bind (...methods) {
     methods.forEach(
@@ -19,7 +27,8 @@ export default class BaseComponent extends React.Component {
   }
 
   _T (key) {
-    if (typeof this.context.translator !== 'undefined') {
+    if (typeof this.context !== 'undefined'
+      && typeof this.context.translator !== 'undefined') {
       return this.context.translator.translate(key)
     } else {
       return counterpart(key)
@@ -27,7 +36,8 @@ export default class BaseComponent extends React.Component {
   }
 
   getLocale () {
-    if (typeof this.context.translator !== 'undefined') {
+    if (typeof this.context !== 'undefined'
+      && typeof this.context.translator !== 'undefined') {
       return this.context.translator.getLocale()
     } else {
       return counterpart.getLocale()

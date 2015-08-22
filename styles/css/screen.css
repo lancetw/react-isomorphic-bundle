@@ -70,13 +70,16 @@ input.hide-submit {
 
 .ui.location > .floated {
   text-shadow: 0 0 0;
-  font-size: 1.3rem;
+  color: #999;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
 }
 
 .ui.detail {
+  margin-left: 0;
   opacity: 0.95;
   filter: alpha(opacity=95);
-  margin-left: 5px;
+
   .content > .title > a {
     font-size: 2rem !important;
     line-height: 2.5rem;
@@ -87,10 +90,12 @@ input.hide-submit {
   }
 
   .description {
+    text-align:justify;
     word-wrap: break-word;
     padding: 1rem;
     text-shadow: 0 0 0;
     > div, span {
+      color: #555;
       line-height: 2rem;
     }
   }
@@ -180,12 +185,114 @@ and (max-width : 480px) {
   #map {
     height: 180px;
   }
+
+  .ui.detail {
+    margin-left: -10px;
+
+    .description {
+      font-size: 1.1rem !important;
+      line-height: 2rem !important;
+    }
+  }
+
+  .column.map > div {
+    padding-left: -10px;
+    margin-left: -10px;
+  }
+
+  .ui.post.card {
+    .content {
+      .title > a {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+      }
+    }
+  }
+
+  .ui.scrollable {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .content > .ui.orange.ribbon.label {
+    top: 5px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .content > div.date.list {
+    max-width: 100px;
+    max-height: 20px;
+    > span {
+      margin-bottom: 10px;
+    }
+  }
+
+  .ui.location > .floated {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: right;
+    width: 160px;
+  }
 }
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
   #map {
     height: 180px;
+  }
+
+  .ui.detail {
+    margin-left: -10px;
+
+    .description {
+      font-size: 1.1rem !important;
+      line-height: 2rem !important;
+    }
+  }
+
+  .column.map > div {
+    padding-left: -10px;
+    margin-left: -10px;
+  }
+
+  .ui.post.card {
+    .content {
+      .title > a {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+      }
+    }
+  }
+
+  .ui.scrollable {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .content > .ui.orange.ribbon.label {
+    top: 5px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .content > div.date.list {
+    max-width: 100px;
+    max-height: 20px;
+    > span {
+      margin-bottom: 10px;
+    }
+  }
+
+  .ui.location > .floated {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: right;
+    width: 160px;
   }
 }
 
@@ -218,6 +325,32 @@ and (min-device-width : 375px)
 and (max-device-width : 667px) {
   #map {
     height: 300px;
+  }
+}
+
+/* iPad in portrait & landscape */
+@media only screen
+and (min-width : 768px)
+and (max-width : 1280px)  {
+  .ui.location > .floated {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: right;
+    width: 280px;
+  }
+}
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  {
+  .ui.location > .floated {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: right;
+    width: 280px;
   }
 }
 

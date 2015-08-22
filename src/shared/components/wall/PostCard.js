@@ -4,40 +4,33 @@ import { Link } from 'react-router'
 import { toShortDate, toYear } from 'shared/utils/date-utils'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
-import counterpart from 'counterpart'
 import moment from 'moment'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
+import counterpart from 'counterpart'
+
+const Translate = require('react-translate-component')
 
 export default class PostCard extends BaseComponent {
 
   static propTypes = {
-    data: PropTypes.object,
-    defaultLocale: PropTypes.string.isRequired
-  }
-
-  static defaultProps = {
-    defaultLocale: 'en'
+    data: PropTypes.object
   }
 
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-
-    this.state = {
-      locale: fixLocaleName(counterpart.getLocale())
-    }
-
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
-  getCardProp (index) {
-    return at(PostPropArray(originLocaleName(this.state.locale)), index)
+  renderCardProp (card) {
+    return (
+      <span>
+        {at(PostPropArray(originLocaleName(this.getLocale())), card.prop)}
+      </span>
+    )
   }
 
   renderLocationInfo (card) {
-    const Translate = require('react-translate-component')
-
     if (card.place) {
       if (card.lat && card.lng) {
         return (
@@ -56,8 +49,6 @@ export default class PostCard extends BaseComponent {
   }
 
   render () {
-    const Translate = require('react-translate-component')
-
     const card = this.props.data
 
     const eventDate = (card.startDate === card.endDate)
@@ -75,38 +66,41 @@ export default class PostCard extends BaseComponent {
         : null
 
     if (eventStartYear && toYear(card.endDate) === toYear(new Date())) {
-      eventEndYear = '今年'
+      eventEndYear = <Translate content="post.detail.this_year" />
     }
-
-    const cardProp = this.getCardProp(card.prop)
 
     return (
       <div>
         <div className="ui post card divider"></div>
-        <div className="ui fluid orange post card">
+        <div className="ui fluid post card">
           <div className="content">
             <h2 className="title">
               <Link to={`/wall/posts/${card.id}`}>{card.title}</Link>
             </h2>
             {eventDate && (
-              <div className="ui orange huge right ribbon label">
+              <div className="ui orange large right ribbon label">
                 {eventDate}
               </div>
             )}
             <div className="date list">
             {eventStartYear && (
-              <span className="ui medium grey label">
-                {eventStartYear} { eventEndYear && `開始` }
+              <span className="ui small grey label">
+                {eventStartYear}
+                { eventEndYear
+                  && <Translate content="post.detail.start" /> }
               </span>
             )}
             {eventEndYear && (
-              <span className="ui medium teal label">
-                將結束於 {eventEndYear}
+              <span className="ui small teal label">
+                <Translate content="post.detail.end" /> {eventEndYear}
               </span>
             )}
             </div>
           </div>
           <div className="extra content">
+            <div className="left floated ui tag label">
+              {this.renderCardProp(card)}
+            </div>
             <div className="ui location">
               <span className="right floated like">
                 <i className="like icon"></i>
@@ -124,7 +118,6 @@ export default class PostCard extends BaseComponent {
     if (process.env.BROWSER) {
       const locale = fixLocaleName(newLocale)
       moment.locale(locale)
-      this.setState({ locale })
     }
   }
 }

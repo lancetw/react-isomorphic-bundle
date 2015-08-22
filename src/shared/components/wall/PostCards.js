@@ -13,20 +13,18 @@ if (process.env.BROWSER) {
   require('css/ui/spinkit')
 }
 
-export default class PostCards extends Component {
+export default class PostCards extends BaseComponent {
 
   static propTypes = {
     posts: PropTypes.array.isRequired,
     loadFunc: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,
     diff: PropTypes.number.isRequired,
-    defaultLocale: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
     diff: 0,
-    defaultLocale: 'en',
     isFetching: false
   }
 
@@ -59,7 +57,6 @@ export default class PostCards extends Component {
       <Card
         key={key}
         data={card}
-        defaultLocale={this.props.defaultLocale}
       />
     )
   }
@@ -107,9 +104,11 @@ export default class PostCards extends Component {
   }
 
   handleScroll (event) {
+    const threshold = 300
+
     if (!!this.props.hasMore) {
       this.setState({disablePointer: true })
-      this.handleInfiniteLoad()
+      this.handleInfiniteLoad(threshold)
       if (this.disablePointerTimeout !== null) {
         clearTimeout(this.disablePointerTimeout)
       }
@@ -125,19 +124,19 @@ export default class PostCards extends Component {
     })
   }
 
-  handleInfiniteLoad () {
+  handleInfiniteLoad (threshold) {
     const nodeScroll = React.findDOMNode(this.refs.scroll)
     const nodeList = React.findDOMNode(this.refs.scrollList)
     const contentHeight = $(nodeList).height() - $(nodeScroll).height()
     const scrollTop = nodeScroll.scrollTop
     const loading = this.props.isFetching
-    const threshold = 1000
     const checkPoint = (contentHeight - threshold) > 0
       ? contentHeight - threshold
       : contentHeight
 
     /* eslint-disable max-len */
     if (!this.state.triggered && nodeScroll.scrollTop > checkPoint) {
+      $('body').bind('touchmove', function(e) { e.preventDefault() })
       $('<div id="overlay"><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.scrollable')
       this.setState({ triggered: true })
 
@@ -150,6 +149,7 @@ export default class PostCards extends Component {
       this.triggerTimeout = setTimeout(() => {
         this.setState({ triggered: false })
         $('#overlay').remove()
+        $('body').unbind('touchmove')
       }, 3000)
     }
   }

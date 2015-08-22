@@ -116,7 +116,10 @@ export default {
           text: '佈告成功刪除',
           confirm: '確定'
         }
-      }
+      },
+      'start': ' 開始',
+      'end': '將結束於 ',
+      'this_year': '今年'
     },
     submit: '張貼佈告',
     nodata: '查無資料'
@@ -130,6 +133,7 @@ export default {
   },
   search: {
     loading: '載入中...',
-    nodata: '查無資料'
+    nodata: '查無資料',
+    title: '「%(keyword)s」的搜尋結果：'
   }
 }

@@ -80,7 +80,7 @@ export default class Post extends BaseComponent {
       : null
 
     if (eventStartYear && toYear(detail.endDate) === toYear(new Date())) {
-      eventEndYear = '今年'
+      eventEndYear = <Translate content="post.detail.this_year" />
     }
 
     const detailProp = this.getDetailProp(detail.prop)
@@ -102,14 +102,15 @@ export default class Post extends BaseComponent {
                 <div className="ui large right floated">
                   {eventStartYear && (
                     <span className="ui right ribbon label">
-                      {eventStartYear} { eventEndYear && `開始` }
+                      {eventStartYear}
+                      { eventEndYear
+                        && <Translate content="post.detail.start" /> }
                     </span>
                   )}
                   {eventEndYear && (
                     <div>
-                      <div className="ui hidden divider"></div>
                       <span className="ui large teal right ribbon label">
-                        將結束於 {eventEndYear}
+                        <Translate content="post.detail.end" /> {eventEndYear}
                       </span>
                     </div>
                   )}
@@ -172,7 +173,7 @@ export default class Post extends BaseComponent {
             </div>
           </div>
         </div>
-        <div className="column">
+        <div className="map column">
           { (detail.lat && detail.lat) &&
           <GMap
             ref="gmap"

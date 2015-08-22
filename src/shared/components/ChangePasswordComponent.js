@@ -14,14 +14,11 @@ export default class ChangePassword extends BaseComponent {
 
   static propTypes = {
     changePassword: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    user: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
-
-    counterpart.setLocale(props.defaultLocale)
 
     this._bind(
       'handleSubmit',
@@ -32,7 +29,7 @@ export default class ChangePassword extends BaseComponent {
     this.releaseTimeout = undefined
     this.state = {
       value: { password: '', passwordCheck: '' },
-      options: ChangePasswordFormOptions(counterpart.getLocale()),
+      options: ChangePasswordFormOptions(this.getLocale()),
       submited: false,
       updated: false
     }

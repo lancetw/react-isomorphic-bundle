@@ -116,7 +116,10 @@ export default {
           text: 'The post is deleted successfully.',
           confirm: 'Done'
         }
-      }
+      },
+      'start': ' started',
+      'end': 'End in ',
+      'this_year': 'this year'
     },
     submit: 'Post it',
     nodata: 'No data'
@@ -130,6 +133,7 @@ export default {
   },
   search: {
     loading: 'Loading...',
-    nodata: 'No data'
+    nodata: 'No data',
+    title: 'The result of "%(keyword)s" :'
   }
 }

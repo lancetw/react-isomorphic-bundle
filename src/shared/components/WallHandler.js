@@ -8,9 +8,6 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
-import counterpart from 'counterpart'
-import moment from 'moment'
-import 'moment/locale/zh-tw'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
 
@@ -35,7 +32,7 @@ export default class WallHandler extends BaseComponent {
     super(props, context)
 
     this.state = {
-      locale: fixLocaleName(counterpart.getLocale())
+      locale: fixLocaleName(this.getLocale())
     }
 
     const { dispatch, resolver } = context.store
@@ -47,12 +44,10 @@ export default class WallHandler extends BaseComponent {
 
     dispatch(updateTitle('title.wall'))
     resolver.resolve(this.postActions.overviewList, 0, 10)
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   getCardProp (index) {
-    const _lang = originLocaleName(this.state.locale)
+    const _lang = originLocaleName(this.getLocale())
     return at(PostPropArray(_lang), index)
   }
 
@@ -79,14 +74,6 @@ export default class WallHandler extends BaseComponent {
     const { dispatch, params, post } = this.props
     const { cprop } = params
     dispatch(PostActions.overviewList(post.offset, post.limit))
-  }
-
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale })
-    }
   }
 
 }

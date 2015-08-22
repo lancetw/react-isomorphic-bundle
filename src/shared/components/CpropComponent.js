@@ -1,33 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router'
-import moment from 'moment'
-import 'moment/locale/zh-tw'
 import counterpart from 'counterpart'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { PostPropArray } from 'shared/utils/forms'
 import { keys, map, range, at } from 'lodash'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
+import { BaseComponent } from 'shared/components'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 
-export default class Cal extends React.Component {
+export default class Cprop extends BaseComponent {
 
   static propTypes = {}
 
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-
-    this.state = {
-      locale: fixLocaleName(counterpart.getLocale())
-    }
-
     counterpart.onLocaleChange(::this.handleLocaleChange)
+
+    this.state = { locale: this.getLocale() }
   }
 
-  getCardProp (index) {
-    const _lang = originLocaleName(this.state.locale)
-    return at(PostPropArray(_lang), index)
-  }
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   renderCprop () {
     const _lang = originLocaleName(this.state.locale)
@@ -40,11 +33,19 @@ export default class Cal extends React.Component {
           <Link
             className="fluid ui huge teal button"
             to={`/wall/cprop/${index}`}>
-            { this.getCardProp(index) }
+            {this.renderCardProp(index)}
           </Link>
         </div>
       )
     })
+  }
+
+  renderCardProp (index) {
+    return (
+      <span>
+        {at(PostPropArray(originLocaleName(this.getLocale())), index)}
+      </span>
+    )
   }
 
   /* eslint-disable max-len */
@@ -56,7 +57,7 @@ export default class Cal extends React.Component {
           <div className="row">
             <div className="ui basic segment">
               <div className="ui relaxed list">
-                { ::this.renderCprop() }
+                { this.renderCprop() }
               </div>
             </div>
           </div>
@@ -66,10 +67,9 @@ export default class Cal extends React.Component {
   }
 
   handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
+    if (this.isMounted()) {
       const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale })
+      this.setState({ locale: locale })
     }
   }
 
