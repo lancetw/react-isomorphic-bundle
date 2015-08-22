@@ -121,7 +121,7 @@ export default class Post extends BaseComponent {
 
   render () {
     if (process.env.BROWSER) {
-      if (this.state.updated) {
+      if (!isEmpty(this.props.post.content)) {
         this.releaseTimeout = setTimeout(() => {
           this.context.router.replaceWith('/manage')
         }, 1000)

@@ -38,6 +38,7 @@ export default class PostDetailHandler extends BaseComponent {
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)
 
+    resolver.resolve(this.postActions.init)
     resolver.resolve(this.mapActions.reload)
     resolver.resolve(this.authActions.showUser, props.auth.token)
 

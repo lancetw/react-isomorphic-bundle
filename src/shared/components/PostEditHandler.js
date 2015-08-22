@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Post from './PostComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import * as UploadActions from '../actions/UploadActions'
 import * as MapActions from '../actions/MapActions'
@@ -38,13 +39,15 @@ export default class PostEditHandler extends BaseComponent {
 
     dispatch(updateTitle('title.post'))
 
-    dispatch(UploadActions.init())
-
+    this.authActions = bindActionCreators(AuthActions, dispatch)
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)
     this.uploadActions = bindActionCreators(UploadActions, dispatch)
 
+    resolver.resolve(this.postActions.init)
+    resolver.resolve(this.uploadActions.init)
     resolver.resolve(this.mapActions.reload)
+    resolver.resolve(this.authActions.showUser, props.auth.token)
 
     const { id } = props.params
     if (id) {
