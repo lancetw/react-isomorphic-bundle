@@ -28,7 +28,7 @@ export default createReducer(initialState, {
   }),
   [SEARCH_POST_COMPLETED]: (state, action) => {
     let hasMore = false
-    if (action.data.length > 0) {
+    if (action.data.length === action.limit) {
       hasMore = true
     }
     const data = state.data.concat(action.data)

@@ -78,7 +78,7 @@ export default createReducer(initialState, {
   }),
   [LIST_POST_COMPLETED]: (state, action) => {
     let hasMore = false
-    if (action.posts.length > 0) {
+    if (action.posts.length === action.limit) {
       hasMore = true
     }
     const posts = state.posts.concat(action.posts)
