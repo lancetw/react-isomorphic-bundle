@@ -90,13 +90,17 @@ input.hide-submit {
   }
 
   .description {
-    text-align:justify;
-    word-wrap: break-word;
     padding: 1rem;
-    text-shadow: 0 0 0;
+
     > div, span {
       color: #555;
       line-height: 2rem;
+    }
+
+    p {
+      text-shadow: 0 0 0;
+      text-align: justify;
+      word-wrap: break-word;
     }
   }
 }
