@@ -37,17 +37,17 @@ export default new Resource('usersinfo', {
 
     const rule = {
       ocname: { type: 'string', required: true },
-      contact: { type: 'string', required: false },
-      country: { type: 'string', required: false },
-      city: { type: 'string', required: false },
-      address: { type: 'string', required: false },
-      place: { type: 'string', required: false },
-      zipcode: { type: 'int', required: false },
+      contact: { type: 'string', required: false, allowEmpty: true },
+      country: { type: 'string', required: false, allowEmpty: true },
+      city: { type: 'string', required: false, allowEmpty: true },
+      address: { type: 'string', required: false, allowEmpty: true },
+      zipcode: { type: 'string', required: false, allowEmpty: true },
+      place: { type: 'string', required: false, allowEmpty: true },
       lat: { type: 'number', required: false },
       lng: { type: 'number', required: false },
-      tel: { type: 'string', required: false },
-      fax: { type: 'string', required: false },
-      url: { type: 'string', required: false },
+      tel: { type: 'string', required: false, allowEmpty: true },
+      fax: { type: 'string', required: false, allowEmpty: true },
+      url: { type: 'string', required: false, allowEmpty: true },
       email: { type: 'string', required: false }
     }
     const errors = validate(rule, body)

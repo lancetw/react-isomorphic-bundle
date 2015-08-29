@@ -13,7 +13,7 @@ import {
   GET_INFO_USER_FAILED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
-import { isEmpty, isNull, omit } from 'lodash'
+import { isEmpty, isNull, mapValues, omit } from 'lodash'
 
 async function update (form, token) {
   return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ async function updateInfo (form, token) {
       .put('/api/v1/usersinfo/' + userId)
       .set('Accept', 'application/json')
       .set('Authorization', 'JWT ' + token)
-      .send(omit(form, isNull))
+      .send(form)
       .end(function (err, res) {
         if (!err && res.body) {
           resolve(res.body)
@@ -105,7 +105,11 @@ export function changeInfo (form) {
     dispatch({ type: CHANGE_INFO_USER_STARTED })
     try {
       const token = getToken()
-      const info = await updateInfo(form, token)
+      let _form = mapValues(form, (v) => isNull(v) ? '' : v)
+      if (isEmpty(_form.email)) {
+        _form = omit(_form, 'email')
+      }
+      const info = await updateInfo(_form, token)
       if (info.ocname) {
         return dispatch({
           type: CHANGE_INFO_USER_COMPLETED,
