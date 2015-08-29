@@ -169,6 +169,7 @@ exports.ManageForm = t.struct({
   email: t.maybe(t.Str),
   contact: t.maybe(t.Str),
   url: t.maybe(t.Str),
+  zipcode: t.maybe(t.Num),
   country: t.maybe(t.Str),
   city: t.maybe(t.Str),
   address: t.maybe(t.Str),
@@ -203,6 +204,12 @@ const ManageFormOptionsEn = {
       hasError: false,
       attrs: {
         placeholder: 'Website Link'
+      }
+    },
+    zipcode: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Zip Code'
       }
     },
     country: {
@@ -265,6 +272,12 @@ const ManageFormOptionsZhHantTW = {
       hasError: false,
       attrs: {
         placeholder: '網站網址'
+      }
+    },
+    zipcode: {
+      hasError: false,
+      attrs: {
+        placeholder: '郵遞區號'
       }
     },
     country: {

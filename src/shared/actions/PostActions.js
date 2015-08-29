@@ -36,7 +36,8 @@ import {
   LIST_CPROP_POST_FAILED,
   COUNT_POST_IN_MONTH_STARTED,
   COUNT_POST_IN_MONTH_COMPLETED,
-  COUNT_POST_IN_MONTH_FAILED
+  COUNT_POST_IN_MONTH_FAILED,
+  CLEAR_UPLOAD_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 

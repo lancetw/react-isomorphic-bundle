@@ -215,11 +215,7 @@ export default class Manage extends BaseComponent {
 
   initForm (info) {
     if (!isEmpty(info)) {
-      this.setState({
-        value: {
-          ocname: info.ocname
-        }
-      })
+      this.setState({ value: info })
       return true
     }
     return false
