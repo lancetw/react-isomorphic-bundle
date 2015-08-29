@@ -115,13 +115,17 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
-      const userinfo = yield UsersInfo.load(this.user.id)
-      body.ocname = userinfo.ocname
-      body.zipcode = userinfo.zipcode
-      body.contact = userinfo.contact
-      body.country = userinfo.country
-      body.city = userinfo.city
-      body.address = userinfo.address
+      try {
+        const userinfo = yield UsersInfo.load(this.user.id)
+        body.ocname = userinfo.ocname
+        body.zipcode = userinfo.zipcode
+        body.contact = userinfo.contact
+        body.country = userinfo.country
+        body.city = userinfo.city
+        body.address = userinfo.address
+      } catch (err) {
+        // no userinfo
+      }
 
       const post = yield Post.create(body)
       this.type = 'json'
@@ -216,13 +220,17 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
-      const userinfo = yield UsersInfo.load(this.user.id)
-      body.ocname = userinfo.ocname
-      body.zipcode = userinfo.zipcode
-      body.contact = userinfo.contact
-      body.country = userinfo.country
-      body.city = userinfo.city
-      body.address = userinfo.address
+      try {
+        const userinfo = yield UsersInfo.load(this.user.id)
+        body.ocname = userinfo.ocname
+        body.zipcode = userinfo.zipcode
+        body.contact = userinfo.contact
+        body.country = userinfo.country
+        body.city = userinfo.city
+        body.address = userinfo.address
+      } catch (err) {
+        // no userinfo
+      }
 
       const post = yield Post.update(this.params.post, body)
 
