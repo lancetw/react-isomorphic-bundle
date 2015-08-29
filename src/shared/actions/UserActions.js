@@ -13,7 +13,7 @@ import {
   GET_INFO_USER_FAILED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
-import { isEmpty } from 'lodash'
+import { isEmpty, isNull, omit } from 'lodash'
 
 async function update (form, token) {
   return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ async function updateInfo (form, token) {
       .put('/api/v1/usersinfo/' + userId)
       .set('Accept', 'application/json')
       .set('Authorization', 'JWT ' + token)
-      .send(form)
+      .send(omit(form, isNull))
       .end(function (err, res) {
         if (!err && res.body) {
           resolve(res.body)

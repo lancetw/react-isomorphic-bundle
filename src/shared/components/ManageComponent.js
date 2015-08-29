@@ -34,7 +34,7 @@ export default class Manage extends BaseComponent {
     this.releaseTimeout = undefined
     this.state = {
       formInited: false,
-      value: { ocname: '' },
+      value: {},
       options: ManageFormOptions(this.getLocale()),
       submited: false,
       updated: false
@@ -93,7 +93,7 @@ export default class Manage extends BaseComponent {
       <main className="ui two column stackable has-header grid container">
         <div className="column">
           <div className="row padding">
-            <h2>修改單位組織資料</h2>
+            <h2><Translate content="manage.org_title" /></h2>
             <CSSTransitionGroup transitionName="MessageTransition">
               {Message}
             </CSSTransitionGroup>

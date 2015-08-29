@@ -131,7 +131,8 @@ export default {
     nodata: 'No data'
   },
   manage: {
-    header: 'Posts by %(user)s'
+    header: 'Posts by %(user)s',
+    org_title: 'Manage Organization Infomation'
   },
   wall: {
     loading: 'Loading...',
@@ -141,5 +142,9 @@ export default {
     loading: 'Loading...',
     nodata: 'No data',
     title: 'The result of "%(keyword)s" :'
+  },
+  news: {
+    header: 'News',
+    unnamed: 'Unknown'
   }
 }

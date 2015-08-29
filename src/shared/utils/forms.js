@@ -165,7 +165,15 @@ exports.ChangePasswordFormOptions = function (locale) {
 }
 
 exports.ManageForm = t.struct({
-  ocname: t.Str
+  ocname: t.Str,
+  email: t.maybe(t.Str),
+  contact: t.maybe(t.Str),
+  url: t.maybe(t.Str),
+  country: t.maybe(t.Str),
+  city: t.maybe(t.Str),
+  address: t.maybe(t.Str),
+  tel: t.maybe(t.Str),
+  fax: t.maybe(t.Str)
 })
 const ManageFormOptionsEn = {
   auto: 'none',
@@ -174,7 +182,57 @@ const ManageFormOptionsEn = {
       error: 'Please correct and submit again.',
       hasError: false,
       attrs: {
-        placeholder: 'organization name'
+        placeholder: 'Organization Name'
+      }
+    },
+    email: {
+      type: 'email',
+      error: 'email should be an email',
+      hasError: false,
+      attrs: {
+        placeholder: 'Organization Email'
+      }
+    },
+    contact: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Contact Name'
+      }
+    },
+    url: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Website Link'
+      }
+    },
+    country: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Country'
+      }
+    },
+    city: {
+      hasError: false,
+      attrs: {
+        placeholder: 'City'
+      }
+    },
+    address: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Address'
+      }
+    },
+    tel: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Tel'
+      }
+    },
+    fax: {
+      hasError: false,
+      attrs: {
+        placeholder: 'Fax'
       }
     }
   }
@@ -187,6 +245,56 @@ const ManageFormOptionsZhHantTW = {
       hasError: false,
       attrs: {
         placeholder: '組織名稱'
+      }
+    },
+    email: {
+      type: 'email',
+      error: '電子郵件信箱不合規定',
+      hasError: false,
+      attrs: {
+        placeholder: '組織電子郵件信箱'
+      }
+    },
+    contact: {
+      hasError: false,
+      attrs: {
+        placeholder: '組織聯絡人'
+      }
+    },
+    url: {
+      hasError: false,
+      attrs: {
+        placeholder: '網站網址'
+      }
+    },
+    country: {
+      hasError: false,
+      attrs: {
+        placeholder: '國家'
+      }
+    },
+    city: {
+      hasError: false,
+      attrs: {
+        placeholder: '縣市'
+      }
+    },
+    address: {
+      hasError: false,
+      attrs: {
+        placeholder: '地址'
+      }
+    },
+    tel: {
+      hasError: false,
+      attrs: {
+        placeholder: '聯絡電話'
+      }
+    },
+    fax: {
+      hasError: false,
+      attrs: {
+        placeholder: '傳真'
       }
     }
   }

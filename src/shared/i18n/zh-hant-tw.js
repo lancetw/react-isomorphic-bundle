@@ -131,7 +131,8 @@ export default {
     nodata: '查無資料'
   },
   manage: {
-    header: '%(user)s 所發表的佈告'
+    header: '%(user)s 所發表的佈告',
+    org_title: '維護單位組織資料'
   },
   wall: {
     loading: '載入中...',
@@ -141,5 +142,9 @@ export default {
     loading: '載入中...',
     nodata: '查無資料',
     title: '「%(keyword)s」的搜尋結果：'
+  },
+  news: {
+    header: '最新公告',
+    unnamed: '未知'
   }
 }

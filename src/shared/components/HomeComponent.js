@@ -26,11 +26,16 @@ export default class HomeComponent extends BaseComponent {
   }
 
   renderItem (post) {
+    const Translate = require('react-translate-component')
     return (
     <div key={post.id} className="ui orange icon message">
       <i className="inbox icon"></i>
       <div className="content">
-        <h2><Link to={`/wall/posts/${post.id}`}>{post.ocname}</Link></h2>
+        <h2>
+          <Link to={`/wall/posts/${post.id}`}>
+            {post.ocname || <Translate content="news.unnamed" />}
+          </Link>
+        </h2>
         <div className="header">
           {post.title}
         </div>
@@ -61,7 +66,7 @@ export default class HomeComponent extends BaseComponent {
     return (
       <main className="ui column centered stackable page grid">
         <div className="column">
-          <h1 className="title">最新公告</h1>
+          <h1 className="title"><Translate content="news.header" /></h1>
           { ::this.renderNews(posts) }
           {loading && isEmpty(posts) && (
             <div className="ui segment basic has-header">
