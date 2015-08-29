@@ -17,12 +17,7 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  [SEARCH_POST_RELOADED]: () => ({
-    errors: {},
-    data: [],
-    offset: 0,
-    limit: 0
-  }),
+  [SEARCH_POST_RELOADED]: () => (initialState),
   [SEARCH_POST_STARTED]: () => ({
     isFetching: true
   }),

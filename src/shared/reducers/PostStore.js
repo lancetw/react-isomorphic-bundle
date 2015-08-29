@@ -67,12 +67,7 @@ export default createReducer(initialState, {
     errors: action.errors,
     isFetching: false
   }),
-  [LIST_POST_RELOADED]: () => ({
-    posts: [],
-    errors: {},
-    offset: 0,
-    limit: 0
-  }),
+  [LIST_POST_RELOADED]: () => (initialState),
   [LIST_POST_STARTED]: () => ({
     isFetching: true
   }),

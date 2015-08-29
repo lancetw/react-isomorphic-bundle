@@ -145,6 +145,6 @@ export default {
   },
   news: {
     header: '最新公告',
-    unnamed: '未知'
+    unnamed: '未提供單位名稱'
   }
 }

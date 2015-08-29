@@ -123,9 +123,7 @@ export default new Resource('posts', {
         body.country = userinfo.country
         body.city = userinfo.city
         body.address = userinfo.address
-      } catch (err) {
-        // no userinfo
-      }
+      } catch (err) {/* no userinfo */}
 
       const post = yield Post.create(body)
       this.type = 'json'
@@ -228,9 +226,7 @@ export default new Resource('posts', {
         body.country = userinfo.country
         body.city = userinfo.city
         body.address = userinfo.address
-      } catch (err) {
-        // no userinfo
-      }
+      } catch (err) {/* no userinfo */}
 
       const post = yield Post.update(this.params.post, body)
 

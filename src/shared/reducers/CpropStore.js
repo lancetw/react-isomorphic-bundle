@@ -17,12 +17,7 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  [LIST_CPROP_POST_RELOADED]: () => ({
-    posts: [],
-    errors: {},
-    offset: 0,
-    limit: 0
-  }),
+  [LIST_CPROP_POST_RELOADED]: () => (initialState),
   [LIST_CPROP_POST_STARTED]: () => ({
     isFetching: true
   }),
