@@ -23,7 +23,8 @@ exports.create = function *(post) {
     'lng',
     'place',
     'url',
-    'status'
+    'status',
+    'ocname'
   ]
 
   return yield Post.create(post, { fields: fillable })
@@ -61,6 +62,20 @@ exports.listWithCprop = function *(cprop, offset=0, limit=20) {
     order: [[ 'start_date', 'DESC' ]],
     where: {
       prop: +cprop
+    }
+  })
+}
+
+/* eslint-disable camelcase */
+exports.listWithType = function *(type, offset=0, limit=20) {
+  if (!type) return []
+
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'DESC' ]],
+    where: {
+      type: +type
     }
   })
 }
@@ -366,7 +381,8 @@ exports.update = function *(hid, post) {
     'lng',
     'place',
     'url',
-    'status'
+    'status',
+    'ocname'
   ]
   const id = +hashids.decode(hid)
   const p = yield Post.findOne({

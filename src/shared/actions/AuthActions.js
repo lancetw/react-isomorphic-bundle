@@ -15,7 +15,7 @@ import {
 import jwtDecode from 'jwt-decode'
 
 export function setToken (token) {
-  if (!localStorage) {
+  if (typeof localStorage === 'undefined') {
     throw Error('no localStorage')
   } else {
     if (!token) {
@@ -28,7 +28,7 @@ export function setToken (token) {
 
 export function getToken () {
   let token = ''
-  if (!localStorage) {
+  if (typeof localStorage === 'undefined') {
     throw Error('no localStorage')
   } else {
     token = localStorage.getItem('token')
@@ -62,7 +62,7 @@ export function checkToken () {   // just check token expire field
 }
 
 export function clearToken () {
-  if (!localStorage) {
+  if (typeof localStorage === 'undefined') {
     throw Error('no localStorage')
   } else {
     localStorage.setItem('token', '')

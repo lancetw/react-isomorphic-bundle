@@ -3,12 +3,14 @@ import Home from './HomeComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
+import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
-  auth: state.auth
+  auth: state.auth,
+  post: state.news
 }))
 export default class HomeHandler extends BaseComponent {
 
@@ -28,7 +30,9 @@ export default class HomeHandler extends BaseComponent {
     dispatch(updateTitle('title.home'))
 
     this.authActions = bindActionCreators(AuthActions, dispatch)
+    this.postActions = bindActionCreators(PostActions, dispatch)
     resolver.resolve(this.authActions.sync)
+    resolver.resolve(this.postActions.newsList, 0, 15)
     resolver.resolve(this.authActions.showUser, props.auth.token)
   }
 

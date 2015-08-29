@@ -10,6 +10,7 @@ import { isEmpty } from 'lodash'
 import queryType from 'query-types'
 
 const Post = db.posts
+const UsersInfo = db.usersInfo
 
 /* eslint-disable max-len */
 export default new Resource('posts', {
@@ -22,7 +23,8 @@ export default new Resource('posts', {
       limit: { type: 'number', required: false },
       start: { type: 'number', required: false },
       end: { type: 'number', required: false },
-      user: { type: 'string', required: false }
+      user: { type: 'string', required: false },
+      type: { type: 'number', required: false }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -32,13 +34,17 @@ export default new Resource('posts', {
       return
     }
 
-    const { cprop, offset, limit, start, end, user } = body
-    let data
+    const { cprop, offset, limit, start, end, user, type } = body
+    let data = []
     if (!user) {
       if (!cprop) {
-        data = !start
-        ? yield Post.list(offset, limit)
-        : yield Post.fetch(offset, limit, start, end)
+        if (!type) {
+          data = !start
+          ? yield Post.list(offset, limit)
+          : yield Post.fetch(offset, limit, start, end)
+        } else {
+          data = yield Post.listWithType(type, offset, limit)
+        }
       } else {
         data = yield Post.listWithCprop(cprop, offset, limit)
       }
@@ -109,13 +115,16 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
+      const userinfo = yield UsersInfo.load(this.user.id)
+      body.ocname = userinfo.ocname
+
       const post = yield Post.create(body)
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(post)
     } catch (err) {
-      this.type = 'josn'
-      this.status = 200
+      this.type = 'json'
+      this.status = 403
       this.body = err
     }
   }],
@@ -123,12 +132,18 @@ export default new Resource('posts', {
   show: function *(next) {
     try {
       const post = yield Post.load(this.params.post)
-      this.type = 'json'
-      this.status = 200
-      this.body = hashids.encodeJson(post)
+
+      if (!isEmpty(post)) {
+        this.type = 'json'
+        this.status = 200
+        this.body = hashids.encodeJson(post)
+      } else {
+        this.type = 'json'
+        this.status = 404
+      }
     } catch (err) {
-      this.type = 'josn'
-      this.status = 404
+      this.type = 'json'
+      this.status = 403
     }
   },
   // GET /posts/:post/edit
@@ -196,13 +211,16 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
+      const userinfo = yield UsersInfo.load(this.user.id)
+      body.ocname = userinfo.ocname
+
       const post = yield Post.update(this.params.post, body)
 
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(post)
     } catch (err) {
-      this.type = 'josn'
+      this.type = 'json'
       this.status = 200
       this.body = err
     }
@@ -220,7 +238,7 @@ export default new Resource('posts', {
       this.status = 200
       this.body = hashids.encodeJson(post)
     } catch (err) {
-      this.type = 'josn'
+      this.type = 'json'
       this.status = 200
       this.body = err
     }

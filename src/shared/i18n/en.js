@@ -72,6 +72,12 @@ export default {
     },
     submit: 'Change'
   },
+  userinfo: {
+    modified: {
+      title: 'Your infomation change request was successful.',
+      content: 'Next time your post will use them.'
+    }
+  },
   post: {
     created: {
       title: 'Post created!',

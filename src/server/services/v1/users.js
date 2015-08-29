@@ -36,7 +36,7 @@ export default new Resource('users', {
       this.status = 201
       this.body = hashids.encodeJson(user)
     } catch (err) {
-      this.type = 'josn'
+      this.type = 'json'
       this.status = 200
       this.body = err
     }
@@ -54,7 +54,7 @@ export default new Resource('users', {
       this.status = 200
       this.body = hashids.encodeJson(user)
     } catch (err) {
-      this.type = 'josn'
+      this.type = 'json'
       this.status = 404
       this.body = err
     }
@@ -90,7 +90,7 @@ export default new Resource('users', {
       this.status = 201
       this.body = hashids.encodeJson(user)
     } catch (err) {
-      this.type = 'josn'
+      this.type = 'json'
       this.status = 404
       this.body = err
     }
@@ -108,7 +108,7 @@ export default new Resource('users', {
       this.status = 200
       this.body = hashids.encodeJson(user)
     } catch (err) {
-      this.type = 'josn'
+      this.type = 'json'
       this.status = 404
       this.body = err
     }

@@ -3,7 +3,7 @@ $red: #D0021B;
 $grey: #DCE0E0;
 $dark-grey: #565A5C;
 $white: #FFF;
-$yellow: #FFFCC6;
+$yellow: #FFFCDD;
 $green: #59A644;
 
 $font: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
@@ -239,8 +239,8 @@ and (max-device-width : 736px) {
 
 .DayPicker-Day--outside {
   cursor: default;
-  color: $grey;
-  background-color: color($grey lightness(95%));
+  color: $white;
+  background-color: color($white lightness(90%));
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {

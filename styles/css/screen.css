@@ -28,11 +28,27 @@ select {
 }
 
 input.hide-submit {
-  position: absolute; left: -9999px
+  position: absolute;
+  left: -9999px;
+}
+
+.ui.center {
+  text-align: center;
 }
 
 .ui.menu.fixed.top {
   font-size: 96%;
+}
+
+.row.padding {
+  padding: 10px 40px;
+}
+
+.ui.orange.message {
+  background: rgba(255, 255, 255, 1);
+  a {
+    color: rgba(0, 0, 0, .4);
+  }
 }
 
 .ui.post.card.divider {

@@ -164,6 +164,41 @@ exports.ChangePasswordFormOptions = function (locale) {
   return list[locale]
 }
 
+exports.ManageForm = t.struct({
+  ocname: t.Str
+})
+const ManageFormOptionsEn = {
+  auto: 'none',
+  fields: {
+    ocname: {
+      error: 'Please correct and submit again.',
+      hasError: false,
+      attrs: {
+        placeholder: 'organization name'
+      }
+    }
+  }
+}
+const ManageFormOptionsZhHantTW = {
+  auto: 'none',
+  fields: {
+    ocname: {
+      error: '請修正後再送出',
+      hasError: false,
+      attrs: {
+        placeholder: '組織名稱'
+      }
+    }
+  }
+}
+exports.ManageFormOptions = function (locale) {
+  const list = {
+    'en': ManageFormOptionsEn,
+    'zh-hant-tw': ManageFormOptionsZhHantTW
+  }
+  return list[locale]
+}
+
 const PostTypeEnArray = {
   1: 'News',
   2: 'Event'

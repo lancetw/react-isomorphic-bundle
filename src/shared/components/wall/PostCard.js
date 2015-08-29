@@ -31,20 +31,17 @@ export default class PostCard extends BaseComponent {
   }
 
   renderLocationInfo (card) {
-    if (card.place) {
-      if (card.lat && card.lng) {
-        return (
-          <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>
-            {card.place}
-          </a>
-        )
-      } else {
-        return (
-          <span>{card.place}</span>
-        )
-      }
+    if (card.place && card.lat && card.lng) {
+      return (
+        <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>
+          {card.place}
+        </a>
+      )
+    } else {
+      return (
+        <span>{card.ocname}</span>
+      )
     }
-
     return <Translate content="post.detail.nomap" />
   }
 

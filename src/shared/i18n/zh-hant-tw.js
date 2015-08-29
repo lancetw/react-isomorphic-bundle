@@ -72,6 +72,12 @@ export default {
     },
     submit: '變更'
   },
+  userinfo: {
+    modified: {
+      title: '您的資料成功變更',
+      content: '下次發表佈告時將會帶入資料'
+    }
+  },
   post: {
     created: {
       title: '佈告已登錄！',

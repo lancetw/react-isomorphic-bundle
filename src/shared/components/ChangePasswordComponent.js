@@ -39,7 +39,7 @@ export default class ChangePassword extends BaseComponent {
 
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.user.errors)
-    this.checkSubmited(nextProps.user.info)
+    this.checkSubmited(nextProps.user._info)
   }
 
   componentWillUnmount () {

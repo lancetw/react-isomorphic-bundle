@@ -18,6 +18,10 @@ import {
   LIST_POST_STARTED,
   LIST_POST_COMPLETED,
   LIST_POST_FAILED,
+  LIST_NEWS_POST_RELOADED,
+  LIST_NEWS_POST_STARTED,
+  LIST_NEWS_POST_COMPLETED,
+  LIST_NEWS_POST_FAILED,
   LIST_MANAGE_POST_RELOADED,
   LIST_MANAGE_POST_STARTED,
   LIST_MANAGE_POST_COMPLETED,
@@ -137,13 +141,14 @@ async function get (id) {
 }
 
 
-async function list (offset, limit, user) {
+async function list ({ offset, limit, user, type }) {
   return new Promise((resolve, reject) => {
     request
       .get(LOCAL_PATH + '/api/v1/posts')
       .query({ offset: offset })
       .query({ limit: limit })
       .query({ user: user })
+      .query({ type: type })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body) {
@@ -337,7 +342,7 @@ export function overviewList (offset=0, limit=5, reload=false) {
     dispatch({ type: LIST_OVERVIEW_POST_STARTED })
 
     try {
-      const posts = await list(offset, limit)
+      const posts = await list({ offset, limit })
       if (isArray(posts)) {
         return dispatch({
           type: LIST_OVERVIEW_POST_COMPLETED,
@@ -360,6 +365,45 @@ export function overviewList (offset=0, limit=5, reload=false) {
   }
 }
 
+export function newsList (offset=0, limit=5, user, reload=false) {
+  return async (dispatch, getState) => {
+    /* cache service */
+    const cached = getState().news.posts
+    if (!reload && offset <= 0 && !isEmpty(cached)) {
+      return null
+    }
+
+    if (reload) {
+      dispatch({ type: LIST_NEWS_POST_RELOADED })
+    }
+
+    dispatch({ type: LIST_NEWS_POST_STARTED })
+
+    try {
+      const type = 1
+      const posts = await list({ offset, limit, type })
+      if (isArray(posts)) {
+        return dispatch({
+          type: LIST_NEWS_POST_COMPLETED,
+          posts: posts,
+          offset: offset,
+          limit: limit
+        })
+      } else {
+        return dispatch({
+          type: LIST_NEWS_POST_FAILED,
+          errors: posts.errors ? posts.errors : posts
+        })
+      }
+    } catch (err) {
+      return dispatch({
+        type: LIST_NEWS_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
 export function manageList (offset=0, limit=5, user, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
@@ -375,7 +419,7 @@ export function manageList (offset=0, limit=5, user, reload=false) {
     dispatch({ type: LIST_MANAGE_POST_STARTED })
 
     try {
-      const posts = await list(offset, limit, user)
+      const posts = await list({ offset, limit, user })
       if (isArray(posts)) {
         return dispatch({
           type: LIST_MANAGE_POST_COMPLETED,
