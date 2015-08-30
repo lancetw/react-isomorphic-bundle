@@ -48,7 +48,7 @@ export default {
     signup: '註冊新帳號',
     or: '或',
     need: {
-      title: '請先登入'
+      title: '請先登入您的帳號及密碼 :)'
     }
   },
   register: {
@@ -109,6 +109,9 @@ export default {
       'tips': '為您的地點取個名稱'
     },
     detail: {
+      'open': '開放報名中',
+      'close': '報名已截止',
+      'noexist': '本佈告已刪除。',
       'nomap': '未提供位置資訊',
       'attachments': '提供附件下載',
       'edit': '編輯',

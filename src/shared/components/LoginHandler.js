@@ -24,7 +24,7 @@ export default class LoginHandler extends BaseComponent {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.store.dispatch
+    const { dispatch } = context.store
     dispatch(updateTitle('title.login'))
   }
 

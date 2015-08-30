@@ -5,6 +5,7 @@ const models = require('src/server/db/models')
 exports.createOrUpdate = function *(hid, info) {
   const fillable = [
     'uid',
+    'cid',
     'ocname',
     'contact',
     'country',

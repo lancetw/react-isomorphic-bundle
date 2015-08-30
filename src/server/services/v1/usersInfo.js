@@ -48,7 +48,8 @@ export default new Resource('usersinfo', {
       tel: { type: 'string', required: false, allowEmpty: true },
       fax: { type: 'string', required: false, allowEmpty: true },
       url: { type: 'string', required: false, allowEmpty: true },
-      email: { type: 'string', required: false }
+      email: { type: 'string', required: false },
+      cid: { type: 'number', required: false }
     }
     const errors = validate(rule, body)
     if (errors) {

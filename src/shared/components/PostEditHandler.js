@@ -75,7 +75,9 @@ export default class PostEditHandler extends BaseComponent {
           resolver.resolve(this.uploadActions.setImageFileName, name, _index)
         })
 
-        this.setState({ disableSubmit: false })
+        if (process.env.BROWSER) {
+          this.setState({ disableSubmit: false })
+        }
       }, 2500)
     }
   }

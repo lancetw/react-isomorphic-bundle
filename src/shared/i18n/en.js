@@ -109,6 +109,9 @@ export default {
       'tips': 'Named  your place please'
     },
     detail: {
+      'open': 'Enroll Now',
+      'close': 'Enrollment Closed',
+      'noexist': 'This post is not exist.',
       'nomap': 'No map infomation',
       'attachments': 'Attachments',
       'edit': 'Edit',

@@ -3,6 +3,7 @@ import Logout from './LogoutComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
+import * as CacheActions from '../actions/CacheActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
@@ -24,8 +25,12 @@ export default class LogoutHandler extends BaseComponent {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.store.dispatch
+    const {dispatch, resolver} = context.store
     dispatch(updateTitle('title.logout'))
+
+    // clear all cache
+    this.cacheActions = bindActionCreators(CacheActions, dispatch)
+    resolver.resolve(this.cacheActions.clearCache)
   }
 
   render () {

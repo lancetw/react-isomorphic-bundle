@@ -10,6 +10,10 @@ module.exports = function (sequelize, Sequelize) {
       allowNull: false,
       type: Sequelize.BIGINT.UNSIGNED
     },
+    cid: {
+      allowNull: true,
+      type: Sequelize.BIGINT.UNSIGNED
+    },
     ocname: {
       allowNull: true,
       type: Sequelize.STRING

@@ -31,10 +31,6 @@ export default class PostHandler extends BaseComponent {
     const {dispatch, resolver} = context.store
     dispatch(updateTitle('title.post'))
 
-    dispatch(PostActions.init())
-    dispatch(UploadActions.init())
-    dispatch(MapActions.init())
-
     this.authActions = bindActionCreators(PostActions, dispatch)
     this.postActions = bindActionCreators(UploadActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)

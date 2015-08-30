@@ -62,6 +62,7 @@ export default class Post extends BaseComponent {
   renderRegisterInfo (detail) {
     if (!detail.url) return <div></div>
 
+    const Translate = require('react-translate-component')
     const open = toMoment(detail.openDate)
     const close = toMoment(detail.closeDate)
     const now = moment()
@@ -72,7 +73,7 @@ export default class Post extends BaseComponent {
           <div className="ui hidden divider"></div>
           <a className="ui fluid large orange button"
             href={detail.url} target="_blank">
-            開放報名中
+            <Translate content="post.detail.open" />
           </a>
         </div>
       )
@@ -81,7 +82,7 @@ export default class Post extends BaseComponent {
         <div className="register-info">
           <div className="ui hidden divider"></div>
           <div className="ui secondary center aligned segment">
-            報名已截止
+            <Translate content="post.detail.close" />
           </div>
         </div>
 
@@ -91,19 +92,20 @@ export default class Post extends BaseComponent {
 
   /* eslint-disable max-len */
   render () {
+    const Translate = require('react-translate-component')
+
     if (!isEmpty(this.props.post.errors)) {
       return (
         <main className="ui two column post detail stackable has-header grid container">
           <div className="column">
             <div className="ui huge orange ribbon label">
-              本佈告已刪除。
+              <Translate content="post.detail.noexist" />
             </div>
           </div>
         </main>
       )
     } else {
       const { detail } = this.props.post
-      const Translate = require('react-translate-component')
       const { content } = detail
       const files = typeof detail.file !== 'undefined'
         ? JSON.parse(detail.file)
@@ -138,6 +140,13 @@ export default class Post extends BaseComponent {
           <div className="column">
             <div className="row">
               <div className="ui fluid detail card">
+                {!detail.id &&
+                <div className="ui segment basic has-header">
+                  <div className="ui active inverted dimmer">
+                    <div className="ui large loader"></div>
+                  </div>
+                </div>
+                }
                 <div className={detailClass}>
                   <div className="ui left floated">
                   {eventDate && (
@@ -201,7 +210,7 @@ export default class Post extends BaseComponent {
                     </span>
                   </div>
                 </div>
-                {this.props.auth.user.id === detail.uid &&
+                {detail.uid > 0 && this.props.auth.user.id === detail.uid &&
                 <div className="extra content">
                   <div className="ui two buttons">
                     <Link

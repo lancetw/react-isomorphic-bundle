@@ -41,6 +41,7 @@ import {
   CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
+import { clear } from 'shared/actions/CacheActions'
 
 async function create ({ token, value, regValue, upload, map }) {
   const _upload = compact(upload)
@@ -231,12 +232,7 @@ export function submit ({ value, regValue, upload, map }) {
       const content = await create({ token, value, regValue, upload, map })
 
       if (content.uid) {
-        dispatch({ type: CLEAR_UPLOAD_COMPLETED })
-        dispatch({ type: LIST_POST_RELOADED })
-        dispatch({ type: LIST_CPROP_POST_RELOADED })
-        dispatch({ type: LIST_MANAGE_POST_RELOADED })
-        dispatch({ type: LIST_OVERVIEW_POST_RELOADED })
-        dispatch({ type: LIST_NEWS_POST_RELOADED })
+        clearCache()
         return dispatch({
           type: CREATE_POST_COMPLETED,
           content: content
@@ -263,12 +259,7 @@ export function modify ({ id, value, regValue, upload, map }) {
       const content = await update({ token, id, value, regValue, upload, map })
 
       if (content.uid) {
-        dispatch({ type: CLEAR_UPLOAD_COMPLETED })
-        dispatch({ type: LIST_POST_RELOADED })
-        dispatch({ type: LIST_CPROP_POST_RELOADED })
-        dispatch({ type: LIST_MANAGE_POST_RELOADED })
-        dispatch({ type: LIST_OVERVIEW_POST_RELOADED })
-        dispatch({ type: LIST_NEWS_POST_RELOADED })
+        clearCache()
         return dispatch({
           type: UPDATE_POST_COMPLETED,
           content: content
@@ -295,11 +286,7 @@ export function remove (id) {
       const content = await destroy({ token, id })
 
       if (content.uid) {
-        dispatch({ type: LIST_POST_RELOADED })
-        dispatch({ type: LIST_CPROP_POST_RELOADED })
-        dispatch({ type: LIST_MANAGE_POST_RELOADED })
-        dispatch({ type: LIST_OVERVIEW_POST_RELOADED })
-        dispatch({ type: LIST_NEWS_POST_RELOADED })
+        clearCache()
         return dispatch({
           type: REMOVE_POST_COMPLETED
         })

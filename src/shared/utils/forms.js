@@ -514,6 +514,11 @@ const RegFormOptionsEn = {
     closeDate: {
       label: 'Close date',
       order: [ 'YYYY', 'M', 'D' ]
+    },
+    url: {
+      attrs: {
+        placeholder: 'Enrollment Link'
+      }
     }
   }
 }
