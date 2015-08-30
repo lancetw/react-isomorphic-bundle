@@ -13,7 +13,7 @@ import {
   GET_INFO_USER_FAILED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
-import { isEmpty, isNull, mapValues, omit } from 'lodash'
+import { isEmpty, isNumber, isNull, mapValues, omit } from 'lodash'
 
 async function update (form, token) {
   return new Promise((resolve, reject) => {
@@ -106,6 +106,9 @@ export function changeInfo (form) {
     try {
       const token = getToken()
       let _form = mapValues(form, (v) => isNull(v) ? '' : v)
+      if (isNumber(_form.zipcode)) {
+        _form.zipcode = '' + _form.zipcode
+      }
       if (isEmpty(_form.email)) {
         _form = omit(_form, 'email')
       }
