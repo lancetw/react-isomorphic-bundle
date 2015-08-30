@@ -74,15 +74,18 @@ export default class Signup extends BaseComponent {
       <main className="ui two column centered stackable page grid">
         <div className="column">
           <div className="ui segment">
-            <h2 className="ui header">
-              <i className="orange inverted users icon"></i>
-              <div className="content">
-                <Translate content="register.hello" />
-                <div className="sub header">
-                  <Translate content="register.msg" />
+            <div className="ui center">
+              <img
+                src={`images/ccnda_icon.jpg`} alt="" />
+              <h2 className="ui header">
+                <div className="content">
+                  <Translate content="register.hello" />
+                  <div className="sub header">
+                    <Translate content="register.msg" />
+                  </div>
                 </div>
-              </div>
-            </h2>
+              </h2>
+            </div>
           </div>
         </div>
         <div className="column">
