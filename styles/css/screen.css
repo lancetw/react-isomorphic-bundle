@@ -39,6 +39,13 @@ input.hide-submit {
   font-size: 96%;
 }
 
+.ui.message {
+  h2 {
+    font-weight: bold;
+    text-shadow: 0 0 0;
+  }
+}
+
 .row.padding {
   padding: 10px 40px;
 }
