@@ -37,7 +37,8 @@ import {
   COUNT_POST_IN_MONTH_STARTED,
   COUNT_POST_IN_MONTH_COMPLETED,
   COUNT_POST_IN_MONTH_FAILED,
-  CLEAR_UPLOAD_COMPLETED
+  CLEAR_UPLOAD_COMPLETED,
+  CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 
@@ -353,6 +354,8 @@ export function overviewList (offset=0, limit=5, reload=false) {
     if (reload) {
       dispatch({ type: LIST_OVERVIEW_POST_RELOADED })
     }
+
+    dispatch({ type: CLEAR_POST_COMPLETED })
 
     dispatch({ type: LIST_OVERVIEW_POST_STARTED })
 

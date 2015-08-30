@@ -123,7 +123,7 @@ export default class Post extends BaseComponent {
     if (process.env.BROWSER) {
       if (!isEmpty(this.props.post.content)) {
         this.releaseTimeout = setTimeout(() => {
-          this.context.router.replaceWith('/manage')
+          this.context.router.replaceWith('/wall')
         }, 1000)
       }
     }
@@ -199,9 +199,6 @@ export default class Post extends BaseComponent {
           />
         </div>
         <div className="column">
-          <CSSTransitionGroup transitionName="MessageTransition">
-            {Message}
-          </CSSTransitionGroup>
           <Tabs
             ref="tabs"
             onSelect={::this.handleSelected}
@@ -488,7 +485,6 @@ export default class Post extends BaseComponent {
 
   handleSubmit (evt) {
     evt.preventDefault()
-    $('html, body').animate({ scrollTop: 0 }, 'slow')
 
     const value = this.refs.form.getValue()
     if (value) {

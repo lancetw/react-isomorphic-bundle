@@ -17,7 +17,8 @@ import {
   LIST_POST_FAILED,
   COUNT_POST_IN_MONTH_STARTED,
   COUNT_POST_IN_MONTH_COMPLETED,
-  COUNT_POST_IN_MONTH_FAILED
+  COUNT_POST_IN_MONTH_FAILED,
+  CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 
@@ -67,7 +68,18 @@ export default createReducer(initialState, {
     errors: action.errors,
     isFetching: false
   }),
-  [LIST_POST_RELOADED]: () => (initialState),
+  [LIST_POST_RELOADED]: () => ({
+    isFetching: false,
+    errors: {},
+    posts: [],
+    offset: 0,
+    limit: 0,
+    hasMore: true,
+    content: {},
+    detail: {},
+    start: null,
+    end: null
+  }),
   [LIST_POST_STARTED]: () => ({
     isFetching: true
   }),
@@ -101,5 +113,8 @@ export default createReducer(initialState, {
       month: action.month
     }),
   [COUNT_POST_IN_MONTH_FAILED]: (state, action) =>
-    ({ errors: action.errors })
+    ({ errors: action.errors }),
+  [CLEAR_POST_COMPLETED]: (state, action) =>
+    ({ content: {} })
+
 })

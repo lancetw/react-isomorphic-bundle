@@ -10,6 +10,7 @@ import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
 const { CSSTransitionGroup } = React.addons
+import $ from 'jquery'
 
 export default class Manage extends BaseComponent {
 
@@ -92,7 +93,7 @@ export default class Manage extends BaseComponent {
     return (
       <main className="ui two column stackable has-header grid container">
         <div className="column">
-          <div className="row padding">
+          <div className="ui row padding center">
             <h2><Translate content="manage.org_title" /></h2>
             <CSSTransitionGroup transitionName="MessageTransition">
               {Message}
@@ -156,6 +157,11 @@ export default class Manage extends BaseComponent {
     )
   }
 
+  scrollToTop () {
+    $('body').stop().animate({
+      scrollTop: 0
+    }, 600)
+  }
 
   handleLocaleChange (newLocale) {
     if (process.env.BROWSER) {
@@ -177,9 +183,10 @@ export default class Manage extends BaseComponent {
     if (value) {
       this.clearFormErrors()
       this.setState({ submited: true })
-
-      this.releaseTimeout =
-        setTimeout(() => this.props.changeInfo(value), 1000)
+      this.scrollToTop()
+      this.releaseTimeout = setTimeout(() => {
+        this.props.changeInfo(value)
+      }, 1000)
     }
   }
 

@@ -28,12 +28,19 @@ export default class PostHandler extends BaseComponent {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.store.dispatch
+    const {dispatch, resolver} = context.store
     dispatch(updateTitle('title.post'))
 
     dispatch(PostActions.init())
     dispatch(UploadActions.init())
     dispatch(MapActions.init())
+
+    this.authActions = bindActionCreators(PostActions, dispatch)
+    this.postActions = bindActionCreators(UploadActions, dispatch)
+    this.mapActions = bindActionCreators(MapActions, dispatch)
+    resolver.resolve(this.authActions.init)
+    resolver.resolve(this.postActions.init)
+    resolver.resolve(this.mapActions.init)
   }
 
   render () {

@@ -236,7 +236,6 @@ and (max-device-width : 736px) {
   background-color: color($yellow lightness(60%));
 }
 
-
 .DayPicker-Day--outside {
   cursor: default;
   color: $white;

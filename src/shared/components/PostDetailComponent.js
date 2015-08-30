@@ -68,7 +68,7 @@ export default class Post extends BaseComponent {
 
     if (now.isBetween(open, close)) {
       return (
-        <div>
+        <div className="register-info">
           <div className="ui hidden divider"></div>
           <a className="ui fluid large orange button"
             href={detail.url} target="_blank">
@@ -78,7 +78,7 @@ export default class Post extends BaseComponent {
       )
     } else if (now.isAfter(close)) {
       return (
-        <div>
+        <div className="register-info">
           <div className="ui hidden divider"></div>
           <div className="ui secondary center aligned segment">
             報名已截止
@@ -288,7 +288,7 @@ export default class Post extends BaseComponent {
           confirmButtonText: _t('post.detail.delete.ok.confirm'),
           closeOnConfirm: true
         }, () => {
-          transitionTo('/manage')
+          transitionTo('/wall')
         })
       })
     })
