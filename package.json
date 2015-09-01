@@ -161,7 +161,7 @@
     "co-mocha": "^1.1.0",
     "co-supertest": "0.0.10",
     "coveralls": "^2.11.2",
-    "css-loader": "^0.15.3",
+    "css-loader": "^0.16.0",
     "cssnext": "^1.6.0",
     "csswring": "^3.0.5",
     "debug": "^2.2.0",

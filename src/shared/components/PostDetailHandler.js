@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
-import { updateTitle } from '../actions/LocaleActions'
+import * as LocaleActions from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
@@ -31,12 +31,10 @@ export default class PostDetailHandler extends BaseComponent {
     super(props, context)
     const { dispatch, resolver, getState } = context.store
 
-    const title = props.post.detail.title
-    dispatch(updateTitle(title))
-
     this.authActions = bindActionCreators(AuthActions, dispatch)
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)
+    this.localeActions = bindActionCreators(LocaleActions, dispatch)
 
     resolver.resolve(this.postActions.init)
     resolver.resolve(this.mapActions.reload)
@@ -45,8 +43,11 @@ export default class PostDetailHandler extends BaseComponent {
     const { id } = props.params
     if (id) {
       resolver.resolve(this.postActions.show, id)
+      const { detail } = props.post
       setTimeout(() => {
-        const { detail } = getState().post
+        resolver.resolve(this.localeActions.updateTitle, detail.title)
+      }, 1000)
+      setTimeout(() => {
         const map = {
           place: detail.place,
           lat: detail.lat,
@@ -60,7 +61,7 @@ export default class PostDetailHandler extends BaseComponent {
   render () {
     const { dispatch } = this.props
     const { getState } = this.context.store
-    const title = getState().locale.title
+    const title = getState().post.detail.title
     const defaultTitle = this._T('title.site')
     return (
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
