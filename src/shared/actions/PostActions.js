@@ -41,7 +41,7 @@ import {
   CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
-import { clear } from 'shared/actions/CacheActions'
+import { clearCache } from 'shared/actions/CacheActions'
 
 async function create ({ token, value, regValue, upload, map }) {
   const _upload = compact(upload)
