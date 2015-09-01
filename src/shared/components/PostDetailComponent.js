@@ -210,7 +210,7 @@ export default class Post extends BaseComponent {
                     </span>
                   </div>
                 </div>
-                {detail.uid > 0 && this.props.auth.user.id === detail.uid &&
+                {!isEmpty(detail.uid) && this.props.auth.user.id === detail.uid &&
                 <div className="extra content">
                   <div className="ui two buttons">
                     <Link
