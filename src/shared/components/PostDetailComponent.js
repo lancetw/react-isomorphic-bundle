@@ -140,7 +140,7 @@ export default class Post extends BaseComponent {
           <div className="column">
             <div className="row">
               <div className="ui fluid detail card">
-                {!detail.id &&
+                {this.props.post.isFetching && !detail.id &&
                 <div className="ui segment basic has-header">
                   <div className="ui active inverted dimmer">
                     <div className="ui large loader"></div>

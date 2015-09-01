@@ -49,3 +49,5 @@ storage/*
 uploads/*
 
 *.env
+
+.DS_Store

@@ -4,7 +4,8 @@ import {
   LIST_CPROP_POST_RELOADED,
   LIST_MANAGE_POST_RELOADED,
   LIST_OVERVIEW_POST_RELOADED,
-  LIST_NEWS_POST_RELOADED
+  LIST_NEWS_POST_RELOADED,
+  CLEAR_CACHE_COMPLETED
 }from 'shared/constants/ActionTypes'
 
 export function clearCache () {
@@ -15,5 +16,7 @@ export function clearCache () {
     dispatch({ type: LIST_MANAGE_POST_RELOADED })
     dispatch({ type: LIST_OVERVIEW_POST_RELOADED })
     dispatch({ type: LIST_NEWS_POST_RELOADED })
+
+    return dispatch({ type: CLEAR_CACHE_COMPLETED })
   }
 }
