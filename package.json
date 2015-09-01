@@ -127,7 +127,7 @@
     "react-pure-render": "^1.0.2",
     "react-redux": "^2.0.0",
     "react-responsive": "0.0.6",
-    "react-router": "^1.0.0-beta3",
+    "react-router": "1.0.0-beta3",
     "react-side-effect": "^0.3.0",
     "react-style": "^0.5.5",
     "react-suitcss": "^1.1.1",
