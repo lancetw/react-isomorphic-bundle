@@ -14,18 +14,9 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
 (async () => {
-  // require('react-a11y')(React)
-
-  // React.initializeTouchEvents(true)
-
-  counterpart.registerTranslations(
-    'en',
-    require('shared/i18n/en')
-  )
-  counterpart.registerTranslations(
-    'zh-hant-tw',
-    require('shared/i18n/zh-hant-tw')
-  )
+  /* eslint-disable max-len */
+  counterpart.registerTranslations('en', require('shared/i18n/en'))
+  counterpart.registerTranslations('zh-hant-tw', require('shared/i18n/zh-hant-tw'))
   counterpart.setFallbackLocale('zh-hant-tw')
 
   const initialState = window.STATE_FROM_SERVER
@@ -42,7 +33,6 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
       LogMonitor
     } = require('redux-devtools/lib/react')
 
-    const DiffMonitor = require('redux-devtools-diff-monitor')
     const { devTools, persistState } = require('redux-devtools')
 
     finalCreateStore = compose(
@@ -51,9 +41,8 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
         reduxPromise
       ),
       devTools(),
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
-      createStore
-    )
+      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+    )(createStore)
 
     const store = finalCreateStore(reducer, initialState)
     const resolver = new ReduxUniversalResolver()
@@ -73,7 +62,9 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
             />
           }
         </Provider>
-        <DevTools store={store} monitor={DiffMonitor} />
+        <DebugPanel top right bottom>
+          <DevTools store={store} monitor={LogMonitor} />
+        </DebugPanel>
       </div>
     ), document.getElementById('app'))
 
@@ -84,8 +75,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
         thunk,
         reduxPromise
       ),
-      createStore
-    )
+    )(createStore)
 
     const store = finalCreateStore(reducer, initialState)
     const resolver = new ReduxUniversalResolver()

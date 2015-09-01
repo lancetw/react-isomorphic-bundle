@@ -24,7 +24,7 @@ $ npm install
 
 `npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
 
-**Press "Ctrl + h" to open redux devtools**
+**Press "Ctrl + h" to switch redux devtools**
 
 * open `http://127.0.0.1:3000`
 * open `http://127.0.0.1:3002` (BrowserSync)
@@ -45,8 +45,8 @@ $ npm install
 ## Features
 
 - [x] isomorphic flux, supports JSON Web Tokens (JWT) and Sessions (levelDB)
-- [x] Flummox changes to Redux v1.0.0-rc...!
-- [x] React-router upgrades to 1.0.0beta3
+- [x] flummox changes to redux@2.0.0
+- [x] react-router@1.0.0beta3
 - [x] Register (isomorphic)
 - [x] Log in (isomorphic)
 - [x] Facebook Sign In (isomorphic)
@@ -73,7 +73,6 @@ $ npm install
 ## You May Be Interested In...
 
 * [redux](https://github.com/gaearon/redux)
-* [redux-devtools-diff-monitor](https://github.com/whetstone/redux-devtools-diff-monitor)
 * [flummox](https://github.com/acdlite/flummox)
 * [react-router](https://github.com/rackt/react-router)
 * [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate)
