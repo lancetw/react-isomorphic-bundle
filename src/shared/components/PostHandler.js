@@ -53,7 +53,7 @@ export default class PostHandler extends BaseComponent {
         }
         resolver.resolve(this.mapActions.setPin, map)
       }
-    }, 800)
+    }, 1500)
   }
 
   render () {
