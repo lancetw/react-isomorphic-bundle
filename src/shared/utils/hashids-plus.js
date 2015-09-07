@@ -6,6 +6,7 @@ const config = require('config')
 const hashids = require('hashids')(require('config').app.SALT)
 const BASEID = config.app.BASEID
 const SEED = config.app.SEED
+const IGNORELIST = ['cid']
 
 exports.encode = function (id) {
   return isNaN(id) ? id : hashids.encode(id * BASEID, SEED)
@@ -17,7 +18,9 @@ exports.decode = function (str) {
 
 exports.encodeJson = function (object) {
   return traverse(object).map(function () {
-    if (_.endsWith(this.key, 'id') && _.isNumber(this.node)) {
+    if (!_.includes(IGNORELIST, this.key)
+        && _.endsWith(this.key, 'id')
+        && _.isNumber(this.node)) {
       return hashids.encode(this.node * BASEID, SEED)
     } else {
       return this.node
@@ -27,8 +30,9 @@ exports.encodeJson = function (object) {
 
 exports.decodeJson = function (object) {
   return traverse(object).map(function () {
-    if (_.endsWith(this.key, 'id') &&
-        _.isString(this.node) &&
+    if (!_.includes(IGNORELIST, this.key)
+        && _.endsWith(this.key, 'id')
+        && _.isString(this.node) &&
         this.node.length === 8) {
       return hashids.decode(this.node)[0] / BASEID
     } else {

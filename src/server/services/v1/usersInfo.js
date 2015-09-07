@@ -5,8 +5,29 @@ import hashids from 'src/shared/utils/hashids-plus'
 import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
+import request from 'superagent'
 
 const UserInfo = db.usersInfo
+
+function fetchOrgData (ocname) {
+  return new Promise((resolve, reject) => {
+    request
+      .get('http://church.oursweb.net/lite/mapsearch')
+      .set('Accept', 'application/json')
+      .query({'keyword': ocname})
+      .end(function (err, res) {
+        if (!err && res.body) {
+          if (res.body.geoinfo.length > 0) {
+            resolve(res.body.geoinfo[0])
+          } else {
+            reject('nodata')
+          }
+        } else {
+          reject(err)
+        }
+      })
+  })
+}
 
 export default new Resource('usersinfo', {
   // GET /userinfo
@@ -48,8 +69,7 @@ export default new Resource('usersinfo', {
       tel: { type: 'string', required: false, allowEmpty: true },
       fax: { type: 'string', required: false, allowEmpty: true },
       url: { type: 'string', required: false, allowEmpty: true },
-      email: { type: 'string', required: false },
-      cid: { type: 'number', required: false }
+      email: { type: 'string', required: false }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -62,6 +82,17 @@ export default new Resource('usersinfo', {
     try {
       if (hashids.decode(this.params.usersinfo) !== this.user.id) {
         throw new Error('user check failed')
+      }
+      // fetch cid by ocname
+      try {
+        const org = yield fetchOrgData(body.ocname)
+        body.cid = org.oid
+        if (typeof body.lat === 'undefined' || !body.lat) body.lat = org.lat
+        if (typeof body.lng === 'undefined' || !body.lng) body.lng = org.lng
+      } catch (err) {
+        body.cid = null
+        if (typeof body.lat === 'undefined' || !body.lat) body.lat = null
+        if (typeof body.lng === 'undefined' || !body.lng) body.lng = null
       }
 
       const userInfo

@@ -50,13 +50,13 @@ export default class Manage extends BaseComponent {
 
   componentWillReceiveProps (nextProps) {
     if (!this.state.formInited) {
-      if (this.initForm(nextProps.user.info)) {
+      if (this.initForm(nextProps.user.orginfo)) {
         this.setState({ formInited: true })
       }
     }
 
     this.validation(nextProps.user.errors)
-    this.checkSubmited(nextProps.user._info)
+    this.checkSubmited(nextProps.user._orginfo)
   }
 
   componentWillUnmount () {
@@ -91,6 +91,26 @@ export default class Manage extends BaseComponent {
         setTimeout(() => this.setState({ updated: false }), 5000)
     }
 
+    /* eslint-disable max-len */
+    const { user } = this.props
+    let cid
+    if (user.orginfo.cid) cid = user.orginfo.cid
+    if (user._orginfo.cid) cid = user._orginfo.cid
+    const BindedMessage
+      = !!cid
+      ? (
+        <div className="ui info small icon message">
+          <i className="check square icon"></i>
+          <div className="content">
+            <div className="header">
+              <a target="_blank" href={`http://church.oursweb.net/church.php?pkey=${cid}`}>
+                已綁定華人教會機構名錄 ^_^
+              </a>
+            </div>
+          </div>
+        </div> )
+      : null
+
     const { post, auth, loadFunc } = this.props
     const loading = !!post.isFetching
 
@@ -105,6 +125,7 @@ export default class Manage extends BaseComponent {
             <form
               className={LoadingClass}
               onSubmit={this.handleSubmit}>
+              {BindedMessage}
               <Form
                 ref="form"
                 type={ManageForm}

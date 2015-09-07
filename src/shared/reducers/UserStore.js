@@ -14,7 +14,8 @@ import { createReducer } from 'shared/utils/redux-utils'
 const initialState = {
   errors: {},
   info: {},
-  _info: {}
+  orginfo: {},
+  _orginfo: {}
 }
 
 export default createReducer(initialState, {
@@ -25,12 +26,12 @@ export default createReducer(initialState, {
     ({ errors: action.errors }),
   [CHANGE_INFO_USER_STARTED]: () => (initialState),
   [CHANGE_INFO_USER_COMPLETED]: (state, action) =>
-    ({ _info: action.info }),
+    ({ _orginfo: action.info }),
   [CHANGE_INFO_USER_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [GET_INFO_USER_STARTED]: () => (initialState),
   [GET_INFO_USER_COMPLETED]: (state, action) =>
-    ({ info: action.info }),
+    ({ orginfo: action.info }),
   [GET_INFO_USER_FAILED]: (state, action) =>
     ({ errors: action.errors })
 })

@@ -32,7 +32,7 @@ export default class HomeHandler extends BaseComponent {
     this.authActions = bindActionCreators(AuthActions, dispatch)
     this.postActions = bindActionCreators(PostActions, dispatch)
     resolver.resolve(this.authActions.sync)
-    resolver.resolve(this.postActions.newsList, 0, 15)
+    resolver.resolve(this.postActions.newsList, 0, 8)
     resolver.resolve(this.authActions.showUser, props.auth.token)
   }
 
