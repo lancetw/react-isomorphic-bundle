@@ -1,7 +1,7 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
 import jwt from 'jsonwebtoken'
-import { isArray, clone, compact, isEmpty } from 'lodash'
+import { isArray, clone, compact, isEmpty, each } from 'lodash'
 import moment from 'moment'
 import {
   CREATE_POST_STARTED,
@@ -42,6 +42,10 @@ import {
 } from 'shared/constants/ActionTypes'
 import { getToken } from 'shared/actions/AuthActions'
 import { clearCache } from 'shared/actions/CacheActions'
+import { getInfo } from 'shared/actions/UserActions'
+import { setPin } from 'shared/actions/MapActions'
+import { updateTitle } from 'shared/actions/LocaleActions'
+import { getFileExt } from 'shared/utils/file-utils'
 
 async function create ({ token, value, regValue, upload, map }) {
   const _upload = compact(upload)
@@ -564,6 +568,67 @@ export function countPostsWithCal (year, month) {
       return dispatch({
         type: COUNT_POST_IN_MONTH_FAILED,
         errors: err.message
+      })
+    }
+  }
+}
+
+export function loadOrgInfoToMap () {
+  return async (dispatch, getState) => {
+    await dispatch(getInfo(getState().auth.token))
+    const { orginfo } = getState().user
+    if (orginfo.cid) {
+      const map = {
+        place: orginfo.ocname,
+        lat: orginfo.lat,
+        lng: orginfo.lng
+      }
+      return dispatch(setPin(map))
+    }
+  }
+}
+
+export function loadPostDetail (id) {
+  return async (dispatch, getState) => {
+    await dispatch(show(id))
+    const { detail } = getState().post
+    if (detail.title) {
+      dispatch(updateTitle(detail.title))
+      const map = {
+        place: detail.place,
+        lat: detail.lat,
+        lng: detail.lng
+      }
+      return dispatch(setPin(map))
+    }
+  }
+}
+
+export function loadPostEdit (id) {
+  return async (dispatch, getState) => {
+    await dispatch(show(id))
+    const { detail } = getState().post
+    if (detail.title) {
+      dispatch(updateTitle(detail.title))
+      const map = {
+        place: detail.place,
+        lat: detail.lat,
+        lng: detail.lng
+      }
+      await dispatch(setPin(map))
+
+      const files = typeof detail.file !== 'undefined'
+      ? JSON.parse(detail.file)
+      : []
+
+      let name
+      each(files, (filename, _index) => {
+        if (getFileExt(filename.toLowerCase()) === 'pdf') {
+          name = 'pdf.png'
+        } else {
+          name = filename
+        }
+        dispatch(setImageFileName(name, _index))
       })
     }
   }

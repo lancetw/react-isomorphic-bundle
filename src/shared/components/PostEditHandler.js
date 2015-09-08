@@ -8,8 +8,6 @@ import * as UploadActions from '../actions/UploadActions'
 import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
-import { getFileExt } from 'shared/utils/file-utils'
-import { each } from 'lodash'
 import { BaseComponent } from 'shared/components'
 
 @connect(state => ({
@@ -51,34 +49,10 @@ export default class PostEditHandler extends BaseComponent {
 
     const { id } = props.params
     if (id) {
-      resolver.resolve(this.postActions.show, id)
-      setTimeout(() => {
-        const { detail } = getState().post
-        const map = {
-          place: detail.place,
-          lat: detail.lat,
-          lng: detail.lng
-        }
-        resolver.resolve(this.mapActions.setPin, map)
-
-        const files = typeof detail.file !== 'undefined'
-        ? JSON.parse(detail.file)
-        : []
-
-        let name
-        each(files, (filename, _index) => {
-          if (getFileExt(filename.toLowerCase()) === 'pdf') {
-            name = 'pdf.png'
-          } else {
-            name = filename
-          }
-          resolver.resolve(this.uploadActions.setImageFileName, name, _index)
-        })
-
-        if (process.env.BROWSER) {
-          this.setState({ disableSubmit: false })
-        }
-      }, 2500)
+      resolver.resolve(this.postActions.loadPostEdit, id)
+      if (process.env.BROWSER) {
+        this.setState({ disableSubmit: false })
+      }
     }
   }
 

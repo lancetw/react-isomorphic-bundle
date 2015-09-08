@@ -42,19 +42,7 @@ export default class PostDetailHandler extends BaseComponent {
 
     const { id } = props.params
     if (id) {
-      resolver.resolve(this.postActions.show, id)
-      const { detail } = props.post
-      setTimeout(() => {
-        resolver.resolve(this.localeActions.updateTitle, detail.title)
-      }, 1000)
-      setTimeout(() => {
-        const map = {
-          place: detail.place,
-          lat: detail.lat,
-          lng: detail.lng
-        }
-        resolver.resolve(this.mapActions.setPin, map)
-      }, 2500)
+      resolver.resolve(this.postActions.loadPostDetail, id)
     }
   }
 
