@@ -50,9 +50,11 @@ export default class PostEditHandler extends BaseComponent {
     const { id } = props.params
     if (id) {
       resolver.resolve(this.postActions.loadPostEdit, id)
-      if (process.env.BROWSER) {
-        this.setState({ disableSubmit: false })
-      }
+      setTimeout(() => {
+        if (process.env.BROWSER) {
+          this.setState({ disableSubmit: false })
+        }
+      }, 0)
     }
   }
 

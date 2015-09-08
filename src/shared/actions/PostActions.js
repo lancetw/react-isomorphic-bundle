@@ -45,6 +45,7 @@ import { clearCache } from 'shared/actions/CacheActions'
 import { getInfo } from 'shared/actions/UserActions'
 import { setPin } from 'shared/actions/MapActions'
 import { updateTitle } from 'shared/actions/LocaleActions'
+import { setImageFileName } from 'shared/actions/UploadActions'
 import { getFileExt } from 'shared/utils/file-utils'
 
 async function create ({ token, value, regValue, upload, map }) {
@@ -609,7 +610,7 @@ export function loadPostEdit (id) {
     await dispatch(show(id))
     const { detail } = getState().post
     if (detail.title) {
-      dispatch(updateTitle(detail.title))
+      await dispatch(updateTitle(detail.title))
       const map = {
         place: detail.place,
         lat: detail.lat,
