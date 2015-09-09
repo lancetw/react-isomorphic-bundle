@@ -5,6 +5,7 @@ import {
   CHANGE_PASS_USER_STARTED,
   CHANGE_PASS_USER_COMPLETED,
   CHANGE_PASS_USER_FAILED,
+  CHANGE_PASS_USER_INITED,
   CHANGE_INFO_USER_STARTED,
   CHANGE_INFO_USER_COMPLETED,
   CHANGE_INFO_USER_FAILED,
@@ -72,6 +73,14 @@ async function updateInfo (form, token) {
         }
       })
   })
+}
+
+export function changePasswordInit (form) {
+  return async dispatch => {
+    return dispatch({
+      type: CHANGE_PASS_USER_INITED
+    })
+  }
 }
 
 export function changePassword (form) {

@@ -24,8 +24,11 @@ export default class ChangePasswordHandler extends BaseComponent {
   constructor (props, context) {
     super(props, context)
 
-    const dispatch = context.store.dispatch
+    const { dispatch, resolver } = context.store
     dispatch(updateTitle('title.password'))
+
+    this.userActions = bindActionCreators(UserActions, dispatch)
+    resolver.resolve(this.userActions.changePasswordInit)
   }
 
   render () {

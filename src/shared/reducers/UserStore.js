@@ -2,6 +2,7 @@ import {
   CHANGE_PASS_USER_STARTED,
   CHANGE_PASS_USER_COMPLETED,
   CHANGE_PASS_USER_FAILED,
+  CHANGE_PASS_USER_INITED,
   CHANGE_INFO_USER_STARTED,
   CHANGE_INFO_USER_COMPLETED,
   CHANGE_INFO_USER_FAILED,
@@ -13,13 +14,16 @@ import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
   errors: {},
-  info: {},
+  _info: {},
   orginfo: {},
   _orginfo: {}
 }
 
 export default createReducer(initialState, {
-  [CHANGE_PASS_USER_STARTED]: () => (initialState),
+  [CHANGE_PASS_USER_INITED]: (state, action) =>
+    ({ _info: {} }),
+  [CHANGE_PASS_USER_STARTED]: () =>
+    ({ _info: {} }),
   [CHANGE_PASS_USER_COMPLETED]: (state, action) =>
     ({ _info: action.info }),
   [CHANGE_PASS_USER_FAILED]: (state, action) =>
