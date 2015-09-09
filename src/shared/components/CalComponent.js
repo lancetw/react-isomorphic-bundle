@@ -47,6 +47,10 @@ export default class Cal extends BaseComponent {
     unlisten = history.listen((location) => {
       const _day = queryString.parse(location.search).day
       this.setState({ selectedDay: _day ? new Date(_day) : new Date() })
+
+      const date = moment(_day).valueOf()
+      const reload = true
+      this.props.fetchList(0, 10, date, null, reload)
     })
   }
 
