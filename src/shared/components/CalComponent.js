@@ -50,7 +50,7 @@ export default class Cal extends BaseComponent {
 
       const date = moment(_day).valueOf()
       const reload = true
-      this.props.fetchList(0, 10, date, null, reload)
+      props.fetchList(0, 10, date, null, reload)
     })
   }
 
