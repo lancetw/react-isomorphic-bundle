@@ -107,10 +107,12 @@ export default class Post extends BaseComponent {
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
 
-    unlisten = history.listen((location) => {
-      tab = queryString.parse(location.search).tab
-      this.setState({ tabIndex: tab })
-    })
+    if (process.env.BROWSER) {
+      unlisten = history.listen((location) => {
+        tab = queryString.parse(location.search).tab
+        this.setState({ tabIndex: tab })
+      })
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -132,7 +134,9 @@ export default class Post extends BaseComponent {
   }
 
   componentWillUnmount () {
-    unlisten()
+    if (process.env.BROWSER) {
+      unlisten()
+    }
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }

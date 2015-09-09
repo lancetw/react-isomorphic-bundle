@@ -47,18 +47,22 @@ export default class Cal extends BaseComponent {
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
 
-    unlisten = history.listen((location) => {
-      day = queryString.parse(location.search).day
-      this.setState({ selectedDay: day ? new Date(day) : new Date() })
+    if (process.env.BROWSER) {
+      unlisten = history.listen((location) => {
+        day = queryString.parse(location.search).day
+        this.setState({ selectedDay: day ? new Date(day) : new Date() })
 
-      const date = moment(day).valueOf()
-      const reload = true
-      props.fetchList(0, 10, date, null, reload)
-    })
+        const date = moment(day).valueOf()
+        const reload = true
+        props.fetchList(0, 10, date, null, reload)
+      })
+    }
   }
 
   componentWillUnmount () {
-    unlisten()
+    if (process.env.BROWSER) {
+      unlisten()
+    }
   }
 
   getTodayCount (date) {
