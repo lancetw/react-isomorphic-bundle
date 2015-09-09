@@ -32,7 +32,7 @@ locale(app, 'lang')
 
 app.use(responseTime())
 app.use(logger())
-app.use(helmet.defaults())
+app.use(helmet())
 
 if (env === 'production') {
   app.use(require('koa-conditional-get')())

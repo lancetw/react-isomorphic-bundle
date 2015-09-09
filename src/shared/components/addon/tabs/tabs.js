@@ -19,6 +19,16 @@ export default class Tabs extends React.Component {
     this.handleSelect = ::this.handleSelect
   }
 
+  handleSelect (index) {
+    this.setState({ index })
+    if (typeof this.props.onSelect === 'function') {
+      this.props.onSelect(
+        index || this.props.selectedIndex,
+        React.Children.count(this.props.children) - 2
+      )
+    }
+  }
+
   render () {
     return (
       <div>
@@ -33,15 +43,4 @@ export default class Tabs extends React.Component {
       </div>
     )
   }
-
-  handleSelect (index) {
-    this.setState({ index })
-    if (typeof this.props.onSelect === 'function') {
-      this.props.onSelect(
-        index || this.props.selectedIndex,
-        React.Children.count(this.props.children) - 2
-      )
-    }
-  }
-
 }

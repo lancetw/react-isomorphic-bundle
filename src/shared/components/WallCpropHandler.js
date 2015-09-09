@@ -56,6 +56,20 @@ export default class WallCpropHandler extends BaseComponent {
     return at(PostPropArray(_lang), index)
   }
 
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      const locale = fixLocaleName(newLocale)
+      moment.locale(locale)
+      this.setState({ locale })
+    }
+  }
+
+  loadFunc () {
+    const { dispatch, params, post } = this.props
+    const { cprop } = params
+    dispatch(PostActions.cpropList(cprop, post.offset, post.limit))
+  }
+
   render () {
     const { params } = this.props
     const { cprop } = params
@@ -74,20 +88,5 @@ export default class WallCpropHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
-  loadFunc () {
-    const { dispatch, params, post } = this.props
-    const { cprop } = params
-    dispatch(PostActions.cpropList(cprop, post.offset, post.limit))
-  }
-
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale })
-    }
-  }
-
 }
 

@@ -24,6 +24,21 @@ export default class ImageUpload extends React.Component {
     super(props)
   }
 
+  handleDrop (files) {
+    const sizeLimit = 1024 * 1024 * 3
+    const { dispatch } = this.props
+    const file = files[0]
+    if (file.size > sizeLimit) {
+      dispatch(UploadActions.setErrorMessage('1', 'too large'))
+      return
+    }
+
+    if (typeof file.preview !== 'undefined') {
+      dispatch(UploadActions.clearErrorMessage())
+      dispatch(UploadActions.send(file.name, file, this.props.index))
+    }
+  }
+
   render () {
     let img
     if (typeof this.props.upload.images !== 'undefined') {
@@ -54,20 +69,5 @@ export default class ImageUpload extends React.Component {
         }
       </Dropzone>
     )
-  }
-
-  handleDrop (files) {
-    const sizeLimit = 1024 * 1024 * 3
-    const { dispatch } = this.props
-    const file = files[0]
-    if (file.size > sizeLimit) {
-      dispatch(UploadActions.setErrorMessage('1', 'too large'))
-      return
-    }
-
-    if (typeof file.preview !== 'undefined') {
-      dispatch(UploadActions.clearErrorMessage())
-      dispatch(UploadActions.send(file.name, file, this.props.index))
-    }
   }
 }

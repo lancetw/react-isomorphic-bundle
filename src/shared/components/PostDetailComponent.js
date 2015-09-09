@@ -59,6 +59,58 @@ export default class Post extends BaseComponent {
     return at(PostPropArray(originLocaleName(this.state.locale)), index)
   }
 
+  removeTags (html) {
+    const pattern = /(<([^>]+)>)/ig;
+    return html.replace(pattern , '')
+  }
+
+  parseContent (content) {
+    const ent = require('ent')
+    if (content) {
+      return (
+        content.replace(/^\"|\"$/g, '').split('\n').map((t) => {
+          return t === ''
+            ? <br />
+            : <p><AutoLinkText text={ent.decode(this.removeTags(t))}/></p>
+        })
+      )
+    }
+  }
+
+  deletePost () {
+    const _t = require('counterpart')
+    const swal = require('sweetalert')
+    const { detail } = this.props.post
+    const { remove } = this.props
+    const { transitionTo } = this.context.router
+    swal({
+      title: _t('post.detail.delete.title'),
+      text: _t('post.detail.delete.text'),
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: _t('post.detail.delete.confirm'),
+      cancelButtonText: _t('post.detail.delete.cancel'),
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true
+    }, () => {
+      Promise.all([
+        remove(detail.id)
+      ]).then(() => {
+        swal({
+          title: _t('post.detail.delete.ok.title'),
+          text: _t('post.detail.delete.ok.text'),
+          type: 'success',
+          confirmButtonText: _t('post.detail.delete.ok.confirm'),
+          closeOnConfirm: true
+        }, () => {
+          transitionTo('/wall')
+        })
+      })
+    })
+  }
+
+  handleLocaleChange () {}
+
   renderRegisterInfo (detail) {
     if (!detail.url) return <div></div>
 
@@ -85,7 +137,6 @@ export default class Post extends BaseComponent {
             <Translate content="post.detail.close" />
           </div>
         </div>
-
       )
     }
   }
@@ -268,57 +319,4 @@ export default class Post extends BaseComponent {
       )
     }
   }
-
-  handleLocaleChange () {}
-
-  deletePost () {
-    const _t = require('counterpart')
-    const swal = require('sweetalert')
-    const { detail } = this.props.post
-    const { remove } = this.props
-    const { transitionTo } = this.context.router
-    swal({
-      title: _t('post.detail.delete.title'),
-      text: _t('post.detail.delete.text'),
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: _t('post.detail.delete.confirm'),
-      cancelButtonText: _t('post.detail.delete.cancel'),
-      closeOnConfirm: false,
-      showLoaderOnConfirm: true
-    }, () => {
-      Promise.all([
-        remove(detail.id)
-      ]).then(() => {
-        swal({
-          title: _t('post.detail.delete.ok.title'),
-          text: _t('post.detail.delete.ok.text'),
-          type: 'success',
-          confirmButtonText: _t('post.detail.delete.ok.confirm'),
-          closeOnConfirm: true
-        }, () => {
-          transitionTo('/wall')
-        })
-      })
-    })
-  }
-
-  parseContent (content) {
-    const ent = require('ent')
-    if (content) {
-      return (
-        content.replace(/^\"|\"$/g, '').split('\n').map((t) => {
-          return t === ''
-            ? <br />
-            : <p><AutoLinkText text={ent.decode(this.removeTags(t))}/></p>
-        })
-      )
-    }
-  }
-
-  removeTags (html) {
-    const pattern = /(<([^>]+)>)/ig;
-    return html.replace(pattern , '')
-  }
-
 }

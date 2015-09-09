@@ -51,6 +51,12 @@ export default class WallHandler extends BaseComponent {
     return at(PostPropArray(_lang), index)
   }
 
+  loadFunc () {
+    const { dispatch, params, post } = this.props
+    const { cprop } = params
+    dispatch(PostActions.overviewList(post.offset, post.limit))
+  }
+
   render () {
     const { params } = this.props
     const { cprop } = params
@@ -69,12 +75,5 @@ export default class WallHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
-  loadFunc () {
-    const { dispatch, params, post } = this.props
-    const { cprop } = params
-    dispatch(PostActions.overviewList(post.offset, post.limit))
-  }
-
 }
 

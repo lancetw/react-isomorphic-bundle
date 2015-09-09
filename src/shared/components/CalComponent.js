@@ -56,6 +56,34 @@ export default class Cal extends BaseComponent {
     }
   }
 
+  handleDayClick (e, day) {
+    const date = moment(day).valueOf()
+    const reload = true
+    this.props.fetchList(0, 10, date, null, reload)
+
+    this.setState({
+      date: date,
+      selectedDay: day
+    })
+  }
+
+  handleMonthChange (day) {
+    this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      const locale = fixLocaleName(newLocale)
+      moment.locale(locale)
+      this.setState({ locale })
+    }
+  }
+
+  loadFunc () {
+    const { post } = this.props
+    this.props.fetchList(post.offset, post.limit, this.state.date)
+  }
+
   renderDay (day) {
     const date = day.getDate()
     const count = this.getTodayStartCount(date)
@@ -131,33 +159,4 @@ export default class Cal extends BaseComponent {
       </main>
     )
   }
-
-  handleDayClick (e, day) {
-    const date = moment(day).valueOf()
-    const reload = true
-    this.props.fetchList(0, 10, date, null, reload)
-
-    this.setState({
-      date: date,
-      selectedDay: day
-    })
-  }
-
-  handleMonthChange (day) {
-    this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
-  }
-
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale })
-    }
-  }
-
-  loadFunc () {
-    const { post } = this.props
-    this.props.fetchList(post.offset, post.limit, this.state.date)
-  }
-
 }

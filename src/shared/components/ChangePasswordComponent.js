@@ -48,63 +48,6 @@ export default class ChangePassword extends BaseComponent {
     }
   }
 
-  render () {
-    const Translate = require('react-translate-component')
-
-    const LoadingClass = classNames(
-      'ui',
-      'orange',
-      'form',
-      'segment',
-      {'loading': !!this.state.submited }
-    )
-
-    const Message = this.state.updated
-      ? (
-        <div className="ui success message">
-          <div className="header">
-            <Translate content="password.modified.title" />
-          </div>
-          <p><Translate content="password.modified.content" /></p>
-        </div> )
-      : null
-
-    if (this.state.updated) {
-      this.messageTimeout =
-        setTimeout(() => this.setState({ updated: false }), 3000)
-    }
-
-    return (
-      <main className="ui two column stackable centered page grid">
-        <div className="column">
-          <CSSTransitionGroup transitionName="MessageTransition">
-            {Message}
-          </CSSTransitionGroup>
-          <form
-            className={LoadingClass}
-            action="/auth/changePassword"
-            method="post"
-            onSubmit={this.handleSubmit}>
-            <Form
-              ref="form"
-              type={ChangePasswordForm}
-              options={this.state.options}
-              value={this.state.value}
-              onChange={this.handleChange} />
-            <div className="ui hidden divider" />
-            <button
-              type="submit"
-              className="ui orange labeled icon large button"
-              disabled={this.state.submited}>
-              <Translate content="password.submit" />
-              <i className="add icon"></i>
-            </button>
-          </form>
-        </div>
-      </main>
-    )
-  }
-
   handleLocaleChange (newLocale) {
     if (process.env.BROWSER) {
       this.setState({
@@ -193,4 +136,60 @@ export default class ChangePassword extends BaseComponent {
     }
   }
 
+  render () {
+    const Translate = require('react-translate-component')
+
+    const LoadingClass = classNames(
+      'ui',
+      'orange',
+      'form',
+      'segment',
+      {'loading': !!this.state.submited }
+    )
+
+    const Message = this.state.updated
+      ? (
+        <div className="ui success message">
+          <div className="header">
+            <Translate content="password.modified.title" />
+          </div>
+          <p><Translate content="password.modified.content" /></p>
+        </div> )
+      : null
+
+    if (this.state.updated) {
+      this.messageTimeout =
+        setTimeout(() => this.setState({ updated: false }), 3000)
+    }
+
+    return (
+      <main className="ui two column stackable centered page grid">
+        <div className="column">
+          <CSSTransitionGroup transitionName="MessageTransition">
+            {Message}
+          </CSSTransitionGroup>
+          <form
+            className={LoadingClass}
+            action="/auth/changePassword"
+            method="post"
+            onSubmit={this.handleSubmit}>
+            <Form
+              ref="form"
+              type={ChangePasswordForm}
+              options={this.state.options}
+              value={this.state.value}
+              onChange={this.handleChange} />
+            <div className="ui hidden divider" />
+            <button
+              type="submit"
+              className="ui orange labeled icon large button"
+              disabled={this.state.submited}>
+              <Translate content="password.submit" />
+              <i className="add icon"></i>
+            </button>
+          </form>
+        </div>
+      </main>
+    )
+  }
 }

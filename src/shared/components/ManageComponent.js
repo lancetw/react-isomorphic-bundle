@@ -65,6 +65,78 @@ export default class Manage extends BaseComponent {
     }
   }
 
+
+  scrollToTop () {
+    $('body').stop().animate({
+      scrollTop: 0
+    }, 600)
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      this.setState({
+        options: ManageFormOptions(newLocale)
+      })
+    }
+  }
+
+  handleChange (value) {
+    this.setState({ value })
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+
+    const value = this.refs.form.getValue()
+
+    if (value) {
+      this.clearFormErrors()
+      this.setState({ submited: true })
+      this.scrollToTop()
+      this.releaseTimeout = setTimeout(() => {
+        this.props.changeInfo(value)
+      }, 1000)
+    }
+  }
+
+  clearFormErrors () {
+    const options = clone(this.state.options)
+    options.fields = clone(options.fields)
+
+    for (const key in options.fields) {
+      if (options.fields.hasOwnProperty(key)) {
+        options.fields[key] = clone(options.fields[key])
+        if (options.fields[key].hasOwnProperty('hasError')) {
+          options.fields[key].hasError = false
+        }
+      }
+    }
+    this.setState({ options: options })
+  }
+
+  validation (errors) {
+    if (!isEmpty(errors)) {
+      this.setState({ submited: false })
+    }
+  }
+
+  checkSubmited (info) {
+    if (!isEmpty(info)) {
+      this.setState({ submited: false })
+      if (info.ocname) {
+        this.setState({ updated: true })
+      }
+    }
+  }
+
+  initForm (info) {
+    if (!isEmpty(info)) {
+      this.setState({ value: info })
+      return true
+    }
+    return false
+  }
+
   render () {
     const Translate = require('react-translate-component')
 
@@ -180,76 +252,5 @@ export default class Manage extends BaseComponent {
         </div>
       </main>
     )
-  }
-
-  scrollToTop () {
-    $('body').stop().animate({
-      scrollTop: 0
-    }, 600)
-  }
-
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: ManageFormOptions(newLocale)
-      })
-    }
-  }
-
-  handleChange (value) {
-    this.setState({ value })
-  }
-
-  handleSubmit (evt) {
-    evt.preventDefault()
-
-    const value = this.refs.form.getValue()
-
-    if (value) {
-      this.clearFormErrors()
-      this.setState({ submited: true })
-      this.scrollToTop()
-      this.releaseTimeout = setTimeout(() => {
-        this.props.changeInfo(value)
-      }, 1000)
-    }
-  }
-
-  clearFormErrors () {
-    const options = clone(this.state.options)
-    options.fields = clone(options.fields)
-
-    for (const key in options.fields) {
-      if (options.fields.hasOwnProperty(key)) {
-        options.fields[key] = clone(options.fields[key])
-        if (options.fields[key].hasOwnProperty('hasError')) {
-          options.fields[key].hasError = false
-        }
-      }
-    }
-    this.setState({ options: options })
-  }
-
-  validation (errors) {
-    if (!isEmpty(errors)) {
-      this.setState({ submited: false })
-    }
-  }
-
-  checkSubmited (info) {
-    if (!isEmpty(info)) {
-      this.setState({ submited: false })
-      if (info.ocname) {
-        this.setState({ updated: true })
-      }
-    }
-  }
-
-  initForm (info) {
-    if (!isEmpty(info)) {
-      this.setState({ value: info })
-      return true
-    }
-    return false
   }
 }

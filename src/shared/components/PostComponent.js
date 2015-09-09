@@ -65,7 +65,6 @@ export default class Post extends BaseComponent {
     const today = this.dateToArray(moment().format('YYYY-M-D'))
 
     counterpart.setLocale(props.defaultLocale)
-
     this.state = {
       formInited: false,
       uploadInited: false,
@@ -82,6 +81,8 @@ export default class Post extends BaseComponent {
         openDate: today,
         closeDate: today
       },
+      formType: PostForm(counterpart.getLocale()),
+      regFormType: RegForm(counterpart.getLocale()),
       options: PostFormOptions(counterpart.getLocale()),
       regOptions: RegFormOptions(counterpart.getLocale()),
       submited: false,
@@ -119,224 +120,6 @@ export default class Post extends BaseComponent {
     }
   }
 
-  render () {
-    if (process.env.BROWSER) {
-      if (!isEmpty(this.props.post.content)) {
-        this.releaseTimeout = setTimeout(() => {
-          this.context.router.replaceWith('/wall')
-        }, 1000)
-      }
-    }
-
-    const Translate = require('react-translate-component')
-
-    const submitClass = classNames(
-      'ui',
-      'fluid',
-      'orange',
-      'labeled',
-      'icon',
-      'large',
-      'button',
-      { 'disabled': this.props.disableSubmit }
-    )
-
-    const Loading = classNames(
-      'ui',
-      'form',
-      { 'loading': this.state.submited && !this.state.updated }
-    )
-
-    const PlaceInput = classNames(
-      'ui',
-      'fluid',
-      'action',
-      'input',
-      { 'error': !!this.state.placeError }
-    )
-
-    const LatLngInput = classNames(
-      'ui',
-      'fluid',
-      'labeled',
-      'input',
-      { 'error': !!this.state.latlngError }
-    )
-
-    const Message = this.state.updated
-      ? (
-        <div>
-          <div className="ui success message">
-            <div className="header">
-              <Translate content="post.created.title" />
-            </div>
-            <p><Translate content="post.created.content" /></p>
-          </div>
-          <div className="ui hidden divider"></div>
-        </div> )
-      : null
-
-    const UploadErrorMessage = this.props.upload.errorId
-    ? (
-      <div>
-        <div className="ui error message">
-          <div className="header">
-            <Translate content="post.upload.error" />
-          </div>
-        </div>
-        <div className="ui hidden divider"></div>
-      </div> )
-    : null
-
-    return (
-      <main className="ui two column stackable has-header grid container">
-        <div className="column">
-          <GMap
-            ref="gmap"
-            {...this.props.map}
-            defaultLocale={this.props.defaultLocale}
-            onBoundsChange={::this.handleBoundsChange}
-          />
-        </div>
-        <div className="column">
-          <Tabs
-            ref="tabs"
-            onSelect={::this.handleSelected}
-            selectedIndex={0}>
-            <TabList>
-              <Tab>
-                <Translate content="post.tabs.title.basic" />
-              </Tab>
-              <Tab>
-                <Translate content="post.tabs.title.advanced" />
-              </Tab>
-              <Tab>
-                <Translate content="post.tabs.title.upload" />
-              </Tab>
-              <Tab>
-                <Translate content="post.tabs.title.map" />
-              </Tab>
-            </TabList>
-            <TabPanel index={0}>
-              <form
-                className={Loading}
-                action="/posts/new"
-                method="post"
-                onSubmit={this.handleSubmit}>
-                <Form
-                  ref="form"
-                  type={PostForm(counterpart.getLocale())}
-                  options={this.state.options}
-                  value={this.state.value}
-                  onChange={this.handleChange}/>
-                <div className="ui hidden divider" />
-                <button
-                  type="submit"
-                  className={submitClass}
-                  disabled={this.state.submited}>
-                  <Translate content="post.submit" />
-                  <i className="add icon"></i>
-                </button>
-              </form>
-            </TabPanel>
-            <TabPanel index={1}>
-              <form>
-                <Form
-                  ref="regForm"
-                  type={RegForm(counterpart.getLocale())}
-                  options={this.state.regOptions}
-                  value={this.state.regValue}
-                  onChange={this.handleRegChange}/>
-              </form>
-              <div className="ui orange center aligned segment">
-                <Translate content="post.tabs.msg.urltips" />
-              </div>
-            </TabPanel>
-            <TabPanel index={2}>
-              <CSSTransitionGroup transitionName="MessageTransition">
-                {UploadErrorMessage}
-              </CSSTransitionGroup>
-              <p>
-                <Translate content="post.tabs.msg.upload" />
-              </p>
-              <div className="ui three column grid center aligned">
-                <ImageUpload index={0} />
-                <ImageUpload index={1} />
-                <ImageUpload index={2} />
-              </div>
-              <div className="ui orange center aligned segment">
-                <Translate content="post.tabs.msg.limit" />
-              </div>
-            </TabPanel>
-            <TabPanel index={3}>
-              <form
-                onSubmit={::this.handleMapSubmit}>
-                <div className={PlaceInput}>
-                  <input
-                    type="text"
-                    placeholder="Place"
-                    ref="place"
-                    defaultValue={
-                      this.props.map.place
-                      || counterpart('post.map.my')
-                    } />
-                  <button
-                    className="ui green button"
-                    onClick={::this.handleSearch}>
-                    <Translate content="post.map.search" />
-                  </button>
-                </div>
-                <div className="ui pointing label visible">
-                  <i><Translate content="post.map.tips" /></i>
-                </div>
-                <div className="ui hidden divider" />
-                <div className={LatLngInput}>
-                  <div className="ui label">
-                    <Translate content="post.map.lat" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="latitude"
-                    ref="lat"
-                    defaultValue={this.props.map.lat} />
-                </div>
-                <div className="ui hidden divider" />
-                <div className={LatLngInput}>
-                  <div className="ui label">
-                    <Translate content="post.map.lng" />
-                  </div>
-                  <input type="text"
-                    placeholder="longitude"
-                    ref="lng"
-                    defaultValue={this.props.map.lng} />
-                </div>
-                <div className="ui hidden divider" />
-                <div className="ui list">
-                  <div className="item">
-                    <div className="left floated content">
-                      <button
-                        className="ui circular yellow icon button"
-                        onClick={::this.handleGeo}>
-                        <i className="icon large map"></i>
-                      </button>
-                    </div>
-                    <div className="right floated content">
-                      <button
-                        className="ui large orange button">
-                        <Translate content="post.map.update" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </TabPanel>
-          </Tabs>
-        </div>
-
-      </main>
-    )
-  }
-
   static defaultPropTypes = {
     disableSubmit: false
   }
@@ -351,7 +134,9 @@ export default class Post extends BaseComponent {
     if (process.env.BROWSER) {
       this.setState({
         options: PostFormOptions(newLocale),
-        regOptions: RegFormOptions(newLocale)
+        regOptions: RegFormOptions(newLocale),
+        formType: PostForm(newLocale),
+        regFormType: RegForm(newLocale)
       })
     }
   }
@@ -621,5 +406,222 @@ export default class Post extends BaseComponent {
     return false
   }
 
+  render () {
+    if (process.env.BROWSER) {
+      if (!isEmpty(this.props.post.content)) {
+        this.releaseTimeout = setTimeout(() => {
+          this.context.router.replaceWith('/wall')
+        }, 1000)
+      }
+    }
+
+    const Translate = require('react-translate-component')
+
+    const submitClass = classNames(
+      'ui',
+      'fluid',
+      'orange',
+      'labeled',
+      'icon',
+      'large',
+      'button',
+      { 'disabled': this.props.disableSubmit }
+    )
+
+    const Loading = classNames(
+      'ui',
+      'form',
+      { 'loading': this.state.submited && !this.state.updated }
+    )
+
+    const PlaceInput = classNames(
+      'ui',
+      'fluid',
+      'action',
+      'input',
+      { 'error': !!this.state.placeError }
+    )
+
+    const LatLngInput = classNames(
+      'ui',
+      'fluid',
+      'labeled',
+      'input',
+      { 'error': !!this.state.latlngError }
+    )
+
+    const Message = this.state.updated
+      ? (
+        <div>
+          <div className="ui success message">
+            <div className="header">
+              <Translate content="post.created.title" />
+            </div>
+            <p><Translate content="post.created.content" /></p>
+          </div>
+          <div className="ui hidden divider"></div>
+        </div> )
+      : null
+
+    const UploadErrorMessage = this.props.upload.errorId
+    ? (
+      <div>
+        <div className="ui error message">
+          <div className="header">
+            <Translate content="post.upload.error" />
+          </div>
+        </div>
+        <div className="ui hidden divider"></div>
+      </div> )
+    : null
+
+    return (
+      <main className="ui two column stackable has-header grid container">
+        <div className="column">
+          <GMap
+            ref="gmap"
+            {...this.props.map}
+            defaultLocale={this.props.defaultLocale}
+            onBoundsChange={::this.handleBoundsChange}
+          />
+        </div>
+        <div className="column">
+          <Tabs
+            ref="tabs"
+            onSelect={::this.handleSelected}
+            selectedIndex={0}>
+            <TabList>
+              <Tab>
+                <Translate content="post.tabs.title.basic" />
+              </Tab>
+              <Tab>
+                <Translate content="post.tabs.title.advanced" />
+              </Tab>
+              <Tab>
+                <Translate content="post.tabs.title.upload" />
+              </Tab>
+              <Tab>
+                <Translate content="post.tabs.title.map" />
+              </Tab>
+            </TabList>
+            <TabPanel index={0}>
+              <form
+                className={Loading}
+                action="/posts/new"
+                method="post"
+                onSubmit={this.handleSubmit}>
+                <Form
+                  ref="form"
+                  type={this.state.formType}
+                  options={this.state.options}
+                  value={this.state.value}
+                  onChange={this.handleChange}/>
+                <div className="ui hidden divider" />
+                <button
+                  type="submit"
+                  className={submitClass}
+                  disabled={this.state.submited}>
+                  <Translate content="post.submit" />
+                  <i className="add icon"></i>
+                </button>
+              </form>
+            </TabPanel>
+            <TabPanel index={1}>
+              <form>
+                <Form
+                  ref="regForm"
+                  type={this.state.regFormType}
+                  options={this.state.regOptions}
+                  value={this.state.regValue}
+                  onChange={this.handleRegChange}/>
+              </form>
+              <div className="ui orange center aligned segment">
+                <Translate content="post.tabs.msg.urltips" />
+              </div>
+            </TabPanel>
+            <TabPanel index={2}>
+              <CSSTransitionGroup transitionName="MessageTransition">
+                {UploadErrorMessage}
+              </CSSTransitionGroup>
+              <p>
+                <Translate content="post.tabs.msg.upload" />
+              </p>
+              <div className="ui three column grid center aligned">
+                <ImageUpload index={0} />
+                <ImageUpload index={1} />
+                <ImageUpload index={2} />
+              </div>
+              <div className="ui orange center aligned segment">
+                <Translate content="post.tabs.msg.limit" />
+              </div>
+            </TabPanel>
+            <TabPanel index={3}>
+              <form
+                onSubmit={::this.handleMapSubmit}>
+                <div className={PlaceInput}>
+                  <input
+                    type="text"
+                    placeholder="Place"
+                    ref="place"
+                    defaultValue={
+                      this.props.map.place
+                      || counterpart('post.map.my')
+                    } />
+                  <button
+                    className="ui green button"
+                    onClick={::this.handleSearch}>
+                    <Translate content="post.map.search" />
+                  </button>
+                </div>
+                <div className="ui pointing label visible">
+                  <i><Translate content="post.map.tips" /></i>
+                </div>
+                <div className="ui hidden divider" />
+                <div className={LatLngInput}>
+                  <div className="ui label">
+                    <Translate content="post.map.lat" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="latitude"
+                    ref="lat"
+                    defaultValue={this.props.map.lat} />
+                </div>
+                <div className="ui hidden divider" />
+                <div className={LatLngInput}>
+                  <div className="ui label">
+                    <Translate content="post.map.lng" />
+                  </div>
+                  <input type="text"
+                    placeholder="longitude"
+                    ref="lng"
+                    defaultValue={this.props.map.lng} />
+                </div>
+                <div className="ui hidden divider" />
+                <div className="ui list">
+                  <div className="item">
+                    <div className="left floated content">
+                      <button
+                        className="ui circular yellow icon button"
+                        onClick={::this.handleGeo}>
+                        <i className="icon large map"></i>
+                      </button>
+                    </div>
+                    <div className="right floated content">
+                      <button
+                        className="ui large orange button">
+                        <Translate content="post.map.update" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </TabPanel>
+          </Tabs>
+        </div>
+
+      </main>
+    )
+  }
 }
 

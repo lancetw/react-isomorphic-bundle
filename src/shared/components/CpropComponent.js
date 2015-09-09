@@ -22,6 +22,13 @@ export default class Cprop extends BaseComponent {
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
+  handleLocaleChange (newLocale) {
+    if (this.isMounted()) {
+      const locale = fixLocaleName(newLocale)
+      this.setState({ locale: locale })
+    }
+  }
+
   renderCprop () {
     const _lang = originLocaleName(this.state.locale)
     const _size = keys(PostPropArray(_lang)).length
@@ -65,12 +72,4 @@ export default class Cprop extends BaseComponent {
       </main>
     )
   }
-
-  handleLocaleChange (newLocale) {
-    if (this.isMounted()) {
-      const locale = fixLocaleName(newLocale)
-      this.setState({ locale: locale })
-    }
-  }
-
 }

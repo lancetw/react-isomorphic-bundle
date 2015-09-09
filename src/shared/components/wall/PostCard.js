@@ -22,6 +22,13 @@ export default class PostCard extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      const locale = fixLocaleName(newLocale)
+      moment.locale(locale)
+    }
+  }
+
   renderCardProp (card) {
     return (
       <span>
@@ -109,12 +116,5 @@ export default class PostCard extends BaseComponent {
         <div className="ui post card divider"></div>
       </div>
     )
-  }
-
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-    }
   }
 }

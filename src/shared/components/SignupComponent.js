@@ -52,70 +52,6 @@ export default class Signup extends BaseComponent {
     }
   }
 
-  render () {
-    if (process.env.BROWSER) {
-      if (this.props.signup.response && this.props.signup.response.token) {
-        this.releaseTimeout1 =
-          setTimeout(() => this.context.router.replaceWith('/home'), 1000)
-      }
-    }
-
-    const LoadingClass = classNames(
-      'ui',
-      'orange',
-      'form',
-      'segment',
-      { 'loading': this.state.submited && !(this.state.ok) }
-    )
-
-    const Translate = require('react-translate-component')
-
-    return (
-      <main className="ui two column centered stackable page grid">
-        <div className="column">
-          <div className="ui segment">
-            <div className="ui center">
-              <img
-                src={`images/ccnda_icon.jpg`} alt="" />
-              <h2 className="ui header">
-                <div className="content">
-                  <Translate content="register.hello" />
-                  <div className="sub header">
-                    <Translate content="register.msg" />
-                  </div>
-                </div>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div className="column">
-          <form
-            className={LoadingClass}
-            action="/auth/register"
-            method="post"
-            onSubmit={this.handleSubmit}>
-            <Form
-              ref="form"
-              type={SignupForm}
-              options={this.state.options}
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-            <div className="ui hidden divider" />
-            <button
-              type="submit"
-              className="ui orange labeled icon huge button"
-              disabled={this.state.submited && this.state.ok}>
-              <Translate content="register.submit" />
-              <i className="add icon"></i>
-            </button>
-          </form>
-        </div>
-      </main>
-    )
-  }
-
-
   handleLocaleChange (newLocale) {
     if (process.env.BROWSER) {
       this.setState({
@@ -199,4 +135,66 @@ export default class Signup extends BaseComponent {
     }
   }
 
+  render () {
+    if (process.env.BROWSER) {
+      if (this.props.signup.response && this.props.signup.response.token) {
+        this.releaseTimeout1 =
+          setTimeout(() => this.context.router.replaceWith('/home'), 1000)
+      }
+    }
+
+    const LoadingClass = classNames(
+      'ui',
+      'orange',
+      'form',
+      'segment',
+      { 'loading': this.state.submited && !(this.state.ok) }
+    )
+
+    const Translate = require('react-translate-component')
+
+    return (
+      <main className="ui two column centered stackable page grid">
+        <div className="column">
+          <div className="ui segment">
+            <div className="ui center">
+              <img
+                src={`images/ccnda_icon.jpg`} alt="" />
+              <h2 className="ui header">
+                <div className="content">
+                  <Translate content="register.hello" />
+                  <div className="sub header">
+                    <Translate content="register.msg" />
+                  </div>
+                </div>
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div className="column">
+          <form
+            className={LoadingClass}
+            action="/auth/register"
+            method="post"
+            onSubmit={this.handleSubmit}>
+            <Form
+              ref="form"
+              type={SignupForm}
+              options={this.state.options}
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+            <div className="ui hidden divider" />
+            <button
+              type="submit"
+              className="ui orange labeled icon huge button"
+              disabled={this.state.submited && this.state.ok}>
+              <Translate content="register.submit" />
+              <i className="add icon"></i>
+            </button>
+          </form>
+        </div>
+      </main>
+    )
+  }
 }

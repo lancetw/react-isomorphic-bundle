@@ -30,6 +30,39 @@ export default class Header extends React.Component {
     }
   }
 
+  handleChange (event) {
+    this.setState({ userInput: event.target.value })
+  }
+
+  handleFocus () {
+    this.setState({ userInput: '' })
+  }
+
+  doSubmit () {
+    const pattern = this.state.userInput
+    if (!pattern) return
+
+    if (process.env.BROWSER) {
+      this.props.searchPost(pattern, 0, 10, true)
+      this.releaseTimeout =
+        setTimeout(() => this.context.router.replaceWith('/search'), 500)
+    }
+
+    React.findDOMNode(this.refs.search).blur()
+  }
+
+  handleSubmit (event) {
+    if (event.which === 13) {
+      event.preventDefault()
+      this.doSubmit()
+    }
+  }
+
+  handleSearchSubmit (event) {
+    event.preventDefault()
+    this.doSubmit()
+  }
+
   render () {
     const { dispatch, auth } = this.props
 
@@ -137,38 +170,5 @@ export default class Header extends React.Component {
         </div>
       </header>
     )
-  }
-
-  handleChange (event) {
-    this.setState({ userInput: event.target.value })
-  }
-
-  handleFocus () {
-    this.setState({ userInput: '' })
-  }
-
-  doSubmit () {
-    const pattern = this.state.userInput
-    if (!pattern) return
-
-    if (process.env.BROWSER) {
-      this.props.searchPost(pattern, 0, 10, true)
-      this.releaseTimeout =
-        setTimeout(() => this.context.router.replaceWith('/search'), 500)
-    }
-
-    React.findDOMNode(this.refs.search).blur()
-  }
-
-  handleSubmit (event) {
-    if (event.which === 13) {
-      event.preventDefault()
-      this.doSubmit()
-    }
-  }
-
-  handleSearchSubmit (event) {
-    event.preventDefault()
-    this.doSubmit()
   }
 }

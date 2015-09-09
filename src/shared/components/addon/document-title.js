@@ -1,70 +1,36 @@
-import React from 'react'
-import createSideEffect from 'react-side-effect'
-import counterpart from 'counterpart'
+import React, { Children, Component, PropTypes } from 'react'
+import withSideEffect from 'react-side-effect'
 
-counterpart.registerTranslations('en',
-  require('shared/i18n/en'))
-counterpart.registerTranslations('zh-hant-tw',
-  require('shared/i18n/zh-hant-tw'))
-
-function extractTitle (propsList) {
-  const innermostProps = propsList[propsList.length - 1]
-  if (innermostProps) {
-    return innermostProps.title
-  }
-}
-
-function extractDefaultTitle (propsList) {
-  const innermostProps = propsList[propsList.length - 1]
-  if (innermostProps) {
-    return innermostProps.defaultTitle
-  }
-}
-
-let _serverTitle = null
-
-export default createSideEffect(
-  function handleChange (propsList) {
-    const title = extractTitle(propsList)
-    const defaultTitle = extractDefaultTitle(propsList)
-
-    if (!title) return
-
-    if (process.env.BROWSER) {
-      if (defaultTitle) {
-        document.title = title ? `${title} | ${defaultTitle}` : defaultTitle
-      } else {
-        document.title = title ? `${title}` : 'Untitled Document'
-      }
+class DocumentTitle extends Component {
+  render () {
+    if (this.props.children) {
+      return Children.only(this.props.children)
     } else {
-      if (defaultTitle) {
-        _serverTitle = title ? `${title} | ${defaultTitle}` : defaultTitle
-      } else {
-        _serverTitle = title ? `${title}` : 'Untitled Document'
-      }
-    }
-  }, {
-    displayName: 'DocumentTitle',
-
-    propTypes: {
-      title: React.PropTypes.string.isRequired,
-      locale: React.PropTypes.string
-    },
-
-    contextTypes: {
-      defaultTitle: React.PropTypes.string
-    },
-
-    statics: {
-      peek: function () {
-        return _serverTitle
-      },
-
-      rewind: function () {
-        const title = _serverTitle
-        this.dispose()
-        return title
-      }
+      return null
     }
   }
-)
+}
+
+DocumentTitle.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.any
+}
+
+function reducePropsToState (propsList) {
+  const innermostProps = propsList[propsList.length - 1]
+  if (innermostProps) {
+    const { defaultTitle, title } = innermostProps
+    return defaultTitle
+      ? `${title} | ${defaultTitle}`
+      : `${title} | Untitled Document`
+  }
+}
+
+function handleStateChangeOnClient (title) {
+  document.title = title || ''
+}
+
+export default withSideEffect(
+  reducePropsToState,
+  handleStateChangeOnClient
+)(DocumentTitle)

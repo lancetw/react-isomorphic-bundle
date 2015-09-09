@@ -51,58 +51,6 @@ export default class PostCards extends BaseComponent {
     window.removeEventListener('resize', this.handleResize)
   }
 
-  renderItem (index, key) {
-    const card = this.props.posts[index]
-    return (
-      <Card
-        key={key}
-        data={card}
-      />
-    )
-  }
-
-  render () {
-    const cards = this.props.posts
-
-    const scrollClass
-      = classNames(
-        'ui',
-        'scrollable',
-        {'disable-pointer': this.disablePointer}
-      )
-
-    if (process.env.BROWSER && cards.length > 0) {
-      const containerHeight = this.state.windowHeight - this.props.diff
-      return (
-        <div
-          className={scrollClass}
-          ref="scroll"
-          onScroll={debounce(::this.handleScroll, 500)}
-          style={{
-            maxHeight: containerHeight
-          }}>
-          <ReactList
-            ref="scrollList"
-            threshold={150}
-            pageSize={10}
-            initialIndex={0}
-            itemRenderer={::this.renderItem}
-            length={cards.length}
-            type="variable" />
-          {this.elementInfiniteLoad}
-        </div>
-      )
-    } else {
-      return (
-        <div className="ui cards" ref="scrollable">
-          {!isEmpty(cards) && cards.map(function (card) {
-            return <Card key={card.id} data={card} />
-          })}
-        </div>
-      )
-    }
-  }
-
   handleScroll (event) {
     const threshold = 300
 
@@ -154,4 +102,55 @@ export default class PostCards extends BaseComponent {
     }
   }
 
+  renderItem (index, key) {
+    const card = this.props.posts[index]
+    return (
+      <Card
+        key={key}
+        data={card}
+      />
+    )
+  }
+
+  render () {
+    const cards = this.props.posts
+
+    const scrollClass
+      = classNames(
+        'ui',
+        'scrollable',
+        {'disable-pointer': this.disablePointer}
+      )
+
+    if (process.env.BROWSER && cards.length > 0) {
+      const containerHeight = this.state.windowHeight - this.props.diff
+      return (
+        <div
+          className={scrollClass}
+          ref="scroll"
+          onScroll={debounce(::this.handleScroll, 500)}
+          style={{
+            maxHeight: containerHeight
+          }}>
+          <ReactList
+            ref="scrollList"
+            threshold={150}
+            pageSize={10}
+            initialIndex={0}
+            itemRenderer={::this.renderItem}
+            length={cards.length}
+            type="variable" />
+          {this.elementInfiniteLoad}
+        </div>
+      )
+    } else {
+      return (
+        <div className="ui cards" ref="scrollable">
+          {!isEmpty(cards) && cards.map(function (card) {
+            return <Card key={card.id} data={card} />
+          })}
+        </div>
+      )
+    }
+  }
 }

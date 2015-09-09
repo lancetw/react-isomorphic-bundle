@@ -44,6 +44,13 @@ export default class ManageHandler extends BaseComponent {
     resolver.resolve(this.postActions.manageList, 0, 5, user)
   }
 
+  loadFunc () {
+    const { dispatch, auth, post } = this.props
+    const user = auth.user.id
+    dispatch(PostActions
+      .manageList(post.offset, post.limit, user))
+  }
+
   render () {
     const title = this._T('title.manage')
     const defaultTitle = this._T('title.site')
@@ -60,12 +67,4 @@ export default class ManageHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
-  loadFunc () {
-    const { dispatch, auth, post } = this.props
-    const user = auth.user.id
-    dispatch(PostActions
-      .manageList(post.offset, post.limit, user))
-  }
-
 }

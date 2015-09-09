@@ -36,11 +36,21 @@ export default class Gmap extends Component {
 
   constructor (props) {
     super(props)
-    counterpart.setLocale(props.defaultLocale)
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
+
+  handleLocaleChange () {}
+
+  _onBoundsChange = (center, zoom, bounds, marginBounds) => {
+    if (this.props.onBoundsChange) {
+      this.props.onBoundsChange({ center, zoom, bounds, marginBounds })
+    }
+  }
+
+  _onChildClick = (key, childProps) => {
+    this.props.onCenterChange([ childProps.lat, childProps.lng ])
+  }
 
   /* eslint-disable max-len */
   render () {
@@ -74,17 +84,4 @@ export default class Gmap extends Component {
       )
     }
   }
-
-  handleLocaleChange () {}
-
-  _onBoundsChange = (center, zoom, bounds, marginBounds) => {
-    if (this.props.onBoundsChange) {
-      this.props.onBoundsChange({ center, zoom, bounds, marginBounds })
-    }
-  }
-
-  _onChildClick = (key, childProps) => {
-    this.props.onCenterChange([ childProps.lat, childProps.lng ])
-  }
-
 }

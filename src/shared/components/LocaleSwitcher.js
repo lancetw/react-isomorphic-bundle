@@ -19,6 +19,21 @@ export default class LocaleSwitcher extends React.Component {
     this.handleChange = ::this.handleChange
   }
 
+  handleChange (e) {
+    const lang = e.target.getAttribute('value')
+    counterpart.setLocale(lang)
+    this.props.dispatch(
+      LocaleActions.sync(lang)
+    )
+    const title = counterpart(this.props.locale.title)
+    const defaultTitle = counterpart('title.site')
+    if (defaultTitle) {
+      document.title = `${title} | ${defaultTitle}`
+    } else {
+      document.title = `${title}`
+    }
+  }
+
   render () {
     return (
       <div className="ui simple dropdown item">
@@ -41,20 +56,4 @@ export default class LocaleSwitcher extends React.Component {
       </div>
     )
   }
-
-  handleChange (e) {
-    const lang = e.target.getAttribute('value')
-    counterpart.setLocale(lang)
-    this.props.dispatch(
-      LocaleActions.sync(lang)
-    )
-    const title = counterpart(this.props.locale.title)
-    const defaultTitle = counterpart('title.site')
-    if (defaultTitle) {
-      document.title = `${title} | ${defaultTitle}`
-    } else {
-      document.title = `${title}`
-    }
-  }
-
 }

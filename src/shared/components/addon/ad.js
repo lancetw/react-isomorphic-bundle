@@ -26,12 +26,6 @@ export default class Ad extends BaseComponent {
     }
   }
 
-  render () {
-    return (
-      <div id={`hotrank-container-${this.props.id}`}></div>
-    )
-  }
-
   loadAd () {
     if (process.env.BROWSER) {
       require('postscribe/htmlParser/htmlParser.js')
@@ -47,4 +41,9 @@ export default class Ad extends BaseComponent {
     }
   }
 
+  render () {
+    return (
+      <div id={`hotrank-container-${this.props.id}`}></div>
+    )
+  }
 }

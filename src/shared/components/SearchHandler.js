@@ -26,6 +26,13 @@ export default class SearchHandler extends BaseComponent {
     dispatch(updateTitle('title.search'))
   }
 
+  loadFunc () {
+    const { dispatch, search } = this.props
+
+    dispatch(SearchActions
+      .searchPost(search.pattern, search.offset, search.limit))
+  }
+
   render () {
     const title = this._T('title.search')
     const defaultTitle = this._T('title.site')
@@ -40,12 +47,4 @@ export default class SearchHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
-  loadFunc () {
-    const { dispatch, search } = this.props
-
-    dispatch(SearchActions
-      .searchPost(search.pattern, search.offset, search.limit))
-  }
-
 }
