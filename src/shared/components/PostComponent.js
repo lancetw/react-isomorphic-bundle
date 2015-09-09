@@ -23,9 +23,14 @@ import { toDate } from 'shared/utils/date-utils'
 import { getFileExt } from 'shared/utils/file-utils'
 import { each } from 'lodash'
 import $ from 'jquery'
+import { createHistory } from 'history'
+import queryString from 'query-string'
 
+let unlisten
+let history
 let sweetAlert
 if (process.env.BROWSER) {
+  history = createHistory()
   sweetAlert = require('sweetalert')
 }
 
@@ -65,6 +70,9 @@ export default class Post extends BaseComponent {
     const today = this.dateToArray(moment().format('YYYY-M-D'))
 
     counterpart.setLocale(props.defaultLocale)
+
+    const { tab } = queryString.parse(window.location.search)
+
     this.state = {
       formInited: false,
       uploadInited: false,
@@ -90,10 +98,16 @@ export default class Post extends BaseComponent {
       locale: counterpart.getLocale(),
       placeError: false,
       latlngError: false,
-      disableSubmit: props.disableSubmit
+      disableSubmit: props.disableSubmit,
+      tabIndex: +tab || 0
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
+
+    unlisten = history.listen((location) => {
+      const _tab = queryString.parse(location.search).tab
+      this.setState({ tabIndex: +_tab })
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -115,69 +129,16 @@ export default class Post extends BaseComponent {
   }
 
   componentWillUnmount () {
+    unlisten()
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
   }
 
-  static defaultPropTypes = {
-    disableSubmit: false
-  }
-
-  dateToArray (date) {
-    const _date = date.split('-')
-    _date[1] = _date[1] - 1
-    return _date
-  }
-
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: PostFormOptions(newLocale),
-        regOptions: RegFormOptions(newLocale),
-        formType: PostForm(newLocale),
-        regFormType: RegForm(newLocale)
-      })
-    }
-  }
-
-  handleBoundsChange (event) {
-    if (this.refs.lat) {
-      React.findDOMNode(this.refs.lat).value = event.center[0]
-    }
-    if (this.refs.lng) {
-      React.findDOMNode(this.refs.lng).value = event.center[1]
-    }
-  }
-
-  handleSearch (event) {
-    event.preventDefault()
-    const address = React.findDOMNode(this.refs.place).value.trim()
-    if (!address || address === counterpart('post.map.my')) {
-      this.runGeoLoc()
-    } else {
-      this.props.search(address)
-    }
-  }
-
-  handleGeo (event) {
-    event.preventDefault()
-    this.runGeoLoc()
-  }
-
-  runGeoLoc () {
-    const self = this
-    if (navigator.geolocation) {
-      const optn = {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-      }
-      navigator.geolocation
-        .getCurrentPosition(self.showPosition.bind(self), this.showError, optn)
-    } else {
-      sweetAlert('Geolocation is not supported in your browser')
-    }
+  setHistory (index) {
+    const pathname = window.location.pathname
+    history.pushState({ the: 'state' }, pathname + '?tab=' + index)
+    this.setState({ tabIndex: +index })
   }
 
   showPosition (position) {
@@ -241,7 +202,14 @@ export default class Post extends BaseComponent {
     this.setState({ regValue })
   }
 
+  dateToArray (date) {
+    const _date = date.split('-')
+    _date[1] = _date[1] - 1
+    return _date
+  }
+
   handleSelected (index) {
+    this.setHistory(index)
     if (index === 2 && !this.state.uploadInited) {
       const { detail } = this.props.post
       const { user } = this.props.auth
@@ -266,6 +234,56 @@ export default class Post extends BaseComponent {
 
       this.setState({ uploadInited: true })
     }
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      this.setState({
+        options: PostFormOptions(newLocale),
+        regOptions: RegFormOptions(newLocale),
+        formType: PostForm(newLocale),
+        regFormType: RegForm(newLocale)
+      })
+    }
+  }
+
+  handleBoundsChange (event) {
+    if (this.refs.lat) {
+      React.findDOMNode(this.refs.lat).value = event.center[0]
+    }
+    if (this.refs.lng) {
+      React.findDOMNode(this.refs.lng).value = event.center[1]
+    }
+  }
+
+  handleSearch (event) {
+    event.preventDefault()
+    const address = React.findDOMNode(this.refs.place).value.trim()
+    if (!address || address === counterpart('post.map.my')) {
+      this.runGeoLoc()
+    } else {
+      this.props.search(address)
+    }
+  }
+
+  runGeoLoc () {
+    const self = this
+    if (navigator.geolocation) {
+      const optn = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+      navigator.geolocation
+        .getCurrentPosition(self.showPosition.bind(self), this.showError, optn)
+    } else {
+      sweetAlert('Geolocation is not supported in your browser')
+    }
+  }
+
+  handleGeo (event) {
+    event.preventDefault()
+    this.runGeoLoc()
   }
 
   handleSubmit (evt) {
@@ -406,6 +424,10 @@ export default class Post extends BaseComponent {
     return false
   }
 
+  static defaultPropTypes = {
+    disableSubmit: false
+  }
+
   render () {
     if (process.env.BROWSER) {
       if (!isEmpty(this.props.post.content)) {
@@ -489,8 +511,8 @@ export default class Post extends BaseComponent {
           <Tabs
             ref="tabs"
             onSelect={::this.handleSelected}
-            selectedIndex={0}>
-            <TabList>
+            selectedIndex={ this.state.tabIndex || 0}>
+            <TabList selectedIndex={ this.state.tabIndex || 0}>
               <Tab>
                 <Translate content="post.tabs.title.basic" />
               </Tab>

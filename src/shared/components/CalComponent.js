@@ -10,9 +10,14 @@ import counterpart from 'counterpart'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { fixLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
+import { createHistory } from 'history'
+import queryString from 'query-string'
 
+let unlisten
+let history
 if (process.env.BROWSER) {
   require('css/ui/date-picker')
+  history = createHistory()
 }
 
 export default class Cal extends BaseComponent {
@@ -29,13 +34,24 @@ export default class Cal extends BaseComponent {
     counterpart.setLocale(this.getLocale())
     moment.locale(fixLocaleName(this.getLocale()))
 
+    const { day } = queryString.parse(window.location.search)
+
     this.state = {
       date: moment(new Date()).startOf('day').valueOf(),
-      selectedDay: new Date(),
+      selectedDay: day ? new Date(day) : new Date(),
       locale: fixLocaleName(this.getLocale())
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
+
+    unlisten = history.listen((location) => {
+      const _day = queryString.parse(location.search).day
+      this.setState({ selectedDay: _day ? new Date(_day) : new Date() })
+    })
+  }
+
+  componentWillUnmount () {
+    unlisten()
   }
 
   getTodayCount (date) {
@@ -56,10 +72,18 @@ export default class Cal extends BaseComponent {
     }
   }
 
+  setHistory (day) {
+    const pathname = window.location.pathname
+    const _day = moment(day).format('YYYY-MM-DD')
+    history.pushState({ the: 'state' }, pathname + '?day=' + _day)
+  }
+
   handleDayClick (e, day) {
     const date = moment(day).valueOf()
     const reload = true
     this.props.fetchList(0, 10, date, null, reload)
+
+    this.setHistory(day)
 
     this.setState({
       date: date,

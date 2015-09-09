@@ -15,15 +15,19 @@ export default class Tabs extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = { index: this.props.selectedIndex }
+    this.state = { selectedIndex: this.props.selectedIndex }
     this.handleSelect = ::this.handleSelect
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState({ selectedIndex: nextProps.selectedIndex })
+  }
+
   handleSelect (index) {
-    this.setState({ index })
+    this.setState({ selectedIndex: index })
     if (typeof this.props.onSelect === 'function') {
       this.props.onSelect(
-        index || this.props.selectedIndex,
+        index,
         React.Children.count(this.props.children) - 2
       )
     }
@@ -36,7 +40,7 @@ export default class Tabs extends React.Component {
           return React.cloneElement(child,
             {
               onSelect: this.handleSelect,
-              selectedIndex: this.state.index
+              selectedIndex: this.state.selectedIndex || 0
             }
           )
         })}
