@@ -20,9 +20,11 @@ function reducePropsToState (propsList) {
   const innermostProps = propsList[propsList.length - 1]
   if (innermostProps) {
     const { defaultTitle, title } = innermostProps
-    return defaultTitle
-      ? `${title} | ${defaultTitle}`
-      : `${title} | Untitled Document`
+    if (typeof title !== 'undefined') {
+      return defaultTitle
+        ? `${title} | ${defaultTitle}`
+        : `${title} | Untitled Document`
+    }
   }
 }
 
