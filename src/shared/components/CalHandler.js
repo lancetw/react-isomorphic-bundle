@@ -7,6 +7,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import moment from 'moment'
 import { BaseComponent } from 'shared/components'
+import queryString from 'query-string'
 
 @connect(state => ({
   post: state.post
@@ -14,7 +15,8 @@ import { BaseComponent } from 'shared/components'
 export default class CalHandler extends BaseComponent {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -23,12 +25,22 @@ export default class CalHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
-    const date = moment(new Date()).startOf('day').valueOf()
     const { dispatch, resolver } = context.store
     dispatch(updateTitle('title.cal'))
-
     this.postActions = bindActionCreators(PostActions, dispatch)
-    resolver.resolve(this.postActions.countPostsWithCal)
+
+    const { query } = props.location
+    let date
+    if (query && query.day) {
+      const { day } = query
+      date = moment(day).startOf('day').valueOf()
+      resolver.resolve(
+        this.postActions.countPostsWithCal,
+        moment(day).year(), moment(day).month() + 1)
+    } else {
+      date = moment(new Date()).startOf('day').valueOf()
+      resolver.resolve(this.postActions.countPostsWithCal)
+    }
     resolver.resolve(this.postActions.fetchList, 0, 10, date, null)
   }
 

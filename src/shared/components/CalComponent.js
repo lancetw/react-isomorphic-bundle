@@ -71,8 +71,6 @@ export default class Cal extends BaseComponent {
     if (day) {
       const date = moment(day).startOf('day').valueOf()
       this.refs.daypicker.showMonth(new Date(day))
-      this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
-      this.props.fetchList(0, 10, date, null)
     }
   }
 
