@@ -36,6 +36,16 @@ export default class ImageUpload extends React.Component {
     if (typeof file.preview !== 'undefined') {
       dispatch(UploadActions.clearErrorMessage())
       dispatch(UploadActions.send(file.name, file, this.props.index))
+      this.forceUpdate()
+    }
+  }
+
+  renderPrecentage () {
+    const percentage = this.props.upload.percentages[this.props.index]
+    if (!this.props.upload.errors && percentage) {
+      return (<span>{percentage} %</span>)
+    } else {
+      return (<span></span>)
     }
   }
 
@@ -45,14 +55,11 @@ export default class ImageUpload extends React.Component {
       img = this.props.upload.images[this.props.index]
     }
 
-    const percentage = this.props.upload.percentages[this.props.index]
-
     if (this.props.upload.errorId) {
       setTimeout(() => {
         this.props.dispatch(UploadActions.clearErrorMessage())
       }, 3000)
     }
-
     return (
       <Dropzone
         multiple={false}
@@ -64,9 +71,7 @@ export default class ImageUpload extends React.Component {
           className="ui image centered"
           alt=""
           src={ img || this.props.src } />
-        {(!this.props.upload.errors && percentage) &&
-          <span>{percentage} %</span>
-        }
+        {::this.renderPrecentage()}
       </Dropzone>
     )
   }
