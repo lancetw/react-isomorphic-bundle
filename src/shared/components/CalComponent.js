@@ -40,7 +40,9 @@ export default class Cal extends BaseComponent {
     }
 
     this.state = {
-      date: moment(new Date()).startOf('day').valueOf(),
+      date: day
+        ? moment(day).startOf('day').valueOf()
+        : moment(new Date()).startOf('day').valueOf(),
       selectedDay: day ? new Date(day) : new Date(),
       locale: fixLocaleName(this.getLocale())
     }
@@ -50,13 +52,24 @@ export default class Cal extends BaseComponent {
     if (process.env.BROWSER) {
       unlisten = history.listen((location) => {
         day = queryString.parse(location.search).day
-        this.setState({ selectedDay: day ? new Date(day) : new Date() })
+        this.setState({
+          date: day
+            ? moment(day).startOf('day').valueOf()
+            : moment(new Date()).startOf('day').valueOf(),
+          selectedDay: day ? new Date(day) : new Date()
+        })
 
         const date = moment(day).valueOf()
         const reload = true
         props.fetchList(0, 10, date, null, reload)
       })
     }
+  }
+
+  componentDidMount () {
+    const day = this.state.date
+    this.refs.daypicker.showMonth(new Date(day))
+    this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
   }
 
   componentWillUnmount () {
@@ -152,6 +165,7 @@ export default class Cal extends BaseComponent {
         <div className="eight wide computer sixteen wide tablet column">
           <WallButtons />
           <DayPicker
+            ref="daypicker"
             renderDay={::this.renderDay}
             modifiers={modifiers}
             onDayClick={::this.handleDayClick}
