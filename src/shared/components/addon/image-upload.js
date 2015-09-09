@@ -55,11 +55,6 @@ export default class ImageUpload extends React.Component {
       img = this.props.upload.images[this.props.index]
     }
 
-    if (this.props.upload.errorId) {
-      setTimeout(() => {
-        this.props.dispatch(UploadActions.clearErrorMessage())
-      }, 3000)
-    }
     return (
       <Dropzone
         multiple={false}
