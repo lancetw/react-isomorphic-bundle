@@ -137,7 +137,7 @@
     "require-dot-file": "^0.4.0",
     "scriptjs": "^2.5.7",
     "semantic-ui": "^2.0.7",
-    "sequelize": "^3.7.1",
+    "sequelize": "3.4.1",
     "sqlite3": "^3.0.9",
     "superagent": "^1.2.0",
     "sweetalert": "^1.1.0",

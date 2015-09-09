@@ -201,19 +201,20 @@ export default new Resource('posts', {
         throw new Error('user check failed')
       }
 
-      body.startDate = moment(body.startDate).format()
-      body.endDate = moment(body.endDate).format()
+      body.startDate = moment(body.startDate).format('YYYY-MM-DD HH:mm:ss')
+      body.endDate = moment(body.endDate).format('YYYY-MM-DD HH:mm:ss')
 
       if (typeof body.openDate === 'undefined') {
         body.openDate = body.startDate
       } else {
-        body.openDate = moment(body.openDate).format()
+        body.openDate = moment(body.openDate).format('YYYY-MM-DD HH:mm:ss')
       }
 
       if (typeof body.closeDate === 'undefined') {
         body.closeDate = body.endDate
       } else {
-        body.closeDate = moment(body.closeDate).endOf('day').format()
+        body.closeDate = moment(body.closeDate)
+          .endOf('day').format('YYYY-MM-DD HH:mm:ss')
       }
 
       body.file = JSON.stringify(body.file)
@@ -227,7 +228,6 @@ export default new Resource('posts', {
         body.city = userinfo.city
         body.address = userinfo.address
       } catch (err) {/* no userinfo */}
-
       const post = yield Post.update(this.params.post, body)
 
       this.type = 'json'
@@ -235,7 +235,7 @@ export default new Resource('posts', {
       this.body = hashids.encodeJson(post)
     } catch (err) {
       this.type = 'json'
-      this.status = 200
+      this.status = 403
       this.body = err
     }
   }],
