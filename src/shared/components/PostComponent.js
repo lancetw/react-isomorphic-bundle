@@ -110,7 +110,7 @@ export default class Post extends BaseComponent {
     if (process.env.BROWSER) {
       unlisten = history.listen((location) => {
         tab = queryString.parse(location.search).tab
-        this.setState({ tabIndex: tab })
+        this.setState({ tabIndex: +tab })
       })
     }
   }
