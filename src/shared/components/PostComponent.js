@@ -71,7 +71,10 @@ export default class Post extends BaseComponent {
 
     counterpart.setLocale(props.defaultLocale)
 
-    const { tab } = queryString.parse(window.location.search)
+    let tab
+    if (process.env.BROWSER) {
+      tab = queryString.parse(window.location.search).tab
+    }
 
     this.state = {
       formInited: false,
@@ -105,8 +108,8 @@ export default class Post extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
 
     unlisten = history.listen((location) => {
-      const _tab = queryString.parse(location.search).tab
-      this.setState({ tabIndex: +_tab })
+      tab = queryString.parse(location.search).tab
+      this.setState({ tabIndex: tab })
     })
   }
 

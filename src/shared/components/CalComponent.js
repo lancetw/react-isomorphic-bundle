@@ -34,7 +34,10 @@ export default class Cal extends BaseComponent {
     counterpart.setLocale(this.getLocale())
     moment.locale(fixLocaleName(this.getLocale()))
 
-    const { day } = queryString.parse(window.location.search)
+    let day
+    if (process.env.BROWSER) {
+      day = queryString.parse(window.location.search).day
+    }
 
     this.state = {
       date: moment(new Date()).startOf('day').valueOf(),
@@ -45,10 +48,10 @@ export default class Cal extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
 
     unlisten = history.listen((location) => {
-      const _day = queryString.parse(location.search).day
-      this.setState({ selectedDay: _day ? new Date(_day) : new Date() })
+      day = queryString.parse(location.search).day
+      this.setState({ selectedDay: day ? new Date(day) : new Date() })
 
-      const date = moment(_day).valueOf()
+      const date = moment(day).valueOf()
       const reload = true
       props.fetchList(0, 10, date, null, reload)
     })
