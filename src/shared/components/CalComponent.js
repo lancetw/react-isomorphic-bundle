@@ -156,9 +156,9 @@ export default class Cal extends BaseComponent {
       'saturday': (day) => day.getDay() === 6,
       'selected': (day) => isSameDay(selectedDay, day),
       'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0,
-      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) > 11,
-      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) > 41,
-      'has-events-lv4': (day) => this.getTodayCount(day.getDate()) > 81
+      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) > 30,
+      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) > 50,
+      'has-events-lv4': (day) => this.getTodayCount(day.getDate()) > 100
     }
 
     return (
