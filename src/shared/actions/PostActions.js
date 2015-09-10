@@ -230,6 +230,12 @@ export function init () {
   }
 }
 
+export function prepare () {
+  return async dispatch => {
+    return dispatch({ type: SHOW_POST_STARTED })
+  }
+}
+
 export function submit ({ value, regValue, upload, map }) {
   return async dispatch => {
     try {
@@ -502,7 +508,8 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
     const cached = getState().post.posts
     const _start = getState().post.start
     const _end = getState().post.end
-    if (!reload && offset <= 0 && !isEmpty(cached)) {
+    if (!reload && offset <= 0 && !isEmpty(cached)
+        && start === _start && end === _end) {
       return null
     }
 
