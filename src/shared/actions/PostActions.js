@@ -502,8 +502,7 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
     const cached = getState().post.posts
     const _start = getState().post.start
     const _end = getState().post.end
-    if (!reload && offset <= 0 && !isEmpty(cached)
-      && start === _start && end === _end) {
+    if (!reload && offset <= 0 && !isEmpty(cached)) {
       return null
     }
 

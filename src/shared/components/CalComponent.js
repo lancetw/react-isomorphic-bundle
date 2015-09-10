@@ -58,10 +58,6 @@ export default class Cal extends BaseComponent {
             : moment(new Date()).startOf('day').valueOf(),
           selectedDay: day ? new Date(day) : new Date()
         })
-
-        const date = moment(day).valueOf()
-        const reload = true
-        props.fetchList(0, 10, date, null, reload)
       })
     }
   }
@@ -159,7 +155,10 @@ export default class Cal extends BaseComponent {
       'sunday': (day) => day.getDay() === 0,
       'saturday': (day) => day.getDay() === 6,
       'selected': (day) => isSameDay(selectedDay, day),
-      'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0
+      'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0,
+      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) > 11,
+      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) > 41,
+      'has-events-lv4': (day) => this.getTodayCount(day.getDate()) > 81
     }
 
     return (
