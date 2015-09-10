@@ -502,15 +502,26 @@ export function cpropList (cprop, offset=0, limit=5, reload=false) {
   }
 }
 
+function _eq (a, b) {
+  let _a = a
+  let _b = b
+  if (typeof _a === 'undefined') _a = null
+  if (typeof _b === 'undefined') _b = null
+
+  return (_a === _b)
+}
+
 export function fetchList (offset=0, limit=5, start, end, reload) {
   return async (dispatch, getState) => {
     /* cache service */
     const cached = getState().post.posts
     const _start = getState().post.start
     const _end = getState().post.end
-    if (!reload && offset <= 0 && !isEmpty(cached)
-        && start === _start && end === _end) {
-      return null
+
+    if (!reload && offset <= 0 && !isEmpty(cached)) {
+      if (_eq(start, _start) && _eq(end, _end)) {
+        return null
+      }
     }
 
     if (reload) {
