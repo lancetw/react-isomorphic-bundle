@@ -1,11 +1,12 @@
 {
   "name": "react-isomorphic-bundle",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
     "prestart": "npm run clean && make fast-build",
     "start": "NODE_ENV=production node --harmony ./lib/server",
+    "win-start": "node --harmony ./lib/server",
     "dev": "make watch",
     "lint": "make lint",
     "build": "make build",
@@ -155,7 +156,6 @@
     "babel-eslint": "^4.1.1",
     "babel-loader": "^5.3.2",
     "babel-runtime": "^5.8.20",
-    "browser-sync": "^2.8.0",
     "chai": "^3.2.0",
     "clean-css": "^3.3.1",
     "co-mocha": "^1.1.0",

@@ -1,4 +1,4 @@
-BIN = node_modules/.bin
+BIN = $(shell npm bin)
 MOCHA_CMD = $(BIN)/mocha
 ISTANBUL_CMD = node --harmony node_modules/istanbul/lib/cli.js cover
 ESLINT_CMD = $(BIN)/eslint
@@ -69,33 +69,33 @@ js: $(LIB_JS)
 
 $(LIB_JS): lib/%.js: src/%.js
 	mkdir -p $(dir $@)
-	$(BIN)/babel $< -o $@ $(BABEL_ARGS)
+	babel $< -o $@ $(BABEL_ARGS)
 
 fast-js:
-	$(BIN)/babel src -d lib $(BABEL_ARGS)
+	babel src -d lib $(BABEL_ARGS)
 
 watch-js:
-	$(BIN)/babel src -d lib $(BABEL_ARGS) -w
+	babel src -d lib $(BABEL_ARGS) -w
 
 dev-server: $(SRC_JS)
-	nodemon --harmony ./src/server
+	nodemon --ignore ./node_modules/ --harmony ./src/server
 
 dev-debug:
 	node --harmony --debug ./src/server
 
 browser-sync:
-	$(BIN)/browser-sync start --proxy="localhost:3000" --port 3002 --ui-port 3003 --files="src" --no-open
+	browser-sync start --proxy="localhost:3000" --port 3002 --ui-port 3003 --files="src" --no-open
 
 webpack-dev:
 	node ./webpack/server.js
 
-webpack-server: $(LIB_JS)
+webpack-server:
 	node ./webpack/server.js
 
 webpack: public/assets
 
 webpack-test:
-	@NODE_ENV=test $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
+	@NODE_ENV=test webpack --progress --profile --colors --stats --config webpack/server.js
 
 public/assets: $(SRC_JS)
-	@NODE_ENV=production $(BIN)/webpack --progress --profile --colors --stats --config webpack/server.js
+	@NODE_ENV=production webpack --progress --profile --colors --stats --config webpack/server.js

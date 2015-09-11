@@ -6,14 +6,17 @@
 [![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
 [![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
 
-DEMO: http://react.deliverwork.co
+## DEMO
+
+http://react.deliverwork.co
+
+---
 
 Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
 
 ```
 
-$ npm install -g nodemon
-
+$ npm install -g nodemon webpack browser-sync babel
 $ npm install
 
 ```
@@ -31,7 +34,12 @@ $ npm install
 
 ## PRODUCTION MODE
 
+### Linux/Mac
 `npm start`
+
+### Windows (Git Bash)
+`npm run prestart && NODE_ENV=production npm run win-start`
+
 
 ## DEBUG MODE
 
@@ -52,9 +60,9 @@ $ npm install
 - [x] Facebook Sign In (isomorphic)
 - [x] Restful API with JWT
 - [x] Change password
-- [x] Create post
-- [x] Modify post
-- [x] Delete post
+- [x] Create posts
+- [x] Modify posts
+- [x] Delete posts
 - [x] i18n / language switcher
 - [x] Files/Images uploader
 - [x] Ad script support

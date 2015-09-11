@@ -1,10 +1,10 @@
 {
   "watch": [
-    "src/server/",
-    "src/client/",
-    "src/shared/routes.js",
-    "src/shared/i18n/",
-    "views/"
+    "./src/server/",
+    "./src/client/",
+    "./src/shared/routes.js",
+    "./src/shared/i18n/",
+    "./views/"
   ],
   "ext": "html css less js"
 }
