@@ -136,12 +136,21 @@ export default class Cal extends BaseComponent {
     const count = this.getTodayStartCount(date)
 
     return (
-      <div>
-        <div className="day">
-          { date }
-        </div>
-        { count > 0 && (<span className="event-started">＊</span>) }
-        { count === 0 && (<span className="event-none">＊</span>) }
+      <div className="daybox">
+        { count > 0 &&
+          (<div className="day shake shake-slow">
+            <div className="event-started">
+              { date }
+            </div>
+          </div>)
+        }
+        { count === 0 &&
+          (<div className="day">
+            <div className="event-none">
+              { date }
+            </div>
+          </div>)
+        }
       </div>
     )
   }
@@ -157,9 +166,9 @@ export default class Cal extends BaseComponent {
       'saturday': (day) => day.getDay() === 6,
       'selected': (day) => isSameDay(selectedDay, day),
       'has-events-lv1': (day) => this.getTodayCount(day.getDate()) > 0,
-      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) > 30,
-      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) > 50,
-      'has-events-lv4': (day) => this.getTodayCount(day.getDate()) > 100
+      'has-events-lv2': (day) => this.getTodayCount(day.getDate()) > 50,
+      'has-events-lv3': (day) => this.getTodayCount(day.getDate()) > 100,
+      'has-events-lv4': (day) => this.getTodayCount(day.getDate()) > 200
     }
 
     return (

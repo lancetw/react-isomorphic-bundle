@@ -7,7 +7,7 @@ SRC_JS = $(shell find src -name "*.js")
 LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
 TEST_JS = $(shell find tests -name "*-test.js")
 
-BABEL_ARGS = --stage 0 --source-maps-inline
+BABEL_ARGS = --stage 0 --source-maps
 MOCHA_ARGS = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R nyan $(TEST_JS)
 MOCHA_ARGS_SPEC = --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
 ISTANBUL_ARGS = node_modules/mocha/bin/_mocha -- --timeout 500000 --harmony --require co-mocha tests/spec.js --compilers js:babel/register -R spec $(TEST_JS)
