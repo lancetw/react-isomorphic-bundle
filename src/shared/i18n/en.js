@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export default {
   title: {
-    site: 'Universal Redux Demo',
+    site: 'OursEvents',
     home: 'Home',
     login: 'Log In',
     logout: 'Log Out',

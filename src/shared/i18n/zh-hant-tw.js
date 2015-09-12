@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export default {
   title: {
-    site: 'Universal Redux 範例',
+    site: '活動訊息佈告 OursEvents',
     home: '首頁',
     login: '登入',
     logout: '登出',
