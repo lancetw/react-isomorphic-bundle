@@ -78,6 +78,11 @@ export default {
         this.plugin('done', writeStats);
       }
     ],
+    externals: {
+      'react': 'React',
+      'react/addons': 'React',
+      'jquery': 'jQuery'
+    },
     module: {
       preLoaders: [
         {

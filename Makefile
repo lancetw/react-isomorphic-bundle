@@ -98,4 +98,4 @@ webpack-test:
 	@NODE_ENV=test webpack --progress --profile --colors --stats --config webpack/server.js
 
 public/assets: $(SRC_JS)
-	@NODE_ENV=production webpack --progress --profile --colors --stats --config webpack/server.js
+	@NODE_ENV=production webpack --production --progress --profile --colors --stats --config webpack/server.js
