@@ -39,7 +39,15 @@ export default class CalHandler extends BaseComponent {
         moment(day).year(), moment(day).month() + 1)
     } else {
       date = moment(new Date()).startOf('day').valueOf()
-      resolver.resolve(this.postActions.countPostsWithCal)
+      if (props.post.day) {
+        const { day } = props.post
+        date = moment(day).startOf('day').valueOf()
+        resolver.resolve(
+          this.postActions.countPostsWithCal,
+          moment(day).year(), moment(day).month() + 1)
+      } else {
+        resolver.resolve(this.postActions.countPostsWithCal)
+      }
     }
     resolver.resolve(this.postActions.fetchList, 0, 10, date, null)
   }

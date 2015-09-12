@@ -38,11 +38,21 @@ export default class PostCards extends BaseComponent {
     }
 
     this.disablePointerTimeout = null
-    this.triggerTimeout = null
   }
 
   componentDidMount () {
     window.addEventListener('resize', ::this.handleResize)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.isFetching) {
+      this.setState({disablePointer: false })
+      this.setState({ triggered: false })
+      $('#overlay').remove()
+      $('body').unbind('touchmove')
+    } else {
+      this.setState({disablePointer: true })
+    }
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
@@ -52,17 +62,11 @@ export default class PostCards extends BaseComponent {
   }
 
   handleScroll (event) {
-    const threshold = 300
+    const threshold = 400
 
     if (!!this.props.hasMore) {
       this.setState({disablePointer: true })
       this.handleInfiniteLoad(threshold)
-      if (this.disablePointerTimeout !== null) {
-        clearTimeout(this.disablePointerTimeout)
-      }
-      this.disablePointerTimeout = setTimeout(() => {
-        this.setState({disablePointer: false })
-      }, 1000)
     }
   }
 
@@ -89,16 +93,6 @@ export default class PostCards extends BaseComponent {
       this.setState({ triggered: true })
 
       this.props.loadFunc()
-
-      if (this.triggerTimeout !== null) {
-        clearTimeout(this.triggerTimeout)
-      }
-
-      this.triggerTimeout = setTimeout(() => {
-        this.setState({ triggered: false })
-        $('#overlay').remove()
-        $('body').unbind('touchmove')
-      }, 3000)
     }
   }
 

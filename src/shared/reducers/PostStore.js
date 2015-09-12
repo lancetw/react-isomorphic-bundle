@@ -21,6 +21,7 @@ import {
   CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
+import moment from 'moment'
 
 const initialState = {
   isFetching: false,
@@ -36,7 +37,8 @@ const initialState = {
   year: null,
   month: null,
   start: null,
-  end: null
+  end: null,
+  day: null
 }
 
 export default createReducer(initialState, {
@@ -99,7 +101,8 @@ export default createReducer(initialState, {
       hasMore: hasMore,
       start: action.start,
       end: action.end,
-      isFetching: false
+      isFetching: false,
+      day: moment(action.start).startOf('day').format('YYYY-MM-DD')
     }
   },
   [LIST_POST_FAILED]: (state, action) =>

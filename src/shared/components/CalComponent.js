@@ -37,6 +37,7 @@ export default class Cal extends BaseComponent {
     let day
     if (process.env.BROWSER) {
       day = queryString.parse(window.location.search).day
+      if (typeof day === 'undefined') day = props.post.day
     }
 
     this.state = {
@@ -72,7 +73,7 @@ export default class Cal extends BaseComponent {
 
   componentWillUnmount () {
     if (process.env.BROWSER) {
-      unlisten()
+      typeof unlisten === 'function' && unlisten()
     }
   }
 
