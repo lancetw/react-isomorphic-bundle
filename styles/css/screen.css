@@ -9,17 +9,15 @@ body {
   font-size: 1rem;
   background: #f5f5f5;
 
-  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
   font-smoothing: antialiased;
   hyphens: auto;
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', '微軟正黑體', sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', \5FAE\8EDF\6B63\9ED1\9AD4, sans-serif;
 
   a {
     text-decoration: none;
-    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
     font-smoothing: antialiased;
     hyphens: auto;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', '微軟正黑體', sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', \5FAE\8EDF\6B63\9ED1\9AD4, sans-serif;
 
     &:hover {
       text-decoration: underline;
