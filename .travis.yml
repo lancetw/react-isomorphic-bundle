@@ -3,7 +3,17 @@ node_js:
   - "iojs-v2.5.0"
   - "iojs-v3.3.0"
   - "0.12.7"
-  - "4.0"
+  - "4"
+sudo: false
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
 script: npm run test:ci
 after_success:
   - codeclimate < coverage/lcov.info
