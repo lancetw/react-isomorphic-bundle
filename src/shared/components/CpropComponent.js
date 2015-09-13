@@ -16,7 +16,6 @@ export default class Cprop extends BaseComponent {
     super(props)
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
-
     this.state = { locale: this.getLocale() }
   }
 

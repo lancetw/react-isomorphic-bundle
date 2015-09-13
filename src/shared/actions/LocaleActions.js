@@ -5,7 +5,18 @@ import {
   UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { originLocaleName } from 'shared/utils/locale-utils'
-import { isEmpty } from 'lodash'
+import { includes, isEmpty } from 'lodash'
+
+function fallBackLocale (locale) {
+  const supported = ['zh-hant-tw', 'en']
+  const defaultLocale = supported[0]
+
+  if (includes(supported, locale)) {
+    return locale
+  }
+
+  return defaultLocale
+}
 
 export function setLocale (locale) {
   if (!localStorage) {
@@ -14,7 +25,7 @@ export function setLocale (locale) {
     if (!locale) {
       throw Error('localStorage data is falsy')
     } else {
-      localStorage.setItem('locale', locale)
+      localStorage.setItem('locale', fallBackLocale(locale))
     }
   }
 }
@@ -26,8 +37,7 @@ export function getLocale () {
   } else {
     locale = localStorage.getItem('locale')
   }
-
-  return locale
+  return fallBackLocale(locale)
 }
 
 export async function send (locale) {
@@ -53,12 +63,12 @@ export function sync (locale) {
       setLocale(locale)
       return dispatch({
         type: SYNC_CLIENT_LOCALE_COMPLETED,
-        locale: getLocale()
+        locale: fallBackLocale(getLocale())
       })
     } else {
       return dispatch({
         type: SYNC_SERVER_LOCALE_COMPLETED,
-        locale: locale
+        locale: fallBackLocale(locale)
       })
     }
   }
