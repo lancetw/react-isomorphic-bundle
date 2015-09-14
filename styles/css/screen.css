@@ -135,6 +135,10 @@ and (max-device-width : 667px) {
     .date.list {
       position: relative;
       top: -42px;
+
+      .label {
+        white-space: nowrap;
+      }
     }
   }
 }
