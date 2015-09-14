@@ -270,21 +270,12 @@ and (max-width : 480px) {
   }
 
   .ui.detail {
-    margin-left: -10px;
+    margin-left: 0;
 
     .description {
       font-size: 1.1rem !important;
       line-height: 2rem !important;
     }
-  }
-
-  .register-info {
-    margin-left: -10px;
-  }
-
-  .column.map > div {
-    padding-left: -10px;
-    margin-left: -10px;
   }
 
   .ui.post.card {
@@ -332,21 +323,12 @@ and (max-device-width : 480px) {
   }
 
   .ui.detail {
-    margin-left: -10px;
+    margin-left: 0;
 
     .description {
       font-size: 1.1rem !important;
       line-height: 2rem !important;
     }
-  }
-
-  .register-info {
-    margin-left: -10px;
-  }
-
-  .column.map > div {
-    padding-left: -10px;
-    margin-left: -10px;
   }
 
   .ui.post.card {
@@ -431,6 +413,10 @@ and (max-width : 1280px)  {
     text-align: right;
     width: 280px;
   }
+
+  .ui.detail > .content {
+    font-size: 120%;
+  }
 }
 @media only screen
 and (min-device-width : 768px)
@@ -443,6 +429,10 @@ and (max-device-width : 1024px)  {
     text-align: right;
     width: 280px;
   }
+
+  .ui.detail > .content {
+    font-size: 120%;
+  }
 }
 
 /* iPad in portrait */
@@ -453,6 +443,10 @@ and (orientation : portrait) {
   .post.detail > .column {
     width: 100% !important;
   }
+
+  .ui.top.menu {
+    font-size: 90.6% !important;
+  }
 }
 @media only screen
 and (min-device-width : 768px)
@@ -460,5 +454,9 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
   .post.detail > .column {
     width: 100% !important;
+  }
+
+  .ui.top.menu {
+    font-size: 90.6% !important;
   }
 }
