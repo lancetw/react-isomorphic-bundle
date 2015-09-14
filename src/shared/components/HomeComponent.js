@@ -66,7 +66,6 @@ export default class HomeComponent extends BaseComponent {
     return (
       <main className="ui column centered stackable page grid">
         <div className="column">
-          <h1 className="title"><Translate content="news.header" /></h1>
           { ::this.renderNews(posts) }
           {loading && isEmpty(posts) && (
             <div className="ui segment basic has-header">
@@ -85,7 +84,7 @@ export default class HomeComponent extends BaseComponent {
               </div>
             </div>
           )}
-          <div className="ui orange segment center">
+          <div className="ui basic segment center">
             <h3>
               <a href="http://www.ccnda.org" target="_blank">
                 <p>中華基督教網路發展協會</p>

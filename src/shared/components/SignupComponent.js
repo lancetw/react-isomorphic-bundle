@@ -145,7 +145,6 @@ export default class Signup extends BaseComponent {
 
     const LoadingClass = classNames(
       'ui',
-      'orange',
       'form',
       'segment',
       { 'loading': this.state.submited && !(this.state.ok) }

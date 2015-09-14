@@ -3,6 +3,7 @@
 html {
   font-size: 1rem;
   -webkit-overflow-scrolling: touch;
+  background: rgba(255, 255, 255, 1);
 }
 
 :-ms-input-placeholder {
@@ -13,7 +14,6 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 1rem;
-  background: #f5f5f5;
 
   font-smoothing: antialiased;
   hyphens: auto;
@@ -29,6 +29,16 @@ body {
       text-decoration: underline;
     }
   }
+
+  background: rgba(255, 255, 255, 1);
+}
+
+#app {
+  background-image:
+    linear-gradient(
+      rgba(252, 173, 49, 1) 10%,
+      rgba(255, 255, 255, 0.0) 78%
+    );
 }
 
 select {
@@ -42,6 +52,23 @@ select {
 input.hide-submit {
   position: absolute;
   left: -9999px;
+}
+
+.ui.warning.message {
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.ui.inverted.menu.top {
+  a {
+    font-weight: bold;
+  }
+  background: rgba(1, 1, 1, 0.72);
+}
+
+.ui.post.card {
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.77);
 }
 
 .ui.center {
@@ -122,13 +149,12 @@ and (max-device-width : 667px) {
   margin: 0;
   .content {
     .title > a {
-      text-shadow: 0px 1px 0px #f5f5f5;
       letter-spacing: 0.08rem;
       font-size: 1.44rem;
       line-height: 2.1rem;
       padding: 0 !important;
       margin: 0 !important;
-      color: #3399cc;
+      color: rgba(219, 80, 50, 0.89);
       display: block;
     }
 
@@ -150,19 +176,22 @@ and (max-device-width : 667px) {
   line-height: 1.8rem;
 }
 
+.fluid.ui.huge.teal.button {
+  background: rgba(31, 181, 173, .64);
+}
+
 .ui.detail {
   margin-left: 0;
   opacity: 0.95;
   filter: alpha(opacity=95);
   box-shadow: none;
   .content {
-    box-shadow: inset 0 0 8px rgba(255, 244, 0, 0.1);
+    background: rgba(255, 255, 255, 0.97);
 
     h1 {
-      text-shadow: 0px 1px 0px #f5f5f5;
       letter-spacing: 0.08rem;
       font-size: 1.6rem;
-      color: #0066cc;
+      color: rgba(239, 10, 111, 1);
     }
   }
 
@@ -186,6 +215,21 @@ and (max-device-width : 667px) {
   margin-top: 10px;
 }
 
+.fluid.ui.black.button {
+  background: rgba(0, 0, 0, 0.42);
+}
+
+.ui.stackable.container.menu, .ui.stackable.container.menu > .item {
+  box-shadow: none;
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.ui.form.segment, .ui.tab.segment {
+  border: none;
+  background: rgba(255, 255, 255, 0.88);
+}
+
 .scrollable {
   margin: 0;
   padding: 0;
@@ -196,6 +240,7 @@ and (max-device-width : 667px) {
 }
 
 .switch-btns {
+  margin-top: -16px;
   text-align: center;
 }
 

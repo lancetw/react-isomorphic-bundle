@@ -95,14 +95,14 @@ export default class PostCard extends BaseComponent {
               </span>
             )}
             {eventEndYear && (
-              <span className="ui small teal label">
+              <span className="ui small white label">
                 <Translate content="post.detail.end" /> {eventEndYear}
               </span>
             )}
             </div>
           </div>
           <div className="extra content">
-            <div className="left floated ui tag label">
+            <div className="left floated ui red tag label">
               {this.renderCardProp(card)}
             </div>
             <div className="ui location">

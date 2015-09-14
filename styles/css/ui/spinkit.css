@@ -5,8 +5,8 @@
     bottom: 0;
     right: 0;
     background: #fff;
-    opacity: 0.7;
-    filter: alpha(opacity=70);
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
 #loading {
     width: 50px;
@@ -14,7 +14,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -28px 0 0 -25px;
+    margin: -100px 0 0 -40px;
 }
 
 .spinner {
@@ -26,7 +26,7 @@
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #222;
+  background-color: orange;
 
   border-radius: 100%;
   display: inline-block;

@@ -160,7 +160,7 @@ export default class Login extends BaseComponent {
 
     const LoginClasses = classNames(
       'ui',
-      'orange',
+      'login',
       'form',
       'segment',
       { 'loading': this.state.submited && !this.state.ok },

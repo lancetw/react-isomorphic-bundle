@@ -100,8 +100,8 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 .DayPicker-Day {
   display: table-cell;
   padding: 1.4rem 1.8rem;
-  border-radius: 8px;
-  border: 3px solid #f5f5f5;
+  border-radius: 0;
+  border: none;
   background-color: $white;
   font-size: 1.8rem;
   text-align: center;
@@ -248,12 +248,12 @@ and (orientation : portrait) {
 .DayPicker-Day--outside {
   cursor: default;
   color: $white;
-  background-color: color($white lightness(96%));
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: $white;
-  background-color: $blue;
+  background-color: orange;
   border-radius: 0;
   .event-started {
     color: white;

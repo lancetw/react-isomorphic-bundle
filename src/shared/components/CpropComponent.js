@@ -37,7 +37,7 @@ export default class Cprop extends BaseComponent {
         <div
           className="item" key={index}>
           <Link
-            className="fluid ui huge teal button"
+            className="fluid ui huge black button"
             to={`/wall/cprop/${index}`}>
             {this.renderCardProp(index)}
           </Link>

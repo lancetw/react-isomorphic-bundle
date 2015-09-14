@@ -145,7 +145,6 @@ export default class Manage extends BaseComponent {
 
     const LoadingClass = classNames(
       'ui',
-      'orange',
       'form',
       'segment',
       {'loading': !!this.state.submited }
@@ -174,7 +173,7 @@ export default class Manage extends BaseComponent {
     const BindedMessage
       = !!cid
       ? (
-        <div className="ui info small icon message">
+        <div className="ui orange small icon message">
           <i className="check square icon"></i>
           <div className="content">
             <div className="header">
@@ -193,7 +192,7 @@ export default class Manage extends BaseComponent {
       <main className="ui two column stackable has-header grid container">
         <div className="eight wide computer sixteen wide tablet column">
           <div className="ui row padding center">
-            <h2><Translate content="manage.org_title" /></h2>
+            <h3><Translate content="manage.org_title" /></h3>
             <CSSTransitionGroup transitionName="MessageTransition">
               {Message}
             </CSSTransitionGroup>
