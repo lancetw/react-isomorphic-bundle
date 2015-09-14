@@ -10,7 +10,11 @@ import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
 const { CSSTransitionGroup } = React.addons
-import $ from 'jquery'
+
+let $
+if (process.env.BROWSER) {
+  $ = require('jquery')
+}
 
 export default class Manage extends BaseComponent {
 
@@ -64,7 +68,6 @@ export default class Manage extends BaseComponent {
       clearTimeout(this.releaseTimeout)
     }
   }
-
 
   scrollToTop () {
     $('body').stop().animate({
@@ -188,7 +191,7 @@ export default class Manage extends BaseComponent {
 
     return (
       <main className="ui two column stackable has-header grid container">
-        <div className="column">
+        <div className="eight wide computer sixteen wide tablet column">
           <div className="ui row padding center">
             <h2><Translate content="manage.org_title" /></h2>
             <CSSTransitionGroup transitionName="MessageTransition">
@@ -215,7 +218,7 @@ export default class Manage extends BaseComponent {
             </form>
           </div>
         </div>
-        <div className="column">
+        <div className="eight wide computer sixteen wide tablet column">
           <div className="row">
             <div className="ui center">
               <h2 className="ui orange label">
@@ -228,7 +231,8 @@ export default class Manage extends BaseComponent {
               posts={post.posts}
               loadFunc={loadFunc}
               hasMore={post.hasMore}
-              diff={126}
+              diff={0}
+              threshold={200}
               defaultLocale={this.props.defaultLocale}
             />
             {loading && isEmpty(post.posts) && (

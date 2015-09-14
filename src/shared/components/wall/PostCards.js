@@ -20,12 +20,14 @@ export default class PostCards extends BaseComponent {
     loadFunc: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,
     diff: PropTypes.number.isRequired,
-    isFetching: PropTypes.bool.isRequired
+    isFetching: PropTypes.bool.isRequired,
+    threshold: PropTypes.number
   }
 
   static defaultProps = {
     diff: 0,
-    isFetching: false
+    isFetching: false,
+    threshold: 400
   }
 
   constructor (props) {
@@ -38,6 +40,7 @@ export default class PostCards extends BaseComponent {
     }
 
     this.disablePointerTimeout = null
+    this.scrollTimeout = null
   }
 
   componentDidMount () {
@@ -46,10 +49,12 @@ export default class PostCards extends BaseComponent {
 
   componentWillReceiveProps (nextProps) {
     if (!nextProps.isFetching) {
-      this.setState({disablePointer: false })
-      this.setState({ triggered: false })
-      $('#overlay').remove()
-      $('body').unbind('touchmove')
+      this.scrollTimeout = setTimeout(() => {
+        this.setState({disablePointer: false })
+        this.setState({ triggered: false })
+        $('#overlay').remove()
+        $('body').unbind('touchmove')
+      }, 1000)
     } else {
       this.setState({disablePointer: true })
     }
@@ -59,14 +64,15 @@ export default class PostCards extends BaseComponent {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
+    if (this.op) {
+      clearTimeout(this.scrollTimeout)
+    }
   }
 
   handleScroll (event) {
-    const threshold = 400
-
     if (!!this.props.hasMore) {
       this.setState({disablePointer: true })
-      this.handleInfiniteLoad(threshold)
+      this.handleInfiniteLoad(this.props.threshold)
     }
   }
 
@@ -89,7 +95,7 @@ export default class PostCards extends BaseComponent {
     /* eslint-disable max-len */
     if (!this.state.triggered && nodeScroll.scrollTop > checkPoint) {
       $('body').bind('touchmove', function(e) { e.preventDefault() })
-      $('<div id="overlay"><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.scrollable')
+      $('<div id="overlay"><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.ui.scrollable')
       this.setState({ triggered: true })
 
       this.props.loadFunc()

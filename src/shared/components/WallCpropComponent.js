@@ -32,7 +32,7 @@ export default class WallCprop extends React.Component {
             loadFunc={loadFunc}
             hasMore={post.hasMore}
             isFetching={loading}
-            diff={121}
+            diff={133}
             defaultLocale={this.props.defaultLocale}
           />
           {loading && isEmpty(post.posts) && (

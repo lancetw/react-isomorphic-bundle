@@ -188,7 +188,7 @@ and (max-device-width : 667px) {
 
 .scrollable {
   margin: 0;
-  padding: 0 40px;
+  padding: 0;
   overflow-y: auto !important;
   overflow-x: hidden;
   user-select: none;
@@ -196,7 +196,7 @@ and (max-device-width : 667px) {
 }
 
 .switch-btns {
-  margin-left: 20px;
+  text-align: center;
 }
 
 main.ui.stackable.full.page {
@@ -221,6 +221,10 @@ main.ui.stackable.page {
   }
 }
 
+.ui.grid.container {
+  margin: 0;
+}
+
 .content.hide {
   display: none;
 }
@@ -239,6 +243,7 @@ main.ui.stackable.page {
 }
 .fileName:after {
   font-size: 120%;
+  white-space: nowrap;
   content: "[ " attr(data-filetype) " ]";
   position: absolute;
   left: 120%;

@@ -195,7 +195,7 @@ export default class Cal extends BaseComponent {
               loadFunc={::this.loadFunc}
               hasMore={post.hasMore}
               isFetching={loading}
-              diff={113}
+              diff={129}
             />
             {loading && isEmpty(post.posts) && (
               <div className="ui segment basic has-header">
