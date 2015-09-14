@@ -253,6 +253,7 @@ and (max-device-width : 736px) {
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: $white;
   background-color: $blue;
+  border-radius: 0;
   .event-started {
     color: white;
     text-shadow: none;
