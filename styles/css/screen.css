@@ -5,6 +5,10 @@ html {
   -webkit-overflow-scrolling: touch;
 }
 
+:-ms-input-placeholder {
+  color: #acacac !important;
+}
+
 body {
   overflow-x: hidden;
   overflow-y: auto;
@@ -13,13 +17,13 @@ body {
 
   font-smoothing: antialiased;
   hyphens: auto;
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'Microsoft JhengHei', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+  font-family: 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
 
   a {
     text-decoration: none;
     font-smoothing: antialiased;
     hyphens: auto;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'Microsoft JhengHei', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+    font-family: 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
 
     &:hover {
       text-decoration: underline;
@@ -119,8 +123,8 @@ and (max-device-width : 667px) {
   .content {
     .title > a {
       text-shadow: 0px 1px 0px #f5f5f5;
-      letter-spacing: 0.1rem;
-      font-size: 1.6rem;
+      letter-spacing: 0.08rem;
+      font-size: 1.44rem;
       line-height: 2.1rem;
       padding: 0 !important;
       margin: 0 !important;
@@ -152,7 +156,9 @@ and (max-device-width : 667px) {
 
     h1 {
       text-shadow: 0px 1px 0px #f5f5f5;
-      letter-spacing: 0.1rem;
+      letter-spacing: 0.08rem;
+      font-size: 1.6rem;
+      color: #0066cc;
     }
   }
 
@@ -216,22 +222,23 @@ main.ui.stackable.page {
 }
 
 .fileName {
-  color: #0066cc;
+  color: #ee9900;
   position: relative;
   width: 150px;
 }
 .fileName a {
-  color: #0066cc;
+  color: #fff;
   display: block;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 .fileName:after {
-  content: attr(data-filetype);
+  font-size: 120%;
+  content: "[ " attr(data-filetype) " ]";
   position: absolute;
-  left: 100%;
-  top: 0;
+  left: 120%;
+  top: -3px;
 }
 
 .fileName:hover {

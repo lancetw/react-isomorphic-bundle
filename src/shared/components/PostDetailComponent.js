@@ -224,10 +224,7 @@ export default class Post extends BaseComponent {
                   </div>
                   <div className="ui hidden divider" />
                   <h1 className="title">
-                    <Link
-                      to={`/wall/posts/${detail.id}`}>
-                      {detail.title}
-                    </Link>
+                    {detail.title}
                   </h1>
                   <div className="description">
                     {finalContent}
@@ -240,15 +237,17 @@ export default class Post extends BaseComponent {
                       files && !isEmpty(files)
                       && files.map(function (file, i) {
                         return (
-                          <div
-                            className="fileName"
-                            key={i}
-                            data-filetype={getFileExt(file)}>
-                            <a
-                              target="_blank"
-                              href={'/uploads/' + file}>
-                              { file }
-                            </a>
+                          <div className="ui red label">
+                            <div
+                              className="fileName"
+                              key={i}
+                              data-filetype={getFileExt(file)}>
+                                <a
+                                  target="_blank"
+                                  href={'/uploads/' + file}>
+                                  { file }
+                                </a>
+                            </div>
                           </div>
                         )
                       })
