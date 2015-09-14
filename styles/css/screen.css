@@ -17,13 +17,13 @@ body {
 
   font-smoothing: antialiased;
   hyphens: auto;
-  font-family: 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+  font-family: 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
 
   a {
     text-decoration: none;
     font-smoothing: antialiased;
     hyphens: auto;
-    font-family: 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+    font-family: 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
 
     &:hover {
       text-decoration: underline;
