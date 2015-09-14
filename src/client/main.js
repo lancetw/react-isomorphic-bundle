@@ -17,6 +17,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
   /* eslint-disable max-len */
   counterpart.registerTranslations('en', require('shared/i18n/en'))
   counterpart.registerTranslations('zh-hant-tw', require('shared/i18n/zh-hant-tw'))
+  counterpart.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
   counterpart.setFallbackLocale('zh-hant-tw')
 
   const initialState = window.STATE_FROM_SERVER

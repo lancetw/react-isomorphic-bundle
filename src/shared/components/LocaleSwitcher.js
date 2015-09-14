@@ -49,6 +49,12 @@ export default class LocaleSwitcher extends React.Component {
           <div
             onClick={this.handleChange}
             className="item"
+            value="zh-hant-cn">
+            简体中文
+          </div>
+          <div
+            onClick={this.handleChange}
+            className="item"
             value="en">
             English
           </div>

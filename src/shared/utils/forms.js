@@ -64,10 +64,41 @@ const SignupFormOptionsZhHantTW = {
     }
   }
 }
+const SignupFormOptionsZhHantCN = {
+  auto: 'none',
+  fields: {
+    email: {
+      type: 'email',
+      error: '电子邮件信箱不合规定',
+      attrs: {
+        placeholder: '电子邮件信箱'
+      }
+    },
+    password: {
+      type: 'password',
+      error: '长度应大于 6',
+      attrs: {
+        placeholder: '密码'
+      }
+    },
+    passwordCheck: {
+      type: 'password',
+      error: '不一致',
+      help: <i>请再输入一次密码</i>,
+      attrs: {
+        placeholder: '重新输入密码'
+      }
+    },
+    tos: {
+      label: '我同意服务条款'
+    }
+  }
+}
 exports.SignupFormOptions = function (locale) {
   const list = {
     'en': SignupFormOptionsEn,
-    'zh-hant-tw': SignupFormOptionsZhHantTW
+    'zh-hant-tw': SignupFormOptionsZhHantTW,
+    'zh-hant-cn': SignupFormOptionsZhHantCN
   }
   return list[locale]
 }
@@ -106,10 +137,29 @@ const LoginFormOptionsZhHantTW = {
     }
   }
 }
+const LoginFormOptionsZhHantCN = {
+  auto: 'none',
+  fields: {
+    email: {
+      hasError: false,
+      attrs: {
+        placeholder: '电子邮件帐号'
+      }
+    },
+    password: {
+      type: 'password',
+      hasError: false,
+      attrs: {
+        placeholder: '密码'
+      }
+    }
+  }
+}
 exports.LoginFormOptions = function (locale) {
   const list = {
     'en': LoginFormOptionsEn,
-    'zh-hant-tw': LoginFormOptionsZhHantTW
+    'zh-hant-tw': LoginFormOptionsZhHantTW,
+    'zh-hant-cn': LoginFormOptionsZhHantCN
   }
   return list[locale]
 }
@@ -156,10 +206,33 @@ const ChangePasswordFormOptionsZhHantTW = {
     }
   }
 }
+const ChangePasswordFormOptionsZhHantCN = {
+  auto: 'none',
+  fields: {
+    password: {
+      type: 'password',
+      error: '长度应大于 6',
+      hasError: false,
+      attrs: {
+        placeholder: '密码'
+      }
+    },
+    passwordCheck: {
+      type: 'password',
+      error: '不一致',
+      hasError: false,
+      help: <i>请再输入一次密码</i>,
+      attrs: {
+        placeholder: '重新输入密码'
+      }
+    }
+  }
+}
 exports.ChangePasswordFormOptions = function (locale) {
   const list = {
     'en': ChangePasswordFormOptionsEn,
-    'zh-hant-tw': ChangePasswordFormOptionsZhHantTW
+    'zh-hant-tw': ChangePasswordFormOptionsZhHantTW,
+    'zh-hant-cn': ChangePasswordFormOptionsZhHantCN
   }
   return list[locale]
 }
@@ -312,10 +385,79 @@ const ManageFormOptionsZhHantTW = {
     }
   }
 }
+const ManageFormOptionsZhHantCN = {
+  auto: 'none',
+  fields: {
+    ocname: {
+      error: '请修正后再送出',
+      hasError: false,
+      attrs: {
+        placeholder: '组织名称'
+      }
+    },
+    email: {
+      type: 'email',
+      error: '电子邮件信箱不合规定',
+      hasError: false,
+      attrs: {
+        placeholder: '组织电子邮件信箱'
+      }
+    },
+    contact: {
+      hasError: false,
+      attrs: {
+        placeholder: '组织联络人'
+      }
+    },
+    url: {
+      hasError: false,
+      attrs: {
+        placeholder: '网站网址'
+      }
+    },
+    zipcode: {
+      hasError: false,
+      attrs: {
+        placeholder: '邮递区号'
+      }
+    },
+    country: {
+      hasError: false,
+      attrs: {
+        placeholder: '国家'
+      }
+    },
+    city: {
+      hasError: false,
+      attrs: {
+        placeholder: '县市'
+      }
+    },
+    address: {
+      hasError: false,
+      attrs: {
+        placeholder: '地址'
+      }
+    },
+    tel: {
+      hasError: false,
+      attrs: {
+        placeholder: '联络电话'
+      }
+    },
+    fax: {
+      hasError: false,
+      attrs: {
+        placeholder: '传真'
+      }
+    }
+  }
+}
 exports.ManageFormOptions = function (locale) {
   const list = {
     'en': ManageFormOptionsEn,
-    'zh-hant-tw': ManageFormOptionsZhHantTW
+    'zh-hant-tw': ManageFormOptionsZhHantTW,
+    'zh-hant-cn': ManageFormOptionsZhHantCN
   }
   return list[locale]
 }
@@ -331,11 +473,17 @@ const PostTypeZhHantTWArray = {
   2: '活動'
 }
 const PostTypeZhHantTW = t.enums(PostTypeZhHantTWArray)
+const PostTypeZhHantCNArray = {
+  1: '公告',
+  2: '活动'
+}
+const PostTypeZhHantCN = t.enums(PostTypeZhHantCNArray)
 
 exports.PostTypeArray = function (locale) {
   const list = {
     'en': PostTypeEnArray,
-    'zh-hant-tw': PostTypeZhHantTWArray
+    'zh-hant-tw': PostTypeZhHantTWArray,
+    'zh-hant-cn': PostTypeZhHantCNArray
   }
   return list[locale]
 }
@@ -374,10 +522,28 @@ const PostPropZhHantTWArray = {
 }
 const PostPropZhHantTW = t.enums(PostPropZhHantTWArray)
 
+const PostPropZhHantCNArray = {
+  0: '其他',
+  1: '一般',
+  2: '音乐',
+  3: '交流',
+  4: '社群',
+  5: '特殊群体',
+  6: '宣教',
+  7: '福音',
+  8: '布道',
+  9: '培训',
+  10: '社福',
+  11: '医疗',
+  12: '谘商'
+}
+const PostPropZhHantCN = t.enums(PostPropZhHantCNArray)
+
 exports.PostPropArray = function (locale) {
   const list = {
     'en': PostPropEnArray,
-    'zh-hant-tw': PostPropZhHantTWArray
+    'zh-hant-tw': PostPropZhHantTWArray,
+    'zh-hant-cn': PostPropZhHantCNArray
   }
   return list[locale]
 }
@@ -408,10 +574,24 @@ const PostFormZhHantTW = t.subtype(t.struct({
   )
 })
 
+const PostFormZhHantCN = t.subtype(t.struct({
+  type: PostTypeZhHantCN,
+  prop: PostPropZhHantCN,
+  startDate: t.Dat,
+  endDate: t.Dat,
+  title: t.Str,
+  content: t.Str
+}), function (value) {
+  return (
+    (value.startDate <= value.endDate)
+  )
+})
+
 exports.PostForm = function (locale) {
   const list = {
     'en': PostFormEn,
-    'zh-hant-tw': PostFormZhHantTW
+    'zh-hant-tw': PostFormZhHantTW,
+    'zh-hant-cn': PostFormZhHantCN
   }
   return list[locale]
 }
@@ -469,10 +649,42 @@ const PostFormOptionsZhHantTW = {
     }
   }
 }
+const PostFormOptionsZhHantCN = {
+  error: <div data-errors="date">日期区间有误</div>,
+  auto: 'none',
+  fields: {
+    type: {
+      factory: t.form.Radio
+    },
+    prop: {
+      factory: t.form.Select
+    },
+    startDate: {
+      label: '开始日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    endDate: {
+      label: '结束日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    title: {
+      attrs: {
+        placeholder: '标题'
+      }
+    },
+    content: {
+      type: 'textarea',
+      attrs: {
+        placeholder: '内容'
+      }
+    }
+  }
+}
 exports.PostFormOptions = function (locale) {
   const list = {
     'en': PostFormOptionsEn,
-    'zh-hant-tw': PostFormOptionsZhHantTW
+    'zh-hant-tw': PostFormOptionsZhHantTW,
+    'zh-hant-cn': PostFormOptionsZhHantCN
   }
   return list[locale]
 }
@@ -495,10 +707,20 @@ const RegFormZhHantTW = t.subtype(t.struct({
     (value.openDate <= value.closeDate)
   )
 })
+const RegFormZhHantCN = t.subtype(t.struct({
+  openDate: t.Dat,
+  closeDate: t.Dat,
+  url: t.maybe(t.Str)
+}), function (value) {
+  return (
+    (value.openDate <= value.closeDate)
+  )
+})
 exports.RegForm = function (locale) {
   const list = {
     'en': RegFormEn,
-    'zh-hant-tw': RegFormZhHantTW
+    'zh-hant-tw': RegFormZhHantTW,
+    'zh-hant-cn': RegFormZhHantCN
   }
   return list[locale]
 }
@@ -541,10 +763,30 @@ const RegFormOptionsZhHantTW = {
     }
   }
 }
+const RegFormOptionsZhHantCN = {
+  error: <div data-errors="date">日期区间有误</div>,
+  auto: 'none',
+  fields: {
+    openDate: {
+      label: '报名开放日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    closeDate: {
+      label: '报名截止日期',
+      order: [ 'YYYY', 'M', 'D' ]
+    },
+    url: {
+      attrs: {
+        placeholder: '报名网址'
+      }
+    }
+  }
+}
 exports.RegFormOptions = function (locale) {
   const list = {
     'en': RegFormOptionsEn,
-    'zh-hant-tw': RegFormOptionsZhHantTW
+    'zh-hant-tw': RegFormOptionsZhHantTW,
+    'zh-hant-cn': RegFormOptionsZhHantCN
   }
   return list[locale]
 }

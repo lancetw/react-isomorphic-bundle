@@ -154,7 +154,7 @@ and (max-device-width : 667px) {
       line-height: 2.1rem;
       padding: 0 !important;
       margin: 0 !important;
-      color: rgba(219, 80, 50, 0.89);
+      color: rgba(219, 80, 50, 0.92);
       display: block;
     }
 
@@ -191,7 +191,7 @@ and (max-device-width : 667px) {
     h1 {
       letter-spacing: 0.08rem;
       font-size: 1.6rem;
-      color: rgba(239, 10, 111, 1);
+      color: rgba(219, 80, 50, 0.92);
     }
   }
 

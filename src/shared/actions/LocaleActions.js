@@ -4,14 +4,13 @@ import {
   SYNC_SERVER_LOCALE_COMPLETED,
   UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
-import { originLocaleName } from 'shared/utils/locale-utils'
+import { originLocaleName, supportedList } from 'shared/utils/locale-utils'
 import { includes, isEmpty } from 'lodash'
 
 function fallBackLocale (locale) {
-  const supported = ['zh-hant-tw', 'en']
-  const defaultLocale = supported[0]
+  const defaultLocale = supportedList[0]
 
-  if (includes(supported, locale)) {
+  if (includes(supportedList, locale)) {
     return locale
   }
 
