@@ -13,13 +13,13 @@ body {
 
   font-smoothing: antialiased;
   hyphens: auto;
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', \5FAE\8EDF\6B63\9ED1\9AD4, \65B0\7D30\660E\9AD4, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'Microsoft JhengHei', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
 
   a {
     text-decoration: none;
     font-smoothing: antialiased;
     hyphens: auto;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', \5FAE\8EDF\6B63\9ED1\9AD4, \65B0\7D30\660E\9AD4, sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, Verdana, 'Lantinghei TC', 'Hiragino Kaku Gothic ProN', 'Heiti TC', 'Microsoft JhengHei', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
 
     &:hover {
       text-decoration: underline;
