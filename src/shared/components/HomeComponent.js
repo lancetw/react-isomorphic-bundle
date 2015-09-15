@@ -87,8 +87,7 @@ export default class HomeComponent extends BaseComponent {
           <div className="ui basic segment center">
             <h3>
               <a href="http://www.ccnda.org" target="_blank">
-                <p>中華基督教網路發展協會</p>
-                <img src={`images/ccnda_icon.jpg`} alt="" />
+                <img src={`images/ccnda.png`} alt="" />
               </a>
             </h3>
           </div>
