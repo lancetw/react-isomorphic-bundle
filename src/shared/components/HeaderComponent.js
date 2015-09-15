@@ -140,7 +140,7 @@ export default class Header extends React.Component {
                 action=""
                 method="post"
                 onSubmit={::this.handleSearchSubmit}>
-                <div className="ui transparent icon input">
+                <div className="ui inverted transparent icon input">
                   <input
                     type="search"
                     ref="search"
@@ -149,7 +149,7 @@ export default class Header extends React.Component {
                     onKeyDown={::this.handleSubmit}
                     value={this.state.userInput}
                   />
-                  <i className="search link icon"></i>
+                  <i className="search inverted link icon"></i>
                   <input type="submit" className="hide-submit" />
                 </div>
               </form>
