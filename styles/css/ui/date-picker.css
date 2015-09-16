@@ -55,12 +55,12 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 }
 
 .DayPicker-NavButton--prev {
-  left: 1rem;
+  left: -1rem;
   background-image: url("./assets/prev.svg");
 }
 
 .DayPicker-NavButton--next {
-  right: 1rem;
+  right: -1rem;
   background-image: url("./assets/next.svg");
 }
 

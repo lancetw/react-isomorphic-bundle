@@ -99,8 +99,8 @@ and (max-width : 480px) {
   }
 }
 @media only screen
-and (min-device-width : 375px)
-and (max-device-width : 667px) {
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
   .row.padding {
     padding: 0;
   }
@@ -244,6 +244,32 @@ and (max-device-width : 667px) {
 .switch-btns {
   margin-top: -16px;
   text-align: center;
+  a.button {
+    display: block;
+  }
+}
+/* iPhone 2G-4S in portrait & landscape */
+@media only screen
+and (min-width : 320px)
+and (max-width : 480px) {
+  .switch-btns {
+    a.button {
+      font-size: 0.8rem !important;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .switch-btns {
+    a.button {
+      font-size: 0.8rem !important;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
 }
 
 main.ui.stackable.full.page {
@@ -439,15 +465,15 @@ and (max-device-width : 480px) {
 
 /* iPhone 2G-4S in portrait & landscape */
 @media only screen
-and (min-width : 375px)
-and (max-width : 667px) {
+and (min-width : 320px)
+and (max-width : 480px) {
   #map {
     height: 180px;
   }
 }
 @media only screen
-and (min-device-width : 375px)
-and (max-device-width : 667px) {
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
   #map {
     height: 180px;
   }
@@ -481,10 +507,6 @@ and (max-width : 1280px)  {
     text-align: right;
     width: 280px;
   }
-
-  .ui.detail > .content {
-    font-size: 120%;
-  }
 }
 @media only screen
 and (min-device-width : 768px)
@@ -496,10 +518,6 @@ and (max-device-width : 1024px)  {
     overflow: hidden;
     text-align: right;
     width: 280px;
-  }
-
-  .ui.detail > .content {
-    font-size: 120%;
   }
 }
 
@@ -528,3 +546,4 @@ and (orientation : portrait) {
     font-size: 90.6% !important;
   }
 }
+
