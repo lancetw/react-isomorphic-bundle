@@ -45,7 +45,7 @@ test-cov:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
 test-ci: storage webpack-test
-	@NODE_ENV=development $(ISTANBUL_CMD) $(TRAVIS_ARGS)
+	@NODE_ENV=test $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
 	$(ESLINT_CMD) $(SRC_JS) $(TEST_JS)
