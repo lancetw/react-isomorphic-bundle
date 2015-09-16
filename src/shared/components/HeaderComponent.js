@@ -149,7 +149,10 @@ export default class Header extends React.Component {
                     onKeyDown={::this.handleSubmit}
                     value={this.state.userInput}
                   />
-                  <i className="search inverted link icon"></i>
+                  <i
+                    onClick={::this.handleSearchSubmit}
+                    className="search inverted link icon">
+                  </i>
                   <input type="submit" className="hide-submit" />
                 </div>
               </form>
