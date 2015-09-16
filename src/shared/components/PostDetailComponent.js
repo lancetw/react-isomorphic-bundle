@@ -239,18 +239,20 @@ export default class Post extends BaseComponent {
                       && files.map(function (file, i) {
                         return (
                           <li
-                            key={i}
-                            data-filetype={getFileExt(file)}
-                            className="ui teal label">
-                            <a
-                              target="_blank"
-                              href={'/uploads/' + file}>
-                              <div >
-                                <div className="fileName">
-                                  { file }
-                                </div>
+                            key={i}>
+                            <div
+                              className="ui teal label"
+                              data-filetype={getFileExt(file)}>
+                              <a
+                                target="_blank"
+                                href={'/uploads/' + file}>
+                                <div >
+                                  <div className="fileName">
+                                    { file }
+                                  </div>
+                              </div>
+                              </a>
                             </div>
-                            </a>
                           </li>
                         )
                       })

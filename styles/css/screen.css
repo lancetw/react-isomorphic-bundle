@@ -280,29 +280,28 @@ ul.fileList {
   margin: 0;
   margin-left: -40px;
   list-style-type: none;
-  li {
-    margin-bottom: 10px;
-  }
 }
 
-ul.fileList li {
+ul.fileList > li {
+  width: 100%;
+}
+
+ul.fileList > li > div {
   color: #ee9900;
   position: relative;
   width: 150px;
-  padding-left: 65px !important;
   margin-bottom: 12px !important;
 }
 
-ul.fileList li a {
+ul.fileList > li > div > a {
   color: #fff;
   display: block;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
-  padding-left: 0;
+  padding-left: 52px;
 }
 
-ul.fileList li:after {
+ul.fileList li > div:after {
   font-size: 120%;
   white-space: nowrap;
   content: "[ " attr(data-filetype) " ]";
@@ -312,13 +311,11 @@ ul.fileList li:after {
   color: #fff;
 }
 
-ul.fileList li:hover {
+ul.fileList li > div:hover {
   width: auto;
-  padding-left: 10px !important;
+  margin-left: 0;
 }
-ul.fileList li:hover:after {
-  display: none;
-}
+
 
 #map {
   positive: relative;
