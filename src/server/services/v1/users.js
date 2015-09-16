@@ -44,7 +44,7 @@ export default new Resource('users', {
   // GET /users/:user
   show: [ RestAuth, function *(next) {
     try {
-      if (hashids.decode(this.params.user) !== this.user.id) {
+      if (hashids.decode(this.params.user) !== +this.user.id) {
         throw new Error('user check failed')
       }
 
@@ -81,7 +81,7 @@ export default new Resource('users', {
     }
 
     try {
-      if (hashids.decode(this.params.user) !== this.user.id) {
+      if (hashids.decode(this.params.user) !== +this.user.id) {
         throw new Error('user check failed')
       }
 
@@ -99,7 +99,7 @@ export default new Resource('users', {
   destroy: [ RestAuth, function *(next) {
     try {
       const body = yield User.load(this.params.user)
-      if (hashids.decode(this.params.user) !== this.user.id) {
+      if (hashids.decode(this.params.user) !== +this.user.id) {
         throw new Error('user check failed')
       }
 

@@ -37,7 +37,7 @@ export default new Resource('usersinfo', {
   // GET /userinfo/:user
   show: [ RestAuth, function *(next) {
     try {
-      if (hashids.decode(this.params.usersinfo) !== this.user.id) {
+      if (hashids.decode(this.params.usersinfo) !== +this.user.id) {
         throw new Error('user check failed')
       }
 
@@ -80,7 +80,7 @@ export default new Resource('usersinfo', {
     }
 
     try {
-      if (hashids.decode(this.params.usersinfo) !== this.user.id) {
+      if (hashids.decode(this.params.usersinfo) !== +this.user.id) {
         throw new Error('user check failed')
       }
       // fetch cid by ocname

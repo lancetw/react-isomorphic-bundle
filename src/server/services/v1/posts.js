@@ -96,7 +96,7 @@ export default new Resource('posts', {
     try {
       body.uid = hashids.decode(body.uid)
 
-      if (body.uid !== this.user.id) {
+      if (body.uid !== +this.user.id) {
         throw new Error('user check failed')
       }
 
@@ -116,7 +116,7 @@ export default new Resource('posts', {
       body.file = JSON.stringify(body.file)
 
       try {
-        const userinfo = yield UsersInfo.load(this.user.id)
+        const userinfo = yield UsersInfo.load(+this.user.id)
         body.ocname = userinfo.ocname
         body.zipcode = userinfo.zipcode
         body.contact = userinfo.contact
@@ -197,7 +197,7 @@ export default new Resource('posts', {
     try {
       body.uid = hashids.decode(body.uid)
 
-      if (body.uid !== this.user.id) {
+      if (body.uid !== +this.user.id) {
         throw new Error('user check failed')
       }
 
@@ -220,7 +220,7 @@ export default new Resource('posts', {
       body.file = JSON.stringify(body.file)
 
       try {
-        const userinfo = yield UsersInfo.load(this.user.id)
+        const userinfo = yield UsersInfo.load(+this.user.id)
         body.ocname = userinfo.ocname
         body.zipcode = userinfo.zipcode
         body.contact = userinfo.contact
@@ -243,7 +243,7 @@ export default new Resource('posts', {
   destroy: [ RestAuth, function *(next) {
     try {
       const body = yield Post.load(this.params.post)
-      if (body.uid !== this.user.id) {
+      if (body.uid !== +this.user.id) {
         throw new Error('user check failed')
       }
 
