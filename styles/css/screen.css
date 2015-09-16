@@ -277,6 +277,7 @@ main.ui.stackable.page {
 }
 
 ul.fileList {
+  margin: 0;
   margin-left: -40px;
   list-style-type: none;
   li {
@@ -284,33 +285,38 @@ ul.fileList {
   }
 }
 
-.fileName {
+ul.fileList li {
   color: #ee9900;
   position: relative;
   width: 150px;
+  padding-left: 65px !important;
+  margin-bottom: 12px !important;
 }
 
-.fileName a {
+ul.fileList li a {
   color: #fff;
   display: block;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-left: 0;
 }
 
-.fileName:after {
+ul.fileList li:after {
   font-size: 120%;
   white-space: nowrap;
   content: "[ " attr(data-filetype) " ]";
   position: absolute;
-  left: 120%;
-  top: -3px;
+  left: 10px;
+  top: 5px;
+  color: #fff;
 }
 
-.fileName:hover {
+ul.fileList li:hover {
   width: auto;
+  padding-left: 10px !important;
 }
-.fileName:hover:after {
+ul.fileList li:hover:after {
   display: none;
 }
 
