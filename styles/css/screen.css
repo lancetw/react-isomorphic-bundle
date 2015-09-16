@@ -276,11 +276,20 @@ main.ui.stackable.page {
   display: none;
 }
 
+ul.fileList {
+  margin-left: -40px;
+  list-style-type: none;
+  li {
+    margin-bottom: 10px;
+  }
+}
+
 .fileName {
   color: #ee9900;
   position: relative;
   width: 150px;
 }
+
 .fileName a {
   color: #fff;
   display: block;
@@ -288,6 +297,7 @@ main.ui.stackable.page {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
 .fileName:after {
   font-size: 120%;
   white-space: nowrap;
@@ -298,7 +308,7 @@ main.ui.stackable.page {
 }
 
 .fileName:hover {
-  width: auto
+  width: auto;
 }
 .fileName:hover:after {
   display: none;

@@ -233,25 +233,29 @@ export default class Post extends BaseComponent {
                       <h4 className="ui horizontal divider header">
                         <Translate content="post.detail.attachments" />
                       </h4> }
+                    <ul className="fileList">
                     {
                       files && !isEmpty(files)
                       && files.map(function (file, i) {
                         return (
-                          <div className="ui red label">
-                            <div
-                              className="fileName"
-                              key={i}
-                              data-filetype={getFileExt(file)}>
-                                <a
-                                  target="_blank"
-                                  href={'/uploads/' + file}>
-                                  { file }
-                                </a>
+                          <li>
+                            <div className="ui teal label">
+                              <div
+                                className="fileName"
+                                key={i}
+                                data-filetype={getFileExt(file)}>
+                                  <a
+                                    target="_blank"
+                                    href={'/uploads/' + file}>
+                                    { file }
+                                  </a>
+                              </div>
                             </div>
-                          </div>
+                          </li>
                         )
                       })
                     }
+                    </ul>
                   </div>
                   <div className="taglist right aligned">
                     <span
