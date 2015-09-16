@@ -4,9 +4,9 @@
     top: 0;
     bottom: 0;
     right: 0;
-    background: #fff;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
+    background: rgba(255, 255, 255, 0);
+    opacity: 0.8;
+    filter: alpha(opacity=80);
 }
 #loading {
     width: 50px;
