@@ -158,7 +158,7 @@ export default class Signup extends BaseComponent {
           <div className="ui segment">
             <div className="ui center">
               <img
-                src={`images/ccnda_icon.jpg`} alt="" />
+                src={`images/ccnda.png`} alt="" />
               <h2 className="ui header">
                 <div className="content">
                   <Translate content="register.hello" />
