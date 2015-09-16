@@ -4,11 +4,11 @@ module.exports = function (sequelize, Sequelize) {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.BIGINT.UNSIGNED
+      type: Sequelize.BIGINT
     },
     uid: {
       allowNull: false,
-      type: Sequelize.BIGINT.UNSIGNED
+      type: Sequelize.BIGINT
     },
     order: {
       defaultValue: 0,
@@ -20,11 +20,11 @@ module.exports = function (sequelize, Sequelize) {
     },
     type: {
       defaultValue: 0,
-      type: Sequelize.INTEGER.UNSIGNED
+      type: Sequelize.INTEGER
     },
     prop: {
       defaultValue: 0,
-      type: Sequelize.INTEGER.UNSIGNED
+      type: Sequelize.INTEGER
     },
     startDate: {
       validate: {
@@ -64,7 +64,7 @@ module.exports = function (sequelize, Sequelize) {
     },
     dateType: {
       defaultValue: 0,
-      type: Sequelize.INTEGER.UNSIGNED,
+      type: Sequelize.INTEGER,
       field: 'date_type'
     },
     title: {
@@ -83,13 +83,13 @@ module.exports = function (sequelize, Sequelize) {
       validate: { min: -90, max: 90 },
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE.UNSIGNED
+      type: Sequelize.DOUBLE
     },
     lng: {
       validate: { min: -180, max: 180 },
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE.UNSIGNED
+      type: Sequelize.DOUBLE
     },
     country: {
       allowNull: true,
@@ -105,7 +105,7 @@ module.exports = function (sequelize, Sequelize) {
     },
     zipcode: {
       allowNull: true,
-      type: Sequelize.INTEGER(9).UNSIGNED
+      type: Sequelize.INTEGER
     },
     address: {
       allowNull: true,
@@ -125,7 +125,7 @@ module.exports = function (sequelize, Sequelize) {
     },
     status: {
       defaultValue: 0,
-      type: Sequelize.INTEGER.UNSIGNED
+      type: Sequelize.INTEGER
     }
   }, {
     classMethods: {

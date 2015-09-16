@@ -1,3 +1,9 @@
+const pg = require('pg')
+// https://github.com/sequelize/sequelize/issues/1774
+pg.defaults.parseInt8 = true
+// https://github.com/sequelize/sequelize/issues/3781
+delete pg.native
+
 const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')

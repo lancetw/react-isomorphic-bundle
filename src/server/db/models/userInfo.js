@@ -4,15 +4,15 @@ module.exports = function (sequelize, Sequelize) {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.BIGINT.UNSIGNED
+      type: Sequelize.BIGINT
     },
     uid: {
       allowNull: false,
-      type: Sequelize.BIGINT.UNSIGNED
+      type: Sequelize.BIGINT
     },
     cid: {
       allowNull: true,
-      type: Sequelize.BIGINT.UNSIGNED
+      type: Sequelize.BIGINT
     },
     ocname: {
       allowNull: true,
@@ -46,13 +46,13 @@ module.exports = function (sequelize, Sequelize) {
       validate: { min: -90, max: 90 },
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE.UNSIGNED
+      type: Sequelize.DOUBLE
     },
     lng: {
       validate: { min: -180, max: 180 },
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE.UNSIGNED
+      type: Sequelize.DOUBLE
     },
     tel: {
       allowNull: true,

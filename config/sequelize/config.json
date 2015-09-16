@@ -1,7 +1,12 @@
 {
   "development": {
     "storage": "storage/db.development.sqlite",
-    "dialect": "sqlite",
+    "dialect": "postgres",
+    "pool": {
+      "max": 20,
+      "min": 0,
+      "idle": 5000
+    },
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,
@@ -61,7 +66,12 @@
   },
   "production": {
     "storage": "storage/db.production.sqlite",
-    "dialect": "sqlite",
+    "dialect": "postgres",
+    "pool": {
+      "max": 20,
+      "min": 0,
+      "idle": 5000
+    },
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,

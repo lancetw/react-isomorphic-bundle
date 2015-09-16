@@ -4,7 +4,7 @@ module.exports = function (sequelize, Sequelize) {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.BIGINT.UNSIGNED
+      type: Sequelize.BIGINT
     },
     email: {
       validate: {
