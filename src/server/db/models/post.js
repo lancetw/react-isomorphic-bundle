@@ -15,8 +15,8 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.INTEGER
     },
     fee: {
-      defaultValue: 0,
-      type: Sequelize.DECIMAL
+      allowNull: true,
+      type: Sequelize.TEXT
     },
     type: {
       defaultValue: 0,
@@ -105,7 +105,7 @@ module.exports = function (sequelize, Sequelize) {
     },
     zipcode: {
       allowNull: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.TEXT
     },
     address: {
       allowNull: true,
