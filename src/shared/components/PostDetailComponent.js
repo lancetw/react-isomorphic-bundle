@@ -244,6 +244,7 @@ export default class Post extends BaseComponent {
                               className="ui teal label"
                               data-filetype={getFileExt(file)}>
                               <a
+                                className="ui teal button"
                                 target="_blank"
                                 href={'/uploads/' + file}>
                                 <div >

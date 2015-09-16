@@ -289,16 +289,19 @@ ul.fileList > li {
 ul.fileList > li > div {
   color: #ee9900;
   position: relative;
-  width: 150px;
+  width: 225px;
   margin-bottom: 12px !important;
 }
 
 ul.fileList > li > div > a {
   color: #fff;
   display: block;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   padding-left: 52px;
+  padding-top: 20px !important;
+  padding-bottom: 3px !important;
 }
 
 ul.fileList li > div:after {
