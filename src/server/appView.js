@@ -80,6 +80,8 @@ export default function (app) {
       let appString
       let assets
       let title
+      let siteUrl
+      let ogImage
       try {
         const { error, initialState, transition, handler }
         = yield new Promise((resolve) => {
@@ -143,9 +145,13 @@ export default function (app) {
             }} />
       )
 
+      siteUrl = this.href
+      ogImage = this.host + '/images/icon.png'
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
+        siteUrl,
+        ogImage,
         env: process.env,
         title,
         stateFromServer: serverState
