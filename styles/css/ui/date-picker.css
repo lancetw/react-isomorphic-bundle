@@ -46,8 +46,8 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-NavButton {
   position: absolute;
-  width: 2.3rem;
-  height: 2.3rem;
+  width: 5rem;
+  height: 2.4rem;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
