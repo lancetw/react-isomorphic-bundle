@@ -87,3 +87,4 @@ exports.auth = function *(email, password) {
     return null
   }
 }
+

@@ -11,6 +11,7 @@ import cors from 'koa-cors'
 import basicAuth from './passport/basic'
 import jwtAuth from './passport/local-jwt'
 import facebookAuth from './passport/facebook'
+import localAuth from './passport/local'
 import router from './routes'
 import path from 'path'
 import co from 'co'
@@ -18,6 +19,7 @@ import favicon from 'koa-favicon'
 import services from 'src/server/services'
 import models from 'src/server/db/models'
 import locale from 'koa-locale'
+import bodyParser from 'koa-bodyparser'
 
 const debug = require('debug')
 const leveldb = level('./storage/leveldb')
@@ -33,6 +35,7 @@ locale(app, 'lang')
 app.use(responseTime())
 app.use(logger())
 app.use(helmet())
+app.use(bodyParser())
 
 if (env === 'production') {
   app.use(require('koa-conditional-get')())
@@ -107,6 +110,9 @@ app.use(mount('/api/v1', cors()))
 app.use(mount('/api/v1', services.v1))
 app.use(mount('/api/v1', basicAuth.initialize()))
 app.use(mount('/api/v1', jwtAuth.initialize()))
+
+app.use(mount('/api/supervisor/v1', cors()))
+app.use(mount('/api/supervisor/v1', localAuth.initialize()))
 
 import appView from './appView'
 appView(app)

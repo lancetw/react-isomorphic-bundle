@@ -90,10 +90,31 @@ router
     const ctx = this
     yield passport.authenticate('basic', {
       session: false
-    }, function *(err, profile, info) {
+    }, function *(err, profile) {
       if (!err && profile) {
         // response JSON web token
         const token = jwtHelper(profile)
+
+        // set session token
+        const sess = ctx.session
+        sess.token = token
+
+        ctx.body = { token: token }
+      } else {
+        ctx.status = 200
+        ctx.body = { profile }
+      }
+    })
+  })
+
+router
+  .post('/api/supervisor/v1/login', function *(next) {
+    const ctx = this
+    yield passport.authenticate('local', function *(err, profile, info) {
+      if (!err && profile) {
+        // response JSON web token
+        const checkAdmin = true
+        const token = jwtHelper(profile, checkAdmin)
 
         // set session token
         const sess = ctx.session
