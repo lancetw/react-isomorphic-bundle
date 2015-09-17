@@ -1,0 +1,29 @@
+.image.logo {
+  margin: 0 auto;
+  display: inline-block;
+  width: 250px;
+  height: 57px;
+  background-image: url('../../images/ccnda.png');
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .image.logo {
+    background-image: url('../../images/ccnda@2x.png');
+    background-size: 250px 57px;
+  }
+}
+
+.image.logo-mini {
+  margin: 0 auto;
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-image: url('../../images/ccnda_icon_mini.jpg');
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .image.logo-mini {
+    background-image: url('../../images/ccnda_icon_mini@2x.jpg');
+    background-size: 64px 64px;
+  }
+}

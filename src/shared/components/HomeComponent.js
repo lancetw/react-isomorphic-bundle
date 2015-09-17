@@ -29,7 +29,7 @@ export default class HomeComponent extends BaseComponent {
     const Translate = require('react-translate-component')
     return (
     <div key={post.id} className="ui orange icon message">
-      <img className="icon" src={`images/ccnda_icon_mini.jpg`} alt="" />
+     <div className="icon"><div className="image logo-mini"></div></div>
       <div className="content">
         <h3>
           <Link to={`/wall/posts/${post.id}`}>
@@ -87,7 +87,7 @@ export default class HomeComponent extends BaseComponent {
           <div className="ui basic segment center">
             <h3>
               <a href="http://www.ccnda.org" target="_blank">
-                <img src={`images/ccnda.png`} alt="" />
+                <div className="image logo"></div>
               </a>
             </h3>
           </div>

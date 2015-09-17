@@ -21,7 +21,6 @@
   </head>
   <body>
     <div id="app">{{ appString | safe }}</div>
-
     {% if env.NODE_ENV != 'debug' %}
       {% for script in assets.script %}
         <script src="{{ script }}" defer></script>
