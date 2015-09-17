@@ -641,12 +641,7 @@ export function loadPostEdit (id) {
 
       let name
       each(files, (filename, _index) => {
-        if (getFileExt(filename.toLowerCase()) === 'pdf') {
-          name = 'pdf.png'
-        } else {
-          name = filename
-        }
-        dispatch(setImageFileName(name, _index))
+        dispatch(setImageFileName(filename, _index))
       })
     }
   }
