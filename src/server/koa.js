@@ -35,7 +35,6 @@ locale(app, 'lang')
 app.use(responseTime())
 app.use(logger())
 app.use(helmet())
-app.use(bodyParser())
 
 if (env === 'production') {
   app.use(require('koa-conditional-get')())
@@ -103,16 +102,15 @@ app.use(
   )
 )
 
-app.use(facebookAuth.initialize())
-app.use(router.routes())
-
 app.use(mount('/api/v1', cors()))
 app.use(mount('/api/v1', services.v1))
 app.use(mount('/api/v1', basicAuth.initialize()))
 app.use(mount('/api/v1', jwtAuth.initialize()))
 
-app.use(mount('/api/supervisor/v1', cors()))
-app.use(mount('/api/supervisor/v1', localAuth.initialize()))
+app.use(bodyParser())
+app.use(localAuth.initialize())
+app.use(facebookAuth.initialize())
+app.use(router.routes())
 
 import appView from './appView'
 appView(app)

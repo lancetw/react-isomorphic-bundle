@@ -1,5 +1,4 @@
-import jwtHelper from './jwt-helper'
-import { verifyJwt } from './jwt-helper'
+import jwtHelper, { verifyJwt } from './jwt-helper'
 import passport from 'koa-passport'
 import parse from 'co-body'
 import validate from 'parameter'
@@ -110,7 +109,7 @@ router
 router
   .post('/api/supervisor/v1/login', function *(next) {
     const ctx = this
-    yield passport.authenticate('local', function *(err, profile, info) {
+    yield passport.authenticate('local', function *(err, profile) {
       if (!err && profile) {
         // response JSON web token
         const checkAdmin = true
