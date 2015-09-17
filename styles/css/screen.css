@@ -547,3 +547,7 @@ and (orientation : portrait) {
   }
 }
 
+.percentage.message {
+  padding: 5px;
+  box-shadow: none !important;
+}
