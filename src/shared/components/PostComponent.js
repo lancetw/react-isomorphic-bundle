@@ -135,7 +135,7 @@ export default class Post extends BaseComponent {
 
   componentWillUnmount () {
     if (process.env.BROWSER) {
-      unlisten()
+      typeof unlisten === 'function' && unlisten()
     }
     if (this.op) {
       clearTimeout(this.releaseTimeout)
