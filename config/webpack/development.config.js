@@ -45,6 +45,11 @@ export default {
         'webpack/hot/only-dev-server',
         './src/client/index',
         './src/client/fallback'
+      ],
+      admin: [
+        `webpack-dev-server/client?http://${HOST}:${PORT}`,
+        'webpack/hot/only-dev-server',
+        './src/client/admin'
       ]
     },
     publicPath: PUBLIC_PATH,

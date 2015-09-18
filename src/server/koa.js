@@ -112,6 +112,9 @@ app.use(localAuth.initialize())
 app.use(facebookAuth.initialize())
 app.use(router.routes())
 
+import adminView from './adminView'
+adminView(app)
+
 import appView from './appView'
 appView(app)
 

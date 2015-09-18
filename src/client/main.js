@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import routes from 'shared/routes'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import url from 'url'
-import AppContainer from 'shared/components/AppContainer'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
@@ -64,7 +63,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
           }
         </Provider>
         <DebugPanel top right bottom>
-          <DevTools store={store} monitor={LogMonitor} />
+          <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
         </DebugPanel>
       </div>
     ), document.getElementById('app'))

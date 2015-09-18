@@ -1,0 +1,26 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>管理介面</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="中華基督教網路發展協會 Chinese Christian Network Development Association">
+    {% if env.NODE_ENV != 'development' %}
+      <link rel="stylesheet" href="{{ publicPath }}admin-{{ hash }}.css">
+    {% endif %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    {% if env.NODE_ENV != 'debug' %}
+      <script src="{{ publicPath }}admin-{{ hash }}.js" defer></script>
+      <script src="{{ publicPath }}admin-{{ hash }}.hot-update.js" defer></script>
+    {% endif %}
+    {% if env.NODE_ENV == 'production' %}
+      <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
+      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    {% endif %}
+  </body>
+</html>

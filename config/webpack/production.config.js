@@ -27,6 +27,9 @@ export default {
       ],
       fallback: [
         './src/client/fallback'
+      ],
+      admin: [
+        './src/client/admin'
       ]
     },
     output: {

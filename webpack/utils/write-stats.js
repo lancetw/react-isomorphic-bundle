@@ -8,6 +8,7 @@ import debug from 'debug'
 const filepath = path.resolve(__dirname, '../../storage/webpack-stats.json')
 
 export default function (stats) {
+  const hash = stats.hash
   const publicPath = this.options.output.publicPath
   const json = stats.toJson();
 
@@ -41,7 +42,7 @@ export default function (stats) {
       }
     })
 
-  const content = {script, style, images};
+  const content = {publicPath, hash, script, style, images};
 
   fs.writeFileSync(filepath, JSON.stringify(content))
   debug('dev')('`webpack-stats.json` updated')
