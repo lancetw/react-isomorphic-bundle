@@ -297,6 +297,25 @@ main.ui.stackable.page {
 .ui.grid.container {
   margin: 0;
 }
+/* iPhone 2G-4S in portrait & landscape */
+@media only screen
+and (min-width : 320px)
+and (max-width : 480px) {
+  .ui.grid.container > .column:not(.row) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+   .ui.grid.container > .column:not(.row) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+
 
 .content.hide {
   display: none;
