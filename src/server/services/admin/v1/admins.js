@@ -96,6 +96,7 @@ export default new Resource('users', {
     }
   }],
   // DELETE /users/:user
+  // TODO: dont delete self.
   destroy: [ RestAuth, function *(next) {
     try {
       const body = yield User.load(this.params.user)

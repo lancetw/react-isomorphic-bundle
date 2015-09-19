@@ -2,6 +2,11 @@ const bcrypt = require('co-bcrypt')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
 
+exports.init = function *(user) {
+  // if no admin in the DB, create one.
+
+}
+
 exports.create = function *(user) {
   const fillable = [ 'email', 'name', 'passwd', 'status', 'comment' ]
   if (user.password) {
