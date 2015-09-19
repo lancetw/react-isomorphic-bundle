@@ -186,7 +186,7 @@ export default class Manage extends BaseComponent {
       : null
 
     const { post, auth, loadFunc } = this.props
-    const loading = !!post.isFetching
+    const loading = post.isFetching || false
 
     return (
       <main className="ui two column stackable has-header grid container">
@@ -230,6 +230,7 @@ export default class Manage extends BaseComponent {
               posts={post.posts}
               loadFunc={loadFunc}
               hasMore={post.hasMore}
+              isFetching={loading}
               diff={0}
               threshold={200}
               defaultLocale={this.props.defaultLocale}
