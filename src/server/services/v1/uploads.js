@@ -7,6 +7,7 @@ import db from 'src/server/db'
 import multer from 'koa-multer'
 import fs from 'fs'
 import { include, isEmpty } from 'lodash'
+import moment from 'moment'
 
 const mimeTypes = [
   'image/jpeg',
@@ -15,9 +16,11 @@ const mimeTypes = [
   'application/pdf'
 ]
 
+const today = moment().format('YYYYMMDD')
+
 const MulterMiddleware = multer({
   putSingleFilesInArray: true,
-  dest: './uploads/',
+  dest: './uploads/' + today + '/',
   rename: function (fieldname, filename) {
     return filename + '_' + Date.now()
   },
@@ -27,7 +30,7 @@ const MulterMiddleware = multer({
   },
   onFileSizeLimit: (file) => {
     file.failed = true
-    fs.unlink('./' + file.path)
+    fs.unlink('./' + today + '/' + file.path)
   },
   onFileUploadStart: (file, req, res) => {
     return include(mimeTypes, file.mimetype)
@@ -43,7 +46,7 @@ export default new Resource('uploads', {
       if (!fileinfo.failed) {
         this.body = {
           response: {
-            name: fileinfo.name,
+            name: today + '/' + fileinfo.name,
             ext: fileinfo.extension
           }
         }

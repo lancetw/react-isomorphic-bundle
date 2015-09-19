@@ -9,7 +9,7 @@ import {
   isPastDay,
   toShortDate,
   toYear } from 'shared/utils/date-utils'
-import { getFileExt } from 'shared/utils/file-utils'
+import { getFileName, getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
@@ -249,7 +249,7 @@ export default class Post extends BaseComponent {
                                 href={'/uploads/' + file}>
                                 <div >
                                   <div className="fileName">
-                                    { file }
+                                    { getFileName(file) }
                                   </div>
                               </div>
                               </a>
