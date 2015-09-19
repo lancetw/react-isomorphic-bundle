@@ -3,7 +3,7 @@ const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
 
 exports.create = function *(user) {
-  const fillable = [ 'email', 'name', 'passwd', 'status' ]
+  const fillable = [ 'email', 'name', 'passwd', 'status', 'comment' ]
   if (user.password) {
     const salt = yield bcrypt.genSalt(10)
     user.passwd = yield bcrypt.hash(user.password, salt)
@@ -12,28 +12,6 @@ exports.create = function *(user) {
 
   return yield models.admins.create(user, { fields: fillable })
 }
-
-
-exports.recreate = function *(unuser) {
-  const fillable = [ 'name', 'passwd' ]
-  const user = yield models.admins.findOne({
-    where: { email: unuser.email },
-    paranoid: false
-  })
-
-  if (user) {
-    if (user.password) {
-      const salt = yield bcrypt.genSalt(10)
-      user.passwd = yield bcrypt.hash(user.password, salt)
-    }
-
-    user.setDataValue('deletedAt', null)
-    yield user.save({ paranoid: false })
-  }
-
-  return yield user.update(unuser, { fields: fillable })
-}
-
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
@@ -49,7 +27,7 @@ exports.loadByEmail = function *(email) {
 }
 
 exports.update = function *(hid, user) {
-  const fillable = [ 'name', 'passwd' ]
+  const fillable = [ 'name', 'passwd', 'comment' ]
   const id = +hashids.decode(hid)
   const salt = yield bcrypt.genSalt(10)
   user.passwd = yield bcrypt.hash(user.password, salt)
