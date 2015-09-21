@@ -122,7 +122,7 @@ export default class Header extends React.Component {
             <Link to="/home" className="item">
               <Translate content="header.home" />
             </Link>
-            <Link to="/wall" className="item">
+            <Link to="/w" className="item">
               <Translate content="header.wall" />
             </Link>
             <Link to="/post" className="item">

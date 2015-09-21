@@ -79,7 +79,7 @@ export default class PostCard extends BaseComponent {
         <div className="ui fluid post card">
           <div className="content">
             <h2 className="title">
-              <Link to={`/wall/posts/${card.id}`}>{card.title}</Link>
+              <Link to={`/w/p/${card.id}`}>{card.title}</Link>
             </h2>
             {eventDate && (
               <div className="ui orange large right ribbon label">

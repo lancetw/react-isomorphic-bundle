@@ -32,7 +32,7 @@ export default class HomeComponent extends BaseComponent {
      <div className="icon"><div className="image logo-mini"></div></div>
       <div className="content">
         <h3>
-          <Link to={`/wall/posts/${post.id}`}>
+          <Link to={`/w/p/${post.id}`}>
             {post.ocname || <Translate content="news.unnamed" />}
           </Link>
         </h3>
