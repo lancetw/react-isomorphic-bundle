@@ -2,7 +2,7 @@ import {
   LIST_MANAGE_POST_RELOADED,
   LIST_MANAGE_POST_STARTED,
   LIST_MANAGE_POST_COMPLETED,
-  LIST_MANAGE_POST_FAILED,
+  LIST_MANAGE_POST_FAILED
 } from 'shared/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 

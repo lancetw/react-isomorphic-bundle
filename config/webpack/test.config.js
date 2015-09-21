@@ -14,6 +14,7 @@ import postColorFn from 'postcss-color-function';
 import postPrecss from 'precss';
 
 const writeStats = require('webpack/utils/write-stats');
+const writeAdminStats = require('webpack/utils/write-admin-stats');
 const LOCAL_IP = require('dev-ip')();
 const PROTOCOL = 'http';
 const HOST = isArray(LOCAL_IP) && LOCAL_IP[0] || LOCAL_IP || 'localhost';
@@ -27,8 +28,9 @@ export default {
     port: PORT,
     options: {
       publicPath: PUBLIC_PATH,
-      historyApiFallback: true,
       hot: true,
+      historyApiFallback: true,
+      headers: { 'Access-Control-Allow-Origin': '*' },
       stats: {
         assets: true,
         colors: true,
@@ -53,7 +55,7 @@ export default {
       path: path.join(__dirname, '../../public/assets/'),
       filename: '[name]-[hash].js',
       chunkFilename: '[name]-[hash].js',
-      publicPath: PUBLIC_PATH,
+      publicPath: PUBLIC_PATH
     },
     plugins: [
       new webpack.ProvidePlugin({
@@ -96,6 +98,7 @@ export default {
       }),
       function () {
         this.plugin('done', writeStats);
+        this.plugin('done', writeAdminStats);
       }
     ],
     module: {

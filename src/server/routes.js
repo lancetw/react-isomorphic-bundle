@@ -107,7 +107,7 @@ router
   })
 
 router
-  .post('/api/supervisor/v1/login', function *(next) {
+  .post('/api/admin/v1/login', function *(next) {
     const ctx = this
     yield passport.authenticate('local', function *(err, profile) {
       if (!err && profile) {

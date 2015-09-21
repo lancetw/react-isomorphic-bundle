@@ -2,7 +2,7 @@ import {
   LIST_OVERVIEW_POST_RELOADED,
   LIST_OVERVIEW_POST_STARTED,
   LIST_OVERVIEW_POST_COMPLETED,
-  LIST_OVERVIEW_POST_FAILED,
+  LIST_OVERVIEW_POST_FAILED
 } from 'shared/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 

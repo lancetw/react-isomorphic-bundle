@@ -3,7 +3,12 @@ import React, { PropTypes } from 'react/addons'
 const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
-  require('css/admin.css')
+  require('css/ui/base')
+  require('css/ui/admin')
+  require('css/animation')
+  require('css/admin')
+  require('css/addon/csshake.min')
+  require('css/images')
 }
 
 export default class AdminHandler extends React.Component {
@@ -12,8 +17,8 @@ export default class AdminHandler extends React.Component {
     children: PropTypes.any
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   componentDidMount () {
@@ -22,11 +27,9 @@ export default class AdminHandler extends React.Component {
 
   render () {
     return (
-      <div>
-        <CSSTransitionGroup transitionName="RouteTransition">
-          {this.props.children}
-        </CSSTransitionGroup>
-      </div>
+      <CSSTransitionGroup transitionName="RouteTransition">
+        {this.props.children}
+      </CSSTransitionGroup>
     )
   }
 }

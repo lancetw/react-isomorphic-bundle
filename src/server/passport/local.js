@@ -12,25 +12,24 @@ export default passport.use(new LocalStrategy({
   passwordField: 'passwd',
   session: false
 }, function (email, passwd, done) {
-    co(function *() {
-      try {
-        const user = yield Admin.auth(email, passwd)
-        if (!user) {
-          throw new Error('no permissions')
-        } else {
-          return user
-        }
-      } catch (err) {
-        throw err
+  co(function *() {
+    try {
+      const user = yield Admin.auth(email, passwd)
+      if (!user) {
+        throw new Error('no permissions')
+      } else {
+        return user
       }
-    })
-    .then(function (user) {
-      return done(null, user)
-    })
-    .catch(function (err) {
-      return done(err)
-    })
-  }
-))
+    } catch (err) {
+      throw err
+    }
+  })
+  .then(function (user) {
+    return done(null, user)
+  })
+  .catch(function (err) {
+    return done(err)
+  })
+}))
 
 

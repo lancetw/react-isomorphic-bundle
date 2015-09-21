@@ -8,11 +8,11 @@ export default class Logout extends BaseComponent {
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.releaseTimeout = undefined
     this.state = { isClient: false }
     props.logout()
@@ -31,7 +31,7 @@ export default class Logout extends BaseComponent {
   render () {
     if (process.env.BROWSER) {
       this.releaseTimeout =
-        setTimeout(() => this.context.router.replaceWith('/'), 1000)
+        setTimeout(() => this.context.history.replaceState({}, '/'), 1000)
     }
 
     const Translate = require('react-translate-component')

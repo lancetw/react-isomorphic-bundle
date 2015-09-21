@@ -2,7 +2,6 @@
 
 var path = require('path');
 var env = process.env.NODE_ENV || 'development';
-var debug = require('debug');
 
 require('babel/register');
 require('app-module-path').addPath(path.join(__dirname, '../'));
@@ -19,10 +18,9 @@ if (env !== 'production' && env !== 'test') {
 
   devServer.listen(config.server.port, '0.0.0.0', function (err, result) {
     if (err) console.log(err);
-    debug('dev')('webpack-dev-server listen on port %s', config.server.port);
+    console.log('webpack-dev-server listen on port %s', config.server.port);
   });
 } else {
-
   module.exports = [
     require('config/webpack/'+ env +'.config').webpack
   ];

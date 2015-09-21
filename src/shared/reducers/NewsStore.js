@@ -2,7 +2,7 @@ import {
   LIST_NEWS_POST_RELOADED,
   LIST_NEWS_POST_STARTED,
   LIST_NEWS_POST_COMPLETED,
-  LIST_NEWS_POST_FAILED,
+  LIST_NEWS_POST_FAILED
 } from 'shared/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 

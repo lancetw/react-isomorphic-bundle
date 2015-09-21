@@ -19,6 +19,7 @@ import counterpart from 'counterpart'
 import { Link } from 'react-router'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import AutoLinkText from 'react-autolink-text'
+import createLocation from 'history/lib/createLocation'
 
 export default class Post extends BaseComponent {
 
@@ -33,11 +34,11 @@ export default class Post extends BaseComponent {
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
 
     counterpart.setLocale(props.defaultLocale)
 
@@ -79,10 +80,9 @@ export default class Post extends BaseComponent {
 
   deletePost () {
     const _t = require('counterpart')
-    const swal = require('sweetalert')
     const { detail } = this.props.post
     const { remove } = this.props
-    const { transitionTo } = this.context.router
+    const { transitionTo } = this.context.history
     swal({
       title: _t('post.detail.delete.title'),
       text: _t('post.detail.delete.text'),
@@ -103,7 +103,7 @@ export default class Post extends BaseComponent {
           confirmButtonText: _t('post.detail.delete.ok.confirm'),
           closeOnConfirm: true
         }, () => {
-          transitionTo('/wall')
+          transitionTo(createLocation('/wall'))
         })
       })
     })

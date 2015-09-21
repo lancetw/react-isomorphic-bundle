@@ -14,6 +14,7 @@ import postColorFn from 'postcss-color-function';
 import postPrecss from 'precss';
 
 const writeStats = require('webpack/utils/write-stats');
+const writeAdminStats = require('webpack/utils/write-admin-stats');
 const PUBLIC_PATH = `/assets/`;
 
 require('webpack/utils/clean-dist')();
@@ -36,7 +37,7 @@ export default {
       path: path.join(__dirname, '../../public/assets/'),
       filename: '[name].js',
       chunkFilename: '[name]-[hash].js',
-      publicPath: PUBLIC_PATH,
+      publicPath: PUBLIC_PATH
     },
     plugins: [
       new webpack.ProvidePlugin({
@@ -79,6 +80,7 @@ export default {
       }),
       function () {
         this.plugin('done', writeStats);
+        this.plugin('done', writeAdminStats);
       }
     ],
     externals: {

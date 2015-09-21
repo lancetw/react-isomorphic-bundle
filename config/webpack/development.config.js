@@ -13,6 +13,7 @@ import postColorFn from 'postcss-color-function';
 import postPrecss from 'precss';
 
 const writeStats = require('webpack/utils/write-stats');
+const writeAdminStats = require('webpack/utils/write-admin-stats');
 const LOCAL_IP = require('dev-ip')();
 const PROTOCOL = 'http';
 const HOST = isArray(LOCAL_IP) && LOCAL_IP[0] || LOCAL_IP || 'localhost';
@@ -24,8 +25,9 @@ export default {
     port: PORT,
     options: {
       publicPath: PUBLIC_PATH,
-      historyApiFallback: true,
       hot: true,
+      historyApiFallback: true,
+      headers: { 'Access-Control-Allow-Origin': '*' },
       stats: {
         assets: true,
         colors: true,
@@ -42,19 +44,19 @@ export default {
     entry: {
       app: [
         `webpack-dev-server/client?http://${HOST}:${PORT}`,
-        'webpack/hot/only-dev-server',
+        'webpack/hot/dev-server',
         './src/client/index',
         './src/client/fallback'
       ],
       admin: [
         `webpack-dev-server/client?http://${HOST}:${PORT}`,
-        'webpack/hot/only-dev-server',
-        './src/client/admin'
+        'webpack/hot/dev-server',
+        './src/client/admin',
+        './src/client/fallback'
       ]
     },
-    publicPath: PUBLIC_PATH,
     output: {
-      path: path.join(__dirname, '../../public'),
+      path: path.join(__dirname, '../../public/assets/'),
       filename: '[name]-[hash].js',
       chunkFilename: '[name]-[hash].js',
       publicPath: PUBLIC_PATH
@@ -65,7 +67,7 @@ export default {
         jQuery: "jquery",
         "window.jQuery": "jquery"
       }),
-      new webpack.HotModuleReplacementPlugin(),
+      new webpack.HotModuleReplacementPlugin({ multiStep: true }),
       new webpack.NoErrorsPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
@@ -78,6 +80,7 @@ export default {
       new webpack.optimize.OccurenceOrderPlugin(),
       function () {
         this.plugin('done', writeStats);
+        this.plugin('done', writeAdminStats);
       }
     ],
     module: {

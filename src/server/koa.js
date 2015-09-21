@@ -58,10 +58,9 @@ if (env === 'development') {
   require('blocked')((ms) => debug('koa')(`blocked for ${ms}ms`))
 }
 
-const cacheOpts: Object = { maxAge: 86400000, gzip: true }
+const cacheOpts = { maxAge: 86400000, gzip: true }
 
 if (env === 'development') {
-  const webpackConfig: Object = require('config/webpack/development.config')
   app.use(
     mount(
       '/assets',
@@ -123,7 +122,7 @@ co(function *() {
   const connection = yield models.sequelize.sync()
   if (connection) {
     app.listen(port)
-    debug('*')(`App started listening on port ${port}`)
+    debug('koa')(`App started listening on port ${port}`)
   }
 })
 

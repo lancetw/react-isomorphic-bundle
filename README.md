@@ -16,7 +16,7 @@ Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-
 
 ```
 
-$ npm install -g nodemon webpack browser-sync babel
+$ npm install -g nodemon webpack babel
 $ npm install
 
 ```
@@ -53,11 +53,11 @@ $ npm install
 ## Features
 
 - [x] isomorphic flux, supports JSON Web Tokens (JWT) and Sessions (levelDB)
-- [x] flummox changes to redux@2.0.0
-- [x] react-router@1.0.0beta3
-- [x] Register (isomorphic)
-- [x] Log in (isomorphic)
-- [x] Facebook Sign In (isomorphic)
+- [x] flummox changes to redux@3.0.0
+- [x] react-router@1.0.0rc1
+- [x] Register
+- [x] Log in
+- [x] Facebook Sign In
 - [x] Restful API with JWT
 - [x] Change password
 - [x] Create posts

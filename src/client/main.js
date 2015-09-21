@@ -6,7 +6,7 @@ import reduxPromise from 'shared/utils/promiseMiddleware'
 import * as reducers from 'shared/reducers'
 import { Provider } from 'react-redux'
 import routes from 'shared/routes'
-import BrowserHistory from 'react-router/lib/BrowserHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 import url from 'url'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
@@ -51,7 +51,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     const { locale } = store.getState().locale
     counterpart.setLocale(locale || 'zh-hant-tw')
 
-    const history = new BrowserHistory()
+    const history = createBrowserHistory()
     React.render((
       <div>
         <Provider store={store}>
@@ -84,7 +84,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     const { locale } = store.getState().locale
     counterpart.setLocale(locale || 'zh-hant-tw')
 
-    const history = new BrowserHistory()
+    const history = createBrowserHistory()
     React.render((
       <Provider store={store}>
         {() =>

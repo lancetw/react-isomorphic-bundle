@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-bundle",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
@@ -41,7 +41,6 @@
     "babel",
     "eslint",
     "postcss",
-    "browser-sync",
     "mocha",
     "jsdom",
     "istanbul",
@@ -132,7 +131,7 @@
     "react-pure-render": "^1.0.2",
     "react-redux": "^2.1.2",
     "react-responsive": "0.0.8",
-    "react-router": "1.0.0-beta3",
+    "react-router": "^1.0.0-rc1",
     "react-side-effect": "^1.0.1",
     "react-style": "^0.5.5",
     "react-suitcss": "^1.1.1",
@@ -145,11 +144,9 @@
     "sequelize": "3.4.1",
     "sqlite3": "^3.0.9",
     "superagent": "^1.2.0",
-    "sweetalert": "^1.1.0",
     "tcomb": "^2.4.0",
     "tcomb-form": "^0.6.4",
     "tcomb-validation": "^2.1.1",
-    "tedious": "^1.11.0",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
@@ -202,7 +199,7 @@
     "style-loader": "^0.12.3",
     "supertest": "^1.0.1",
     "url-loader": "^0.5.6",
-    "webpack": "^1.10.5",
+    "webpack": "^1.12.2",
     "webpack-dev-server": "^1.10.1"
   },
   "engines": {

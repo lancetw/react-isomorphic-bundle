@@ -13,11 +13,11 @@ export default class Header extends React.Component {
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
 
     this.state = { userInput: '' }
 
@@ -45,7 +45,7 @@ export default class Header extends React.Component {
     if (process.env.BROWSER) {
       this.props.searchPost(pattern, 0, 10, true)
       this.releaseTimeout =
-        setTimeout(() => this.context.router.replaceWith('/search'), 500)
+        setTimeout(() => this.context.history.replaceState({}, '/search'), 500)
     }
 
     React.findDOMNode(this.refs.search).blur()

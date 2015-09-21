@@ -2,7 +2,7 @@ import {
   LIST_CPROP_POST_RELOADED,
   LIST_CPROP_POST_STARTED,
   LIST_CPROP_POST_COMPLETED,
-  LIST_CPROP_POST_FAILED,
+  LIST_CPROP_POST_FAILED
 } from 'shared/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 

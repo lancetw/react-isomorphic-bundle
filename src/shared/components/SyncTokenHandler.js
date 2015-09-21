@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { save } from '../actions/AuthActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
+import createLocation from 'history/lib/createLocation'
 
 export default class SyncTokenHandler extends BaseComponent {
 
@@ -10,19 +11,18 @@ export default class SyncTokenHandler extends BaseComponent {
   }
 
   static contextTypes = {
+    history: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
     translator: PropTypes.object
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.state = { isClient: false }
   }
 
   componentDidMount () {
     this.setState({ isClient: true })
-
     const dispatch = this.context.store.dispatch
     const token = this.props.location.query.token
 
@@ -32,7 +32,7 @@ export default class SyncTokenHandler extends BaseComponent {
         resolve('ok')
       }, 1000)
     }).then(() => {
-      this.context.router.transitionTo('/home')
+      this.context.history.transitionTo(createLocation('/home'))
     })
   }
 

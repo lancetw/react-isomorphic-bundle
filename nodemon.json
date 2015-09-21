@@ -1,7 +1,7 @@
 {
   "watch": [
     "./src/server/",
-    "./src/client/",
+    "./src/client/admin/routes.js",
     "./src/shared/routes.js",
     "./src/shared/i18n/",
     "./views/"

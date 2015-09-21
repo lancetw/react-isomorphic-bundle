@@ -75,7 +75,7 @@ export function setPercent (percent, index) {
 }
 
 export function send (filename, file, index) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(setImagePreview(null, index))
     const token = getToken()
     const user = jwt.decode(token)
@@ -92,7 +92,10 @@ export function send (filename, file, index) {
       .set('Authorization', 'JWT ' + token)
       .on('progress', (e) => {
         setTimeout(() => {
-          dispatch(setPercent(e.percent, index))
+          if (!getState().upload.errorMessages
+              || !getState().upload.errorMessages[index]) {
+            dispatch(setPercent(e.percent, index))
+          }
         }, 0)
       })
       .end(function (err, res) {

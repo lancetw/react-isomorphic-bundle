@@ -28,10 +28,8 @@ import queryString from 'query-string'
 
 let unlisten
 let history
-let sweetAlert
 if (process.env.BROWSER) {
   history = createHistory()
-  sweetAlert = require('sweetalert')
 }
 
 const { CSSTransitionGroup } = React.addons
@@ -55,11 +53,11 @@ export default class Post extends BaseComponent {
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this._bind(
       'handleSubmit',
       'validation',
@@ -439,7 +437,7 @@ export default class Post extends BaseComponent {
     if (process.env.BROWSER) {
       if (!isEmpty(this.props.post.content)) {
         this.releaseTimeout = setTimeout(() => {
-          this.context.router.replaceWith('/wall')
+          this.context.history.replaceState({}, '/wall')
         }, 1000)
       }
     }

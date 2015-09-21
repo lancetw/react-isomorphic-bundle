@@ -1,6 +1,6 @@
 import React from 'react'
-import { Router } from 'react-router'
-import Location from 'react-router/lib/Location'
+import { Router, RoutingContext, match } from 'react-router'
+import createLocation from 'history/lib/createLocation'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import reduxPromise from 'shared/utils/promiseMiddleware'
@@ -55,7 +55,7 @@ export default function (app) {
       const resolver = new ReduxUniversalResolver()
       store.resolver = resolver
 
-      const location = new Location(this.path, this.query)
+      const location = createLocation(this.url)
       // save session token to store
       if (this.session.token && this.session.token !== null) {
         store.dispatch(AuthActions.sync(this.session.token))
@@ -82,58 +82,60 @@ export default function (app) {
       let title
       let siteUrl
       let ogImage
-      try {
-        const { error, initialState, transition, handler }
-        = yield new Promise((resolve) => {
-          Router.run(
-          routes(store),
-          location,
-          (_error, _initialState, _transition) => {
+      const ctx = this
+
+      const { error, redirectLocation, renderProps }
+      = yield new Promise((resolve) => {
+        match({routes: routes(store), location},
+          (_error, _redirectLocation, _renderProps) => {
             resolve({
               error: _error,
-              initialState: _initialState,
-              transition: _transition
+              _redirectLocation: _redirectLocation,
+              renderProps: _renderProps
             })
           })
-        })
+      })
 
-        if (!initialState && transition.isCancelled) {
-          return this.redirect(url.format(transition.redirectInfo))
-        }
+      if (redirectLocation) {
+        ctx.redirect(redirectLocation.pathname + redirectLocation.search)
+        return
+      } else if (error) {
+        ctx.status = 500
+        const { message } = error
+        ctx.body = message
+        return
+      } else if (renderProps === null) {
+        ctx.status = 404
+        ctx.body = 'Not found'
+        return
+      }
 
-        const elements = (
-          <AppContainer translator={translator}>
-            {() =>
-              <Provider store={store}>
-                {() =>
-                  <Router {...initialState} />
-                }
-              </Provider>
-            }
-          </AppContainer>
+      const elements = (
+        <AppContainer translator={translator}>
+          {() =>
+            <Provider store={store}>
+              {() =>
+                <RoutingContext {...renderProps} />
+              }
+            </Provider>
+          }
+        </AppContainer>
+      )
+
+      React.renderToString(elements)  // need this line to collect data
+      yield resolver.dispatch()
+      appString = React.renderToString(elements)
+
+      title = DocumentTitle.rewind()
+
+      const env = process.env.NODE_ENV
+      if (env === 'development') {
+        assets = fs.readFileSync(
+          path.resolve(__dirname, '../../storage/webpack-stats.json')
         )
-
-        React.renderToString(elements)  // need this line to collect data
-        yield resolver.dispatch()
-        appString = React.renderToString(elements)
-
-        title = DocumentTitle.rewind()
-
-        const env = process.env.NODE_ENV
-        if (env === 'development') {
-          assets = fs.readFileSync(
-            path.resolve(__dirname, '../../storage/webpack-stats.json')
-          )
-          assets = JSON.parse(assets)
-        } else {
-          assets = require('storage/webpack-stats.json')
-        }
-      } catch (error) {
-        if (error.redirect) {
-          return this.redirect(error.redirect)
-        }
-
-        throw error
+        assets = JSON.parse(assets)
+      } else {
+        assets = require('storage/webpack-stats.json')
       }
 
       const serverState = React.renderToString(

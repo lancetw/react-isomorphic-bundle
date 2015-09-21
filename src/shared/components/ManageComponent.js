@@ -27,10 +27,6 @@ export default class Manage extends BaseComponent {
     changeInfo: PropTypes.func.isRequired
   }
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
   constructor (props) {
     super(props)
 

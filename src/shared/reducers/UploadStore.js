@@ -16,18 +16,24 @@ const initialState = {
   filenames: [],
   index: 0,
   response: null,
-  errors: null,
   percentages: [],
-  errorMessage: null,
-  errorId: null
+  errorMessages: []
 }
 
 export default createReducer(initialState, {
   [UPLOAD_FILE_STARTED]: () => (initialState),
   [UPLOAD_FILE_COMPLETED]: (state, action) =>
     ({ response: action.response }),
-  [UPLOAD_FILE_FAILED]: (state, action) =>
-    ({ errors: action.errors }),
+  [UPLOAD_FILE_FAILED]: (state, action) => {
+    const _percentages = initialState.percentages
+    _percentages[action.index] = action.percentage
+    const _errorMessages = state.errorMessages
+    _errorMessages[action.index] = action.errors
+    return {
+      errorMessages: _errorMessages,
+      index: action.index
+    }
+  },
   [UPLOAD_FILE_PROGRESS]: (state, action) => {
     const _percentages = initialState.percentages
     _percentages[action.index] = action.percentage
@@ -59,15 +65,15 @@ export default createReducer(initialState, {
     return initialState
   },
   [SET_UPLOAD_ERROR_MESSAGE_COMPLETED]: (state, action) => {
+    const _errorMessages = state.errorMessages
+    _errorMessages[action.errorId] = action.errorMessage
     return {
-      errorMessage: action.errorMessage,
-      errorId: action.errorId
+      errorMessages: _errorMessages
     }
   },
   [CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED]: () => {
     return {
-      errorMessage: null,
-      errorId: null
+      errorMessages: []
     }
   }
 })

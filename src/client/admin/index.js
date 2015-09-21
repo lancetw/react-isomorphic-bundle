@@ -2,15 +2,15 @@ import React from 'react'
 import { Router } from 'react-router'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import reduxPromise from 'shared/utils/promiseMiddleware'
 import * as reducers from 'client/admin/reducers'
 import { Provider } from 'react-redux'
 import routes from 'client/admin/routes'
-import BrowserHistory from 'react-router/lib/BrowserHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 
 (async () => {
   let finalCreateStore
 
+  const initialState = window.STATE_FROM_SERVER
   const reducer = combineReducers(reducers)
 
   const {
@@ -23,16 +23,14 @@ import BrowserHistory from 'react-router/lib/BrowserHistory'
 
   finalCreateStore = compose(
     applyMiddleware(
-      thunk,
-      reduxPromise
+      thunk
     ),
     devTools(),
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
   )(createStore)
 
-  const store = finalCreateStore(reducer)
-
-  const history = new BrowserHistory()
+  const store = finalCreateStore(reducer, initialState)
+  const history = createBrowserHistory()
 
   if (process.env.NODE_ENV !== 'production') {
     React.render((
@@ -49,7 +47,7 @@ import BrowserHistory from 'react-router/lib/BrowserHistory'
           <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
         </DebugPanel>
       </div>
-    ), document.getElementById('app'))
+    ), document.getElementById('admin'))
   } else {
     React.render((
       <Provider store={store}>
@@ -60,6 +58,6 @@ import BrowserHistory from 'react-router/lib/BrowserHistory'
           />
         }
       </Provider>
-    ), document.getElementById('app'))
+    ), document.getElementById('admin'))
   }
 })()

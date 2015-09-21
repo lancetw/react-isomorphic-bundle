@@ -1,6 +1,6 @@
-import { checkToken, showUser, logout } from 'shared/actions/AuthActions'
+import { checkToken, showUser, logout } from 'client/admin/actions/AuthActions'
 
-export default function (nextState, replaceState) {
+export default function (nextState, transition) {
   const nextPathname = nextState.location.pathname
   const { dispatch, getState } = this.store
   if (process.env.BROWSER) dispatch(checkToken())

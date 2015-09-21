@@ -14,11 +14,11 @@ export default class Signup extends BaseComponent {
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
 
     counterpart.setLocale(props.defaultLocale)
 
@@ -139,7 +139,7 @@ export default class Signup extends BaseComponent {
     if (process.env.BROWSER) {
       if (this.props.signup.response && this.props.signup.response.token) {
         this.releaseTimeout1 =
-          setTimeout(() => this.context.router.replaceWith('/home'), 1000)
+          setTimeout(() => this.context.history.replaceState({}, '/home'), 1000)
       }
     }
 

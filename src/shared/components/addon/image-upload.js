@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import * as UploadActions from 'shared/actions/UploadActions'
+import { isEmpty } from 'lodash'
 
 @connect(state => ({
   upload: state.upload
@@ -50,20 +51,23 @@ export default class ImageUpload extends React.Component {
           <div>{percentage} %</div>
         </div>
       )
-    } else if (percentage < 100) {
+    } else if (+percentage < 100) {
       return (
         <div
-          className="ui red percentage message">
+          className="ui blue percentage message">
           <div>{percentage} %</div>
         </div>
       )
-    } else {
-      return (
-        <div
-          className="ui green percentage message">
-          <div>{percentage} %</div>
-        </div>
-      )
+    } else if (+percentage === 100) {
+      if (!this.props.upload.errorMessages
+        || isEmpty(this.props.upload.errorMessages[index])) {
+        return (
+          <div
+            className="ui green percentage message">
+            <div>{percentage} %</div>
+          </div>
+        )
+      }
     }
   }
 

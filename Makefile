@@ -56,7 +56,7 @@ fast-build: storage fast-js build
 
 # Watch for changes
 watch:
-	@NODE_ENV=development $(MAKE) -j5 storage dev-server webpack-server browser-sync
+	@NODE_ENV=development $(MAKE) -j5 storage dev-server webpack-server
 
 debug:
 	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
@@ -82,9 +82,6 @@ dev-server: $(SRC_JS)
 
 dev-debug:
 	node --harmony --debug ./src/server
-
-browser-sync:
-	browser-sync start --proxy="localhost:3000" --port 3002 --ui-port 3003 --files="src" --no-open
 
 webpack-dev:
 	node ./webpack/server.js
