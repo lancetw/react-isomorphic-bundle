@@ -84,13 +84,13 @@ export default class Header extends React.Component {
     let AuthLink
     if (!auth.token) {
       AuthLink = (
-        <Link to="/login" className="item">
+        <Link activeClassName="active" to="/login" className="item">
           <Translate content="header.login" />
         </Link>
       )
     } else {
       AuthLink = (
-        <Link to="/logout" className="item">
+        <Link activeClassName="active" to="/logout" className="item">
           <Translate content="header.logout" />
         </Link>
       )
@@ -99,7 +99,7 @@ export default class Header extends React.Component {
     let ChangePasswordLink
     if (auth.token) {
       ChangePasswordLink = (
-        <Link to="/password" className="item">
+        <Link activeClassName="active" to="/password" className="item">
           <Translate content="header.password" />
         </Link>
       )
@@ -108,7 +108,7 @@ export default class Header extends React.Component {
     let ManageLink
     if (auth.token) {
       ManageLink = (
-        <Link to="/manage" className="item">
+        <Link activeClassName="active" to="/manage" className="item">
           <Translate content="header.manage" />
         </Link>
       )
@@ -119,13 +119,13 @@ export default class Header extends React.Component {
         className="ui orange top inverted pointing menu grid fixed top">
         <div className="computer tablet only row">
           <div className="left menu">
-            <Link to="/home" className="item">
+            <Link activeClassName="active" to="/home" className="item">
               <Translate content="header.home" />
             </Link>
-            <Link to="/w" className="item">
+            <Link activeClassName="active" to="/w" className="item">
               <Translate content="header.wall" />
             </Link>
-            <Link to="/post" className="item">
+            <Link activeClassName="active" to="/post" className="item">
               <Translate content="header.post" />
             </Link>
             {ChangePasswordLink}
@@ -161,10 +161,10 @@ export default class Header extends React.Component {
         </div>
         <div className="mobile only row">
           <div className="left menu">
-            <Link to="/wall/today" className="item left">
+            <Link activeClassName="active" to="/wall/today" className="item left">
               <Translate content="header.home" />
             </Link>
-            <Link to="/post" className="item">
+            <Link activeClassName="active" to="/post" className="item">
               <Translate content="header.post" />
             </Link>
             <LocaleSwitcher dispatch={dispatch} />
