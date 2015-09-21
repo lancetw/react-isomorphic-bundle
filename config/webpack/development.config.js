@@ -67,6 +67,7 @@ export default {
         jQuery: "jquery",
         "window.jQuery": "jquery"
       }),
+      new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin({ multiStep: true }),
       new webpack.NoErrorsPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -76,8 +77,6 @@ export default {
           NODE_ENV: JSON.stringify('development')
         }
       }),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurenceOrderPlugin(),
       function () {
         this.plugin('done', writeStats);
         this.plugin('done', writeAdminStats);
