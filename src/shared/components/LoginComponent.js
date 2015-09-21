@@ -145,20 +145,18 @@ export default class Login extends BaseComponent {
 
     if (process.env.BROWSER) {
       if (this.props.auth.isAuthenticated) {
+        let path
         const { location } = this.context.history
         if (typeof location !== 'undefined') {
           const { nextPathname } = location.state
-
-          let path
           if (nextPathname) {
             path = nextPathname
           } else {
             path = '/home'
           }
-
-          this.releaseTimeout =
-            setTimeout(() => this.context.history.replaceState({}, path), 1000)
         }
+        this.releaseTimeout =
+          setTimeout(() => this.context.history.replaceState({}, path), 1000)
       }
     }
 
