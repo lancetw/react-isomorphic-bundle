@@ -4,18 +4,8 @@ import {
   SYNC_SERVER_LOCALE_COMPLETED,
   UPDATE_TITLE_COMPLETED
 } from 'shared/constants/ActionTypes'
-import { originLocaleName, supportedList } from 'shared/utils/locale-utils'
-import { includes, isEmpty } from 'lodash'
-
-function fallBackLocale (locale) {
-  const defaultLocale = supportedList[0]
-
-  if (includes(supportedList, locale)) {
-    return locale
-  }
-
-  return defaultLocale
-}
+import { originLocaleName, fallBackLocale } from 'shared/utils/locale-utils'
+import { isEmpty } from 'lodash'
 
 export function setLocale (locale) {
   if (!localStorage) {

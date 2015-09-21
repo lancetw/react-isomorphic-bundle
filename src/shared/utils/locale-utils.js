@@ -1,4 +1,15 @@
-export const supportedList = ['zh-hant-tw', 'zh-hant-cn', 'en']
+import { includes } from 'lodash'
+const supportedList = ['zh-hant-tw', 'zh-hant-cn', 'en']
+
+export function fallBackLocale (locale) {
+  const defaultLocale = supportedList[0]
+
+  if (includes(supportedList, locale)) {
+    return locale
+  }
+
+  return defaultLocale
+}
 
 export function fixLocaleName (locale) {
   if (locale === 'zh-hant-tw') {
@@ -12,6 +23,10 @@ export function fixLocaleName (locale) {
 }
 
 export function originLocaleName (locale) {
+  if (locale.startsWith('en')) {
+    return 'en'
+  }
+
   if (locale === 'zh-TW' || locale === 'zh-tw') {
     return 'zh-hant-tw'
   }
@@ -20,10 +35,6 @@ export function originLocaleName (locale) {
     return 'zh-hant-cn'
   }
 
-  if (locale === 'en-US' || locale === 'en-us') {
-    return 'en'
-  }
-
-  return locale
+  return fallBackLocale(locale)
 }
 
