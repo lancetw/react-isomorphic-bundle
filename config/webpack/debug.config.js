@@ -47,8 +47,11 @@ export default {
     entry: {
       app: [
         './src/client/index',
-        './src/client/fallback',
-        './src/client/admin'
+        './src/client/fallback'
+      ],
+      admin: [
+        './src/client/admin',
+        './src/client/fallback'
       ]
     },
     output: {

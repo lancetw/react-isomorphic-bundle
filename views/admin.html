@@ -8,22 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="author" content="中華基督教網路發展協會 Chinese Christian Network Development Association">
     {% if env.NODE_ENV == 'production' %}
-      {% for style in assets.style %}
-        <link rel="stylesheet" href="{{ style }}">
-      {% endfor %}
+    {% for style in assets.style %}
+    <link rel="stylesheet" href="{{ style }}">
+    {% endfor %}
     {% endif %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css">
   </head>
   <body>
     <div id="admin"></div>
     {% if env.NODE_ENV != 'debug' %}
-      {% for script in assets.script %}
-        <script src="{{ script }}" defer></script>
-      {% endfor %}
+    {% for script in assets.script %}
+    <script src="{{ script }}" defer></script>
+    {% endfor %}
     {% endif %}
     {% if env.NODE_ENV == 'production' %}
-      <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
-      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      var headID = document.getElementsByTagName("head")[0];
+      var cssNode = document.createElement('link');
+      cssNode.type = 'text/css';
+      cssNode.rel = 'stylesheet';
+      cssNode.href = '/assets/fallback.css';
+      cssNode.media = 'screen';
+      headID.appendChild(cssNode);
+    </script>
     {% endif %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
   </body>
