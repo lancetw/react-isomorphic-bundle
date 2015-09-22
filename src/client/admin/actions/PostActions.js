@@ -38,7 +38,7 @@ async function fetchAll (offset, limit, start, end, status) {
   })
 }
 
-export function fetchList (offset=0, limit=5, start, end, status, reload) {
+export function fetchList (offset=0, limit=5, start, end, status=0, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
     const _start = getState().post.start

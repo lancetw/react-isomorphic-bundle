@@ -42,11 +42,10 @@ export function checkToken () {   // just check token expire field
       const decoded = jwtDecode(getToken())
       const now = Math.round(+new Date() / 1000)  // Unix Timestamp
       const expired = decoded.exp <= now
-      const isAdmin = !!decoded.isAdmin
       if (!expired) {
         return dispatch({
           type: CHECK_TOKEN_COMPLETED,
-          verified: isAdmin
+          verified: !!decoded.isAdmin
         })
       } else {
         throw new Error('verification failed')

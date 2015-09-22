@@ -10,8 +10,7 @@ import {
 export default class Dash extends React.Component {
 
   static propTypes = {
-    post: PropTypes.object.isRequired,
-    fetchList: PropTypes.func.isRequired
+    post: PropTypes.object.isRequired
   }
 
   static contextTypes = {
