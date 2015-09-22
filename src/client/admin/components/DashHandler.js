@@ -3,19 +3,43 @@ import Dash from './DashComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PostActions from 'client/admin/actions/PostActions'
+import * as AuthActions from 'client/admin/actions/AuthActions'
 
 @connect(state => ({
-  auth: state.auth
+  auth: state.auth,
+  post: state.post
 }))
 export default class DashHandler extends React.Component {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    fetchList: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired
+  }
+
   constructor (props, context) {
     super(props)
+    const { dispatch } = props
+    dispatch(PostActions.fetchList(0, 5))
+  }
+
+  handlePageClick (page) {
+    const { dispatch } = this.props
+    const c = page.selected * this.props.post.limit
+    dispatch(PostActions.fetchList(c, this.props.post.limit))
+  }
+
+  markAsSpam () {
+
   }
 
   render () {
+    const { dispatch } = this.props
     return (
       <Dash
+        {...bindActionCreators(AuthActions, dispatch)}
+        handlePageClick={::this.handlePageClick}
+        markAsSpam={this.markAsSpam}
         {...this.props}
       />
     )

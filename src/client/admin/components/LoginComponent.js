@@ -7,7 +7,8 @@ export default class Login extends React.Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
+    sync: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -18,6 +19,12 @@ export default class Login extends React.Component {
     super(props, context)
 
     this.releaseTimeout = null
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.auth.isAuthenticated && !nextProps.auth.token) {
+      this.props.sync()
+    }
   }
 
   componentWillUnmount () {
@@ -38,7 +45,7 @@ export default class Login extends React.Component {
         this.releaseTimeout =
           setTimeout(() => {
             this.context.history.replaceState({}, '/ring/dash')
-          }, 1000)
+          }, 1500)
       }
     }
 

@@ -1,20 +1,13 @@
 import { checkToken, showUser, logout } from 'client/admin/actions/AuthActions'
 
-export default function (nextState, transition) {
+export default function (nextState, replaceState) {
   const nextPathname = nextState.location.pathname
   const { dispatch, getState } = this.store
-  if (process.env.BROWSER) dispatch(checkToken())
-  const isAuthenticated = getState().auth.isAuthenticated
+  dispatch(checkToken())
   const verified = getState().auth.verified
 
-  dispatch(showUser(getState().auth.token))
-
-  if (!isAuthenticated) {
-    replaceState({ nextPathname: nextPathname }, '/login')
-  }
-
-  if (process.env.BROWSER && !verified) {
+  if (!verified) {
     this.store.dispatch(logout())
-    replaceState({ nextPathname: nextPathname }, '/login')
+    replaceState({ nextPathname: nextPathname }, '/ring')
   }
 }

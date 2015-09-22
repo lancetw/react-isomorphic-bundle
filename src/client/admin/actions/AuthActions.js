@@ -33,7 +33,6 @@ export function getToken () {
   } else {
     token = localStorage.getItem('token')
   }
-
   return token
 }
 
@@ -125,21 +124,6 @@ export async function verify () {
   })
 }
 
-export async function revoke () {
-  return new Promise((resolve, reject) => {
-    request
-      .get('/api/v1/logout')
-      .set('Accept', 'application/json')
-      .end(function (err, res) {
-        if (!err && res.body) {
-          resolve(res.body)
-        } else {
-          reject(err)
-        }
-      })
-  })
-}
-
 export function save (token) {
   return async dispatch => {
     dispatch({ type: AUTH_USER_STARTED })
@@ -200,15 +184,10 @@ export function login (form) {
 export function logout () {
   return async dispatch => {
     try {
-      const res = await revoke()
-      if (res && res.revoke) {
-        clearToken()
-        return dispatch({
-          type: REVOKE_USER_COMPLETED
-        })
-      } else {
-        throw new Error('revoke error')
-      }
+      clearToken()
+      return dispatch({
+        type: REVOKE_USER_COMPLETED
+      })
     } catch (err) {
       return dispatch({
         type: REVOKE_USER_FAILED,

@@ -18,7 +18,7 @@ export default class AdminHandler extends React.Component {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
   }
 
   componentDidMount () {

@@ -10,7 +10,7 @@ import {
   SYNC_CLIENT_USER_COMPLETED,
   CHECK_TOKEN_COMPLETED,
   CHECK_TOKEN_FAILED
-} from 'shared/constants/ActionTypes'
+} from 'client/admin/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
@@ -32,7 +32,7 @@ export default createReducer(initialState, {
   [SHOW_USER_FAILED]: (state, action) =>
     ({ errors: action.errors, isAuthenticated: false, verified: false }),
   [REVOKE_USER_COMPLETED]: () =>
-    ({ token: null, isAuthenticated: false, user: {} }),
+    ({ token: null, isAuthenticated: false, verified: false, user: {} }),
   [REVOKE_USER_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SYNC_CLIENT_USER_COMPLETED]: (state, action) =>

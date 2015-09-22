@@ -12,7 +12,7 @@ export default function (store) {
   return (
     <Route path="/ring" component={Admin}>
       <IndexRoute store={store} component={Login} />
-      <Route path="dash" store={store} component={Dash} />
+      <Route path="dash" store={store} component={Dash} onEnter={auth} />
       <Route path="*" store={store} component={NotFound} />
     </Route>
   )

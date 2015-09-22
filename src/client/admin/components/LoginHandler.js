@@ -13,7 +13,7 @@ export default class LoginHandler extends React.Component {
     dispatch: PropTypes.func.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 

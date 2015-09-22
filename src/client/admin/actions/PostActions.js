@@ -10,15 +10,23 @@ import {
   LIST_POST_FAILED
 } from 'client/admin/constants/ActionTypes'
 import { getToken } from 'client/admin/actions/AuthActions'
+import { EQUAL } from 'shared/utils/common-utils'
 
-async function fetchAll (offset, limit, start, end) {
+async function fetchAll (offset, limit, start, end, status) {
   return new Promise((resolve, reject) => {
+    const token = getToken()
+    const user = jwt.decode(token)
+    if (!user.isAdmin) reject('invalid token')
+
     request
       .get(LOCAL_PATH + '/api/admin/v1/posts')
+      .set('Accept', 'application/json')
+      .set('Authorization', 'JWT ' + token)
       .query({ offset: offset })
       .query({ limit: limit })
       .query({ start: start })
       .query({ end: end })
+      .query({ status: status })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body) {
@@ -30,27 +38,11 @@ async function fetchAll (offset, limit, start, end) {
   })
 }
 
-function _eq (a, b) {
-  let _a = a
-  let _b = b
-  if (typeof _a === 'undefined') _a = null
-  if (typeof _b === 'undefined') _b = null
-
-  return (_a === _b)
-}
-
-export function fetchList (offset=0, limit=5, start, end, reload) {
+export function fetchList (offset=0, limit=5, start, end, status, reload) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().post.posts
     const _start = getState().post.start
     const _end = getState().post.end
-
-    if (!reload && offset <= 0 && !isEmpty(cached)) {
-      if (_eq(start, _start) && _eq(end, _end)) {
-        return null
-      }
-    }
 
     if (reload) {
       dispatch({ type: LIST_POST_RELOADED })
@@ -59,11 +51,12 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
     dispatch({ type: LIST_POST_STARTED })
 
     try {
-      const posts = await fetchAll(offset, limit, start, end)
-      if (isArray(posts)) {
+      const posts = await fetchAll(offset, limit, start, end, status)
+      if (typeof posts.rows !== 'undefined' && isArray(posts.rows)) {
         return dispatch({
           type: LIST_POST_COMPLETED,
-          posts: posts,
+          posts: posts.rows,
+          count: posts.count,
           offset: offset,
           limit: limit,
           start: start,
