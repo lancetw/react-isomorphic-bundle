@@ -1,6 +1,5 @@
 'use strict'
 /* eslint-disable no-unused-expressions */
-
 import app from 'src/server'
 const request = require('co-supertest').agent(app.listen())
 
@@ -85,7 +84,7 @@ describe('user', function () {
         })
         .expect(200).end()
 
-      expect(res.body[0].message).is.equal('email should be an email')
+      expect(res.body[0].message).is.equal('should be an email')
     })
 
     it('missing email', function *() {
@@ -97,7 +96,7 @@ describe('user', function () {
         })
         .expect(200).end()
 
-      expect(res.body[0].message).is.equal('email required')
+      expect(res.body[0].field + ' ' + res.body[0].message).is.equal('email required')
     })
 
     it('bad password', function *() {
@@ -111,7 +110,7 @@ describe('user', function () {
         .expect(200).end()
 
       expect(res.body[0].message).is
-        .equal('password length should bigger than 6')
+        .equal('length should bigger than 6')
     })
 
     it('missing password', function *() {
@@ -119,7 +118,7 @@ describe('user', function () {
         .send({ email: 'lancetw@gmail.com' })
         .expect(200).end()
 
-      expect(res.body[0].message).is.equal('password required')
+      expect(res.body[0].field + ' ' + res.body[0].message).is.equal('password required')
     })
   })
 

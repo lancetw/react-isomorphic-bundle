@@ -121,6 +121,7 @@ import appView from './appView'
 appView(app)
 
 const port = process.env.PORT || 3000
+
 co(function *() {
   const connection = yield models.sequelize.sync()
   if (connection) {
