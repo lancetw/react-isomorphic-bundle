@@ -72,7 +72,7 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
   return yield Post.findAndCountAll({
     offset: offset,
     limit: limit,
-    order: [[ 'id', 'DESC' ]],
+    order: [[ 'created_at', 'DESC' ]],
     where: {
       status: +status
     },
@@ -220,7 +220,7 @@ exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
   const items = yield Post.findAndCountAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
+    order: [[ 'created_at', 'DESC' ]],
     where: {
       status: +status,
       $or: [
