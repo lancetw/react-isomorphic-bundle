@@ -111,3 +111,4 @@ $ npm install
 * [google-map-react](https://github.com/istarkov/google-map-react)
 * [react-list](https://github.com/orgsync/react-list)
 * [Css Shake](http://elrumordelaluz.github.io/csshake/)
+* [react-paginate](https://github.com/AdeleD/react-paginate)

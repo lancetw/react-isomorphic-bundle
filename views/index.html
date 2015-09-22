@@ -21,11 +21,6 @@
   </head>
   <body>
     <div id="app">{{ appString | safe }}</div>
-    {% if env.NODE_ENV != 'debug' %}
-    {% for script in assets.script %}
-    <script src="{{ script }}"></script>
-    {% endfor %}
-    {% endif %}
     {% if env.NODE_ENV == 'production' %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -38,6 +33,11 @@
       cssNode.media = 'screen';
       headID.appendChild(cssNode);
     </script>
+    {% endif %}
+    {% if env.NODE_ENV != 'debug' %}
+    {% for script in assets.script %}
+    <script src="{{ script }}"></script>
+    {% endfor %}
     {% endif %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
   </body>
