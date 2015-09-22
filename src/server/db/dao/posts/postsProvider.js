@@ -1,10 +1,20 @@
 import models from 'src/server/db/models'
 import hashids from 'src/shared/utils/hashids-plus'
 import moment from 'moment'
-import { sortByOrder, uniq, pluck, range, compact, reduce, isEmpty } from 'lodash'
+import {
+  sortByOrder,
+  uniq,
+  pluck,
+  range,
+  compact,
+  reduce,
+  isEmpty,
+  isFinite
+} from 'lodash'
 
 const Sequelize = models.Sequelize
 const Post = models.posts
+const User = models.users
 
 exports.create = function *(post) {
   const fillable = [
@@ -32,8 +42,11 @@ exports.create = function *(post) {
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return {}
+
   return yield Post.findOne({
-    where: { id: id }
+    where: { id: id, status: 0 },
+    raw: true
   })
 }
 
@@ -47,50 +60,80 @@ exports.list = function *(offset=0, limit=20) {
     where: {
       end_date: {
         $gte: new Date(moment(_start))
-      }
-    }
+      },
+      status: 0
+    },
+    raw: true
+  })
+}
+
+/* eslint-disable camelcase */
+exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
+  return yield Post.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'id', 'DESC' ]],
+    where: {
+      status: +status
+    },
+    attributes: ['id', 'title', 'created_at', 'status'],
+    include: [{
+      model: User,
+      attributes: ['email'],
+      required: true
+    }],
+    raw: true
   })
 }
 
 /* eslint-disable camelcase */
 exports.listWithCprop = function *(cprop, offset=0, limit=20) {
   if (!cprop) return []
+  if (!isFinite(+cprop)) return []
 
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
     where: {
-      prop: +cprop
-    }
+      prop: +cprop,
+      status: 0
+    },
+    raw: true
   })
 }
 
 /* eslint-disable camelcase */
 exports.listWithType = function *(type, offset=0, limit=20) {
   if (!type) return []
+  if (!isFinite(+type)) return []
 
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
     where: {
-      type: +type
-    }
+      type: +type,
+      status: 0
+    },
+    raw: true
   })
 }
 
 /* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
   if (!uid) return []
+  if (!isFinite(+uid)) return []
 
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'id', 'DESC' ]],
     where: {
-      uid: +uid
-    }
+      uid: +uid,
+      status: 0
+    },
+    raw: true
   })
 }
 
@@ -110,11 +153,76 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
     _end = +_end
   }
 
+  if (!isFinite(_start)) return []
+  if (!isFinite(_end)) return []
+
   const items = yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
     where: {
+      status: 0,
+      $or: [
+        {
+          start_date: {
+            $between: [
+              new Date(moment(_start).startOf('day')),
+              new Date(moment(_start).endOf('day'))
+            ]
+          }
+        },
+        {
+          end_date: {
+            $between: [
+              new Date(moment(_end).startOf('day')),
+              new Date(moment(_end).endOf('day'))
+            ]
+          }
+        },
+        {
+          start_date: {
+            $lt:
+              new Date(moment(_start).startOf('day'))
+          },
+          end_date: {
+            $gt:
+              new Date(moment(_end).startOf('day'))
+          }
+        }
+      ]
+    },
+    raw: true
+  })
+
+  return items
+}
+
+/* eslint-disable camelcase */
+exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
+  let _start = start
+  let _end = end
+
+  if (!_start) {
+    _start = moment().startOf('day').valueOf()
+  } else {
+    _start = +_start
+  }
+  if (!_end) {
+    _end = moment(+_start).endOf('day').valueOf()
+  } else {
+    _end = +_end
+  }
+
+  if (!isFinite(_start)) return {}
+  if (!isFinite(_end)) return {}
+  if (!isFinite(status)) return {}
+
+  const items = yield Post.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'DESC' ]],
+    where: {
+      status: +status,
       $or: [
         {
           start_date: {
@@ -153,6 +261,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
 /* eslint-disable camelcase */
 exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
   if (!uid) return []
+  if (!isFinite(+uid)) return []
 
   let _start = start
   let _end = end
@@ -168,16 +277,21 @@ exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
     _end = +_end
   }
 
+  if (!isFinite(_start)) return []
+  if (!isFinite(_end)) return []
+
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'id', 'DESC' ]],
     where: {
       uid: +uid,
+      status: 0,
       end_date: {
         $gte: new Date(moment(_start))
       }
-    }
+    },
+    raw: true
   })
 }
 
@@ -208,6 +322,7 @@ exports.countPerDayInMonth = function *(year, month) {
     ],
     order: [[ 'start_date', 'ASC' ]],
     where: {
+      status: 0,
       start_date: {
         $between: [
           new Date(moment({
@@ -233,6 +348,7 @@ exports.countPerDayInMonth = function *(year, month) {
     ],
     order: [[ 'start_date', 'ASC' ]],
     where: {
+      status: 0,
       start_date: {
         $notBetween: [
           new Date(moment({
@@ -272,6 +388,7 @@ exports.countPerDayInMonth = function *(year, month) {
     ],
     order: [[ 'start_date', 'ASC' ]],
     where: {
+      status: 0,
       start_date: {
         $lt:
           new Date(moment({
@@ -385,6 +502,8 @@ exports.update = function *(hid, post) {
     'ocname'
   ]
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
+
   const p = yield Post.findOne({
     where: { id: id }
   })
@@ -393,6 +512,7 @@ exports.update = function *(hid, post) {
 
 exports.destroy = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const post = yield Post.findOne({ where: { id: id } })
   return yield post.destroy()
 }
@@ -408,19 +528,11 @@ exports.updateGeo = function *(hid, geo) {
     'address'
   ]
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const p = yield Post.findOne({
     where: { id: id }
   })
   return yield p.update(geo, { fields: fillable })
-}
-
-exports.updateAttachments = function *(hid, attach) {
-  const fillable = [ 'url', 'img', 'file' ]
-  const id = +hashids.decode(hid)
-  const p = yield Post.findOne({
-    where: { id: id }
-  })
-  return yield p.update(attach, { fields: fillable })
 }
 
 /* eslint-disable camelcase */
@@ -430,6 +542,7 @@ exports.search = function *(pattern, offset=0, limit=20) {
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
     where: {
+      status: 0,
       $or: [
         {
           title: {
@@ -442,6 +555,7 @@ exports.search = function *(pattern, offset=0, limit=20) {
           }
         }
       ]
-    }
+    },
+    raw: true
   })
 }

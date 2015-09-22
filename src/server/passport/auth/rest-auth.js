@@ -1,5 +1,4 @@
 import passport from 'koa-passport'
-import debug from 'debug'
 
 export default function *(next) {
   const ctx = this

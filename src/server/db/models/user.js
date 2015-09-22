@@ -1,5 +1,5 @@
 module.exports = function (sequelize, Sequelize) {
-  return sequelize.define('users', {
+  const User = sequelize.define('users', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -28,7 +28,9 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     classMethods: {
       associate: function (models) {
-        // associations can be defined here
+        User.hasMany(models.posts, {
+          foreignKey: 'id'
+        });
       }
     },
     instanceMethods: {
@@ -45,4 +47,6 @@ module.exports = function (sequelize, Sequelize) {
       }
     }
   })
+
+  return User
 }

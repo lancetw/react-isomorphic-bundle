@@ -87,12 +87,20 @@ export default new Resource('usersinfo', {
       try {
         const org = yield fetchOrgData(body.ocname)
         body.cid = org.oid
-        if (typeof body.lat === 'undefined' || !body.lat) body.lat = org.lat
-        if (typeof body.lng === 'undefined' || !body.lng) body.lng = org.lng
+        if (typeof body.lat === 'undefined' || !body.lat) {
+          body.lat = parseFloat(org.lat)
+        }
+        if (typeof body.lng === 'undefined' || !body.lng) {
+          body.lng = parseFloat(org.lng)
+        }
       } catch (err) {
         body.cid = null
-        if (typeof body.lat === 'undefined' || !body.lat) body.lat = null
-        if (typeof body.lng === 'undefined' || !body.lng) body.lng = null
+        if (typeof body.lat === 'undefined' || !body.lat) {
+          body.lat = null
+        }
+        if (typeof body.lng === 'undefined' || !body.lng) {
+          body.lng = null
+        }
       }
 
       const userInfo

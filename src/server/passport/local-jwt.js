@@ -6,6 +6,7 @@ import debug from 'debug'
 
 const JwtStrategy = require('passport-jwt').Strategy
 const User = db.users
+const Admin = db.admins
 
 const opts = {}
 opts.secretOrKey = config.jwt.SECRET_OR_KEY
@@ -17,7 +18,13 @@ opts.audience = config.jwt.OPTIONS.AUD
 export default passport.use(new JwtStrategy(opts, function (payload, done) {
   co(function* () {
     try {
-      const user = yield User.loadByEmail(payload.email)
+      let user
+      if (!!payload.isAdmin) {
+        user = yield Admin.loadByEmail(payload.email)
+      } else {
+        user = yield User.loadByEmail(payload.email)
+      }
+
       if (!user) {
         throw new Error('no user')
       } else {

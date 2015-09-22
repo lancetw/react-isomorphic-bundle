@@ -1,5 +1,5 @@
 module.exports = function (sequelize, Sequelize) {
-  return sequelize.define('posts', {
+  const Post = sequelize.define('posts', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -130,7 +130,9 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     classMethods: {
       associate: function (models) {
-        // associations can be defined here
+        Post.belongsTo(models.users, {
+          foreignKey: 'uid'
+        });
       }
     },
     validate: {
@@ -145,11 +147,12 @@ module.exports = function (sequelize, Sequelize) {
     instanceMethods: {
       toJSON: function () {
         const values = this.get()
-        delete values.created_at
         delete values.updated_at
         delete values.deleted_at
         return values
       }
     }
   })
+
+  return Post
 }

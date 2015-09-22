@@ -37,6 +37,7 @@ exports.createOrUpdate = function *(hid, info) {
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
   return yield models.usersInfo.findOne({
-    where: { uid: id }
+    where: { uid: id },
+    raw: true
   })
 }

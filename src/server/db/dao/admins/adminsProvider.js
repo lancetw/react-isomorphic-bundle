@@ -21,13 +21,15 @@ exports.create = function *(user) {
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
   return yield models.admins.findOne({
-    where: { id: id }
+    where: { id: id },
+    raw: true
   })
 }
 
 exports.loadByEmail = function *(email) {
   return yield models.admins.findOne({
-    where: { email: email }
+    where: { email: email },
+    raw: true
   })
 }
 
@@ -50,7 +52,8 @@ exports.delete = function *(hid) {
 
 exports.auth = function *(email, password) {
   const user = yield models.admins.findOne({
-    where: { email: email }
+    where: { email: email },
+    raw: true
   })
 
   if (!user) {

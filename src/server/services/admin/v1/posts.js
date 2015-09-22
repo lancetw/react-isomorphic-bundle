@@ -2,16 +2,37 @@ import Resource from 'koa-resource-router'
 import validate from 'parameter'
 import parse from 'co-body'
 import hashids from 'src/shared/utils/hashids-plus'
-import RestAuth from 'src/server/passport/auth/rest-admin-auth'
+import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
-import nunjucks from 'nunjucks'
+import queryType from 'query-types'
 
-const User = db.admins
+const Post = db.posts
 
 export default new Resource('posts', {
-  index: function *(next) {
-    this.body = nunjucks.render('admins/index.html')
-  },
+  index: [ RestAuth, function *(next) {
+    const body = queryType.parseObject(this.request.query)
+    const rule = {
+      offset: { type: 'number', required: false },
+      limit: { type: 'number', required: false },
+      start: { type: 'number', required: false },
+      end: { type: 'number', required: false },
+      status: { type: 'number', required: false }
+    }
+    const errors = validate(rule, body)
+    if (errors) {
+      this.type = 'json'
+      this.status = 200
+      this.body = { errors: errors }
+      return
+    }
+
+    const {  offset, limit, start, end, status } = body
+    const data = !start
+      ? yield Post.listAllWithCount(offset, limit, status)
+      : yield Post.fetchWithCount(offset, limit, start, end, status)
+
+    this.body = hashids.encodeJson(data)
+  }],
   update: [ RestAuth, function *(next) {
     const body = yield parse(this)
     const rule = {

@@ -2,7 +2,7 @@ import Resource from 'koa-resource-router'
 import validate from 'parameter'
 import parse from 'co-body'
 import hashids from 'src/shared/utils/hashids-plus'
-import RestAuth from 'src/server/passport/auth/rest-admin-auth'
+import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 

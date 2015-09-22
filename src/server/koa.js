@@ -17,6 +17,7 @@ import path from 'path'
 import co from 'co'
 import favicon from 'koa-favicon'
 import services from 'src/server/services'
+import adminServices from 'src/server/services/admin'
 import models from 'src/server/db/models'
 import locale from 'koa-locale'
 import bodyParser from 'koa-bodyparser'
@@ -110,6 +111,8 @@ app.use(bodyParser())
 app.use(localAuth.initialize())
 app.use(facebookAuth.initialize())
 app.use(router.routes())
+
+app.use(mount('/api/admin/v1', adminServices.v1))
 
 import adminView from './adminView'
 adminView(app)
