@@ -57,8 +57,8 @@ export default createReducer(initialState, {
         ? !!action.token
         : state.isAuthenticated
     }),
-  [CHECK_TOKEN_COMPLETED]: () =>
-    ({ verified: true }),
+  [CHECK_TOKEN_COMPLETED]: (state, action) =>
+    ({ verified: action.verified }),
   [CHECK_TOKEN_FAILED]: (state, action) =>
     ({ errors: action.errors, verified: false })
 })
