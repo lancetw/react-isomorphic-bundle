@@ -100,13 +100,10 @@ export default function (app) {
         ctx.redirect(redirectLocation.pathname + redirectLocation.search)
         return
       } else if (error) {
-        ctx.status = 500
-        const { message } = error
-        ctx.body = message
+        ctx.redirect('/')
         return
       } else if (renderProps === null) {
-        ctx.status = 404
-        ctx.body = 'Not found'
+        ctx.redirect('/')
         return
       }
 
