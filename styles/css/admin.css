@@ -36,12 +36,68 @@ body {
 #admin {
   background-image:
     linear-gradient(
-      rgba(255, 255, 255, 1) 30%,
-      rgba(252, 173, 49, 1) 100%
+      rgba(255, 255, 255, 1) 23%,
+      rgba(252, 173, 49, 1) 76%
     );
 }
 
 main.ui.stackable.page {
   padding-top: 32px;
   user-select: none;
+}
+
+ul.pagination {
+  display: inline-block;
+}
+
+ul.pagination li {
+  display: inline-block;
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  border: none;
+  vertical-align: baseline;
+  color: rgba(0, 0, 0, 0.6);
+  text-transform: none;
+  text-shadow: none;
+  font-weight: bold;
+  font-style: normal;
+  text-align: center;
+  box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(39, 41, 43, 0.15) inset;
+  -webkit-transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+  transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+  will-change: '';
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul.pagination li.active a {
+  color: gold;
+}
+
+ul.pagination > ul > li > a, ul.pagination > li > a {
+  display: inline-block;
+  padding: 8px 18px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+ul.pagination .break a {
+  cursor: default;
+}
+
+.table .title {
+  width: 60%;
+}
+
+td.table.title a {
+  width: 340px;
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table .date {
+  white-space: nowrap;
 }
