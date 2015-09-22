@@ -54,7 +54,7 @@ export default class PostCards extends BaseComponent {
         this.setState({ triggered: false })
         $('#overlay').remove()
         $('body').unbind('touchmove')
-      }, 1000)
+      }, 0)
     } else {
       this.setState({disablePointer: true })
     }
