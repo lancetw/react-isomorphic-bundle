@@ -32,7 +32,7 @@ export default class WallCpropHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
 
     this.state = {
       locale: fixLocaleName(counterpart.getLocale())

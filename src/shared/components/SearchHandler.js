@@ -21,7 +21,7 @@ export default class SearchHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
     const { dispatch } = context.store
     dispatch(updateTitle('title.search'))
   }

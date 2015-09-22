@@ -32,7 +32,7 @@ export default createReducer(initialState, {
   [SHOW_USER_FAILED]: (state, action) =>
     ({ errors: action.errors, isAuthenticated: false, verified: false }),
   [REVOKE_USER_COMPLETED]: () =>
-    ({ token: null, isAuthenticated: false, user: {} }),
+    ({ token: null, isAuthenticated: false, verified: false, user: {} }),
   [REVOKE_USER_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [SYNC_CLIENT_USER_COMPLETED]: (state, action) =>

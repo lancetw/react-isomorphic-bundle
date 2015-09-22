@@ -29,7 +29,7 @@ export default class PostEditHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
 
     this.state = { disableSubmit: true }
 

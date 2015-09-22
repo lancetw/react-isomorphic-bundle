@@ -47,6 +47,7 @@ import { setPin } from 'shared/actions/MapActions'
 import { updateTitle } from 'shared/actions/LocaleActions'
 import { setImageFileName } from 'shared/actions/UploadActions'
 import { getFileExt } from 'shared/utils/file-utils'
+import { EQUAL } from 'shared/utils/common-utils'
 
 async function create ({ token, value, regValue, upload, map }) {
   const _upload = compact(upload)
@@ -502,15 +503,6 @@ export function cpropList (cprop, offset=0, limit=5, reload=false) {
   }
 }
 
-function _eq (a, b) {
-  let _a = a
-  let _b = b
-  if (typeof _a === 'undefined') _a = null
-  if (typeof _b === 'undefined') _b = null
-
-  return (_a === _b)
-}
-
 export function fetchList (offset=0, limit=5, start, end, reload) {
   return async (dispatch, getState) => {
     /* cache service */
@@ -519,7 +511,7 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
     const _end = getState().post.end
 
     if (!reload && offset <= 0 && !isEmpty(cached)) {
-      if (_eq(start, _start) && _eq(end, _end)) {
+      if (EQUAL(start, _start) && EQUAL(end, _end)) {
         return null
       }
     }

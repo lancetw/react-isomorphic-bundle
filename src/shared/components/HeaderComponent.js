@@ -161,7 +161,7 @@ export default class Header extends React.Component {
         </div>
         <div className="mobile only row">
           <div className="left menu">
-            <Link activeClassName="active" to="/wall/today" className="item left">
+            <Link activeClassName="active" to="/w/today" className="item left">
               <Translate content="header.home" />
             </Link>
             <Link activeClassName="active" to="/post" className="item">

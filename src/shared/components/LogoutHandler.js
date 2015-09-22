@@ -23,7 +23,7 @@ export default class LogoutHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
 
     const {dispatch, resolver} = context.store
     dispatch(updateTitle('title.logout'))

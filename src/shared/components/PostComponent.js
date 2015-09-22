@@ -68,6 +68,7 @@ export default class Post extends BaseComponent {
     const today = this.dateToArray(moment().format('YYYY-M-D'))
 
     counterpart.setLocale(props.defaultLocale)
+    const locale = counterpart.getLocale()
 
     let tab
     if (process.env.BROWSER) {
@@ -90,13 +91,13 @@ export default class Post extends BaseComponent {
         openDate: today,
         closeDate: today
       },
-      formType: PostForm(counterpart.getLocale()),
-      regFormType: RegForm(counterpart.getLocale()),
-      options: PostFormOptions(counterpart.getLocale()),
-      regOptions: RegFormOptions(counterpart.getLocale()),
+      formType: PostForm(locale),
+      regFormType: RegForm(locale),
+      options: PostFormOptions(locale),
+      regOptions: RegFormOptions(locale),
       submited: false,
       updated: false,
-      locale: counterpart.getLocale(),
+      locale: locale,
       placeError: false,
       latlngError: false,
       disableSubmit: props.disableSubmit,
@@ -437,7 +438,7 @@ export default class Post extends BaseComponent {
     if (process.env.BROWSER) {
       if (!isEmpty(this.props.post.content)) {
         this.releaseTimeout = setTimeout(() => {
-          this.context.history.replaceState({}, '/wall')
+          this.context.history.replaceState({}, '/w')
         }, 1000)
       }
     }

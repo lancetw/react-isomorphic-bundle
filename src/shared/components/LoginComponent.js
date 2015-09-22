@@ -25,8 +25,8 @@ export default class Login extends BaseComponent {
     history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
 
     counterpart.setLocale(props.defaultLocale)
 

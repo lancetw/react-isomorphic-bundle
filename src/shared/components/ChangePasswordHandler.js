@@ -22,7 +22,7 @@ export default class ChangePasswordHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
 
     const { dispatch, resolver } = context.store
     dispatch(updateTitle('title.password'))

@@ -103,7 +103,7 @@ export default class Post extends BaseComponent {
           confirmButtonText: _t('post.detail.delete.ok.confirm'),
           closeOnConfirm: true
         }, () => {
-          transitionTo(createLocation('/wall'))
+          transitionTo(createLocation('/w'))
         })
       })
     })

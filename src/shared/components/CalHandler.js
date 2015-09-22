@@ -24,7 +24,7 @@ export default class CalHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
     const { dispatch, resolver } = context.store
     dispatch(updateTitle('title.cal'))
     this.postActions = bindActionCreators(PostActions, dispatch)

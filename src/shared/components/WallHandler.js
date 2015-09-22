@@ -29,7 +29,7 @@ export default class WallHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
 
     this.state = {
       locale: fixLocaleName(this.getLocale())
