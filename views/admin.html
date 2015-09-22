@@ -18,7 +18,7 @@
     <div id="admin"></div>
     {% if env.NODE_ENV != 'debug' %}
     {% for script in assets.script %}
-    <script src="{{ script }}" defer></script>
+    <script src="{{ script }}"></script>
     {% endfor %}
     {% endif %}
     {% if env.NODE_ENV == 'production' %}
