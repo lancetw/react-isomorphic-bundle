@@ -74,7 +74,7 @@ export default class TableWidget extends React.Component {
                 { post.title }
               </a>
             </td>
-            <td className="table date">{ toDate(post.created_at) }</td>
+            <td className="table date">{ toDate(post.created_at, true) }</td>
             <td className="table email">{ post['user.email'] }</td>
           </tr>
           )

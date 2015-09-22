@@ -26,10 +26,12 @@ export function toMoment (date) {
   return ''
 }
 
-export function toDate (date) {
+export function toDate (date, full) {
   const moment = require('moment')
+  let format = 'YYYY-M-D'
+  if (typeof full !== 'undefined' && full) format = 'YYYY-MM-DD'
   if (moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').isValid()) {
-    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format('YYYY-M-D')
+    return moment(date, 'YYYY-MM-DD HH:mm:ss ZZ').format(format)
   }
 
   return ''
