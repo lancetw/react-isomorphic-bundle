@@ -303,7 +303,7 @@ export default class Post extends BaseComponent {
             </div>
             }
             <div className="row">
-              <MediaQuery minDeviceWidth={1224}>
+              <MediaQuery minDeviceWidth={375}>
                 <div className="ui basic segment center aligned">
                   <Ad
                     id="1L"
@@ -311,7 +311,7 @@ export default class Post extends BaseComponent {
                   />
                 </div>
               </MediaQuery>
-              <MediaQuery maxDeviceWidth={1224}>
+              <MediaQuery maxDeviceWidth={375}>
                 <div className="ui basic segment center aligned">
                   <Ad
                     id="1S"
