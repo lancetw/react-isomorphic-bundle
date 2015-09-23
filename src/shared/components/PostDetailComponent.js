@@ -307,7 +307,7 @@ export default class Post extends BaseComponent {
                 <div className="ui basic segment center aligned">
                   <Ad
                     id="1L"
-                    link="http://mx1.hotrank.com.tw/script/oursweb/All_468x40"
+                    link="http://mx1.hotrank.com.tw/script/taiwanbible/Home335150"
                   />
                 </div>
               </MediaQuery>
