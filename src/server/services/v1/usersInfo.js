@@ -94,14 +94,15 @@ export default new Resource('usersinfo', {
           body.lng = parseFloat(org.lng)
         }
       } catch (err) {
-        body.cid = null
+        body.cid = 0
         if (typeof body.lat === 'undefined' || !body.lat) {
-          body.lat = null
+          body.lat = 0
         }
         if (typeof body.lng === 'undefined' || !body.lng) {
-          body.lng = null
+          body.lng = 0
         }
       }
+      console.log(body.cid, body.lng, body.lat)
 
       const userInfo
         = yield UserInfo.createOrUpdate(this.params.usersinfo, body)
