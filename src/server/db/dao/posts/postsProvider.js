@@ -72,7 +72,7 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
   return yield Post.findAndCountAll({
     offset: offset,
     limit: limit,
-    order: [[ 'created_at', 'DESC' ]],
+    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
     where: {
       status: +status
     },
@@ -220,7 +220,7 @@ exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
   const items = yield Post.findAndCountAll({
     offset: offset,
     limit: limit,
-    order: [[ 'created_at', 'DESC' ]],
+    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
     where: {
       status: +status,
       $or: [
@@ -536,13 +536,19 @@ exports.updateGeo = function *(hid, geo) {
 }
 
 /* eslint-disable camelcase */
-exports.search = function *(pattern, offset=0, limit=20) {
+exports.search = function *(pattern, status, offset=0, limit=20) {
   return yield Post.findAll({
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
+    attributes: ['id', 'title', 'created_at', 'status'],
+    include: [{
+      model: User,
+      attributes: ['email'],
+      required: true
+    }],
     where: {
-      status: 0,
+      status: status,
       $or: [
         {
           title: {
@@ -559,3 +565,35 @@ exports.search = function *(pattern, offset=0, limit=20) {
     raw: true
   })
 }
+
+/* eslint-disable camelcase */
+exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
+  return yield Post.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'DESC' ]],
+    attributes: ['id', 'title', 'created_at', 'status'],
+    include: [{
+      model: User,
+      attributes: ['email'],
+      required: true
+    }],
+    where: {
+      status: status,
+      $or: [
+        {
+          title: {
+            $like: '%' + pattern + '%'
+          }
+        },
+        {
+          content: {
+            $like: '%' + pattern + '%'
+          }
+        }
+      ]
+    },
+    raw: true
+  })
+}
+

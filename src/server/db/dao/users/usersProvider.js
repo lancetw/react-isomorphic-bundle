@@ -13,7 +13,6 @@ exports.create = function *(user) {
   return yield models.users.create(user, { fields: fillable })
 }
 
-
 exports.recreate = function *(unuser) {
   const fillable = [ 'name', 'passwd' ]
   const user = yield models.users.findOne({
@@ -34,7 +33,6 @@ exports.recreate = function *(unuser) {
   return yield user.update(unuser, { fields: fillable })
 }
 
-
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
   return yield models.users.findOne({
@@ -51,10 +49,12 @@ exports.loadByEmail = function *(email) {
 }
 
 exports.update = function *(hid, user) {
-  const fillable = [ 'name', 'passwd' ]
+  const fillable = [ 'name', 'passwd', 'status' ]
   const id = +hashids.decode(hid)
   const salt = yield bcrypt.genSalt(10)
-  user.passwd = yield bcrypt.hash(user.password, salt)
+  if (!!user.password) {
+    user.passwd = yield bcrypt.hash(user.password, salt)
+  }
   const u = yield models.users.findOne({
     where: { id: id }
   })
@@ -69,7 +69,7 @@ exports.delete = function *(hid) {
 
 exports.auth = function *(email, password) {
   const user = yield models.users.findOne({
-    where: { email: email },
+    where: { email: email, status: 0 },
     raw: true
   })
 
@@ -89,5 +89,49 @@ exports.auth = function *(email, password) {
   } else {
     return null
   }
+}
+
+/* eslint-disable camelcase */
+exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
+  return yield models.users.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    attributes: ['id', 'email', 'created_at', 'status', 'name'],
+    include: [{
+      model: models.usersInfo,
+      attributes: ['ocname', 'url'],
+      required: false
+    }],
+    where: {
+      status: +status
+    },
+    raw: true
+  })
+}
+
+/* eslint-disable camelcase */
+exports.searchWithCount = function *(offset=0, limit=20, pattern, status) {
+  return yield models.users.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    attributes: ['id', 'email', 'created_at', 'status', 'name'],
+    include: [{
+      model: models.usersInfo,
+      required: false
+    }],
+    where: {
+      status: status,
+      $or: [
+        {
+          email: {
+            $like: '%' + pattern + '%'
+          }
+        }
+      ]
+    },
+    raw: true
+  })
 }
 

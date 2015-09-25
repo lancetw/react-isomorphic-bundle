@@ -34,10 +34,12 @@ exports.loadByEmail = function *(email) {
 }
 
 exports.update = function *(hid, user) {
-  const fillable = [ 'name', 'passwd', 'comment' ]
+  const fillable = [ 'name', 'passwd', 'status', 'comment' ]
   const id = +hashids.decode(hid)
-  const salt = yield bcrypt.genSalt(10)
-  user.passwd = yield bcrypt.hash(user.password, salt)
+  if (user.password) {
+    const salt = yield bcrypt.genSalt(10)
+    user.passwd = yield bcrypt.hash(user.password, salt)
+  }
   const u = yield models.admins.findOne({
     where: { id: id }
   })
@@ -52,7 +54,7 @@ exports.delete = function *(hid) {
 
 exports.auth = function *(email, password) {
   const user = yield models.admins.findOne({
-    where: { email: email },
+    where: { email: email, status : 0 },
     raw: true
   })
 
@@ -72,5 +74,41 @@ exports.auth = function *(email, password) {
   } else {
     return null
   }
+}
+
+/* eslint-disable camelcase */
+exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
+  return yield models.admins.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    attributes: ['id', 'email', 'created_at', 'status', 'name', 'comment'],
+    where: {
+      status: +status
+    },
+    raw: true
+  })
+}
+
+/* eslin
+/* eslint-disable camelcase */
+exports.searchWithCount = function *(offset=0, limit=20, pattern, status) {
+  return yield models.admins.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    attributes: ['id', 'email', 'created_at', 'status', 'name', 'comment'],
+    where: {
+      status: status,
+      $or: [
+        {
+          email: {
+            $like: '%' + pattern + '%'
+          }
+        }
+      ]
+    },
+    raw: true
+  })
 }
 

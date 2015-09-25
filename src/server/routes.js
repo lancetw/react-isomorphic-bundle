@@ -175,7 +175,13 @@ router
         // [TODO]: get param to set nextPage
         ctx.redirect('/sync/token?token=' + token)
       } else {
-        ctx.redirect('/auth/facebook/request/email')
+        if (err.message === 'Error: user blocked') {
+          ctx.redirect('/login')
+        } else if (err.message === 'Error: no emails') {
+          ctx.redirect('/auth/facebook/request/email')
+        } else {
+          ctx.redirect('/')
+        }
       }
     })
   })

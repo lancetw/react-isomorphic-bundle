@@ -1,5 +1,5 @@
 module.exports = function (sequelize, Sequelize) {
-  return sequelize.define('usersInfo', {
+  const UserInfo = sequelize.define('usersInfo', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -76,7 +76,9 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     classMethods: {
       associate: function (models) {
-        // associations can be defined here
+        UserInfo.belongsTo(models.users, {
+          foreignKey: 'uid'
+        });
       }
     },
     validate: {
@@ -98,5 +100,7 @@ module.exports = function (sequelize, Sequelize) {
         return values
       }
     }
-  })
+  });
+
+  return UserInfo;
 }

@@ -102,7 +102,6 @@ export default new Resource('usersinfo', {
           body.lng = 0
         }
       }
-      console.log(body.cid, body.lng, body.lat)
 
       const userInfo
         = yield UserInfo.createOrUpdate(this.params.usersinfo, body)

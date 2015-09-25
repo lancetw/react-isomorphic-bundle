@@ -152,7 +152,7 @@ module.exports = function (sequelize, Sequelize) {
         return values
       }
     }
-  })
+  });
 
-  return Post
+  return Post;
 }

@@ -5,6 +5,8 @@ import hashids from 'src/shared/utils/hashids-plus'
 import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import queryType from 'query-types'
+import { each } from 'lodash'
+import co from 'co'
 
 const Post = db.posts
 
@@ -26,12 +28,56 @@ export default new Resource('posts', {
       return
     }
 
-    const {  offset, limit, start, end, status } = body
-    const data = !start
-      ? yield Post.listAllWithCount(offset, limit, status)
-      : yield Post.fetchWithCount(offset, limit, start, end, status)
+    const {  offset, limit, start, end, keyword, status } = body
+
+    let data
+    if (!!keyword) {
+      data = yield Post.searchWithCount(keyword, status, offset, limit)
+    } else {
+      data = !start
+        ? yield Post.listAllWithCount(offset, limit, status)
+        : yield Post.fetchWithCount(offset, limit, start, end, status)
+    }
 
     this.body = hashids.encodeJson(data)
+  }],
+  create: [ RestAuth, function *(next) {
+    const body = this.request.body
+    const rule = {
+      spam: {
+        type: 'array',
+        itemType: 'string',
+        rule: { type: 'string', allowEmpty: false }
+      },
+      type: { type: 'string' }
+    }
+    const errors = validate(rule, body)
+    if (errors) {
+      this.type = 'json'
+      this.status = 200
+      this.body = { errors: errors }
+      return
+    }
+    // updateAll
+    try {
+      each(body.spam, function (hid) {
+        co(function* () {
+          const id = hashids.decode(hid)
+          const _body = {
+            status: (body.type === 'spam') ? 1 : 0
+          }
+          yield Post.update(id, _body)
+        })
+      })
+
+      this.type = 'json'
+      this.status = 201
+      this.body = { done: true }
+    } catch (err) {
+      this.type = 'json'
+      this.status = 403
+      this.body = err
+    }
   }],
   update: [ RestAuth, function *(next) {
     const body = yield parse(this)

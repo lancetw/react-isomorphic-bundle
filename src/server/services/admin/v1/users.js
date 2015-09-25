@@ -8,10 +8,9 @@ import queryType from 'query-types'
 import { each } from 'lodash'
 import co from 'co'
 
-const User = db.admins
+const User = db.users
 
-export default new Resource('admins', {
-  // GET /admins
+export default new Resource('users', {
   index: [ RestAuth, function *(next) {
     const body = queryType.parseObject(this.request.query)
     const rule = {
@@ -38,7 +37,6 @@ export default new Resource('admins', {
 
     this.body = hashids.encodeJson(data)
   }],
-  // POST /users
   create: [ RestAuth, function *(next) {
     const body = this.request.body
     const rule = {
@@ -53,10 +51,9 @@ export default new Resource('admins', {
     if (errors) {
       this.type = 'json'
       this.status = 200
-      this.body = errors
+      this.body = { errors: errors }
       return
     }
-
     // updateAll
     try {
       each(body.blocked, function (hid) {
@@ -64,7 +61,6 @@ export default new Resource('admins', {
           const _body = {
             status: (body.type === 'blocked') ? 1 : 0
           }
-
           yield User.update(hid, _body)
         })
       })
@@ -78,36 +74,14 @@ export default new Resource('admins', {
       this.body = err
     }
   }],
-  // GET /admins/:admin
-  show: [ RestAuth, function *(next) {
-    try {
-      if (hashids.decode(this.params.admin) !== +this.user.id) {
-        throw new Error('user check failed')
-      }
-
-      const user = yield User.load(this.params.admin)
-
-      this.type = 'json'
-      this.status = 200
-      this.body = hashids.encodeJson(user)
-    } catch (err) {
-      this.type = 'json'
-      this.status = 404
-      this.body = err
-    }
-  }],
-  // GET /users/:user/edit
-  edit: function *(next) {
-    this.body = 'users'
-  },
-  // PUT /users/:user
   update: [ RestAuth, function *(next) {
     const body = yield parse(this)
 
     const rule = {
       name: { type: 'string', required: false, allowEmpty: true },
-      password: { type: 'password', required: false, allowEmpty: false },
-      status: { type: 'number', required: false, allowEmpty: true }
+      password: { type: 'password', compare: 'passwordCheck' },
+      passwordCheck: 'password',
+      status: { type: 'number', required: false }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -118,28 +92,13 @@ export default new Resource('admins', {
     }
 
     try {
-      const user = yield User.update(this.params.admin, body)
-      this.type = 'json'
-      this.status = 201
-      this.body = hashids.encodeJson(user)
-    } catch (err) {
-      this.type = 'json'
-      this.status = 404
-      this.body = err
-    }
-  }],
-  // DELETE /users/:user
-  // TODO: dont delete self.
-  destroy: [ RestAuth, function *(next) {
-    try {
-      const body = yield User.load(this.params.admin)
-      if (hashids.decode(this.params.admin) !== +this.user.id) {
+      if (hashids.decode(this.params.user) !== +this.user.id) {
         throw new Error('user check failed')
       }
 
-      const user = yield User.delete(this.params.admin)
+      const user = yield User.update(this.params.user, body)
       this.type = 'json'
-      this.status = 200
+      this.status = 201
       this.body = hashids.encodeJson(user)
     } catch (err) {
       this.type = 'json'
