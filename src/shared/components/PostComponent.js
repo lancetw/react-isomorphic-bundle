@@ -589,11 +589,11 @@ export default class Post extends BaseComponent {
                 <div className={PlaceInput}>
                   <input
                     type="text"
-                    placeholder="Place"
+                    placeholder={counterpart('post.map.my')}
                     ref="place"
                     defaultValue={
                       this.props.map.place
-                      || counterpart('post.map.my')
+                      || ''
                     } />
                   <button
                     className="ui green button"
