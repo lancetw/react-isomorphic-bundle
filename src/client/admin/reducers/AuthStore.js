@@ -6,7 +6,6 @@ import {
   SHOW_USER_FAILED,
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
-  SYNC_SERVER_USER_COMPLETED,
   SYNC_CLIENT_USER_COMPLETED,
   CHECK_TOKEN_COMPLETED,
   CHECK_TOKEN_FAILED
@@ -18,15 +17,17 @@ const initialState = {
   token: null,
   isAuthenticated: false,
   verified: false,
-  user: {}
+  user: {},
+  isFetching: false
 }
 
 export default createReducer(initialState, {
-  [AUTH_USER_STARTED]: () => (initialState),
+  [AUTH_USER_STARTED]: () =>
+    ({ isFetching: true }),
   [AUTH_USER_COMPLETED]: (state, action) =>
-    ({ token: action.token, isAuthenticated: !!action.token }),
+    ({ token: action.token, isAuthenticated: !!action.token, isFetching: false }),
   [AUTH_USER_FAILED]: (state, action) =>
-    ({ errors: action.errors, isAuthenticated: false }),
+    ({ errors: action.errors, isAuthenticated: false, isFetching: false }),
   [SHOW_USER_COMPLETED]: (state, action) =>
     ({ user: action.user }),
   [SHOW_USER_FAILED]: (state, action) =>
@@ -37,17 +38,8 @@ export default createReducer(initialState, {
     ({ errors: action.errors }),
   [SYNC_CLIENT_USER_COMPLETED]: (state, action) =>
     ({
-      token:
-        typeof action.token !== 'undefined'
-        ? action.token
-        : state.token,
-      isAuthenticated:
-        typeof action.token !== 'undefined'
-        ? !!action.token
-        : state.isAuthenticated
-    }),
-  [SYNC_SERVER_USER_COMPLETED]: (state, action) =>
-    ({
+      isFetching: false,
+      errors: {},
       token:
         typeof action.token !== 'undefined'
         ? action.token

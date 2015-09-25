@@ -1,3 +1,5 @@
-export { default as dash } from './DashStore'
+export { default as admin } from './AdminStore'
 export { default as auth } from './AuthStore'
 export { default as post } from './PostStore'
+export { default as user } from './UserStore'
+export { default as ad } from './AdStore'

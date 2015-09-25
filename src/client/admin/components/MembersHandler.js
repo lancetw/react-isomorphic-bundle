@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react'
-import Dash from './DashComponent'
+import Members from './MembersComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as PostActions from 'client/admin/actions/PostActions'
-import * as AuthActions from 'client/admin/actions/AuthActions'
+import * as UserActions from 'client/admin/actions/UserActions'
 
 @connect(state => ({
   auth: state.auth,
-  collect: state.post
+  collect: state.user
 }))
-export default class DashHandler extends React.Component {
+export default class MembersHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -19,7 +18,7 @@ export default class DashHandler extends React.Component {
   constructor (props, context) {
     super(props)
     const { dispatch } = props
-    dispatch(PostActions.fetchList({ offset: 0, limit: 8, status: 0 }))
+    dispatch(UserActions.fetchList({ offset: 0, limit: 8, status: 0 }))
 
     this.state = { page: { selected: 0 } }
   }
@@ -29,7 +28,7 @@ export default class DashHandler extends React.Component {
     const c = page.selected * collect.limit
     this.setState({ page: page })
 
-    return dispatch(PostActions.fetchList({
+    return dispatch(UserActions.fetchList({
       offset: c,
       limit: collect.limit,
       status: 0,
@@ -37,14 +36,14 @@ export default class DashHandler extends React.Component {
     }))
   }
 
-  markAsSpam (checked) {
+  blockUsers (checked) {
     const { dispatch } = this.props
     const form = {
-      spam: checked,
-      type: 'spam'
+      blocked: checked,
+      type: 'blocked'
     }
 
-    return dispatch(PostActions.markAsSpam(form)).then(() => {
+    return dispatch(UserActions.blockUsers(form)).then(() => {
       return this.handlePageClick(this.state.page)
     })
   }
@@ -52,11 +51,11 @@ export default class DashHandler extends React.Component {
   render () {
     const { dispatch } = this.props
     return (
-      <Dash
-        {...bindActionCreators(AuthActions, dispatch)}
-        {...bindActionCreators(PostActions, dispatch)}
+      <Members
+        {...bindActionCreators(UserActions, dispatch)}
         handlePageClick={::this.handlePageClick}
-        action={::this.markAsSpam}
+        action={::this.blockUsers}
+        menuIndex={1}
         {...this.props}
       />
     )

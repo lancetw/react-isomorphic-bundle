@@ -1,11 +1,11 @@
 import {
-  LIST_POST_RELOADED,
-  LIST_POST_STARTED,
-  LIST_POST_COMPLETED,
-  LIST_POST_FAILED,
-  MARK_AS_SPAM_STARTED,
-  MARK_AS_SPAM_COMPLETED,
-  MARK_AS_SPAM_FAILED
+  LIST_USER_RELOADED,
+  LIST_USER_STARTED,
+  LIST_USER_COMPLETED,
+  LIST_USER_FAILED,
+  BLOCK_USER_STARTED,
+  BLOCK_USER_COMPLETED,
+  BLOCK_USER_FAILED
 } from 'client/admin/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 import moment from 'moment'
@@ -21,7 +21,7 @@ const initialState = {
   start: null,
   end: null,
   count: null,
-  spamCount: null,
+  blockedCount: null,
   totalPages: null,
   currPage: null,
   done: true,
@@ -29,7 +29,7 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  [LIST_POST_RELOADED]: () => ({
+  [LIST_USER_RELOADED]: () => ({
     isFetching: false,
     errors: {},
     items: [],
@@ -39,15 +39,15 @@ export default createReducer(initialState, {
     start: null,
     end: null,
     count: null,
-    spamCount: null,
+    blockedCount: null,
     totalPages: null,
     currPage: null,
     keyword: null
   }),
-  [LIST_POST_STARTED]: () => ({
+  [LIST_USER_STARTED]: () => ({
     isFetching: true
   }),
-  [LIST_POST_COMPLETED]: (state, action) => {
+  [LIST_USER_COMPLETED]: (state, action) => {
     let hasMore = false
     if (action.items.length === action.limit) {
       hasMore = true
@@ -68,17 +68,17 @@ export default createReducer(initialState, {
       keyword: action.keyword
     }
     if (action.status === 0) {
-      return merge(o, { count: action.count, spamCount: null })
+      return merge(o, { count: action.count, blockedCount: null })
     } else {
-      return merge(o, { spamCount: action.count })
+      return merge(o, { blockedCount: action.count })
     }
   },
-  [LIST_POST_FAILED]: (state, action) =>
+  [LIST_USER_FAILED]: (state, action) =>
     ({ done: true, isFetching: false, errors: action.errors }),
-  [MARK_AS_SPAM_STARTED]: () =>
+  [BLOCK_USER_STARTED]: () =>
     ({ done: false }),
-  [MARK_AS_SPAM_COMPLETED]: (state, action) =>
+  [BLOCK_USER_COMPLETED]: (state, action) =>
     ({ done: false }),
-  [MARK_AS_SPAM_FAILED]: (state, action) =>
+  [BLOCK_USER_FAILED]: (state, action) =>
     ({ done: false, errors: action.errors })
 })

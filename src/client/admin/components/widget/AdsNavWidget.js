@@ -6,7 +6,7 @@ import { isFinite } from 'lodash'
 if (process.env.BROWSER) {
 }
 
-export default class NavWidget extends React.Component {
+export default class AdsNavWidget extends React.Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
@@ -110,32 +110,17 @@ export default class NavWidget extends React.Component {
     return (
       <div className="ui fluid vertical menu">
         <Link
-          to="/ring/dash"
+          to="/ring/permissions"
           className={this.menuItemClass(this.props.selected, 0)}>
           {this.renderCounter(0)}
           {this.renderLabel(0)}
         </Link>
         <Link
-          to="/ring/spam"
+          to="/ring/disabled"
           className={this.menuItemClass(this.props.selected, 1)}>
           {this.renderCounter(1)}
           {this.renderLabel(1)}
         </Link>
-        <div className="item">
-          <div className="ui icon input">
-            <input
-              ref="search"
-              value={this.state.userInput}
-              onFocus={::this.handleSearchFocus}
-              onChange={::this.handleSearchChange}
-              onKeyUp={::this.handleSearchKeyUp}
-              onKeyDown={::this.handleSearchKeyDown}
-              onBlur={::this.handleBlur}
-              type="text"
-              placeholder="搜尋佈告..." />
-            <i className="search icon"></i>
-          </div>
-        </div>
       </div>
     )
   }

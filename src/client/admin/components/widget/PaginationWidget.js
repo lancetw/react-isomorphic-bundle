@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
 export default class PaginationWidget extends React.Component {
 
   static propTypes = {
-    post: PropTypes.object.isRequired,
+    collect: PropTypes.object.isRequired,
     handlePageClick: PropTypes.func.isRequired
   }
 
@@ -16,14 +16,14 @@ export default class PaginationWidget extends React.Component {
   }
 
   render () {
-    const { post } = this.props
+    const { collect } = this.props
 
     return (
       <ReactPaginate
         previousLabel={<i className="left chevron icon"></i>}
         nextLabel={<i className="right chevron icon"></i>}
         breakLabel={<li className="break">...</li>}
-        pageNum={post.totalPages + 1}
+        pageNum={collect.totalPages}
         marginPagesDisplayed={1}
         pageRangeDisplayed={3}
         clickCallback={this.props.handlePageClick}

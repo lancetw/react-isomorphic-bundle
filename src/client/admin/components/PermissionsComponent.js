@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import {
   Menu,
-  Table,
-  Nav
+  PermissionsTable as Table,
+  PermissionsNav as Nav
 } from 'client/admin/components/widget'
 
-export default class Dash extends React.Component {
+export default class Permissions extends React.Component {
 
   constructor (props) {
     super(props)

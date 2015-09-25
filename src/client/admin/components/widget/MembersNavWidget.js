@@ -6,18 +6,16 @@ import { isFinite } from 'lodash'
 if (process.env.BROWSER) {
 }
 
-export default class NavWidget extends React.Component {
+export default class MembersNavWidget extends React.Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
     selected: PropTypes.number,
-    menuIndex: PropTypes.number,
     fetchList: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    selected: 0,
-    menuIndex: 0
+    selected: 0
   }
 
   constructor (props) {
@@ -72,23 +70,9 @@ export default class NavWidget extends React.Component {
 
   renderLabel (index) {
     if (index === 0) {
-      switch (this.props.menuIndex) {
-      case 0:
-        return '佈告列表'
-      case 1:
-        return '使用者列表'
-      default:
-        return ''
-      }
+      return '使用者列表'
     } else {
-      switch (this.props.menuIndex) {
-      case 0:
-        return '垃圾回收筒'
-      case 1:
-        return '凍結的使用者'
-      default:
-        return ''
-      }
+      return '凍結的使用者'
     }
   }
 
@@ -96,10 +80,10 @@ export default class NavWidget extends React.Component {
     if (index === 0) {
       const count = isFinite(this.props.collect.count) ? this.props.collect.count : '-'
       return (
-        <div className="ui teal label">{count}</div>
+        <div className="ui orange label">{count}</div>
       )
     } else {
-      const count = isFinite(this.props.collect.spamCount) ? this.props.collect.spamCount : '-'
+      const count = isFinite(this.props.collect.blockedCount) ? this.props.collect.blockedCount : '-'
       return (
         <div className="ui label">{count}</div>
       )
@@ -110,13 +94,13 @@ export default class NavWidget extends React.Component {
     return (
       <div className="ui fluid vertical menu">
         <Link
-          to="/ring/dash"
+          to="/ring/members"
           className={this.menuItemClass(this.props.selected, 0)}>
           {this.renderCounter(0)}
           {this.renderLabel(0)}
         </Link>
         <Link
-          to="/ring/spam"
+          to="/ring/blocked"
           className={this.menuItemClass(this.props.selected, 1)}>
           {this.renderCounter(1)}
           {this.renderLabel(1)}
@@ -132,7 +116,7 @@ export default class NavWidget extends React.Component {
               onKeyDown={::this.handleSearchKeyDown}
               onBlur={::this.handleBlur}
               type="text"
-              placeholder="搜尋佈告..." />
+              placeholder="搜尋..." />
             <i className="search icon"></i>
           </div>
         </div>

@@ -7,7 +7,6 @@ import {
   SHOW_USER_FAILED,
   REVOKE_USER_COMPLETED,
   REVOKE_USER_FAILED,
-  SYNC_SERVER_USER_COMPLETED,
   SYNC_CLIENT_USER_COMPLETED,
   CHECK_TOKEN_COMPLETED,
   CHECK_TOKEN_FAILED
@@ -143,19 +142,11 @@ export function save (token) {
 
 export function sync (token) {
   return async dispatch => {
-    if (process.env.BROWSER) {
-      return dispatch({
-        type: SYNC_CLIENT_USER_COMPLETED,
-        token: getToken(),
-        errors: {}
-      })
-    } else {
-      return dispatch({
-        type: SYNC_SERVER_USER_COMPLETED,
-        token: token,
-        errors: {}
-      })
-    }
+    return dispatch({
+      type: SYNC_CLIENT_USER_COMPLETED,
+      token: getToken(),
+      errors: {}
+    })
   }
 }
 

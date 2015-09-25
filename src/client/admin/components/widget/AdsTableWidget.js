@@ -2,14 +2,11 @@ import React, { PropTypes } from 'react'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
-import {
-  Pagination
-} from 'client/admin/components/widget'
 
 if (process.env.BROWSER) {
 }
 
-export default class TableWidget extends React.Component {
+export default class AdsTableWidget extends React.Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
@@ -57,13 +54,13 @@ export default class TableWidget extends React.Component {
   renderActionBtn () {
     const ActionBtnClasses = classNames(
       'ui',
-      {'red': !this.props.selected },
-      {'green': this.props.selected },
+      {'blue': isEmpty(this.state.checked) },
+      {'red': !isEmpty(this.state.checked) },
       'button',
       {'loading': !this.props.collect.done },
-      {'disabled': isEmpty(this.state.checked) }
+      {'disabled': !this.props.collect.done }
     )
-    const btnLabel = (!this.props.selected) ? '標記垃圾' : '還原佈告'
+    const btnLabel = (!this.props.selected) ? '新增' : '刪除'
     return (
       <div
         onClick={::this.handleClick}
@@ -92,9 +89,9 @@ export default class TableWidget extends React.Component {
         <thead className="full-width">
           <tr>
             <th></th>
-            <th className="table title">標題</th>
-            <th className="table date">發文日期</th>
-            <th className="table email">發文者</th>
+            <th className="table name">名稱</th>
+            <th className="table script">廣告網址</th>
+            <th className="table comment">備註</th>
           </tr>
         </thead>
         <tbody>
@@ -112,20 +109,13 @@ export default class TableWidget extends React.Component {
                 <label></label>
               </div>
             </td>
-            <td className="table title">
-              { (checked)
-                && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
-                  { item.title }
-                </a>)
-              }
-              { (!checked)
-                && (<a target="_blank" href={`../w/p/${item.id}`}>
-                  { item.title }
-                </a>)
-              }
+            <td className="table name">
+              { item.name }
             </td>
-            <td className="table date">{ toDate(item.created_at, true) }</td>
-            <td className="table email">{ item['user.email'] }</td>
+            <td className="table script">
+              { item.script }
+            </td>
+            <td className="table comment">{ item.comment }</td>
           </tr>
           )
         })}
@@ -134,7 +124,6 @@ export default class TableWidget extends React.Component {
           <tr>
             <th colSpan="5">
               {::this.renderActionBtn()}
-              <Pagination {...this.props} />
             </th>
           </tr>
         </tfoot>

@@ -9,7 +9,7 @@ import {
 if (process.env.BROWSER) {
 }
 
-export default class TableWidget extends React.Component {
+export default class PermissionsTableWidget extends React.Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
@@ -47,6 +47,8 @@ export default class TableWidget extends React.Component {
 
     this.props.action(checked, this.state.page).then(() => {
       this.setState({ checked: [] })
+    }).catch(() => {
+      this.setState({ checked: [] })
     })
   }
 
@@ -63,7 +65,7 @@ export default class TableWidget extends React.Component {
       {'loading': !this.props.collect.done },
       {'disabled': isEmpty(this.state.checked) }
     )
-    const btnLabel = (!this.props.selected) ? '標記垃圾' : '還原佈告'
+    const btnLabel = (!this.props.selected) ? '停權' : '復權'
     return (
       <div
         onClick={::this.handleClick}
@@ -92,9 +94,10 @@ export default class TableWidget extends React.Component {
         <thead className="full-width">
           <tr>
             <th></th>
-            <th className="table title">標題</th>
-            <th className="table date">發文日期</th>
-            <th className="table email">發文者</th>
+            <th className="table email">電子郵件信箱</th>
+            <th className="table name">名稱</th>
+            <th className="table comment">備註</th>
+            <th className="table date">加入日期</th>
           </tr>
         </thead>
         <tbody>
@@ -112,20 +115,21 @@ export default class TableWidget extends React.Component {
                 <label></label>
               </div>
             </td>
-            <td className="table title">
+            <td className="table email">
               { (checked)
                 && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
-                  { item.title }
+                  { item.email }
                 </a>)
               }
               { (!checked)
-                && (<a target="_blank" href={`../w/p/${item.id}`}>
-                  { item.title }
+                && (<a target="_blank" href={`/ring/admin/${item.id}`}>
+                  { item.email }
                 </a>)
               }
             </td>
+            <td className="table name">{ item.name }</td>
+            <td className="table comment">{ item.comment }</td>
             <td className="table date">{ toDate(item.created_at, true) }</td>
-            <td className="table email">{ item['user.email'] }</td>
           </tr>
           )
         })}

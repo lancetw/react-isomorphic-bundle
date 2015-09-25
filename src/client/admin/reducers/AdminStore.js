@@ -1,11 +1,11 @@
 import {
-  LIST_POST_RELOADED,
-  LIST_POST_STARTED,
-  LIST_POST_COMPLETED,
-  LIST_POST_FAILED,
-  MARK_AS_SPAM_STARTED,
-  MARK_AS_SPAM_COMPLETED,
-  MARK_AS_SPAM_FAILED
+  LIST_ADMIN_RELOADED,
+  LIST_ADMIN_STARTED,
+  LIST_ADMIN_COMPLETED,
+  LIST_ADMIN_FAILED,
+  BLOCK_ADMIN_STARTED,
+  BLOCK_ADMIN_COMPLETED,
+  BLOCK_ADMIN_FAILED
 } from 'client/admin/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 import moment from 'moment'
@@ -18,10 +18,8 @@ const initialState = {
   offset: 0,
   limit: 0,
   hasMore: true,
-  start: null,
-  end: null,
   count: null,
-  spamCount: null,
+  blockedCount: null,
   totalPages: null,
   currPage: null,
   done: true,
@@ -29,25 +27,23 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  [LIST_POST_RELOADED]: () => ({
+  [LIST_ADMIN_RELOADED]: () => ({
     isFetching: false,
     errors: {},
     items: [],
     offset: 0,
     limit: 0,
     hasMore: true,
-    start: null,
-    end: null,
     count: null,
-    spamCount: null,
+    blockedCount: null,
     totalPages: null,
     currPage: null,
     keyword: null
   }),
-  [LIST_POST_STARTED]: () => ({
+  [LIST_ADMIN_STARTED]: () => ({
     isFetching: true
   }),
-  [LIST_POST_COMPLETED]: (state, action) => {
+  [LIST_ADMIN_COMPLETED]: (state, action) => {
     let hasMore = false
     if (action.items.length === action.limit) {
       hasMore = true
@@ -59,8 +55,6 @@ export default createReducer(initialState, {
       offset: state.offset + action.limit,
       limit: action.limit,
       hasMore: hasMore,
-      start: action.start,
-      end: action.end,
       isFetching: false,
       totalPages: Math.ceil(+action.count / +action.limit),
       currPage: Math.ceil(+(state.offset + action.limit) / +action.limit),
@@ -68,17 +62,17 @@ export default createReducer(initialState, {
       keyword: action.keyword
     }
     if (action.status === 0) {
-      return merge(o, { count: action.count, spamCount: null })
+      return merge(o, { count: action.count, blockedCount: null })
     } else {
-      return merge(o, { spamCount: action.count })
+      return merge(o, { blockedCount: action.count })
     }
   },
-  [LIST_POST_FAILED]: (state, action) =>
+  [LIST_ADMIN_FAILED]: (state, action) =>
     ({ done: true, isFetching: false, errors: action.errors }),
-  [MARK_AS_SPAM_STARTED]: () =>
+  [BLOCK_ADMIN_STARTED]: () =>
     ({ done: false }),
-  [MARK_AS_SPAM_COMPLETED]: (state, action) =>
+  [BLOCK_ADMIN_COMPLETED]: (state, action) =>
     ({ done: false }),
-  [MARK_AS_SPAM_FAILED]: (state, action) =>
+  [BLOCK_ADMIN_FAILED]: (state, action) =>
     ({ done: false, errors: action.errors })
 })

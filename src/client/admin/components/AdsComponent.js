@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import {
   Menu,
-  Table,
-  Nav
+  AdsTable as Table,
+  AdsNav as Nav
 } from 'client/admin/components/widget'
 
-export default class Dash extends React.Component {
+export default class Ads extends React.Component {
 
   constructor (props) {
     super(props)
@@ -21,10 +21,7 @@ export default class Dash extends React.Component {
           </div>
           <Menu {...this.props} />
           <div className="ui grid">
-            <div className="four wide column">
-              <Nav {...this.props} />
-            </div>
-            <div className="twelve wide stretched column">
+            <div className="full wide stretched column">
               <Table {...this.props} />
             </div>
           </div>

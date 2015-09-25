@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Dash from './DashComponent'
+import Spam from './SpamComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PostActions from 'client/admin/actions/PostActions'
@@ -9,7 +9,7 @@ import * as AuthActions from 'client/admin/actions/AuthActions'
   auth: state.auth,
   collect: state.post
 }))
-export default class DashHandler extends React.Component {
+export default class SpamHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ export default class DashHandler extends React.Component {
   constructor (props, context) {
     super(props)
     const { dispatch } = props
-    dispatch(PostActions.fetchList({ offset: 0, limit: 8, status: 0 }))
+    dispatch(PostActions.fetchList({ offset: 0, limit: 8, status: 1 }))
 
     this.state = { page: { selected: 0 } }
   }
@@ -32,16 +32,16 @@ export default class DashHandler extends React.Component {
     return dispatch(PostActions.fetchList({
       offset: c,
       limit: collect.limit,
-      status: 0,
+      status: 1,
       keyword: collect.keyword
     }))
   }
 
-  markAsSpam (checked) {
+  markAsUnSpam (checked) {
     const { dispatch } = this.props
     const form = {
       spam: checked,
-      type: 'spam'
+      type: 'unspam'
     }
 
     return dispatch(PostActions.markAsSpam(form)).then(() => {
@@ -52,11 +52,11 @@ export default class DashHandler extends React.Component {
   render () {
     const { dispatch } = this.props
     return (
-      <Dash
+      <Spam
         {...bindActionCreators(AuthActions, dispatch)}
         {...bindActionCreators(PostActions, dispatch)}
         handlePageClick={::this.handlePageClick}
-        action={::this.markAsSpam}
+        action={::this.markAsUnSpam}
         {...this.props}
       />
     )

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
+import { isEmpty } from 'lodash'
 const { CSSTransitionGroup } = React.addons
 
 export default class Login extends React.Component {
@@ -54,7 +55,15 @@ export default class Login extends React.Component {
       'login',
       'form',
       'orange',
-      'segment'
+      'segment',
+      { 'loading': this.props.auth.isFetching || !!this.props.auth.token }
+    )
+
+    const LoginBtnClasses = classNames(
+      'ui',
+      'orange',
+      'button',
+      { 'disabled': this.props.auth.isFetching }
     )
 
     /* eslint-disable max-len */
@@ -77,10 +86,9 @@ export default class Login extends React.Component {
               <div className="field">
                 <button
                   type="submit"
-                  className="ui orange button">
+                  className={LoginBtnClasses}>
                   登入管理
                 </button>
-                <Link to="/ring/dash">dash</Link>
               </div>
             </div>
           </form>
