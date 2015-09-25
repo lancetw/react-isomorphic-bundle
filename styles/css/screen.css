@@ -3,7 +3,6 @@
 html {
   font-size: 1rem;
   -webkit-overflow-scrolling: touch;
-  background: rgba(255, 255, 255, 1);
 }
 
 :-ms-input-placeholder {
@@ -14,6 +13,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 1rem;
+  color: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 1);
 
   font-smoothing: antialiased;
   hyphens: auto;

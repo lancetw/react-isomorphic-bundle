@@ -3,7 +3,6 @@
 html {
   font-size: 1rem;
   -webkit-overflow-scrolling: touch;
-  background: rgba(255, 255, 255, 1);
 }
 
 :-ms-input-placeholder {
@@ -14,6 +13,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 1rem;
+  color: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 1);
 
   font-smoothing: antialiased;
   hyphens: auto;
@@ -33,7 +34,12 @@ body {
   background: rgba(252, 173, 49, 1);
 }
 
+a.delete {
+  text-decoration: line-through;
+}
+
 #admin {
+  height: 100%;
   background-image:
     linear-gradient(
       rgba(255, 255, 255, 1) 23%,
@@ -71,7 +77,7 @@ ul.pagination li {
 }
 
 ul.pagination li.active a {
-  color: gold;
+  color: orange;
 }
 
 ul.pagination > ul > li > a, ul.pagination > li > a {
@@ -86,12 +92,41 @@ ul.pagination .break a {
   cursor: default;
 }
 
+table.ui.table {
+  color: #999;
+  background: transparent;
+}
+
+table.ui.table tbody {
+  background: #fff;
+}
+
 .table .title {
   width: 60%;
 }
 
+.table .name {
+  width: 25%;
+}
+
+.table .ocname {
+  width: 25%;
+}
+
+.table .email {
+  width: 25%;
+}
+
+td.table .ocname {
+  width: 300px;
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 td.table.title a {
-  width: 340px;
+  width: 280px;
   white-space: nowrap;
   display: block;
   overflow: hidden;
@@ -100,4 +135,14 @@ td.table.title a {
 
 .table .date {
   white-space: nowrap;
+}
+
+.ui.form.segment, .ui.tab.segment {
+  background: transparent;
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 1) 73%,
+      rgba(255, 255, 255, 0.88) 20%
+    );
+  border: none;
 }
