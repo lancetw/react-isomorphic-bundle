@@ -94,7 +94,6 @@ export default createReducer(initialState, {
     return {
       errors: {},
       content: {},
-      loading: false,
       posts: posts,
       offset: state.offset + action.limit,
       limit: action.limit,
