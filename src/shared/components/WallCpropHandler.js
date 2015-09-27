@@ -10,15 +10,10 @@ import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
 import moment from 'moment'
-import 'moment/locale/zh-tw'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  auth: state.auth,
-  post: state.cprop
-}))
-export default class WallCpropHandler extends BaseComponent {
+class WallCpropHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -90,3 +85,7 @@ export default class WallCpropHandler extends BaseComponent {
   }
 }
 
+export default connect(state => ({
+  auth: state.auth,
+  post: state.cprop
+}))(WallCpropHandler)

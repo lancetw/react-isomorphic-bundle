@@ -7,10 +7,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  user: state.user
-}))
-export default class ChangePasswordHandler extends BaseComponent {
+class ChangePasswordHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
@@ -45,5 +42,8 @@ export default class ChangePasswordHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
 }
+
+export default connect(state => ({
+  user: state.user
+}))(ChangePasswordHandler)

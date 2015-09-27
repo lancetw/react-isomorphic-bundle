@@ -15,7 +15,7 @@ async function fetchAll (offset, limit, start, end, keyword, status) {
   return new Promise((resolve, reject) => {
     const token = getToken()
     const user = jwt.decode(token)
-    if (!user.isAdmin) reject('invalid token')
+    if (!user || !user.isAdmin) reject('invalid token')
 
     request
       .get(LOCAL_PATH + '/api/admin/v1/promotions')
@@ -41,7 +41,7 @@ async function fetchAll (offset, limit, start, end, keyword, status) {
 async function send (form, token) {
   return new Promise((resolve, reject) => {
     const user = jwt.decode(token)
-    if (!user.isAdmin) reject('invalid token')
+    if (!user || !user.isAdmin) reject('invalid token')
     request
       .post('/api/admin/v1/promotions')
       .set('Accept', 'application/json')

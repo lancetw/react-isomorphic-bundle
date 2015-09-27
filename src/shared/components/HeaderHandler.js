@@ -5,11 +5,7 @@ import { connect } from 'react-redux'
 import * as AuthActions from 'shared/actions/AuthActions'
 import * as SearchActions from 'shared/actions/SearchActions'
 
-@connect(state => ({
-  auth: state.auth,
-  search: state.search
-}))
-export default class HeaderHandler extends React.Component {
+class HeaderHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
@@ -31,3 +27,7 @@ export default class HeaderHandler extends React.Component {
   }
 }
 
+export default connect(state => ({
+  auth: state.auth,
+  search: state.search
+}))(HeaderHandler)

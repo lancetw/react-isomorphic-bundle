@@ -6,10 +6,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  search: state.search
-}))
-export default class SearchHandler extends BaseComponent {
+class SearchHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -48,3 +45,7 @@ export default class SearchHandler extends BaseComponent {
     )
   }
 }
+
+export default connect(state => ({
+  search: state.search
+}))(SearchHandler)

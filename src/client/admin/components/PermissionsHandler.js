@@ -4,11 +4,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdminActions from 'client/admin/actions/AdminActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
-@connect(state => ({
-  auth: state.auth,
-  collect: state.admin
-}))
-export default class PermissionsHandler extends React.Component {
+import { contains } from 'lodash'
+
+class PermissionsHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -47,8 +45,8 @@ export default class PermissionsHandler extends React.Component {
     const token = AuthActions.getToken()
     return dispatch(AuthActions.showUser(token)).then(() => {
       const { user } = this.props.auth
-      if (checked.length === 1 && checked[0] === user.id) {
-        swal('Oops...', '頭腦清楚的人知道不應該停用自己。', 'error')
+      if (contains(checked, user.id)) {
+        swal('Oops...', '不應該停用自己。', 'error')
         return Promise.reject('Oops')
       } else {
         return dispatch(AdminActions.blockAdmins(form)).then(() => {
@@ -71,3 +69,8 @@ export default class PermissionsHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  auth: state.auth,
+  collect: state.admin
+}))(PermissionsHandler)

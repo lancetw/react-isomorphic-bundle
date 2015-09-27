@@ -55,5 +55,4 @@ export default class SyncTokenHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
 }

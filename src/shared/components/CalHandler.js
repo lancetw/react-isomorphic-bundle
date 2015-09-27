@@ -9,10 +9,7 @@ import moment from 'moment'
 import { BaseComponent } from 'shared/components'
 import queryString from 'query-string'
 
-@connect(state => ({
-  post: state.post
-}))
-export default class CalHandler extends BaseComponent {
+class CalHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -66,3 +63,7 @@ export default class CalHandler extends BaseComponent {
     )
   }
 }
+
+export default connect(state => ({
+  post: state.post
+}))(CalHandler)

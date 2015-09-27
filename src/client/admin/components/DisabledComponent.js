@@ -17,7 +17,7 @@ export default class Disabled extends React.Component {
       <main className="ui column page grid container">
         <div className="column">
           <div className="row">
-            <div className="image logo"></div>
+            <div className="image logo admin"></div>
           </div>
           <Menu {...this.props} />
           <div className="ui grid">

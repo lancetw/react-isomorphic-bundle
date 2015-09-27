@@ -8,11 +8,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  auth: state.auth,
-  post: state.news
-}))
-export default class HomeHandler extends BaseComponent {
+class HomeHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func
@@ -47,5 +43,9 @@ export default class HomeHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
 }
+
+export default connect(state => ({
+  auth: state.auth,
+  post: state.news
+}))(HomeHandler)

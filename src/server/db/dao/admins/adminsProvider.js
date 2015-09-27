@@ -54,7 +54,7 @@ exports.delete = function *(hid) {
 
 exports.auth = function *(email, password) {
   const user = yield models.admins.findOne({
-    where: { email: email, status : 0 },
+    where: { email: email, status: 0 },
     raw: true
   })
 

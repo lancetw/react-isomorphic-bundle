@@ -1,5 +1,6 @@
 # React Redux Universal (isomorphic) bundle
 
+[![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 [![Build Status](https://travis-ci.org/lancetw/react-isomorphic-bundle.svg)](https://travis-ci.org/lancetw/react-isomorphic-bundle)
 [![Dependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle)
 [![devDependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle/dev-status.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle#info=devDependencies)
@@ -18,6 +19,10 @@ Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-
 
 $ npm install -g nodemon webpack babel
 $ npm install
+
+edit `./config/sequelize/config.json`
+
+change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 ```
 
@@ -58,22 +63,24 @@ $ npm install
 - [x] Register
 - [x] Log in
 - [x] Facebook Sign In
-- [x] Restful API with JWT
-- [x] Change password
-- [x] Create posts
-- [x] Modify posts
-- [x] Delete posts
+- [x] restful API with JWT
+- [x] change password
+- [x] create posts
+- [x] modify posts
+- [x] delete posts
 - [x] i18n / language switcher
-- [x] Files/Images uploader
-- [x] Ad script support
-- [x] Location Settings (Google maps with HTML5 Geolocation)
-- [x] Posts with Infinite Scroll
-- [x] Posts with Calendar
-- [x] Serverside Async data-fetching (thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
-- [x] Full text Search
-- [ ] Sitemap
-- [ ] Static archive pages
-- [ ] Testing suite
+- [x] files/images uploader (Dropzone)
+- [x] Ad scripts support
+- [x] location Settings (Google maps with HTML5 Geolocation)
+- [x] post list with Infinite Scroll
+- [x] post list with Calendar
+- [x] serverside Async data-fetching (thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
+- [x] full text Search
+- [ ] image slideshow
+- [ ] admin mode
+- [ ] sitemap
+- [ ] static archive pages
+- [ ] testing suite
 - [ ] more ...
 
 ---
@@ -112,3 +119,4 @@ $ npm install
 * [react-list](https://github.com/orgsync/react-list)
 * [Css Shake](http://elrumordelaluz.github.io/csshake/)
 * [react-paginate](https://github.com/AdeleD/react-paginate)
+* [react-picture-show](https://github.com/dowjones/react-picture-show)

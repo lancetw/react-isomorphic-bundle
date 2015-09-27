@@ -9,12 +9,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  auth: state.auth,
-  post: state.manage,
-  user: state.user
-}))
-export default class ManageHandler extends BaseComponent {
+class ManageHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -68,3 +63,9 @@ export default class ManageHandler extends BaseComponent {
     )
   }
 }
+
+export default connect(state => ({
+  auth: state.auth,
+  post: state.manage,
+  user: state.user
+}))(ManageHandler)

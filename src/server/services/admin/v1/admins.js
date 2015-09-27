@@ -41,41 +41,70 @@ export default new Resource('admins', {
   // POST /users
   create: [ RestAuth, function *(next) {
     const body = this.request.body
-    const rule = {
-      blocked: {
-        type: 'array',
-        itemType: 'string',
-        rule: { type: 'string', allowEmpty: false }
-      },
-      type: { type: 'string' }
-    }
-    const errors = validate(rule, body)
-    if (errors) {
-      this.type = 'json'
-      this.status = 200
-      this.body = errors
-      return
-    }
 
-    // updateAll
-    try {
-      each(body.blocked, function (hid) {
-        co(function* () {
-          const _body = {
-            status: (body.type === 'blocked') ? 1 : 0
-          }
+    if (!body.email) {
+      const rule = {
+        blocked: {
+          type: 'array',
+          itemType: 'string',
+          rule: { type: 'string', allowEmpty: false }
+        },
+        type: { type: 'string' }
+      }
+      const errors = validate(rule, body)
 
-          yield User.update(hid, _body)
+      if (errors) {
+        this.type = 'json'
+        this.status = 200
+        this.body = errors
+        return
+      }
+
+      // updateAll
+      try {
+        each(body.blocked, function (hid) {
+          co(function* () {
+            const _body = {
+              status: (body.type === 'blocked') ? 1 : 0
+            }
+
+            yield User.update(hid, _body)
+          })
         })
-      })
 
-      this.type = 'json'
-      this.status = 201
-      this.body = { done: true }
-    } catch (err) {
-      this.type = 'json'
-      this.status = 403
-      this.body = err
+        this.type = 'json'
+        this.status = 201
+        this.body = { done: true }
+      } catch (err) {
+        this.type = 'json'
+        this.status = 200
+        this.body = err
+      }
+    } else {
+      const rule = {
+        email: { type: 'email', required: true, allowEmpty: false },
+        password: { type: 'password', required: true, allowEmpty: false }
+      }
+      const errors = validate(rule, body)
+
+      if (errors) {
+        this.type = 'json'
+        this.status = 200
+        this.body = errors
+        return
+      }
+
+      // save
+      try {
+        const user = yield User.create(body)
+        this.type = 'json'
+        this.status = 201
+        this.body = hashids.encodeJson(user)
+      } catch (err) {
+        this.type = 'json'
+        this.status = 200
+        this.body = err
+      }
     }
   }],
   // GET /admins/:admin
@@ -102,7 +131,7 @@ export default new Resource('admins', {
   },
   // PUT /users/:user
   update: [ RestAuth, function *(next) {
-    const body = yield parse(this)
+    const body = this.request.body
 
     const rule = {
       name: { type: 'string', required: false, allowEmpty: true },
@@ -133,7 +162,7 @@ export default new Resource('admins', {
   destroy: [ RestAuth, function *(next) {
     try {
       const body = yield User.load(this.params.admin)
-      if (hashids.decode(this.params.admin) !== +this.user.id) {
+      if (hashids.decode(this.params.admin) !== body.id) {
         throw new Error('user check failed')
       }
 

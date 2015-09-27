@@ -75,7 +75,7 @@ export default class Login extends React.Component {
             action=""
             method="post"
             onSubmit={::this.handleSubmit}>
-            <div className="image logo"></div>
+            <div className="image logo admin"></div>
             <div className="three fields">
               <div className="field">
                 <input ref="email" type="email" placeholder="電子郵件信箱" />

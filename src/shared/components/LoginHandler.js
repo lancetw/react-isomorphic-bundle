@@ -7,10 +7,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  auth: state.auth
-}))
-export default class LoginHandler extends BaseComponent {
+class LoginHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
@@ -43,3 +40,7 @@ export default class LoginHandler extends BaseComponent {
     )
   }
 }
+
+export default connect(state => ({
+  auth: state.auth
+}))(LoginHandler)

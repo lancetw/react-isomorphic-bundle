@@ -5,11 +5,7 @@ import { connect } from 'react-redux'
 import * as PostActions from 'client/admin/actions/PostActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
 
-@connect(state => ({
-  auth: state.auth,
-  collect: state.post
-}))
-export default class SpamHandler extends React.Component {
+class SpamHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -62,3 +58,7 @@ export default class SpamHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  collect: state.post
+}))(SpamHandler)

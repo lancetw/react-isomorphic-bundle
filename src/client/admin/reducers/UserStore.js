@@ -5,7 +5,17 @@ import {
   LIST_USER_FAILED,
   BLOCK_USER_STARTED,
   BLOCK_USER_COMPLETED,
-  BLOCK_USER_FAILED
+  BLOCK_USER_FAILED,
+  CHANGE_PASS_USER_STARTED,
+  CHANGE_PASS_USER_COMPLETED,
+  CHANGE_PASS_USER_FAILED,
+  CHANGE_PASS_USER_INITED,
+  CHANGE_USER_STARTED,
+  CHANGE_USER_COMPLETED,
+  CHANGE_USER_FAILED,
+  GET_USER_STARTED,
+  GET_USER_COMPLETED,
+  GET_USER_FAILED
 } from 'client/admin/constants/ActionTypes'
 import { createReducer } from 'shared/utils/redux-utils'
 import moment from 'moment'
@@ -33,6 +43,7 @@ export default createReducer(initialState, {
     isFetching: false,
     errors: {},
     items: [],
+    detail: {},
     offset: 0,
     limit: 0,
     hasMore: true,
@@ -65,7 +76,8 @@ export default createReducer(initialState, {
       totalPages: Math.ceil(+action.count / +action.limit),
       currPage: Math.ceil(+(state.offset + action.limit) / +action.limit),
       done: true,
-      keyword: action.keyword
+      keyword: action.keyword,
+      user: null
     }
     if (action.status === 0) {
       return merge(o, { count: action.count, blockedCount: null })
@@ -80,5 +92,17 @@ export default createReducer(initialState, {
   [BLOCK_USER_COMPLETED]: (state, action) =>
     ({ done: false }),
   [BLOCK_USER_FAILED]: (state, action) =>
-    ({ done: false, errors: action.errors })
+    ({ done: false, errors: action.errors }),
+  [GET_USER_STARTED]: () =>
+    ({ detail: {} }),
+  [GET_USER_COMPLETED]: (state, action) =>
+    ({ detail: action.detail }),
+  [GET_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors }),
+  [CHANGE_PASS_USER_STARTED]: () =>
+    ({ user: null }),
+  [CHANGE_PASS_USER_COMPLETED]: (state, action) =>
+    ({ user: action.user }),
+  [CHANGE_PASS_USER_FAILED]: (state, action) =>
+    ({ errors: action.errors })
 })

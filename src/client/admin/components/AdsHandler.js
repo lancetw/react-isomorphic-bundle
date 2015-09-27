@@ -4,11 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdActions from 'client/admin/actions/AdActions'
 
-@connect(state => ({
-  auth: state.auth,
-  collect: state.ad
-}))
-export default class AdsHandler extends React.Component {
+class AdsHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -34,3 +30,7 @@ export default class AdsHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  collect: state.ad
+}))(AdsHandler)

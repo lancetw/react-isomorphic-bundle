@@ -106,7 +106,7 @@ table.ui.table tbody {
 }
 
 .table .name {
-  width: 25%;
+  width: 35%;
 }
 
 .table .ocname {
@@ -114,7 +114,12 @@ table.ui.table tbody {
 }
 
 .table .email {
+  width: 35%;
+}
+
+.table .date {
   width: 25%;
+  white-space: nowrap;
 }
 
 td.table .ocname {
@@ -133,8 +138,8 @@ td.table.title a {
   text-overflow: ellipsis;
 }
 
-.table .date {
-  white-space: nowrap;
+td.table.email > .ui.header {
+  cursor: pointer !important;
 }
 
 .ui.form.segment, .ui.tab.segment {

@@ -41,6 +41,32 @@ exports.load = function *(hid) {
   })
 }
 
+exports.loadDetail = function *(hid) {
+  const id = +hashids.decode(hid)
+  return yield models.users.findOne({
+    where: { id: id },
+    attributes: ['id', 'name', 'email', 'created_at', 'status'],
+    include: [{
+      model: models.usersInfo,
+      attributes: [
+        'ocname',
+        'contact',
+        'country',
+        'city',
+        'address',
+        'place',
+        'zipcode',
+        'tel',
+        'fax',
+        'url',
+        'email'
+      ],
+      required: false
+    }],
+    raw: true
+  })
+}
+
 exports.loadByEmail = function *(email) {
   return yield models.users.findOne({
     where: { email: email },

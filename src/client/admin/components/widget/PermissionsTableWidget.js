@@ -13,7 +13,12 @@ export default class PermissionsTableWidget extends React.Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     action: PropTypes.func.isRequired,
+    deleteAction: PropTypes.func.isRequired,
+    fetchList: PropTypes.func.isRequired,
+    submit: PropTypes.func.isRequired,
+    changePassword: PropTypes.func.isRequired,
     selected: PropTypes.number
   }
 
@@ -27,9 +32,9 @@ export default class PermissionsTableWidget extends React.Component {
     this.state = { checked: [], page: 1 }
   }
 
-  handleChange (id, e) {
+  handleChange (id, event) {
     let checked = this.state.checked
-    if (e.target.checked) {
+    if (event.target.checked) {
       if (!contains(checked, id)) {
         checked.push(id)
         this.setState({ checked: checked })
@@ -45,7 +50,142 @@ export default class PermissionsTableWidget extends React.Component {
   handleClick () {
     const checked = this.state.checked
 
-    this.props.action(checked, this.state.page).then(() => {
+    this.props.action(checked).then(() => {
+      this.setState({ checked: [] })
+    }).catch(() => {
+      this.setState({ checked: [] })
+    })
+  }
+
+  handleCreateClick () {
+    const self = this
+
+    swal({
+      title: '新增管理者',
+      text: '請輸入 Email',
+      type: 'input',
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: 'slide-from-top',
+      inputPlaceholder: 'Email',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消',
+      confirmButtonColor: '#ff8800'
+    }, function (email) {
+      if (email === false) {
+        return false
+      }
+      if (email === '') {
+        swal.showInputError('輸入有誤')
+        return false
+      }
+
+      swal({
+        title: '新增管理者',
+        text: '請輸入密碼',
+        type: 'input',
+        inputType: 'password',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: 'slide-from-top',
+        inputPlaceholder: '密碼（長度應大於 6）',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消',
+        confirmButtonColor: '#ff8800'
+      }, function (password) {
+        if (password === false) {
+          return false
+        }
+        if (password === '') {
+          swal.showInputError('輸入有誤')
+          return false
+        }
+
+        swal({
+          title: '新增管理者',
+          text: '名稱（可不填）',
+          type: 'input',
+          showCancelButton: true,
+          closeOnConfirm: false,
+          animation: 'slide-from-top',
+          inputPlaceholder: '名稱',
+          confirmButtonText: '確認',
+          cancelButtonText: '取消',
+          confirmButtonColor: '#ff8800',
+          showLoaderOnConfirm: true
+        }, function (name) {
+          self.props.submit({ email: email, password: password, name: name })
+          .then((res) => {
+            const { admin, errors } = res
+            if (admin && admin.email === email) {
+              swal('完成', email + ' 已新增', 'success')
+              self.props.fetchList({ offset: 0, limit: 8, status: 0 })
+            } else {
+              if (!isEmpty(errors)) {
+                const message = errors[0].message
+                if (message === 'email must be unique') {
+                  swal('新增失敗', email + ' 已存在', 'error')
+                } else if (message === 'should be an email') {
+                  swal('新增失敗', email + ' 不是個 email', 'error')
+                } else if (message === 'length should bigger than 6') {
+                  swal('新增失敗', '密碼太短', 'error')
+                } else {
+                  swal('新增失敗', email + ' 新增時發生錯誤', 'error')
+                }
+              }
+            }
+          })
+          .catch((err) => {
+            swal('失敗', err, 'error')
+          })
+        })
+      })
+    })
+  }
+
+  handleChangePasswordClick (id, event) {
+    const self = this
+
+    swal({
+      title: '修改密碼',
+      text: '請輸入新密碼',
+      type: 'input',
+      inputType: 'password',
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: 'slide-from-top',
+      inputPlaceholder: '密碼（長度應大於 6）',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消',
+      confirmButtonColor: '#ff8800',
+      showLoaderOnConfirm: true
+    }, function (password) {
+      if (password === false) {
+        return false
+      }
+      if (password === '') {
+        swal.showInputError('輸入有誤')
+        return false
+      }
+
+      self.props.changePassword({ id: id, password: password })
+      .then((res) => {
+        const { admin } = res
+        if (admin && admin.email) {
+          swal('完成', admin.email + ' 已更新密碼', 'success')
+        } else {
+          swal('新增失敗', '失敗，請重試', 'error')
+        }
+      }).catch((err) => {
+        swal('失敗', err, 'error')
+      })
+    })
+  }
+
+  handleDeleteClick () {
+    const checked = this.state.checked
+
+    this.props.deleteAction(checked).then(() => {
       this.setState({ checked: [] })
     }).catch(() => {
       this.setState({ checked: [] })
@@ -59,7 +199,7 @@ export default class PermissionsTableWidget extends React.Component {
   renderActionBtn () {
     const ActionBtnClasses = classNames(
       'ui',
-      {'red': !this.props.selected },
+      {'yellow': !this.props.selected },
       {'green': this.props.selected },
       'button',
       {'loading': !this.props.collect.done },
@@ -75,10 +215,33 @@ export default class PermissionsTableWidget extends React.Component {
     )
   }
 
+  renderUserActionBtn () {
+    const ActionBtnClasses = classNames(
+      'ui',
+      {'blue': !this.props.selected },
+      {'red': this.props.selected },
+      'button',
+      {'loading': false },
+      {'disabled': false }
+    )
+    const btnLabel = (!this.props.selected) ? '新增' : '刪除'
+    return (
+      <div
+        onClick={
+          (!this.props.selected)
+            ? ::this.handleCreateClick
+            : ::this.handleDeleteClick}
+        className={ActionBtnClasses}>
+        { btnLabel }
+      </div>
+    )
+  }
+
   render () {
     const { items } = this.props.collect
     const handleChange = ::this.handleChange
     const isChecked = ::this.isChecked
+    const handleChangePasswordClick = ::this.handleChangePasswordClick
 
     const TableClasses = classNames(
       'ui',
@@ -96,7 +259,6 @@ export default class PermissionsTableWidget extends React.Component {
             <th></th>
             <th className="table email">電子郵件信箱</th>
             <th className="table name">名稱</th>
-            <th className="table comment">備註</th>
             <th className="table date">加入日期</th>
           </tr>
         </thead>
@@ -116,19 +278,22 @@ export default class PermissionsTableWidget extends React.Component {
               </div>
             </td>
             <td className="table email">
-              { (checked)
-                && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
+              { (checked) && (
+                <div
+                  onClick={handleChangePasswordClick.bind(this, item.id)}
+                  className="ui orange small header">
                   { item.email }
-                </a>)
+                </div>)
               }
-              { (!checked)
-                && (<a target="_blank" href={`/ring/admin/${item.id}`}>
+              { (!checked) && (
+                <div
+                  onClick={handleChangePasswordClick.bind(this, item.id)}
+                  className="ui orange small header">
                   { item.email }
-                </a>)
+                </div>)
               }
             </td>
             <td className="table name">{ item.name }</td>
-            <td className="table comment">{ item.comment }</td>
             <td className="table date">{ toDate(item.created_at, true) }</td>
           </tr>
           )
@@ -138,6 +303,7 @@ export default class PermissionsTableWidget extends React.Component {
           <tr>
             <th colSpan="5">
               {::this.renderActionBtn()}
+              {::this.renderUserActionBtn()}
               <Pagination {...this.props} />
             </th>
           </tr>

@@ -3,10 +3,7 @@ import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import { connect } from 'react-redux'
 
-@connect(state => ({
-  locale: state.locale
-}))
-export default class LocaleSwitcher extends React.Component {
+class LocaleSwitcher extends React.Component {
 
   static propTypes = {
     locale: PropTypes.object.isRequired,
@@ -63,3 +60,7 @@ export default class LocaleSwitcher extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  locale: state.locale
+}))(LocaleSwitcher)

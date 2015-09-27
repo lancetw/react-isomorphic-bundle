@@ -4,10 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from 'client/admin/actions/AuthActions'
 
-@connect(state => ({
-  auth: state.auth
-}))
-export default class LoginHandler extends React.Component {
+class LoginHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
@@ -27,3 +24,7 @@ export default class LoginHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  auth: state.auth
+}))(LoginHandler)

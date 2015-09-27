@@ -3,13 +3,8 @@ import Blocked from './BlockedComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from 'client/admin/actions/UserActions'
-import * as AuthActions from 'client/admin/actions/AuthActions'
 
-@connect(state => ({
-  auth: state.auth,
-  collect: state.user
-}))
-export default class BlockedHandler extends React.Component {
+class BlockedHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -53,7 +48,6 @@ export default class BlockedHandler extends React.Component {
     const { dispatch } = this.props
     return (
       <Blocked
-        {...bindActionCreators(AuthActions, dispatch)}
         {...bindActionCreators(UserActions, dispatch)}
         handlePageClick={::this.handlePageClick}
         action={::this.unblockUsers}
@@ -63,3 +57,7 @@ export default class BlockedHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  collect: state.user
+}))(BlockedHandler)

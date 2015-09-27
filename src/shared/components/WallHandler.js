@@ -11,10 +11,6 @@ import { at } from 'lodash'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  auth: state.auth,
-  post: state.overview
-}))
 export default class WallHandler extends BaseComponent {
 
   static propTypes = {
@@ -77,3 +73,7 @@ export default class WallHandler extends BaseComponent {
   }
 }
 
+export default connect(state => ({
+  auth: state.auth,
+  post: state.overview
+}))(WallHandler)

@@ -5,11 +5,7 @@ import { connect } from 'react-redux'
 import * as PostActions from 'client/admin/actions/PostActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
 
-@connect(state => ({
-  auth: state.auth,
-  collect: state.post
-}))
-export default class DashHandler extends React.Component {
+class DashHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -62,3 +58,8 @@ export default class DashHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  auth: state.auth,
+  collect: state.post
+}))(DashHandler)

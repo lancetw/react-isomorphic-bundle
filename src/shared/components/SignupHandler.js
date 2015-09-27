@@ -7,10 +7,7 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
-@connect(state => ({
-  signup: state.signup
-}))
-export default class SignupHandler extends BaseComponent {
+class SignupHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
@@ -44,5 +41,8 @@ export default class SignupHandler extends BaseComponent {
       </DocumentTitle>
     )
   }
-
 }
+
+export default connect(state => ({
+  signup: state.signup
+}))(SignupHandler)

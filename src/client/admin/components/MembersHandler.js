@@ -4,11 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from 'client/admin/actions/UserActions'
 
-@connect(state => ({
-  auth: state.auth,
-  collect: state.user
-}))
-export default class MembersHandler extends React.Component {
+class MembersHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -61,3 +57,7 @@ export default class MembersHandler extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  collect: state.user
+}))(MembersHandler)

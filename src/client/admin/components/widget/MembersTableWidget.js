@@ -120,7 +120,7 @@ export default class MembersTableWidget extends React.Component {
                 </a>)
               }
               { (!checked)
-                && (<a target="_blank" href={`/ring/user/${item.id}`}>
+                && (<a target="_blank" href={`/ring/members/${item.id}`}>
                   { item.email }
                 </a>)
               }

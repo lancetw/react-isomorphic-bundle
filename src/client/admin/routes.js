@@ -6,6 +6,7 @@ import {
   Spam,
   Login,
   Members,
+  MembersDetail,
   Blocked,
   Ads,
   Permissions,
@@ -21,6 +22,7 @@ export default function (store) {
       <Route path="dash" store={store} component={Dash} onEnter={auth} />
       <Route path="spam" store={store} component={Spam} onEnter={auth} />
       <Route path="members" store={store} component={Members} onEnter={auth} />
+      <Route path="members/:id" store={store} component={MembersDetail} onEnter={auth} />
       <Route path="blocked" store={store} component={Blocked} onEnter={auth} />
       <Route path="ads" store={store} component={Ads} onEnter={auth} />
       <Route path="permissions" store={store} component={Permissions} onEnter={auth} />

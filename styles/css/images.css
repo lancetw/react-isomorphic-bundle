@@ -13,6 +13,10 @@
   }
 }
 
+.image.logo.admin {
+  margin-top: 10px;
+}
+
 .image.logo-mini {
   margin: 0 auto;
   display: inline-block;
