@@ -90,18 +90,20 @@ export default class MembersTableWidget extends React.Component {
 
     const Message = isFetching
       ? (
-        <div className="ui warning message">
-          <div className="header">
-            資料更新中請稍候...
+        <div className="ui icon message">
+          <i className="notched circle loading icon"></i>
+          <div className="content">
+            <div className="header">
+              請稍候
+            </div>
+            <p>資料載入中...</p>
           </div>
-        </div> )
+        </div>
+        )
       : null
 
     return (
       <div>
-        <CSSTransitionGroup transitionName="MessageTransition">
-          {Message}
-        </CSSTransitionGroup>
         <table className={TableClasses}>
           <thead className="full-width">
             <tr>
@@ -164,6 +166,9 @@ export default class MembersTableWidget extends React.Component {
             </tr>
           </tfoot>
         </table>
+        <CSSTransitionGroup transitionName="MessageTransition">
+          {Message}
+        </CSSTransitionGroup>
       </div>
     )
   }
