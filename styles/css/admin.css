@@ -47,6 +47,13 @@ a.delete {
     );
 }
 
+@media only screen and (min-width: 1600px) {
+  main {
+    margin: 0 auto !important;
+    width: 1440px;
+  }
+}
+
 main.ui.stackable.page {
   padding-top: 32px;
   user-select: none;
