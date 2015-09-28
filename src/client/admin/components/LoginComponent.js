@@ -9,7 +9,8 @@ export default class Login extends React.Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    sync: PropTypes.func.isRequired
+    sync: PropTypes.func.isRequired,
+    showUser: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -22,12 +23,6 @@ export default class Login extends React.Component {
     this.releaseTimeout = null
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.auth.isAuthenticated && !nextProps.auth.token) {
-      this.props.sync()
-    }
-  }
-
   componentWillUnmount () {
     typeof this.releaseTimeout === 'function'
       && clearTimeout(this.releaseTimeout)
@@ -37,7 +32,9 @@ export default class Login extends React.Component {
     evt.preventDefault()
     const email = React.findDOMNode(this.refs.email).value
     const passwd = React.findDOMNode(this.refs.passwd).value
-    this.props.login({ email, passwd })
+    this.props.login({ email, passwd }).then((info) => {
+      return this.props.sync()
+    })
   }
 
   render () {
