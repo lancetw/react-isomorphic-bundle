@@ -106,7 +106,6 @@
     "levelup": "^1.2.1",
     "lodash": "^3.9.3",
     "lru-cache": "^2.6.4",
-    "mocha": "^2.3.3",
     "moment": "^2.10.3",
     "node-libs-browser": "^0.5.2",
     "nunjucks": "^2.0.0",
