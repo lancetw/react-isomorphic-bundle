@@ -56,8 +56,7 @@ export default createReducer(initialState, {
     keyword: null
   }),
   [LIST_USER_STARTED]: () => ({
-    isFetching: true,
-    items: []
+    isFetching: true
   }),
   [LIST_USER_COMPLETED]: (state, action) => {
     let hasMore = false
