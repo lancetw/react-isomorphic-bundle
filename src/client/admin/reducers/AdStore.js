@@ -33,7 +33,8 @@ export default createReducer(initialState, {
     currPage: null
   }),
   [LIST_AD_STARTED]: () => ({
-    isFetching: true
+    isFetching: true,
+    items: []
   }),
   [LIST_AD_COMPLETED]: (state, action) => {
     let hasMore = false

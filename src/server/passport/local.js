@@ -1,9 +1,9 @@
 import passport from 'koa-passport'
-import conifg from 'config'
 import db from 'src/server/db'
 import co from 'co'
 import debug from 'debug'
 
+const config = require('config').admin
 const LocalStrategy = require('passport-local').Strategy
 const Admin = db.admins
 
@@ -14,6 +14,17 @@ export default passport.use(new LocalStrategy({
 }, function (email, passwd, done) {
   co(function *() {
     try {
+      // if db is empty and default email and password
+      const count = yield Admin.count()
+      if (count === 0
+          && email === config.defaultEmail
+          && passwd === config.defaultPassword) {
+        return {
+          id: 0,
+          email: config.defaultEmail
+        }
+      }
+
       const user = yield Admin.auth(email, passwd)
       if (!user) {
         throw new Error('no permissions')

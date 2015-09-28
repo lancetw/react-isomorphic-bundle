@@ -45,7 +45,7 @@ export default class Login extends React.Component {
       if (this.props.auth.isAuthenticated) {
         this.releaseTimeout =
           setTimeout(() => {
-            this.context.history.replaceState({}, '/ring/dash')
+            this.context.history.replaceState({}, '/ring/permissions')
           }, 1500)
       }
     }

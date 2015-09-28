@@ -5,12 +5,12 @@ export default class ReduxResolver {
 
   constructor () {
     this.pending = []
-    this.firstRending = true
+    this.firstRendering = true
   }
 
   resolve (action) {
     const [, ...args] = arguments
-    if (process.env.BROWSER && !this.firstRending) {
+    if (process.env.BROWSER && !this.firstRendering) {
       return action(...args)
     } else {
       this.pending = [
@@ -27,6 +27,6 @@ export default class ReduxResolver {
 
   clear () {
     this.pending = []
-    this.firstRending = false
+    this.firstRendering = false
   }
 }

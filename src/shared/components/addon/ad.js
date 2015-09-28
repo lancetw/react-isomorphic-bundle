@@ -6,7 +6,7 @@ import { BaseComponent } from 'shared/components'
 export default class Ad extends BaseComponent {
 
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    size: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired
   }
 
@@ -17,7 +17,7 @@ export default class Ad extends BaseComponent {
   }
 
   componentDidMount () {
-    this._releaseTimeout = setTimeout(() => this.loadAd(), 0)
+    this._releaseTimeout = setTimeout(() => this.loadAd(), 500)
   }
 
   componentWillUnmount () {
@@ -33,7 +33,7 @@ export default class Ad extends BaseComponent {
 
       new Promise((resolve) => {
         setTimeout(() => {
-          postscribe('#hotrank-container-' + this.props.id,
+          postscribe('#hotrank-container-' + this.props.size,
             `<script src='${this.props.link}'></script>`,
             { done: () => { resolve(true) } })
         }, 0)
@@ -43,7 +43,10 @@ export default class Ad extends BaseComponent {
 
   render () {
     return (
-      <div id={`hotrank-container-${this.props.id}`}></div>
+      <div
+        ref={`hotrank-container-${this.props.size}`}
+        id={`hotrank-container-${this.props.size}`}>
+      </div>
     )
   }
 }

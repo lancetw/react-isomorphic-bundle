@@ -5,6 +5,7 @@ import cals from './cals'
 import posts from './posts'
 import uploads from './uploads'
 import searches from './searches'
+import promotions from './promotions'
 
 const router = compose([
   users.middleware(),
@@ -12,7 +13,8 @@ const router = compose([
   posts.middleware(),
   cals.middleware(),
   uploads.middleware(),
-  searches.middleware()
+  searches.middleware(),
+  promotions.middleware()
 ])
 
 export default router

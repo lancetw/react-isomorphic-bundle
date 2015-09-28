@@ -80,7 +80,7 @@ export default new Resource('posts', {
     }
   }],
   update: [ RestAuth, function *(next) {
-    const body = yield parse(this)
+    const body = this.request.body
     const rule = {
       uid: { type: 'string' },
       type: { type: 'string' },

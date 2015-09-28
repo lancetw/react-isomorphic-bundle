@@ -10,7 +10,7 @@ module.exports = function (sequelize, Sequelize) {
       validate: {
         isUrl: true
       },
-      unique: true,
+      unique: false,
       type: Sequelize.STRING
     },
     name: {

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
+import { endsWith } from 'lodash'
 
 if (process.env.BROWSER) {
 }
@@ -10,7 +11,8 @@ export default class AdsTableWidget extends React.Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
-    action: PropTypes.func.isRequired,
+    deleteAction: PropTypes.func.isRequired,
+    fetchList: PropTypes.func.isRequired,
     selected: PropTypes.number
   }
 
@@ -40,9 +42,71 @@ export default class AdsTableWidget extends React.Component {
   }
 
   handleClick () {
+    const self = this
+
+    swal({
+      title: '新增廣告網址',
+      text: '請輸入廣告網址',
+      type: 'input',
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: 'slide-from-top',
+      inputPlaceholder: '網址',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消',
+      confirmButtonColor: '#ff8800'
+    }, function (link) {
+      if (link === false) {
+        return false
+      }
+      if (link === '') {
+        swal.showInputError('輸入有誤')
+        return false
+      }
+
+      swal({
+        title: '設定尺寸',
+        text: '請輸入 1L 或 1S（數字可增加）',
+        type: 'input',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: 'slide-from-top',
+        inputPlaceholder: '尺寸',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消',
+        confirmButtonColor: '#ff8800',
+        showLoaderOnConfirm: true
+      }, function (size) {
+        if (size === false) {
+          return false
+        }
+        if (!(endsWith(size, 'L') || endsWith(size ,'S'))) {
+          swal.showInputError('輸入有誤')
+          return false
+        }
+
+        self.props.submit({ name: size, script: link })
+        .then((res) => {
+          const { ad } = res
+          if (ad && ad.name) {
+            swal('完成', '設定完畢', 'success')
+            self.props.fetchList({ offset: 0, limit: 10, status: 0 })
+          } else {
+            swal('新增失敗', '失敗，請重試', 'error')
+          }
+        }).catch((err) => {
+          swal('失敗', err, 'error')
+        })
+      })
+    })
+  }
+
+  handleDeleteClick () {
     const checked = this.state.checked
 
-    this.props.action(checked, this.state.page).then(() => {
+    this.props.deleteAction(checked).then(() => {
+      this.setState({ checked: [] })
+    }).catch(() => {
       this.setState({ checked: [] })
     })
   }
@@ -60,10 +124,13 @@ export default class AdsTableWidget extends React.Component {
       {'loading': !this.props.collect.done },
       {'disabled': !this.props.collect.done }
     )
-    const btnLabel = (!this.props.selected) ? '新增' : '刪除'
+    const btnLabel = isEmpty(this.state.checked) ? '新增' : '刪除'
     return (
       <div
-        onClick={::this.handleClick}
+        onClick={
+          isEmpty(this.state.checked)
+          ? ::this.handleClick
+          : ::this.handleDeleteClick}
         className={ActionBtnClasses}>
         { btnLabel }
       </div>
@@ -89,9 +156,8 @@ export default class AdsTableWidget extends React.Component {
         <thead className="full-width">
           <tr>
             <th></th>
-            <th className="table name">名稱</th>
+            <th className="table size">尺寸</th>
             <th className="table script">廣告網址</th>
-            <th className="table comment">備註</th>
           </tr>
         </thead>
         <tbody>
@@ -109,13 +175,12 @@ export default class AdsTableWidget extends React.Component {
                 <label></label>
               </div>
             </td>
-            <td className="table name">
+            <td className="table size">
               { item.name }
             </td>
             <td className="table script">
               { item.script }
             </td>
-            <td className="table comment">{ item.comment }</td>
           </tr>
           )
         })}

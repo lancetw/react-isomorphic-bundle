@@ -51,7 +51,8 @@ export default createReducer(initialState, {
     keyword: null
   }),
   [LIST_ADMIN_STARTED]: () => ({
-    isFetching: true
+    isFetching: true,
+    items: []
   }),
   [LIST_ADMIN_COMPLETED]: (state, action) => {
     let hasMore = false

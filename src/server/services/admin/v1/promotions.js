@@ -1,6 +1,5 @@
 import Resource from 'koa-resource-router'
 import validate from 'parameter'
-import parse from 'co-body'
 import hashids from 'src/shared/utils/hashids-plus'
 import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
@@ -25,14 +24,14 @@ export default new Resource('promotions', {
       return
     }
 
-    const {  offset, limit } = body
+    const { offset, limit } = body
 
     const data = yield Promotion.listAllWithCount(offset, limit)
     this.body = hashids.encodeJson(data)
   },
   // POST /promotions
   create: [ RestAuth, function *(next) {
-    const body = yield parse(this)
+    const body = this.request.body
     const rule = {
       name: { type: 'string', required: true, allowEmpty: true },
       script: { type: 'string', required: true, allowEmpty: false },
@@ -77,7 +76,7 @@ export default new Resource('promotions', {
   },
   // PUT /promotions/:promotion
   update: [ RestAuth, function *(next) {
-    const body = yield parse(this)
+    const body = this.request.body
 
     const rule = {
       name: { type: 'string', required: true, allowEmpty: true },

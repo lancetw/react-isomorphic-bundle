@@ -25,5 +25,9 @@
       "ISS": "http://localhost:3000/api/v1/login",
       "AUD": "http://localhost:3000"
     }
+  },
+  "admin": {
+    "defaultEmail": "admin@example.com",
+    "defaultPassword": "admin"
   }
 }

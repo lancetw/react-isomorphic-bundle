@@ -3,6 +3,7 @@ import validate from 'parameter'
 import parse from 'co-body'
 import hashids from 'src/shared/utils/hashids-plus'
 import RestAuth from 'src/server/passport/auth/rest-auth'
+import RestAuthLoose from 'src/server/passport/auth/rest-auth-loose'
 import db from 'src/server/db'
 import queryType from 'query-types'
 import { each } from 'lodash'
@@ -12,7 +13,7 @@ const User = db.admins
 
 export default new Resource('admins', {
   // GET /admins
-  index: [ RestAuth, function *(next) {
+  index: [ RestAuthLoose, function *(next) {
     const body = queryType.parseObject(this.request.query)
     const rule = {
       offset: { type: 'number', required: false },
@@ -39,7 +40,7 @@ export default new Resource('admins', {
     this.body = hashids.encodeJson(data)
   }],
   // POST /users
-  create: [ RestAuth, function *(next) {
+  create: [ RestAuthLoose, function *(next) {
     const body = this.request.body
 
     if (!body.email) {

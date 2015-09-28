@@ -8,11 +8,10 @@ import {
   isBetween,
   isPastDay,
   toShortDate,
-  toYear } from 'shared/utils/date-utils'
+  toYear
+} from 'shared/utils/date-utils'
 import { getFileName, getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
-import MediaQuery from 'react-responsive'
-import Ad from 'shared/components/addon/ad'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import counterpart from 'counterpart'
@@ -20,6 +19,7 @@ import { Link } from 'react-router'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import AutoLinkText from 'react-autolink-text'
 import createLocation from 'history/lib/createLocation'
+import ADContent from './ADContent'
 
 export default class Post extends BaseComponent {
 
@@ -303,22 +303,7 @@ export default class Post extends BaseComponent {
             </div>
             }
             <div className="row">
-              <MediaQuery minDeviceWidth={375}>
-                <div className="ui basic segment center aligned">
-                  <Ad
-                    id="1L"
-                    link="http://mx1.hotrank.com.tw/script/taiwanbible/Home335150"
-                  />
-                </div>
-              </MediaQuery>
-              <MediaQuery maxDeviceWidth={375}>
-                <div className="ui basic segment center aligned">
-                  <Ad
-                    id="1S"
-                    link="http://mx1.hotrank.com.tw/script/oursweb/200x200"
-                  />
-                </div>
-              </MediaQuery>
+              <ADContent />
             </div>
           </div>
         </main>

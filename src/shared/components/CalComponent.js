@@ -13,6 +13,7 @@ import { fixLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
 import { createHistory } from 'history'
 import queryString from 'query-string'
+import ADContent from './ADContent'
 
 let unlisten
 let history
@@ -185,6 +186,7 @@ export default class Cal extends BaseComponent {
             locale={locale}
             localeUtils={LocaleUtils}
           />
+          <ADContent />
         </div>
         <div className="eight wide computer sixteen wide tablet column">
           <div className="ui horizontal header divider">

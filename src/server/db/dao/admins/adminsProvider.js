@@ -112,3 +112,6 @@ exports.searchWithCount = function *(offset=0, limit=20, pattern, status) {
   })
 }
 
+exports.count = function *() {
+  return yield models.admins.count()
+}
