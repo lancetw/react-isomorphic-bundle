@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react/addons'
-
 const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {

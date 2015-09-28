@@ -2,12 +2,15 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 
+import { logout } from 'client/admin/actions/AuthActions'
+
 if (process.env.BROWSER) {
 }
 
 export default class MenuWidget extends React.Component {
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     menuIndex: PropTypes.number
   }
@@ -25,8 +28,9 @@ export default class MenuWidget extends React.Component {
   }
 
   doLogout () {
-    this.props.logout()
-    this.context.history.replaceState({}, '/ring')
+    this.props.dispatch(logout()).then(() => {
+      this.context.history.replaceState({}, '/ring')
+    })
   }
 
   LinkClasses (index) {
