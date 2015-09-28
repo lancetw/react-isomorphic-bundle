@@ -45,7 +45,7 @@ export default createReducer(initialState, {
     keyword: null
   }),
   [LIST_POST_STARTED]: () => ({
-    isFetching: true,
+    isFetching: true
   }),
   [LIST_POST_COMPLETED]: (state, action) => {
     let hasMore = false
