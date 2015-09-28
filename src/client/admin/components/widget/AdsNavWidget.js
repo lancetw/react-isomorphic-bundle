@@ -37,9 +37,11 @@ export default class AdsNavWidget extends React.Component {
   doSubmit (userInput) {
     this.props.fetchList({
       offset: 0,
-      limit: 5,
+      limit: 8,
       status: this.props.selected,
-      keyword: userInput })
+      keyword: userInput,
+      reload: true
+    })
     this.setState({ userInput })
   }
 

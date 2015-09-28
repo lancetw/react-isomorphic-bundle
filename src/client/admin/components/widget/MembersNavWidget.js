@@ -37,7 +37,9 @@ export default class MembersNavWidget extends React.Component {
       offset: 0,
       limit: 5,
       status: this.props.selected,
-      keyword: userInput })
+      keyword: userInput,
+      reload: true
+    })
     this.setState({ userInput })
   }
 

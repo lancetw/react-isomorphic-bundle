@@ -15,6 +15,15 @@ export default class PaginationWidget extends React.Component {
     super(props)
   }
 
+  resetSelected () {
+    const { offset, limit } = this.props.collect
+    if (offset === limit) {
+      return 0
+    } else {
+      return undefined
+    }
+  }
+
   render () {
     const { collect } = this.props
 
@@ -29,6 +38,7 @@ export default class PaginationWidget extends React.Component {
         clickCallback={this.props.handlePageClick}
         containerClassName={'ui right floated small pagination menu'}
         subContainerClassName={''}
+        forceSelected={::this.resetSelected()}
         activeClassName={"active"} />
     )
   }
