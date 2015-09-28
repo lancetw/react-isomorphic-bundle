@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react/addons'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
 import {
   Pagination
 } from 'client/admin/components/widget'
+const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
 }
@@ -74,7 +75,7 @@ export default class TableWidget extends React.Component {
   }
 
   render () {
-    const { items } = this.props.collect
+    const { items, isFetching } = this.props.collect
     const handleChange = ::this.handleChange
     const isChecked = ::this.isChecked
 
@@ -87,58 +88,77 @@ export default class TableWidget extends React.Component {
       'table'
     )
 
+    const Message = isFetching
+      ? (
+        <div className="ui icon message">
+          <i className="notched circle loading icon"></i>
+          <div className="content">
+            <div className="header">
+              請稍候
+            </div>
+            <p>資料載入中...</p>
+          </div>
+        </div>
+        )
+      : null
+
     return (
-      <table className={TableClasses}>
-        <thead className="full-width">
-          <tr>
-            <th></th>
-            <th className="table title">標題</th>
-            <th className="table date">發文日期</th>
-            <th className="table email">發文者</th>
-          </tr>
-        </thead>
-        <tbody>
-        {!isEmpty(items) && items.map(function(item, i) {
-          const checked = isChecked(item.id)
-          return (
-          <tr>
-            <td className="collapsing">
-              <div className="ui checkbox">
-                <input
-                  type="checkbox"
-                  defaultChecked="false"
-                  checked={checked}
-                  onChange={handleChange.bind(this, item.id)} />
-                <label></label>
-              </div>
-            </td>
-            <td className="table title">
-              { (checked)
-                && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
-                  { item.title }
-                </a>)
-              }
-              { (!checked)
-                && (<a target="_blank" href={`../w/p/${item.id}`}>
-                  { item.title }
-                </a>)
-              }
-            </td>
-            <td className="table date">{ toDate(item.created_at, true) }</td>
-            <td className="table email">{ item['user.email'] }</td>
-          </tr>
-          )
-        })}
-        </tbody>
-        <tfoot className="full-width">
-          <tr>
-            <th colSpan="5">
-              {::this.renderActionBtn()}
-              <Pagination {...this.props} />
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+      <div>
+        <table className={TableClasses}>
+          <thead className="full-width">
+            <tr>
+              <th></th>
+              <th className="table title">標題</th>
+              <th className="table date">發文日期</th>
+              <th className="table email">發文者</th>
+            </tr>
+          </thead>
+          <tbody>
+          {!isEmpty(items) && items.map(function(item, i) {
+            const checked = isChecked(item.id)
+            return (
+            <tr>
+              <td className="collapsing">
+                <div className="ui checkbox">
+                  <input
+                    type="checkbox"
+                    defaultChecked="false"
+                    checked={checked}
+                    onChange={handleChange.bind(this, item.id)} />
+                  <label></label>
+                </div>
+              </td>
+              <td className="table title">
+                { (checked)
+                  && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
+                    { item.title }
+                  </a>)
+                }
+                { (!checked)
+                  && (<a target="_blank" href={`../w/p/${item.id}`}>
+                    { item.title }
+                  </a>)
+                }
+              </td>
+              <td className="table date">{ toDate(item.created_at, true) }</td>
+              <td className="table email">{ item['user.email'] }</td>
+            </tr>
+            )
+          })}
+          </tbody>
+          <tfoot className="full-width">
+            <tr>
+              <th colSpan="5">
+                {::this.renderActionBtn()}
+                <Pagination {...this.props} />
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+        <CSSTransitionGroup transitionName="MessageTransition">
+          {Message}
+        </CSSTransitionGroup>
+      </div>
     )
   }
 }

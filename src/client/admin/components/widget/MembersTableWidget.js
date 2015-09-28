@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react/addons'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
 import {
   Pagination
 } from 'client/admin/components/widget'
+const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
 }
@@ -74,7 +75,7 @@ export default class MembersTableWidget extends React.Component {
   }
 
   render () {
-    const { items } = this.props.collect
+    const { items, isFetching } = this.props.collect
     const handleChange = ::this.handleChange
     const isChecked = ::this.isChecked
 
@@ -87,69 +88,83 @@ export default class MembersTableWidget extends React.Component {
       'table'
     )
 
+    const Message = isFetching
+      ? (
+        <div className="ui warning message">
+          <div className="header">
+            資料更新中請稍候...
+          </div>
+        </div> )
+      : null
+
     return (
-      <table className={TableClasses}>
-        <thead className="full-width">
-          <tr>
-            <th></th>
-            <th className="table email">電子郵件信箱</th>
-            <th className="table ocname">所屬組織</th>
-            <th className="table name">名稱</th>
-            <th className="table date">加入日期</th>
-          </tr>
-        </thead>
-        <tbody>
-        {!isEmpty(items) && items.map(function(item, i) {
-          const checked = isChecked(item.id)
-          return (
-          <tr>
-            <td className="collapsing">
-              <div className="ui checkbox">
-                <input
-                  type="checkbox"
-                  defaultChecked="false"
-                  checked={checked}
-                  onChange={handleChange.bind(this, item.id)} />
-                <label></label>
-              </div>
-            </td>
-            <td className="table email">
-              { (checked)
-                && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
-                  { item.email }
-                </a>)
-              }
-              { (!checked)
-                && (<a target="_blank" href={`/ring/members/${item.id}`}>
-                  { item.email }
-                </a>)
-              }
-            </td>
-            <td className="table ocname">
-              { (!!item['userInfo.url']) &&
-                <a target="_blank" href={`../w/p/${item['userInfo.url']}`}>
-                  { item['usersInfo.ocname'] }
-                </a>
-              }
-              { !(!!item['userInfo.url']) &&
-                item['usersInfo.ocname']
-              }
-            </td>
-            <td className="table name">{ item.name }</td>
-            <td className="table date">{ toDate(item.created_at, true) }</td>
-          </tr>
-          )
-        })}
-        </tbody>
-        <tfoot className="full-width">
-          <tr>
-            <th colSpan="5">
-              {::this.renderActionBtn()}
-              <Pagination {...this.props} />
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+      <div>
+        <CSSTransitionGroup transitionName="MessageTransition">
+          {Message}
+        </CSSTransitionGroup>
+        <table className={TableClasses}>
+          <thead className="full-width">
+            <tr>
+              <th></th>
+              <th className="table email">電子郵件信箱</th>
+              <th className="table ocname">所屬組織</th>
+              <th className="table name">名稱</th>
+              <th className="table date">加入日期</th>
+            </tr>
+          </thead>
+          <tbody>
+          {!isEmpty(items) && items.map(function(item, i) {
+            const checked = isChecked(item.id)
+            return (
+            <tr>
+              <td className="collapsing">
+                <div className="ui checkbox">
+                  <input
+                    type="checkbox"
+                    defaultChecked="false"
+                    checked={checked}
+                    onChange={handleChange.bind(this, item.id)} />
+                  <label></label>
+                </div>
+              </td>
+              <td className="table email">
+                { (checked)
+                  && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
+                    { item.email }
+                  </a>)
+                }
+                { (!checked)
+                  && (<a target="_blank" href={`/ring/members/${item.id}`}>
+                    { item.email }
+                  </a>)
+                }
+              </td>
+              <td className="table ocname">
+                { (!!item['userInfo.url']) &&
+                  <a target="_blank" href={`../w/p/${item['userInfo.url']}`}>
+                    { item['usersInfo.ocname'] }
+                  </a>
+                }
+                { !(!!item['userInfo.url']) &&
+                  item['usersInfo.ocname']
+                }
+              </td>
+              <td className="table name">{ item.name }</td>
+              <td className="table date">{ toDate(item.created_at, true) }</td>
+            </tr>
+            )
+          })}
+          </tbody>
+          <tfoot className="full-width">
+            <tr>
+              <th colSpan="5">
+                {::this.renderActionBtn()}
+                <Pagination {...this.props} />
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     )
   }
 }
