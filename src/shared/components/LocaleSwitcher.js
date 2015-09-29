@@ -22,7 +22,10 @@ class LocaleSwitcher extends React.Component {
     this.props.dispatch(
       LocaleActions.sync(lang)
     )
-    const title = counterpart(this.props.locale.title)
+    let title = counterpart(this.props.locale.title)
+    if (title.startsWith('missing')) {
+      title = this.props.locale.title
+    }
     const defaultTitle = counterpart('title.site')
     if (defaultTitle) {
       document.title = `${title} | ${defaultTitle}`
