@@ -162,7 +162,7 @@ export default class Post extends BaseComponent {
             imgs.map(function (link) {
               if (getFileExt(link) !== 'pdf') {
                 return (
-                  <img src={'/uploads/' + link} />
+                  <img className="carousel" src={'/uploads/' + link} />
                 )
               } else {
                 return (<div />)

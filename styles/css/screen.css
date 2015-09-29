@@ -584,3 +584,6 @@ and (orientation : portrait) {
   box-shadow: none !important;
 }
 
+.carousel img {
+  max-height: 300px;
+}
