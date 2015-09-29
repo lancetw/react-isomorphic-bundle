@@ -137,8 +137,8 @@ export default class PermissionsTableWidget extends React.Component {
             swal('失敗', err, 'error')
           })
         }.bind(this))
-      })
-    })
+      }.bind(this))
+    }.bind(this))
   }
 
   handleChangePasswordClick (id, event) {

@@ -97,7 +97,7 @@ export default class AdsTableWidget extends React.Component {
           swal('失敗', err, 'error')
         })
       }.bind(this))
-    })
+    }.bind(this))
   }
 
   handleDeleteClick () {
