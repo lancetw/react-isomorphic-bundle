@@ -50,7 +50,7 @@ exports.load = function *(hid) {
     include: [{
       model: UserInfo,
       attributes: ['ocname'],
-      required: true
+      required: false
     }],
     raw: true
   })
