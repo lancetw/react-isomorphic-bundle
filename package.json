@@ -108,6 +108,7 @@
     "lru-cache": "^2.6.4",
     "moment": "^2.10.3",
     "node-libs-browser": "^0.5.2",
+    "nuka-carousel": "0.0.19",
     "nunjucks": "^2.0.0",
     "parameter": "^1.0.2",
     "passport-facebook": "^2.0.0",

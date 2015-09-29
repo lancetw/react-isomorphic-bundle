@@ -20,6 +20,7 @@ import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import AutoLinkText from 'react-autolink-text'
 import createLocation from 'history/lib/createLocation'
 import ADContent from './ADContent'
+import Carousel from 'nuka-carousel'
 
 export default class Post extends BaseComponent {
 
@@ -139,6 +140,43 @@ export default class Post extends BaseComponent {
         </div>
       )
     }
+  }
+
+  renderImageAttachments () {
+    const { detail } = this.props.post
+    const files = typeof detail.file !== 'undefined'
+      ? JSON.parse(detail.file)
+      : []
+
+    const imgs = []
+    files && files.map(function (file) {
+      if (getFileExt(file) !== 'pdf') {
+        imgs.push(file)
+      }
+    })
+    if (!isEmpty(imgs)) {
+      return (
+        <div className="ui basic segment">
+          <Carousel cellAlign="center" slideWidth="300px">
+          {
+            imgs.map(function (link) {
+              if (getFileExt(link) !== 'pdf') {
+                return (
+                  <img src={'/uploads/' + link} />
+                )
+              } else {
+                return (<div />)
+              }
+            })
+          }
+          </Carousel>
+        </div>
+      )
+    }
+
+    return (
+      <div />
+    )
   }
 
   /* eslint-disable max-len */
@@ -290,6 +328,7 @@ export default class Post extends BaseComponent {
             </div>
           </div>
           <div className="map column">
+            { this.renderImageAttachments() }
             { (detail.lat && detail.lat) &&
             <GMap
               ref="gmap"

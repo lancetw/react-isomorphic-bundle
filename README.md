@@ -76,8 +76,8 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 - [x] post list with Calendar
 - [x] serverside Async data-fetching (thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
 - [x] full text Search
-- [ ] image slideshow
-- [ ] admin mode
+- [x] image slider
+- [x] admin pages
 - [ ] sitemap
 - [ ] static archive pages
 - [ ] testing suite
@@ -119,4 +119,4 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 * [react-list](https://github.com/orgsync/react-list)
 * [Css Shake](http://elrumordelaluz.github.io/csshake/)
 * [react-paginate](https://github.com/AdeleD/react-paginate)
-* [react-picture-show](https://github.com/dowjones/react-picture-show)
+* [nuka-carousel](https://github.com/kenwheeler/nuka-carousel)
