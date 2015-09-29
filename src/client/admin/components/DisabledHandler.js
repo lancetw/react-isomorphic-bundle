@@ -47,35 +47,34 @@ class DisabledHandler extends React.Component {
 
   deleteAdmins (checked) {
     const { dispatch } = this.props
-    const self = this
     const token = AuthActions.getToken()
     return dispatch(AuthActions.showUser(token)).then(() => {
       const { user } = this.props.auth
       if (contains(checked, user.id)) {
-        swal('Oops...', '不應該刪除自己。', 'error')
+        swal('Oops...', '不應該封鎖自己。', 'error')
         return Promise.reject('Oops')
       } else {
         if (!isEmpty(checked)) {
           return new Promise((resolve, reject) => {
             swal({
               title: '您確定嗎？',
-              text: '這會永久刪除使用者',
+              text: '這會永久封鎖管理者（無法再新增）',
               type: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#DD6B55',
-              confirmButtonText: '確定刪除',
+              confirmButtonText: '確定封鎖',
               cancelButtonText: '取消',
               closeOnConfirm: false,
               showLoaderOnConfirm: true
             }, function() {
-              return dispatch(self.asyncDeportAction(checked)).then(() => {
-                swal('刪除', '刪除作業完成', 'success')
-                resolve(self.handlePageClick(self.state.page))
+              return dispatch(this.asyncDeportAction(checked)).then(() => {
+                swal('刪除', '封鎖作業完成', 'success')
+                resolve(this.handlePageClick(this.state.page))
               }).catch((err) => {
                 swal('Oops...', err, 'error')
                 reject(err)
               })
-            })
+            }.bind(this))
           })
         } else {
           return Promise.resolve()

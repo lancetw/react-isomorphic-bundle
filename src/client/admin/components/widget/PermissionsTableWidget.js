@@ -58,8 +58,6 @@ export default class PermissionsTableWidget extends React.Component {
   }
 
   handleCreateClick () {
-    const self = this
-
     swal({
       title: '新增管理者',
       text: '請輸入 Email',
@@ -114,12 +112,12 @@ export default class PermissionsTableWidget extends React.Component {
           confirmButtonColor: '#ff8800',
           showLoaderOnConfirm: true
         }, function (name) {
-          self.props.submit({ email: email, password: password, name: name })
+          this.props.submit({ email: email, password: password, name: name })
           .then((res) => {
             const { admin, errors } = res
             if (admin && admin.email === email) {
               swal('完成', email + ' 已新增', 'success')
-              self.props.fetchList({ offset: 0, limit: 8, status: 0 })
+              this.props.fetchList({ offset: 0, limit: 8, status: 0 })
             } else {
               if (!isEmpty(errors)) {
                 const message = errors[0].message
@@ -138,14 +136,12 @@ export default class PermissionsTableWidget extends React.Component {
           .catch((err) => {
             swal('失敗', err, 'error')
           })
-        })
+        }.bind(this))
       })
     })
   }
 
   handleChangePasswordClick (id, event) {
-    const self = this
-
     swal({
       title: '修改密碼',
       text: '請輸入新密碼',
@@ -168,7 +164,7 @@ export default class PermissionsTableWidget extends React.Component {
         return false
       }
 
-      self.props.changePassword({ id: id, password: password })
+      this.props.changePassword({ id: id, password: password })
       .then((res) => {
         const { admin } = res
         if (admin && admin.email) {
@@ -179,7 +175,7 @@ export default class PermissionsTableWidget extends React.Component {
       }).catch((err) => {
         swal('失敗', err, 'error')
       })
-    })
+    }.bind(this))
   }
 
   handleDeleteClick () {
@@ -224,7 +220,7 @@ export default class PermissionsTableWidget extends React.Component {
       {'loading': false },
       {'disabled': false }
     )
-    const btnLabel = (!this.props.selected) ? '新增' : '刪除'
+    const btnLabel = (!this.props.selected) ? '新增' : '封鎖'
     return (
       <div
         onClick={

@@ -150,7 +150,6 @@ export default class Post extends BaseComponent {
   }
 
   renderImageAttachments () {
-    const self = this
     const { detail } = this.props.post
     const files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
@@ -173,14 +172,14 @@ export default class Post extends BaseComponent {
                 return (
                   <a
                     className="carousel"
-                    onClick={self.handleImgClick.bind(this, src)}>
+                    onClick={this.handleImgClick.bind(this, src)}>
                     <img src={src} />
                   </a>
                 )
               } else {
                 return (<div />)
               }
-            })
+            }.bind(this))
           }
           </Carousel>
         </div>

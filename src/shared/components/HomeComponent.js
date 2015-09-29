@@ -16,10 +16,9 @@ export default class HomeComponent extends BaseComponent {
 
   renderNews (posts) {
     if (!isEmpty(posts)) {
-      const self = this
       return posts.map(function (post) {
-        return self.renderItem(post)
-      })
+        return this.renderItem(post)
+      }.bind(this))
     } else {
       return <div></div>
     }

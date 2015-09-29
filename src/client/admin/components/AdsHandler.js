@@ -32,7 +32,7 @@ class AdsHandler extends React.Component {
 
   deleteAds (checked) {
     const { dispatch } = this.props
-    const self = this
+
     if (!isEmpty(checked)) {
       return new Promise((resolve, reject) => {
         swal({
@@ -46,14 +46,14 @@ class AdsHandler extends React.Component {
           closeOnConfirm: false,
           showLoaderOnConfirm: true
         }, function() {
-          return dispatch(self.asyncDeportAction(checked)).then(() => {
+          return dispatch(this.asyncDeportAction(checked)).then(() => {
             swal('刪除', '刪除作業完成', 'success')
             resolve(dispatch(AdActions.fetchList({ offset: 0, limit: 10 })))
           }).catch((err) => {
             swal('Oops...', err, 'error')
             reject(err)
           })
-        })
+        }.bind(this))
       })
     } else {
       return Promise.resolve()

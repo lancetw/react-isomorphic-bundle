@@ -273,7 +273,6 @@ export default class Post extends BaseComponent {
   }
 
   runGeoLoc () {
-    const self = this
     if (navigator.geolocation) {
       const optn = {
         enableHighAccuracy: true,
@@ -281,7 +280,7 @@ export default class Post extends BaseComponent {
         maximumAge: 0
       }
       navigator.geolocation
-        .getCurrentPosition(self.showPosition.bind(self), this.showError, optn)
+        .getCurrentPosition(this.showPosition.bind(this), this.showError, optn)
     } else {
       sweetAlert('Geolocation is not supported in your browser')
     }

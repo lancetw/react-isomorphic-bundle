@@ -13,6 +13,7 @@ export default class AdsTableWidget extends React.Component {
     collect: PropTypes.object.isRequired,
     deleteAction: PropTypes.func.isRequired,
     fetchList: PropTypes.func.isRequired,
+    submit: PropTypes.func.isRequired,
     selected: PropTypes.number
   }
 
@@ -42,8 +43,6 @@ export default class AdsTableWidget extends React.Component {
   }
 
   handleClick () {
-    const self = this
-
     swal({
       title: '新增廣告網址',
       text: '請輸入廣告網址',
@@ -85,19 +84,19 @@ export default class AdsTableWidget extends React.Component {
           return false
         }
 
-        self.props.submit({ name: size, script: link })
+        this.props.submit({ name: size, script: link })
         .then((res) => {
           const { ad } = res
           if (ad && ad.name) {
             swal('完成', '設定完畢', 'success')
-            self.props.fetchList({ offset: 0, limit: 10, status: 0 })
+            this.props.fetchList({ offset: 0, limit: 10, status: 0 })
           } else {
             swal('新增失敗', '失敗，請重試', 'error')
           }
         }).catch((err) => {
           swal('失敗', err, 'error')
         })
-      })
+      }.bind(this))
     })
   }
 
