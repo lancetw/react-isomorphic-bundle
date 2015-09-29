@@ -79,6 +79,9 @@ module.exports = function (sequelize, Sequelize) {
         UserInfo.belongsTo(models.users, {
           foreignKey: 'uid'
         });
+        UserInfo.hasMany(models.posts, {
+          foreignKey: 'uid'
+        });
       }
     },
     validate: {

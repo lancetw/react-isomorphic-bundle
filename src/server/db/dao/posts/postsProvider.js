@@ -15,6 +15,7 @@ import {
 const Sequelize = models.Sequelize
 const Post = models.posts
 const User = models.users
+const UserInfo = models.usersInfo
 
 exports.create = function *(post) {
   const fillable = [
@@ -46,6 +47,11 @@ exports.load = function *(hid) {
 
   return yield Post.findOne({
     where: { id: id, status: 0 },
+    include: [{
+      model: UserInfo,
+      attributes: ['ocname'],
+      required: true
+    }],
     raw: true
   })
 }
@@ -541,12 +547,7 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
-    attributes: ['id', 'title', 'created_at', 'status'],
-    include: [{
-      model: User,
-      attributes: ['email'],
-      required: true
-    }],
+    attributes: ['id', 'title', 'created_at', 'status', 'type', 'prop'],
     where: {
       status: status,
       $or: [
@@ -565,35 +566,3 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
     raw: true
   })
 }
-
-/* eslint-disable camelcase */
-exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
-  return yield Post.findAndCountAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
-    attributes: ['id', 'title', 'created_at', 'status'],
-    include: [{
-      model: User,
-      attributes: ['email'],
-      required: true
-    }],
-    where: {
-      status: status,
-      $or: [
-        {
-          title: {
-            $like: '%' + pattern + '%'
-          }
-        },
-        {
-          content: {
-            $like: '%' + pattern + '%'
-          }
-        }
-      ]
-    },
-    raw: true
-  })
-}
-

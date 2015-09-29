@@ -133,6 +133,9 @@ module.exports = function (sequelize, Sequelize) {
         Post.belongsTo(models.users, {
           foreignKey: 'uid'
         });
+        Post.belongsTo(models.usersInfo, {
+          foreignKey: 'uid'
+        });
       }
     },
     validate: {
