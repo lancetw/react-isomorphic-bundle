@@ -21,6 +21,7 @@ import AutoLinkText from 'react-autolink-text'
 import createLocation from 'history/lib/createLocation'
 import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
+import { Lightbox } from 'shared/components/addon/lightbox'
 
 export default class Post extends BaseComponent {
 
@@ -110,6 +111,12 @@ export default class Post extends BaseComponent {
     })
   }
 
+  handleImgClick (src, event) {
+    Lightbox.show(
+      <img src={src} />
+    )
+  }
+
   handleLocaleChange () {}
 
   renderRegisterInfo (detail) {
@@ -143,6 +150,7 @@ export default class Post extends BaseComponent {
   }
 
   renderImageAttachments () {
+    const self = this
     const { detail } = this.props.post
     const files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
@@ -161,8 +169,13 @@ export default class Post extends BaseComponent {
           {
             imgs.map(function (link) {
               if (getFileExt(link) !== 'pdf') {
+                const src = '/uploads/' + link
                 return (
-                  <img className="carousel" src={'/uploads/' + link} />
+                  <a
+                    className="carousel"
+                    onClick={self.handleImgClick.bind(this, src)}>
+                    <img src={src} />
+                  </a>
                 )
               } else {
                 return (<div />)
@@ -225,8 +238,12 @@ export default class Post extends BaseComponent {
       const detailProp = this.getDetailProp(detail.prop)
 
       return (
-        <main className="ui two column post detail stackable has-header grid container">
+        <main
+          className="ui two column post detail stackable has-header grid container">
           <div className="column">
+            <div className="row">
+              <div id="lightbox-container" />
+            </div>
             <div className="row">
               <div className="ui fluid detail card">
                 {this.props.post.isFetching && !detail.id &&
@@ -328,19 +345,23 @@ export default class Post extends BaseComponent {
             </div>
           </div>
           <div className="map column">
-            { this.renderImageAttachments() }
-            { (detail.lat && detail.lat) &&
-            <GMap
-              ref="gmap"
-              {...this.props.map}
-              defaultLocale={this.props.defaultLocale}
-            />
-            }
-            { (!detail.lat || !detail.lat) &&
-            <div className="ui orange center aligned segment">
-              <Translate content="post.detail.nomap" />
+            <div className="row">
+              { this.renderImageAttachments() }
             </div>
-            }
+            <div className="row">
+              { (detail.lat && detail.lat) &&
+              <GMap
+                ref="gmap"
+                {...this.props.map}
+                defaultLocale={this.props.defaultLocale}
+              />
+              }
+              { (!detail.lat || !detail.lat) &&
+              <div className="ui orange center aligned segment">
+                <Translate content="post.detail.nomap" />
+              </div>
+              }
+            </div>
             <div className="row">
               <ADContent />
             </div>
