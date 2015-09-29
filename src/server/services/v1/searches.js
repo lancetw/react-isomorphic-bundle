@@ -11,8 +11,10 @@ export default new Resource('searches', {
     const { scope, pattern } = this.request.query
 
     if (scope === 'post') {
+      const status = 0
       const { offset, limit } = this.request.query
-      this.body = hashids.encodeJson(yield Post.search(pattern, offset, limit))
+      this.body = hashids.encodeJson(
+        yield Post.search(pattern, status, offset, limit))
     }
   }
 })

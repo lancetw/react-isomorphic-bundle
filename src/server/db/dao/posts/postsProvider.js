@@ -547,7 +547,43 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
-    attributes: ['id', 'title', 'created_at', 'status', 'type', 'prop'],
+    attributes: ['id', 'title', 'created_at', 'status', 'prop', 'type'],
+    include: [{
+      model: User,
+      attributes: ['email'],
+      required: true
+    }],
+    where: {
+      status: status,
+      $or: [
+        {
+          title: {
+            $like: '%' + pattern + '%'
+          }
+        },
+        {
+          content: {
+            $like: '%' + pattern + '%'
+          }
+        }
+      ]
+    },
+    raw: true
+  })
+}
+
+/* eslint-disable camelcase */
+exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
+  return yield Post.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'DESC' ]],
+    attributes: ['id', 'title', 'created_at', 'status', 'prop', 'type'],
+    include: [{
+      model: User,
+      attributes: ['email'],
+      required: true
+    }],
     where: {
       status: status,
       $or: [
