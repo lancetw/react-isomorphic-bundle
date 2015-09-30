@@ -18,11 +18,9 @@ export default class SyncTokenHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props, context)
-    this.state = { isClient: false }
   }
 
   componentDidMount () {
-    this.setState({ isClient: true })
     const dispatch = this.context.store.dispatch
     const token = this.props.location.query.token
 
@@ -41,7 +39,7 @@ export default class SyncTokenHandler extends BaseComponent {
     const title = this._T('title.redirect')
     const defaultTitle = this._T('title.site')
 
-    const msg = this.state.isClient
+    const msg = !!process.env.BROWSER
       ? <Translate content="redirect.msg" />
       : <div><a href="/"><Translate content="redirect.click" /></a></div>
 

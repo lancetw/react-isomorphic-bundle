@@ -14,12 +14,7 @@ export default class Logout extends BaseComponent {
   constructor (props, context) {
     super(props, context)
     this.releaseTimeout = undefined
-    this.state = { isClient: false }
     props.logout()
-  }
-
-  componentDidMount () {
-    this.setState({ isClient: true })
   }
 
   componentWillUnmount () {
@@ -36,7 +31,7 @@ export default class Logout extends BaseComponent {
 
     const Translate = require('react-translate-component')
 
-    const msg = this.state.isClient
+    const msg = !!process.env.BROWSER
       ? <Translate content="logout.msg" />
       : <div><Translate content="logout.msg2" />
           <a href="/auth/logout"><Translate content="logout.click" /></a>
