@@ -60,6 +60,7 @@ export function clearErrorMessage () {
 
 export function init () {
   return async dispatch => {
+    dispatch({ type: CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED })
     return dispatch({ type: CLEAR_UPLOAD_COMPLETED })
   }
 }
