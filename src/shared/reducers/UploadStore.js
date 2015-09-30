@@ -62,7 +62,7 @@ export default createReducer(initialState, {
     state.images.length = 0
     state.filenames.length = 0
     state.percentages.length = 0
-    return initialState
+    return state
   },
   [SET_UPLOAD_ERROR_MESSAGE_COMPLETED]: (state, action) => {
     const _errorMessages = state.errorMessages
@@ -71,9 +71,8 @@ export default createReducer(initialState, {
       errorMessages: _errorMessages
     }
   },
-  [CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED]: () => {
-    return {
-      errorMessages: []
-    }
+  [CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED]: (state) => {
+    state.errorMessages.length = 0
+    return state
   }
 })
