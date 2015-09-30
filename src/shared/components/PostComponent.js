@@ -502,7 +502,7 @@ export default class Post extends BaseComponent {
         </div> )
       : null
 
-    const UploadErrorMessage = this.props.upload.errorId
+    const UploadErrorMessage = !isEmpty(this.props.upload.errorMessages)
     ? (
       <div>
         <div className="ui error message">
