@@ -229,7 +229,7 @@ and (max-device-width : 667px) {
 @media only screen and (min-width: 1080px) {
   .ui.detail {
     .description {
-      padding: 1em 4em;
+      padding: 1em 2.2em;
 
       > div, span {
         line-height: 2.2rem;
@@ -349,8 +349,6 @@ and (max-device-width : 480px) {
     padding-right: 0 !important;
   }
 }
-
-
 
 .content.hide {
   display: none;
