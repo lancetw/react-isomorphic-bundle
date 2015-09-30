@@ -433,6 +433,18 @@ export default class Post extends BaseComponent {
     disableSubmit: false
   }
 
+  renderTips () {
+    const Translate = require('react-translate-component')
+    return (
+      <div className="ui small warning message">
+        <div className="header">
+          <Translate content="post.tips.title" />
+        </div>
+        <p><Translate content="post.tips.content" /></p>
+      </div>
+    )
+  }
+
   render () {
     if (process.env.BROWSER) {
       if (!isEmpty(this.props.post.content)) {
@@ -554,6 +566,7 @@ export default class Post extends BaseComponent {
               </form>
             </TabPanel>
             <TabPanel index={1}>
+              {this.renderTips()}
               <form>
                 <Form
                   ref="regForm"
@@ -567,6 +580,7 @@ export default class Post extends BaseComponent {
               </div>
             </TabPanel>
             <TabPanel index={2}>
+              {this.renderTips()}
               <CSSTransitionGroup transitionName="MessageTransition">
                 {UploadErrorMessage}
               </CSSTransitionGroup>
@@ -583,6 +597,7 @@ export default class Post extends BaseComponent {
               </div>
             </TabPanel>
             <TabPanel index={3}>
+              {this.renderTips()}
               <form
                 onSubmit={::this.handleMapSubmit}>
                 <div className={PlaceInput}>

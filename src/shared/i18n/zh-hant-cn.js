@@ -83,6 +83,10 @@ export default {
       title: '布告已登录！',
       content: '现在自动转页⋯'
     },
+    tips: {
+      title: '～ 温馨小提示 ～',
+      content: '修改完毕后请切换回基本页面张贴布告'
+    },
     upload: {
       error: '选择要上传的档案太大了 :('
     },

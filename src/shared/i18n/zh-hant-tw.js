@@ -83,6 +83,10 @@ export default {
       title: '佈告已登錄！',
       content: '現在自動轉頁⋯'
     },
+    tips: {
+      title: '～ 溫馨小提示 ～',
+      content: '修改完畢後請切換回基本頁面張貼佈告'
+    },
     upload: {
       error: '選擇要上傳的檔案太大了 :('
     },

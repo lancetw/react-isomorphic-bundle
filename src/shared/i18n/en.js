@@ -83,6 +83,10 @@ export default {
       title: 'Post created!',
       content: 'Now will redirect to wall page.'
     },
+    tips: {
+      title: '~ Tips ~',
+      content: 'You could submit this post by switch to basic tab'
+    },
     upload: {
       error: 'File too large :('
     },
