@@ -226,6 +226,15 @@ and (max-device-width : 667px) {
   }
 }
 
+@media only screen and (min-width: 1080px) {
+  .ui.detail {
+    .content {
+      padding: 2em;
+    }
+  }
+}
+
+
 .ui.category {
   margin-top: 10px;
 }
