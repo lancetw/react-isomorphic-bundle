@@ -48,9 +48,14 @@ exports.load = function *(hid) {
   return yield Post.findOne({
     where: { id: id, status: 0 },
     include: [{
-      model: UserInfo,
-      attributes: ['ocname'],
-      required: false
+      model: User,
+      attributes: ['name'],
+      required: true,
+      include: [{
+        model: UserInfo,
+        attributes: ['ocname'],
+        required: false
+      }],
     }],
     raw: true
   })

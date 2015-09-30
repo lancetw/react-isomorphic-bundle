@@ -29,10 +29,10 @@ module.exports = function (sequelize, Sequelize) {
     classMethods: {
       associate: function (models) {
         User.hasMany(models.posts, {
-          foreignKey: 'id'
+          foreignKey: 'uid'
         });
         User.hasOne(models.usersInfo, {
-          foreignKey: 'id'
+          foreignKey: 'uid'
         });
       }
     },

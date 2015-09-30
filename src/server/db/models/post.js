@@ -133,7 +133,7 @@ module.exports = function (sequelize, Sequelize) {
         Post.belongsTo(models.users, {
           foreignKey: 'uid'
         });
-        Post.belongsTo(models.usersInfo, {
+        Post.hasOne(models.usersInfo, {
           foreignKey: 'uid'
         });
       }
