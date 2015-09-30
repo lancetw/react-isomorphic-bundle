@@ -228,12 +228,25 @@ and (max-device-width : 667px) {
 
 @media only screen and (min-width: 1080px) {
   .ui.detail {
-    .content {
-      padding: 2em;
+    .description {
+      padding: 1em 4em;
+
+      > div, span {
+        line-height: 2.2rem;
+      }
     }
   }
 }
 
+@media only screen and (max-width: 1079px) {
+  .ui.detail {
+    .description {
+      > div, span {
+        line-height: 2rem;
+      }
+    }
+  }
+}
 
 .ui.category {
   margin-top: 10px;
