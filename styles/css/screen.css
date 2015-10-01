@@ -18,13 +18,13 @@ body {
 
   font-smoothing: antialiased;
   hyphens: auto;
-  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 
   a {
     text-decoration: none;
     font-smoothing: antialiased;
     hyphens: auto;
-    font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+    font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 
     &:hover {
       text-decoration: underline;
@@ -42,6 +42,13 @@ body {
     );
 }
 
+h1.title {
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
+}
+
+a.ui.button {
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
+}
 
 @media only screen and (min-width: 1600px) {
   main {
