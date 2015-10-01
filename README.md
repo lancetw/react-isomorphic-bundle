@@ -21,7 +21,7 @@ $ npm install
 edit `./config/sequelize/config.json`
 
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
-(You need to run `npm install --save sequelize@3.4.0 to avoid datatime bugs.`)
+(You need to run `npm install --save sequelize@3.4.0` to avoid datatime bugs.)
 
 ## DEV mode
 
