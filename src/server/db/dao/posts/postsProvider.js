@@ -55,7 +55,7 @@ exports.load = function *(hid) {
         model: UserInfo,
         attributes: ['ocname'],
         required: false
-      }],
+      }]
     }],
     raw: true
   })
