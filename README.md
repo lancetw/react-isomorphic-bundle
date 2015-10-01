@@ -7,85 +7,75 @@
 [![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
 [![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
 
-## DEMO
+# DEMO
 
 http://react.deliverwork.co
 
----
-
 Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
 
-```
-
+```bash
 $ npm install -g nodemon webpack babel
 $ npm install
+```
 
 edit `./config/sequelize/config.json`
 
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
+(You need to run `npm install --save sequelize@3.4.0 to avoid datatime bugs.`)
 
-```
-
----
-
-## DEV MODE
+## DEV mode
 
 `npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
 
 **Press "Ctrl + h" to switch redux devtools**
 
 * open `http://127.0.0.1:3000`
-* open `http://127.0.0.1:3002` (BrowserSync)
 
-## PRODUCTION MODE
+## PRODUCTION mode
 
-### Linux/Mac
+### Linux / Mac
 `npm start`
 
 ### Windows (Git Bash)
 `npm run prestart && NODE_ENV=production npm run win-start`
 
 
-## DEBUG MODE
+## DEBUG mode
 
 `npm run debug`
 
 * open `http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=5858`
 * open `http://127.0.0.1:3000`
 
----
+# Features
 
-## Features
-
-- [x] isomorphic flux, supports JSON Web Tokens (JWT) and Sessions (levelDB)
-- [x] flummox changes to redux@3.0.0
+- [x] isomorphic flux, support JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] change flummox to redux@3.0.0
 - [x] react-router@1.0.0rc1
-- [x] Register
-- [x] Log in
-- [x] Facebook Sign In
-- [x] restful API with JWT
+- [x] register
+- [x] log in
+- [x] Facebook sign in
+- [x] restful API with JSON Web Tokens
 - [x] change password
 - [x] create posts
 - [x] modify posts
 - [x] delete posts
 - [x] i18n / language switcher
-- [x] files/images uploader (Dropzone)
-- [x] Ad scripts support
+- [x] files/images uploader (dropzone)
+- [x] advertisement scripts support
 - [x] location Settings (Google maps with HTML5 Geolocation)
-- [x] post list with Infinite Scroll
-- [x] post list with Calendar
-- [x] serverside Async data-fetching (thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
+- [x] post list with infinite scroll
+- [x] post list with calendar
+- [x] serverside Async data-fetching (great thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
 - [x] full text Search
 - [x] image slider
-- [x] admin pages
+- [x] admin pages (manage posts and users)
 - [ ] sitemap
 - [ ] static archive pages
 - [ ] testing suite
 - [ ] more ...
 
----
-
-## You May Be Interested In...
+# You might be interested in...
 
 * [redux](https://github.com/gaearon/redux)
 * [flummox](https://github.com/acdlite/flummox)
