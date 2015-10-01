@@ -26,7 +26,7 @@ export default class Logout extends BaseComponent {
   render () {
     if (process.env.BROWSER) {
       this.releaseTimeout =
-        setTimeout(() => this.context.history.replaceState({}, '/'), 1000)
+        setTimeout(() => this.context.history.replaceState({}, '/'), 1500)
     }
 
     const Translate = require('react-translate-component')
@@ -37,9 +37,11 @@ export default class Logout extends BaseComponent {
           <a href="/auth/logout"><Translate content="logout.click" /></a>
         </div>
     return (
-      <main className="ui stackable page grid">
+      <main className="ui has-header grid page container">
         <div className="column">
-          { msg }
+          <div className="ui center aligned orange segment">
+            { msg }
+          </div>
         </div>
       </main>
     )

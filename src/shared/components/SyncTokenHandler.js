@@ -24,13 +24,8 @@ export default class SyncTokenHandler extends BaseComponent {
     const dispatch = this.context.store.dispatch
     const token = this.props.location.query.token
 
-    new Promise((resolve) => {
-      dispatch(save(token))
-      setTimeout(() => {
-        resolve('ok')
-      }, 1000)
-    }).then(() => {
-      this.context.history.transitionTo(createLocation('/home'))
+    dispatch(save(token)).then(() => {
+      setTimeout(() => this.context.history.replaceState({}, '/home'), 1500)
     })
   }
 
@@ -45,9 +40,11 @@ export default class SyncTokenHandler extends BaseComponent {
 
     return (
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
-        <main className="ui stackable page grid">
+        <main className="ui has-header grid page container">
           <div className="column">
-            { msg }
+            <div className="ui center aligned orange segment">
+              { msg }
+            </div>
           </div>
         </main>
       </DocumentTitle>
