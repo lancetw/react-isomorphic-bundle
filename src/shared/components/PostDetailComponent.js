@@ -58,10 +58,6 @@ export default class Post extends BaseComponent {
     }
   }
 
-  getDetailProp (index) {
-    return at(PostPropArray(originLocaleName(this.state.locale)), index)
-  }
-
   removeTags (html) {
     const pattern = /(<([^>]+)>)/ig;
     return html.replace(pattern , '')
@@ -117,7 +113,17 @@ export default class Post extends BaseComponent {
     )
   }
 
-  handleLocaleChange () {}
+  handleLocaleChange () {
+    this.forceUpdate()
+  }
+
+  renderDetailProp (detail) {
+    return (
+      <span>
+        {at(PostPropArray(originLocaleName(counterpart.getLocale())), detail.prop)}
+      </span>
+    )
+  }
 
   renderRegisterInfo (detail) {
     if (!detail.url) return <div></div>
@@ -234,8 +240,6 @@ export default class Post extends BaseComponent {
         eventEndYear = <Translate content="post.detail.this_year" />
       }
 
-      const detailProp = this.getDetailProp(detail.prop)
-
       return (
         <main
           className="ui two column post detail stackable has-header grid container">
@@ -317,7 +321,7 @@ export default class Post extends BaseComponent {
                   <div className="taglist right aligned">
                     <span
                       className="ui large tag label category">
-                      {detailProp}
+                      {this.renderDetailProp(detail)}
                     </span>
                   </div>
                 </div>

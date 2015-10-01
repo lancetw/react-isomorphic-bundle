@@ -26,13 +26,14 @@ export default class PostCard extends BaseComponent {
     if (process.env.BROWSER) {
       const locale = fixLocaleName(newLocale)
       moment.locale(locale)
+      this.forceUpdate()
     }
   }
 
   renderCardProp (card) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.getLocale())), card.prop)}
+        {at(PostPropArray(originLocaleName(counterpart.getLocale())), card.prop)}
       </span>
     )
   }
