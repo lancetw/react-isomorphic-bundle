@@ -67,13 +67,7 @@ export default function (app) {
       translator.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
       translator.setFallbackLocale('zh-hant-tw')
 
-      let lang
-      const { locale } = this.session
-      if (locale) {
-        lang = locale
-      } else {
-        lang = originLocaleName(this.getLocaleFromHeader())
-      }
+      let lang = originLocaleName(this.getLocaleFromHeader())
       store.dispatch(LocaleActions.sync(lang || 'zh-hant-tw'))
       translator.setLocale(lang || 'zh-hant-tw')
 
@@ -82,8 +76,6 @@ export default function (app) {
       let title
       let siteUrl
       let ogImage
-      const ctx = this
-
       const { error, redirectLocation, renderProps }
       = yield new Promise((resolve) => {
         match({routes: routes(store), location},
@@ -97,13 +89,13 @@ export default function (app) {
       })
 
       if (redirectLocation) {
-        ctx.redirect(redirectLocation.pathname + redirectLocation.search)
+        this.redirect(redirectLocation.pathname + redirectLocation.search)
         return
       } else if (error) {
-        ctx.redirect('/')
+        this.redirect('/')
         return
       } else if (renderProps === null) {
-        ctx.redirect('/')
+        this.redirect('/')
         return
       }
 
