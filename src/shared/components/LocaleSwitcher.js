@@ -19,9 +19,7 @@ class LocaleSwitcher extends React.Component {
   handleChange (e) {
     const lang = e.target.getAttribute('value')
     counterpart.setLocale(lang)
-    this.props.dispatch(
-      LocaleActions.sync(lang)
-    )
+
     let title = counterpart(this.props.locale.title)
     if (title.startsWith('missing')) {
       title = this.props.locale.title
