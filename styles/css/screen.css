@@ -37,8 +37,8 @@ body {
 #app {
   background-image:
     linear-gradient(
-      rgba(252, 173, 49, 1) 20%,
-      rgba(255, 255, 255, 0.0) 60%
+      rgba(252, 173, 49, 1) 36%,
+      rgba(255, 255, 255, 0.0) 100%
     );
 }
 
