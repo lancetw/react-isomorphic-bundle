@@ -20,7 +20,6 @@ class Lightbox extends React.Component {
       <CSSTransitionGroup
         transitionName="lightbox"
         transitionAppear="true">
-        <div className="lightbox-bg"></div>
         <div className="lightbox">
           <div className="lightbox-wrap">
             <a onClick={Lightbox.remove}>
