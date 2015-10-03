@@ -606,13 +606,17 @@ export function loadPostDetail (id) {
     const { detail } = getState().post
     if (detail.title) {
       dispatch(updateTitle(detail.title))
+      if (isFinite(detail.prop)) {
+        if (!isEmpty(detail.file)) {
+          await dispatch(cpropList(detail.prop, 0, 5))
+        } else {
+          await dispatch(cpropList(detail.prop, 0, 10))
+        }
+      }
       const map = {
         place: detail.place,
         lat: detail.lat,
         lng: detail.lng
-      }
-      if (isFinite(detail.prop)) {
-        await dispatch(cpropList(detail.prop))
       }
       return dispatch(setPin(map))
     }
