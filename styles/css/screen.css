@@ -46,7 +46,6 @@ h1.title, .ui.header.divider, .ui.pointing.label, .ui.message > .header, .ui.but
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 }
 
-
 @media only screen and (min-width: 1600px) {
   main {
     margin: 0 auto !important;
@@ -236,7 +235,7 @@ and (max-device-width : 667px) {
       padding: 1em 2.2em;
 
       > div, span {
-        line-height: 2.2rem;
+        line-height: 2.1rem;
       }
     }
   }
