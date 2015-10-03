@@ -101,8 +101,7 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
 exports.listWithCprop = function *(cprop, offset=0, limit=20, nocontent=false) {
   if (!cprop) return []
   if (!isFinite(+cprop)) return []
-
-  if (!nocontent) {
+  if (nocontent) {
     return yield Post.findAll({
       offset: offset,
       limit: limit,

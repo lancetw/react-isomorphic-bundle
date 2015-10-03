@@ -460,7 +460,7 @@ export function manageList (offset=0, limit=5, user, reload=false) {
   }
 }
 
-export function cpropList (cprop, offset=0, limit=5, reload=false) {
+export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=false) {
   return async (dispatch, getState) => {
     /* cache service */
     const cached = getState().cprop.posts
@@ -478,7 +478,6 @@ export function cpropList (cprop, offset=0, limit=5, reload=false) {
     dispatch({ type: LIST_CPROP_POST_STARTED })
 
     try {
-      const nocontent = true
       const posts = await listWithCprop(cprop, offset, limit, nocontent)
       if (isArray(posts)) {
         return dispatch({
@@ -608,9 +607,9 @@ export function loadPostDetail (id) {
       dispatch(updateTitle(detail.title))
       if (isFinite(detail.prop)) {
         if (!isEmpty(detail.file)) {
-          await dispatch(cpropList(detail.prop, 0, 5))
+          await dispatch(cpropList(detail.prop, 0, 5, false, true))
         } else {
-          await dispatch(cpropList(detail.prop, 0, 10))
+          await dispatch(cpropList(detail.prop, 0, 10, false, true))
         }
       }
       const map = {
