@@ -41,6 +41,16 @@ class PostDetailHandler extends BaseComponent {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { id } = nextProps.params
+    if (id !== this.props.params.id) {
+      const { dispatch } = nextProps
+      setTimeout(() => {
+        dispatch(PostActions.loadPostDetail(id))
+      }, 0)
+    }
+  }
+
   render () {
     const { dispatch } = this.props
     const { getState } = this.context.store
@@ -62,5 +72,6 @@ class PostDetailHandler extends BaseComponent {
 export default connect(state => ({
   auth: state.auth,
   post: state.post,
+  moreList: state.cprop,
   map: state.map
 }))(PostDetailHandler)

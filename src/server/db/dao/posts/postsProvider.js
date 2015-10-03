@@ -98,20 +98,34 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
 }
 
 /* eslint-disable camelcase */
-exports.listWithCprop = function *(cprop, offset=0, limit=20) {
+exports.listWithCprop = function *(cprop, offset=0, limit=20, nocontent=false) {
   if (!cprop) return []
   if (!isFinite(+cprop)) return []
 
-  return yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
-    where: {
-      prop: +cprop,
-      status: 0
-    },
-    raw: true
-  })
+  if (!nocontent) {
+    return yield Post.findAll({
+      offset: offset,
+      limit: limit,
+      order: [[ 'start_date', 'DESC' ]],
+      attributes: ['id', 'title', 'startDate'],
+      where: {
+        prop: +cprop,
+        status: 0
+      },
+      raw: true
+    })
+  } else {
+    return yield Post.findAll({
+      offset: offset,
+      limit: limit,
+      order: [[ 'start_date', 'DESC' ]],
+      where: {
+        prop: +cprop,
+        status: 0
+      },
+      raw: true
+    })
+  }
 }
 
 /* eslint-disable camelcase */

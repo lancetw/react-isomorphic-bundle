@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react/addons'
 import { BaseComponent } from 'shared/components'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
@@ -23,11 +23,14 @@ import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
 import { Lightbox } from 'shared/components/addon/lightbox'
 
+const { CSSTransitionGroup } = React.addons
+
 export default class Post extends BaseComponent {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
+    moreList: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
     remove: PropTypes.func.isRequired,
     defaultLocale: PropTypes.string.isRequired
@@ -195,9 +198,37 @@ export default class Post extends BaseComponent {
     )
   }
 
+  renderMoreList () {
+    const { posts } = this.props.moreList
+    return (
+      <div className="ui fluid detail card">
+        {this.props.moreList.isFetching &&
+        <div className="ui segment basic has-header">
+          <div className="ui active inverted dimmer">
+            <div className="ui large loader"></div>
+          </div>
+        </div>
+        }
+        <div className="ui divided selection animated list content">
+          { !isEmpty(posts) && posts.map(function (item, i) {
+            return (
+              <Link className="item" to={`/w/p/${item.id}`}>
+                <div className="more">
+                  <div className="ui orange horizontal label">
+                    { toShortDate(item.startDate) }
+                  </div>
+                  <span>{ item.title }</span>
+                </div>
+              </Link>
+            )})
+          }
+        </div>
+      </div>
+    )
+  }
+
   /* eslint-disable max-len */
   render () {
-    console.log(this.props.map)
     const Translate = require('react-translate-component')
 
     if (!isEmpty(this.props.post.errors)) {
@@ -357,6 +388,9 @@ export default class Post extends BaseComponent {
             <div className="row">
               {this.renderRegisterInfo(detail)}
             </div>
+            { (detail.lat && detail.lat) &&
+              this.renderMoreList()
+            }
           </div>
           <div className="map column">
             <div className="row">
@@ -369,6 +403,9 @@ export default class Post extends BaseComponent {
                 {...this.props.map}
                 defaultLocale={this.props.defaultLocale}
               />
+              }
+              { (!detail.lat || !detail.lat) &&
+                this.renderMoreList()
               }
             </div>
             <div className="row">

@@ -24,7 +24,8 @@ export default new Resource('posts', {
       start: { type: 'number', required: false },
       end: { type: 'number', required: false },
       user: { type: 'string', required: false },
-      type: { type: 'number', required: false }
+      type: { type: 'number', required: false },
+      nocontent: { type: 'bool', required: false }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -34,7 +35,7 @@ export default new Resource('posts', {
       return
     }
 
-    const { cprop, offset, limit, start, end, user, type } = body
+    const { cprop, offset, limit, start, end, user, type, nocontent } = body
     let data = []
     if (!user) {
       if (!cprop) {
@@ -46,7 +47,7 @@ export default new Resource('posts', {
           data = yield Post.listWithType(type, offset, limit)
         }
       } else {
-        data = yield Post.listWithCprop(cprop, offset, limit)
+        data = yield Post.listWithCprop(cprop, offset, limit, nocontent)
       }
     } else {
       const uid = hashids.decode(user)

@@ -1,7 +1,7 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
 import jwt from 'jsonwebtoken'
-import { isArray, clone, compact, isEmpty, each } from 'lodash'
+import { isArray, clone, compact, isEmpty, each, isFinite } from 'lodash'
 import moment from 'moment'
 import {
   CREATE_POST_STARTED,
@@ -168,13 +168,14 @@ async function list ({ offset, limit, user, type }) {
   })
 }
 
-async function listWithCprop (cprop, offset, limit) {
+async function listWithCprop (cprop, offset, limit, nocontent=false) {
   return new Promise((resolve, reject) => {
     request
       .get(LOCAL_PATH + '/api/v1/posts')
       .query({ offset: offset })
       .query({ limit: limit })
       .query({ cprop: cprop })
+      .query({ nocontent: nocontent })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body) {
@@ -477,7 +478,8 @@ export function cpropList (cprop, offset=0, limit=5, reload=false) {
     dispatch({ type: LIST_CPROP_POST_STARTED })
 
     try {
-      const posts = await listWithCprop(cprop, offset, limit)
+      const nocontent = true
+      const posts = await listWithCprop(cprop, offset, limit, nocontent)
       if (isArray(posts)) {
         return dispatch({
           type: LIST_CPROP_POST_COMPLETED,
@@ -608,6 +610,9 @@ export function loadPostDetail (id) {
         place: detail.place,
         lat: detail.lat,
         lng: detail.lng
+      }
+      if (isFinite(detail.prop)) {
+        await dispatch(cpropList(detail.prop))
       }
       return dispatch(setPin(map))
     }

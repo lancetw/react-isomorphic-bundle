@@ -43,7 +43,7 @@ export default class Ad extends BaseComponent {
 
   render () {
     return (
-      <div
+      <div className="ad"
         ref={`hotrank-container-${this.props.size}`}
         id={`hotrank-container-${this.props.size}`}>
       </div>

@@ -42,7 +42,7 @@ body {
     );
 }
 
-h1.title, .ui.header.divider, .ui.pointing.label, .ui.message > .header, .ui.button > span {
+h1, h2, h3, h4, h5, h6, .ui.header.divider, .ui.pointing.label, .ui.message > .header, .ui.button > span {
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 }
 
@@ -76,6 +76,14 @@ input.hide-submit {
     font-weight: bold;
   }
   background: rgba(1, 1, 1, 0.72);
+}
+
+.ui.list > .item > .more > span {
+  display: inline-block;
+  white-space: nowrap;
+  width: 80%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .ui.cards > div {
@@ -608,4 +616,9 @@ and (orientation : portrait) {
 .carousel > img {
   display: block;
   max-height: 230px !important;
+}
+
+.ad > a > img {
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
