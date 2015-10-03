@@ -23,7 +23,7 @@ export default class CpropHandler extends BaseComponent {
 
   render () {
     const title = this._T('title.cprop')
-    const defaultTitle = this._T('title.home')
+    const defaultTitle = this._T('title.site')
 
     return (
       <DocumentTitle title={title} defaultTitle={defaultTitle}>
