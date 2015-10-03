@@ -564,7 +564,7 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
     offset: offset,
     limit: limit,
     order: [[ 'start_date', 'DESC' ]],
-    attributes: ['id', 'title', 'created_at', 'status', 'prop', 'type'],
+    attributes: ['id', 'title', 'created_at', 'status', 'prop', 'type', 'ocname'],
     include: [{
       model: User,
       attributes: ['email'],
