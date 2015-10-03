@@ -29,8 +29,6 @@ export default class Post extends BaseComponent {
     auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
-    setPin: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
     defaultLocale: PropTypes.string.isRequired
   }
@@ -199,6 +197,7 @@ export default class Post extends BaseComponent {
 
   /* eslint-disable max-len */
   render () {
+    console.log(this.props.map)
     const Translate = require('react-translate-component')
 
     if (!isEmpty(this.props.post.errors)) {
@@ -240,9 +239,27 @@ export default class Post extends BaseComponent {
         eventEndYear = <Translate content="post.detail.this_year" />
       }
 
+      let mainClasses
+      if (!detail.lat || !detail.lat) {
+        mainClasses = classNames(
+          'ui',
+          { 'one': (!detail.lat || !detail.lat) ? true : false },
+          { 'two': !(!detail.lat || !detail.lat) ? true : false },
+          'column',
+          'post',
+          'detail',
+          'stackable',
+          'has-header',
+          { 'nomap': (!detail.lat || !detail.lat) ? true : false },
+          { 'page': (!detail.lat || !detail.lat) ? true : false },
+          'grid',
+          'container'
+        )
+      }
+
       return (
         <main
-          className="ui two column post detail stackable has-header grid container">
+          className={mainClasses}>
           <div className="column">
             <div className="row">
               <div id="lightbox-container" />
