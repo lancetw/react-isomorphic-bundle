@@ -81,6 +81,7 @@ input.hide-submit {
 .ui.list > .item > .more {
   .label {
     vertical-align: top !important;
+    font-size: 80%;
   }
 
   & {
@@ -89,7 +90,10 @@ input.hide-submit {
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
-    vertical-align: middle !important;
+
+    span {
+      vertical-align: middle !important;
+    }
   }
 }
 
