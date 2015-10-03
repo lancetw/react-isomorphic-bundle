@@ -6,6 +6,7 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import request from 'superagent'
+import { isFinite } from 'lodash'
 
 const UserInfo = db.usersInfo
 
@@ -87,21 +88,25 @@ export default new Resource('usersinfo', {
       try {
         const org = yield fetchOrgData(body.ocname)
         body.cid = org.oid
-        if (typeof body.lat === 'undefined' || !body.lat) {
+        if (org.lat && org.lng) {
           body.lat = parseFloat(org.lat)
-        }
-        if (typeof body.lng === 'undefined' || !body.lng) {
           body.lng = parseFloat(org.lng)
+          if (!isFinite(body.lat) || !isFinite(body.lng)) {
+            body.lat = 0
+            body.lng = 0
+            body.cid = 0
+          }
+        } else {
+          body.lat = 0
+          body.lng = 0
+          body.cid = 0
         }
       } catch (err) {
         body.cid = 0
-        if (typeof body.lat === 'undefined' || !body.lat) {
-          body.lat = 0
-        }
-        if (typeof body.lng === 'undefined' || !body.lng) {
-          body.lng = 0
-        }
+        body.lat = 0
+        body.lng = 0
       }
+      console.log(body)
 
       const userInfo
         = yield UserInfo.createOrUpdate(this.params.usersinfo, body)
