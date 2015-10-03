@@ -99,14 +99,13 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
 
 /* eslint-disable camelcase */
 exports.listWithCprop = function *(cprop, offset=0, limit=20, nocontent=false) {
-  if (!cprop) return []
   if (!isFinite(+cprop)) return []
   if (nocontent) {
     return yield Post.findAll({
       offset: offset,
       limit: limit,
       order: [[ 'start_date', 'DESC' ]],
-      attributes: ['id', 'title', 'startDate'],
+      attributes: ['id', 'title', 'startDate', 'prop', 'type'],
       where: {
         prop: +cprop,
         status: 0

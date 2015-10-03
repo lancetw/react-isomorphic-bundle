@@ -6,7 +6,7 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import moment from 'moment'
-import { isEmpty } from 'lodash'
+import { isEmpty, isFinite } from 'lodash'
 import queryType from 'query-types'
 
 const Post = db.posts
@@ -38,7 +38,7 @@ export default new Resource('posts', {
     const { cprop, offset, limit, start, end, user, type, nocontent } = body
     let data = []
     if (!user) {
-      if (!cprop) {
+      if (!isFinite(+cprop)) {
         if (!type) {
           data = !start
           ? yield Post.list(offset, limit)
