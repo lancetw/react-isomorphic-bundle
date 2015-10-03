@@ -52,11 +52,11 @@ class ADContent extends React.Component {
       return (
         <div className="row">
           <div className="ui basic segment center aligned">
+            <MediaQuery maxDeviceWidth={374}>
+              { this.AdS }
+            </MediaQuery>
             <MediaQuery minDeviceWidth={375}>
               { this.AdL }
-            </MediaQuery>
-            <MediaQuery maxDeviceWidth={375}>
-              { this.AdS }
             </MediaQuery>
           </div>
         </div>

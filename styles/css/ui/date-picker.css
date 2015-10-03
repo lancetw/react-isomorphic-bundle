@@ -19,9 +19,8 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
   position: relative;
   padding: 0;
   margin-top: 1rem;
-  margin-left: -2rem;
-  margin-right: -2rem;
-
+  margin-left: -1.3rem;
+  margin-right: -1.3rem;
   &:focus {
     outline-width: 0;
   }
@@ -113,22 +112,24 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
   }
 }
 
-
 /* iPhone 2G-4S in portrait & landscape */
 @media only screen
 and (min-width : 320px)
 and (max-width : 768px) {
   .DayPicker-Day {
-    font-size: 1.3rem !important;
-    padding: .2rem .6rem !important;
+    font-size: 1.5rem !important;
+    padding: .5rem .6rem !important;
   }
 }
 @media only screen
 and (min-device-width : 320px)
-and (max-device-width : 480px) {
+and (max-device-width : 768px) {
+  .DayPicker {
+    margin-right: 0 !important;
+  }
   .DayPicker-Day {
-    font-size: 1rem !important;
-    padding: .3rem .7rem !important;
+    font-size: 1.5rem !important;
+    padding: .5rem .6rem !important;
   }
 }
 
@@ -137,16 +138,19 @@ and (max-device-width : 480px) {
 and (min-width : 375px)
 and (max-width : 667px) {
   .DayPicker-Day {
-    font-size: 1.6rem !important;
-    padding: .3rem .7rem !important;
+    font-size: 1.7rem !important;
+    padding: .6rem .7rem !important;
   }
 }
 @media only screen
 and (min-device-width : 375px)
 and (max-device-width : 667px) {
+  .DayPicker {
+    margin-right: 0 !important;
+  }
   .DayPicker-Day {
-    font-size: 1.6rem !important;
-    padding: .3rem .7rem !important;
+    font-size: 1.7rem !important;
+    padding: .6rem .7rem !important;
   }
 }
 
@@ -155,16 +159,19 @@ and (max-device-width : 667px) {
 and (min-width : 414px)
 and (max-width : 736px) {
   .DayPicker-Day {
-    font-size: 1.7rem !important;
-    padding: .4rem .8rem !important;
+    font-size: 2rem !important;
+    padding: .8rem .8rem !important;
   }
 }
 @media only screen
 and (min-device-width : 414px)
 and (max-device-width : 736px) {
+  .DayPicker {
+    margin-right: 0 !important;
+  }
   .DayPicker-Day {
-    font-size: 1.7rem !important;
-    padding: .4rem .8rem !important;
+    font-size: 2rem !important;
+    padding: .8rem .8rem !important;
   }
 }
 
@@ -180,6 +187,9 @@ and (max-width : 1280px)  {
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)  {
+  .DayPicker {
+    margin-right: 0 !important;
+  }
   .DayPicker-Day {
     font-size: 1.3rem !important;
     padding: 1.2rem 1.3rem !important;
@@ -200,6 +210,9 @@ and (orientation : portrait) {
 and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait) {
+  .DayPicker {
+    margin-right: 0 !important;
+  }
   .DayPicker-Day {
     font-size: 1.3rem !important;
     padding: 0.9rem 1.5rem !important;

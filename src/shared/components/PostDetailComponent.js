@@ -308,7 +308,7 @@ export default class Post extends BaseComponent {
                   </div>
                   <div className="ui large right floated">
                     {eventStartYear && (
-                      <span className="ui right ribbon label">
+                      <span className="ui top right attached label label">
                         {eventStartYear}
                         { eventEndYear
                           && <Translate content="post.detail.start" /> }
@@ -316,7 +316,7 @@ export default class Post extends BaseComponent {
                     )}
                     {eventEndYear && (
                       <div>
-                        <span className="ui large teal right ribbon label">
+                        <span className="ui teal label">
                           <Translate content="post.detail.end" /> {eventEndYear}
                         </span>
                       </div>

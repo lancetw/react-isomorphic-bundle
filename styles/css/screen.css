@@ -46,10 +46,10 @@ h1, h2, h3, h4, h5, h6, .ui.header.divider, .ui.pointing.label, .ui.message > .h
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 }
 
-@media only screen and (min-width: 1600px) {
+@media only screen and (min-width: 1280px) {
   main {
     margin: 0 auto !important;
-    width: 1440px;
+    width: 1280px;
   }
 }
 
@@ -99,11 +99,6 @@ input.hide-submit {
 
 .ui.cards > div {
   width: 100%;
-}
-
-.ui.post.card {
-  border-radius: 0.7rem;
-  background: rgba(255, 255, 255, 0.77);
 }
 
 .ui.center {
@@ -192,16 +187,12 @@ and (max-device-width : 667px) {
       padding: 0 !important;
       margin: 0 !important;
       color: rgba(219, 80, 50, 0.92);
-      display: block;
-    }
-
-    .date.list {
-      position: relative;
-      top: -42px;
-
-      .label {
-        white-space: nowrap;
-      }
+      width: 80%;
+      display: inline-block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-top: 1.6rem !important;
     }
   }
 }
@@ -449,6 +440,8 @@ and (max-width : 480px) {
       .title > a {
         font-size: 1.2rem;
         line-height: 1.8rem;
+        width: 100%;
+        margin-top: 1.6rem !important;
       }
     }
   }
@@ -464,21 +457,13 @@ and (max-width : 480px) {
     font-size: 1.1rem !important;
   }
 
-  .content > div.date.list {
-    max-width: 100px;
-    max-height: 20px;
-    > span {
-      margin-bottom: 10px;
-    }
-  }
-
   .ui.location > .floated {
     display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: right;
-    width: 160px;
+    width: 100%;
   }
 }
 @media only screen
@@ -502,6 +487,8 @@ and (max-device-width : 480px) {
       .title > a {
         font-size: 1.2rem;
         line-height: 1.8rem;
+        width: 100%;
+        margin-top: 1.6rem !important;
       }
     }
   }
@@ -517,21 +504,13 @@ and (max-device-width : 480px) {
     font-size: 1.1rem !important;
   }
 
-  .content > div.date.list {
-    max-width: 100px;
-    max-height: 20px;
-    > span {
-      margin-bottom: 10px;
-    }
-  }
-
   .ui.location > .floated {
     display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: right;
-    width: 160px;
+    width: 100%;
   }
 }
 
@@ -577,7 +556,7 @@ and (max-width : 1280px)  {
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: right;
-    width: 280px;
+    width: 100%;
   }
 }
 @media only screen
@@ -589,7 +568,7 @@ and (max-device-width : 1024px)  {
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: right;
-    width: 280px;
+    width: 100%;
   }
 }
 

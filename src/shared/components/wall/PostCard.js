@@ -82,8 +82,11 @@ export default class PostCard extends BaseComponent {
             <h2 className="title">
               <Link to={`/w/p/${card.id}`}>{card.title}</Link>
             </h2>
+            <div className="ui orange top left attached label">
+              {this.renderCardProp(card)}
+            </div>
             {eventDate && (
-              <div className="ui orange large right ribbon label">
+              <div className="ui teal top right attached label">
                 {eventDate}
               </div>
             )}
@@ -103,11 +106,8 @@ export default class PostCard extends BaseComponent {
             </div>
           </div>
           <div className="extra content">
-            <div className="left floated ui red tag label">
-              {this.renderCardProp(card)}
-            </div>
             <div className="ui location">
-              <span className="right floated like">
+              <span className="floated right like">
                 <i className="like icon"></i>
                   {this.renderLocationInfo(card)}
               </span>
