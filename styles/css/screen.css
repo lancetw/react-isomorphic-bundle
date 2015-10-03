@@ -83,10 +83,10 @@ input.hide-submit {
     vertical-align: top !important;
   }
 
-  span {
+  & {
     display: inline-block;
     white-space: nowrap;
-    width: 75%;
+    width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
     vertical-align: middle !important;

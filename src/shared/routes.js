@@ -37,16 +37,14 @@ export default function (store) {
         <Route path="cprop" component={Cprop} />
         <Route path="cprop/:cprop" component={WallCprop} />
         <Redirect from="p" to="/w" />
-        <Route path="p/:id" component={PostDetail} onUpdate={() => window.scrollTo(0, 0)} />
+        <Route path="p/:id" component={PostDetail} />
       </Route>
       <Route path="/post" component={Post} store={store} onEnter={auth}/>
       <Route
         path="/post/:id/edit"
         component={PostEdit}
         store={store}
-        onEnter={auth}
-        onUpdate={() => window.scrollTo(0, 0)}
-      />
+        onEnter={auth} />
       <Route path="/manage" component={Manage} store={store} onEnter={auth} />
       <Route path="/password" component={ChangePassword}
         store={store} onEnter={auth} />

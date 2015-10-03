@@ -59,6 +59,7 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
             <Router
               children={routes(store)}
               history={history}
+              onUpdate={() => window.scrollTo(0, 0)}
             />
           }
         </Provider>
