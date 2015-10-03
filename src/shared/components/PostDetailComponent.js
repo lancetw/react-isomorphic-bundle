@@ -376,11 +376,6 @@ export default class Post extends BaseComponent {
                 defaultLocale={this.props.defaultLocale}
               />
               }
-              { (!detail.lat || !detail.lat) &&
-              <div className="ui orange center aligned segment">
-                <Translate content="post.detail.nomap" />
-              </div>
-              }
             </div>
             <div className="row">
               <ADContent />
