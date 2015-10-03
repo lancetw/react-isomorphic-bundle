@@ -67,7 +67,7 @@ export default function (app) {
       translator.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
       translator.setFallbackLocale('zh-hant-tw')
 
-      let lang = originLocaleName(this.getLocaleFromHeader())
+      const lang = originLocaleName(this.getLocaleFromHeader())
       store.dispatch(LocaleActions.sync(lang || 'zh-hant-tw'))
       translator.setLocale(lang || 'zh-hant-tw')
 
