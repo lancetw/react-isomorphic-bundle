@@ -243,15 +243,12 @@ export default class Post extends BaseComponent {
       if (!detail.lat || !detail.lat) {
         mainClasses = classNames(
           'ui',
-          { 'one': (!detail.lat || !detail.lat) ? true : false },
-          { 'two': !(!detail.lat || !detail.lat) ? true : false },
+          'two',
           'column',
           'post',
           'detail',
           'stackable',
           'has-header',
-          { 'nomap': (!detail.lat || !detail.lat) ? true : false },
-          { 'page': (!detail.lat || !detail.lat) ? true : false },
           'grid',
           'container'
         )

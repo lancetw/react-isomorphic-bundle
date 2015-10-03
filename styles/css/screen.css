@@ -78,11 +78,6 @@ input.hide-submit {
   background: rgba(1, 1, 1, 0.72);
 }
 
-.ui.nomap.page.grid {
-  padding-left: 22% !important;
-  padding-right: 22% !important;
-}
-
 .ui.cards > div {
   width: 100%;
 }
