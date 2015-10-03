@@ -239,20 +239,17 @@ export default class Post extends BaseComponent {
         eventEndYear = <Translate content="post.detail.this_year" />
       }
 
-      let mainClasses
-      if (!detail.lat || !detail.lat) {
-        mainClasses = classNames(
-          'ui',
-          'two',
-          'column',
-          'post',
-          'detail',
-          'stackable',
-          'has-header',
-          'grid',
-          'container'
-        )
-      }
+      const mainClasses = classNames(
+        'ui',
+        'two',
+        'column',
+        'post',
+        'detail',
+        'stackable',
+        'has-header',
+        'grid',
+        'container'
+      )
 
       return (
         <main
