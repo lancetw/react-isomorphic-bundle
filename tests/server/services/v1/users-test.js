@@ -24,20 +24,23 @@ describe('user', function () {
     email: 'lancetw@gmail.com',
     password: '1234567890',
     passwordCheck: '1234567890',
-    tos: 'on'
+    tos: 'on',
+    recaptcha: 'test only'
   }
 
   const user2 = {
     email: 'lancetw@gmail.com',
     password: '1111111111',
     passwordCheck: '1111111111',
-    tos: 'on'
+    tos: 'on',
+    recaptcha: 'test only'
   }
 
   describe('create', function () {
     it('DB: create new user', function *() {
       yield models.users.sync({ force: true })
-      yield User.create(user)
+      const u = yield User.create(user)
+      expect(u.email).equal(user.email)
     })
 
     it('DB: create duplicate user', function *() {
@@ -80,7 +83,8 @@ describe('user', function () {
           email: 'lancetw',
           password: '1234567890',
           passwordCheck: '1234567890',
-          'tos': 'on'
+          'tos': 'on',
+          recaptcha: 'test only'
         })
         .expect(200).end()
 
@@ -92,7 +96,8 @@ describe('user', function () {
         .send({
           password: '12345678',
           passwordCheck: '12345678',
-          'tos': 'on'
+          'tos': 'on',
+          recaptcha: 'test only'
         })
         .expect(200).end()
 
@@ -105,7 +110,8 @@ describe('user', function () {
           email: 'lancetw@gmail.com',
           password: '1234',
           passwordCheck: '1234',
-          'tos': 'on'
+          'tos': 'on',
+          recaptcha: 'test only'
         })
         .expect(200).end()
 

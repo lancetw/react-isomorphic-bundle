@@ -52,7 +52,7 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 - [x] isomorphic flux, support JSON Web Tokens (JWT) and Sessions (levelDB)
 - [x] change flummox to redux@3.0.0
 - [x] react-router@1.0.0rc1
-- [x] register
+- [x] register (with recaptcha)
 - [x] log in
 - [x] Facebook sign in
 - [x] restful API with JSON Web Tokens
@@ -110,3 +110,4 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 * [Css Shake](http://elrumordelaluz.github.io/csshake/)
 * [react-paginate](https://github.com/AdeleD/react-paginate)
 * [nuka-carousel](https://github.com/kenwheeler/nuka-carousel)
+* [react-google-recaptcha](https://github.com/dozoisch/react-google-recaptcha)

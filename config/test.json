@@ -7,6 +7,10 @@
     "BASEID": 9999,
     "SEED": 1412
   },
+  "ReCAPTCHA": {
+    "KEY": "",
+    "SECRET": ""
+  },
   "passport": {
     "FACEBOOK_APP_ID": "1234",
     "FACEBOOK_APP_SECRET": "secret",

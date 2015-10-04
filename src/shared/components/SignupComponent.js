@@ -4,6 +4,7 @@ import { Form, SignupForm, SignupFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 export default class Signup extends BaseComponent {
 
@@ -34,8 +35,7 @@ export default class Signup extends BaseComponent {
         tos: false
       },
       options: SignupFormOptions(counterpart.getLocale()),
-      submited: false,
-      ok: false
+      submited: false
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
@@ -50,6 +50,9 @@ export default class Signup extends BaseComponent {
       clearTimeout(this.releaseTimeout0)
       clearTimeout(this.releaseTimeout1)
     }
+  }
+
+  handleRecaptchaChange (value) {
   }
 
   handleLocaleChange (newLocale) {
@@ -79,19 +82,26 @@ export default class Signup extends BaseComponent {
         pass.setState({ hasError: false })
       }
     }
+
+    this.setState({ value })
   }
 
   handleSubmit (evt) {
     evt.preventDefault()
-    const value = this.refs.form.getValue()
-    if (value && value.tos === true &&
-      (value.password === value.passwordCheck)) {
+    const form = this.refs.form.getValue()
+    const value = clone(form)
+    value.recaptcha = this.refs.recaptcha.getValue()
+
+    if (value && value.tos === true
+        && (value.password === value.passwordCheck)
+        && value.recaptcha) {
+      this.clearFormErrors()
       let saved = clone(value)
       this.setState({ value: saved })
       saved = omit(saved, 'password')
       saved = omit(saved, 'passwordCheck')
       this.setState({ submited: true })
-      this.clearFormErrors()
+      this.refs.recaptcha.reset()
 
       this.releaseTimeout0 =
         setTimeout(() => this.props.submit(value), 1000)
@@ -147,7 +157,7 @@ export default class Signup extends BaseComponent {
       'ui',
       'form',
       'segment',
-      { 'loading': this.state.submited && !(this.state.ok) }
+      { 'loading': this.state.submited }
     )
 
     const Translate = require('react-translate-component')
@@ -183,10 +193,18 @@ export default class Signup extends BaseComponent {
               onChange={this.handleChange}
             />
             <div className="ui hidden divider" />
+            { this.props.signup.sitekey && (
+              <ReCAPTCHA
+                ref="recaptcha"
+                sitekey={this.props.signup.sitekey}
+                onChange={::this.handleRecaptchaChange}
+              />)
+            }
+            <div className="ui hidden divider" />
             <button
               type="submit"
               className="ui orange labeled icon huge button"
-              disabled={this.state.submited && this.state.ok}>
+              disabled={this.state.submited}>
               <Translate content="register.submit" />
               <i className="add icon"></i>
             </button>

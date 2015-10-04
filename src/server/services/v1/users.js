@@ -5,13 +5,15 @@ import hashids from 'src/shared/utils/hashids-plus'
 import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
+import { verify } from 'src/shared/actions/SignupActions'
 
 const User = db.users
 
 export default new Resource('users', {
   // GET /users
   index: function *(next) {
-    this.body = nunjucks.render('users/index.html')
+    const sitekey = require('config').ReCAPTCHA.KEY
+    this.body = { sitekey: sitekey }
   },
   // POST /users
   create: function *(next) {
@@ -20,14 +22,30 @@ export default new Resource('users', {
       name: { type: 'string', required: false, allowEmpty: true },
       password: { type: 'password', compare: 'passwordCheck' },
       passwordCheck: 'password',
-      email: 'email'
+      email: 'email',
+      recaptcha: { type: 'string', required: true, allowEmpty: false }
     }
     const errors = validate(rule, body)
+
     if (errors) {
       this.type = 'json'
       this.status = 200
       this.body = errors
       return
+    }
+
+    if (process.env.NODE_ENV !== 'test') {
+      const checkReCAPTCHA = yield verify({
+        secret: require('config').ReCAPTCHA.SECRET,
+        response: body.recaptcha
+      })
+
+      if (!checkReCAPTCHA.success) {
+        this.type = 'json'
+        this.status = 200
+        this.body = checkReCAPTCHA
+        return
+      }
     }
 
     try {

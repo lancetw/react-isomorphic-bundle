@@ -24,6 +24,7 @@ class SignupHandler extends BaseComponent {
     dispatch(updateTitle('title.signup'))
 
     dispatch(SignupActions.init())
+    dispatch(SignupActions.getSiteKey())
   }
 
   render () {
