@@ -70,7 +70,7 @@ export default {
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin({ multiStep: true }),
       new webpack.NoErrorsPlugin(),
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/, /webpack-stats\.json$/),
       new webpack.DefinePlugin({
         'process.env': {
           BROWSER: JSON.stringify(true),
