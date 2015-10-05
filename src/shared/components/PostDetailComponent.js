@@ -18,7 +18,6 @@ import counterpart from 'counterpart'
 import { Link } from 'react-router'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import AutoLinkText from 'react-autolink-text'
-import createLocation from 'history/lib/createLocation'
 import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
 import { Lightbox } from 'shared/components/addon/lightbox'
@@ -81,7 +80,7 @@ export default class Post extends BaseComponent {
     const _t = require('counterpart')
     const { detail } = this.props.post
     const { remove } = this.props
-    const { transitionTo } = this.context.history
+    const { transitionTo, createLocation } = this.context.history
     swal({
       title: _t('post.detail.delete.title'),
       text: _t('post.detail.delete.text'),

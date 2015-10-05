@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router, RoutingContext, match } from 'react-router'
-import createLocation from 'history/lib/createLocation'
+import { createMemoryHistory } from 'history'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import reduxPromise from 'shared/utils/promiseMiddleware'
@@ -55,7 +55,8 @@ export default function (app) {
       const resolver = new ReduxUniversalResolver()
       store.resolver = resolver
 
-      const location = createLocation(this.url)
+      const history = createMemoryHistory()
+      const location = history.createLocation(this.url)
       // save session token to store
       if (this.session.token && this.session.token !== null) {
         store.dispatch(AuthActions.sync(this.session.token))
