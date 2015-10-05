@@ -9,13 +9,13 @@ $green: #59A644;
 .DayPicker {
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
   font-size: 100%;
-  display: flex;
-  justify-content: center;
   position: relative;
   max-width: 500px;
+  border: none;
   border-radius: 1rem 1rem 0 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background: rgba(245, 115, 47, 0.8);
   margin: 0 auto;
+  padding: 0;
 
   &:focus {
     outline-width: 0;
@@ -24,7 +24,7 @@ $green: #59A644;
 
 .DayPicker-Month {
   display: table;
-  width: 100.2%;  /* bug */
+  width: 100%;
   margin: 0 auto;
   border: none;
   user-select: none;
@@ -32,6 +32,7 @@ $green: #59A644;
 
 .DayPicker-Body {
   display: table-row-group;
+  background: rgba(255, 255, 255, 0.90);
 }
 
 .DayPicker-Caption {
@@ -42,8 +43,7 @@ $green: #59A644;
   width: 100%;
   height: 4rem;
   color: white;
-  border-radius: 1rem 1rem 0 0;
-  background: rgba(245, 115, 47, 0.9);
+  background: transparent;
 }
 
 .DayPicker-NavButton {
@@ -76,7 +76,7 @@ $green: #59A644;
   font-size: 120%;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
-  background: rgba(245, 115, 47, 0.9);
+  background: transparent;
   > div {
     display: table-row;
   }
