@@ -48,8 +48,11 @@ $green: #59A644;
 
 .DayPicker-NavButton {
   position: absolute;
-  width: 2rem;
-  height: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: rgba(255, 255, 255, 0.86);
+  border: 0.5rem solid transparent;
+  border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -71,6 +74,7 @@ $green: #59A644;
   display: table-header-group;
   width: 100%;
   font-size: 120%;
+  font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
   background: rgba(245, 115, 47, 0.9);
   > div {

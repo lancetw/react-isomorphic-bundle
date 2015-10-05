@@ -60,12 +60,8 @@ export default class Cprop extends BaseComponent {
       <main className="ui column stackable has-header grid page container">
         <div className="column">
           <WallButtons />
-          <div className="row">
-            <div className="ui basic segment">
-              <div className="ui relaxed list">
-                { this.renderCprop() }
-              </div>
-            </div>
+          <div className="ui relaxed list">
+            { this.renderCprop() }
           </div>
         </div>
       </main>

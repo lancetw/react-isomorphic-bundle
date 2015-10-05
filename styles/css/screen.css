@@ -614,3 +614,11 @@ and (orientation : portrait) {
   border-radius: 6px 6px 6px 6px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
+
+.ui.horizontal.header.divider:before {
+  background-image: none !important;
+}
+
+.ui.horizontal.header.divider:after {
+  background-image: none !important;
+}

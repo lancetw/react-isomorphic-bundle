@@ -24,6 +24,7 @@ export default class WallButtons extends React.Component {
             <Translate content="header.cprop" />
           </Link>
         </div>
+        <div className="ui hidden divider"></div>
       </div>
     )
   }
