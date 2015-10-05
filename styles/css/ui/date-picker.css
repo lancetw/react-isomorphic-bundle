@@ -24,7 +24,7 @@ $green: #59A644;
 
 .DayPicker-Month {
   display: table;
-  width: 100%;
+  width: 100.2%;  /* bug */
   margin: 0 auto;
   border: none;
   user-select: none;
@@ -42,7 +42,7 @@ $green: #59A644;
   width: 100%;
   height: 4rem;
   color: white;
-  border-radius: 0.8rem 0.8rem 0 0;
+  border-radius: 1rem 1rem 0 0;
   background: rgba(245, 115, 47, 0.9);
 }
 
