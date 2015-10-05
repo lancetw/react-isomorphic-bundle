@@ -198,6 +198,7 @@ export default class Signup extends BaseComponent {
                 ref="recaptcha"
                 sitekey={this.props.signup.sitekey}
                 onChange={::this.handleRecaptchaChange}
+                size="compact"
               />)
             }
             <div className="ui hidden divider" />
