@@ -6,21 +6,17 @@ $white: #FFF;
 $yellow: #FFFCE9;
 $green: #59A644;
 
-$font: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
-$font-head: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$monospace: Inconsolata, Menlo, Consolas, monospace !important;
-
 .DayPicker {
-  font-family: $font;
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
   font-size: 100%;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   position: relative;
-  padding: 0;
-  margin-top: 1rem;
-  margin-left: -1.3rem;
-  margin-right: -1.3rem;
+  max-width: 500px;
+  border-radius: 1rem 1rem 0 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 0 auto;
+
   &:focus {
     outline-width: 0;
   }
@@ -28,54 +24,55 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Month {
   display: table;
-  border-collapse: collapse;
-  border-spacing: 0;
+  width: 100%;
+  margin: 0 auto;
+  border: none;
   user-select: none;
-  margin: 0 1rem;
 }
 
-.DayPicker-NavBar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  padding: 0 .5rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+.DayPicker-Body {
+  display: table-row-group;
+}
+
+.DayPicker-Caption {
+  display: table-caption;
+  text-align: center;
+  font-size: 160%;
+  line-height: 4rem;
+  width: 100%;
+  height: 4rem;
+  color: white;
+  border-radius: 0.8rem 0.8rem 0 0;
+  background: rgba(245, 115, 47, 0.9);
 }
 
 .DayPicker-NavButton {
   position: absolute;
-  width: 5rem;
-  height: 2.4rem;
+  width: 2rem;
+  height: 2rem;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   cursor: pointer;
+  margin: 1rem 0.6rem;
 }
 
 .DayPicker-NavButton--prev {
-  left: -1rem;
+  left: 0;
   background-image: url("./assets/prev.svg");
 }
 
 .DayPicker-NavButton--next {
-  right: -1rem;
+  right: 0;
   background-image: url("./assets/next.svg");
 }
 
-
-.DayPicker-Caption {
-  font-family: $font-head;
-  font-size: 2rem;
-  line-height: 2.3rem;
-  display: table-caption;
-  height: 2.3rem;
-  text-align: center;
-}
-
 .DayPicker-Weekdays {
-  font-family: $font-head;
   display: table-header-group;
+  width: 100%;
+  font-size: 120%;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(245, 115, 47, 0.9);
   > div {
     display: table-row;
   }
@@ -83,155 +80,54 @@ $monospace: Inconsolata, Menlo, Consolas, monospace !important;
 
 .DayPicker-Weekday {
   display: table-cell;
-  padding: .5rem;
-  font-size: 1em;
   text-align: center;
-}
-
-.DayPicker-Body {
-  display: table-row-group;
+  height: 2rem;
 }
 
 .DayPicker-Week {
   display: table-row;
 }
 
+.DayPicker-NavBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
 .DayPicker-Day {
   display: table-cell;
-  padding: 1.4rem 1.8rem;
-  border-radius: 0;
-  border: none;
-  background-color: $white;
-  font-size: 1.8rem;
   text-align: center;
   cursor: pointer;
   vertical-align: middle;
-
+  height: 3rem;
+  font-size: 140%;
   &:focus {
     outline-width: 0;
   }
 }
 
-/* iPhone 2G-4S in portrait & landscape */
-@media only screen
-and (min-width : 320px)
-and (max-width : 768px) {
+@media only screen and (min-width: 1280px) {
   .DayPicker-Day {
-    font-size: 1.5rem !important;
-    padding: .5rem .6rem !important;
-  }
-}
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 768px) {
-  .DayPicker {
-    margin-right: 0 !important;
-  }
-  .DayPicker-Day {
-    font-size: 1.5rem !important;
-    padding: .5rem .6rem !important;
-  }
-}
-
-/* iPhone 6 in portrait & landscape  */
-@media only screen
-and (min-width : 375px)
-and (max-width : 667px) {
-  .DayPicker-Day {
-    font-size: 1.7rem !important;
-    padding: .6rem .7rem !important;
-  }
-}
-@media only screen
-and (min-device-width : 375px)
-and (max-device-width : 667px) {
-  .DayPicker {
-    margin-right: 0 !important;
-  }
-  .DayPicker-Day {
-    font-size: 1.7rem !important;
-    padding: .6rem .7rem !important;
-  }
-}
-
-/* iPhone 6 Plus in portrait & landscape */
-@media only screen
-and (min-width : 414px)
-and (max-width : 736px) {
-  .DayPicker-Day {
-    font-size: 2rem !important;
-    padding: .8rem .8rem !important;
-  }
-}
-@media only screen
-and (min-device-width : 414px)
-and (max-device-width : 736px) {
-  .DayPicker {
-    margin-right: 0 !important;
-  }
-  .DayPicker-Day {
-    font-size: 2rem !important;
-    padding: .8rem .8rem !important;
-  }
-}
-
-/* iPad in portrait & landscape */
-@media only screen
-and (min-width : 768px)
-and (max-width : 1280px)  {
-  .DayPicker-Day {
-    font-size: 1.3rem !important;
-    padding: 1.2rem 1.3rem !important;
-  }
-}
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)  {
-  .DayPicker {
-    margin-right: 0 !important;
-  }
-  .DayPicker-Day {
-    font-size: 1.3rem !important;
-    padding: 1.2rem 1.3rem !important;
-  }
-}
-
-/* iPad in portrait */
-@media only screen
-and (min-width : 768px)
-and (max-width : 1024px)
-and (orientation : portrait) {
-  .DayPicker-Day {
-    font-size: 1.3rem !important;
-    padding: 0.9rem 1.5rem !important;
-  }
-}
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)
-and (orientation : portrait) {
-  .DayPicker {
-    margin-right: 0 !important;
-  }
-  .DayPicker-Day {
-    font-size: 1.3rem !important;
-    padding: 0.9rem 1.5rem !important;
+    height: 4rem;
   }
 }
 
 .event-started:after {
-  margin-bottom: -8px;
   content: "";
   display: block;
-  width: 100%;
+  max-width: 0;
   height: 0;
-  color: rgba(0, 0, 77, 0.6);
+  margin: 0 auto;
+  margin-bottom: -16px;
   background: white;
-  border: 4px solid rgba(251, 22, 0, 0.1);
-  border-radius: 100%;
+  border: 4px solid rgba(251, 22, 0, 0.48);
+  border-radius: 50%;
 }
 
-.event-none {
+.DayPicker-Day--selected {
+  .event-started:after {
+    border: 4px solid rgba(255, 255, 255, 0.48);
+  }
 }
 
 .DayPicker--interactionDisabled .DayPicker-Day {
@@ -267,7 +163,6 @@ and (orientation : portrait) {
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: $white;
   background-color: orange;
-  border-radius: 0;
   .event-started {
     color: white;
     text-shadow: none;
@@ -277,6 +172,12 @@ and (orientation : portrait) {
 .DayPicker-Day--today {
   color: $blue;
   font-weight: 500;
+}
+
+.DayPicker-Day--selected {
+  .DayPicker-Day--today {
+    color: rgba(255, 255, 255, 0.5);
+  }
 }
 
 .DayPicker-Day--disabled {

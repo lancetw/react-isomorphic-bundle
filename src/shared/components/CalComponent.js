@@ -177,6 +177,7 @@ export default class Cal extends BaseComponent {
       <main className="ui two column has-header stackable grid container">
         <div className="eight wide computer sixteen wide tablet column">
           <WallButtons />
+          <div className="ui hidden divider"></div>
           <DayPicker
             ref="daypicker"
             renderDay={::this.renderDay}

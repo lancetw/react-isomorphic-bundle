@@ -13,10 +13,10 @@
     <meta property="og:image" content="{{ ogImage }}">
     {% if env.NODE_ENV != 'development' %}
     {% for style in assets.style %}
-    <link rel="stylesheet" href="{{ style }}">
+    <link rel="stylesheet" href="{{ style }}" media="screen, projection">
     {% endfor %}
     {% endif %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css" media="screen, projection">
     {{ stateFromServer | safe }}
   </head>
   <body>
@@ -30,7 +30,7 @@
       cssNode.type = 'text/css';
       cssNode.rel = 'stylesheet';
       cssNode.href = '/assets/fallback.css';
-      cssNode.media = 'screen';
+      cssNode.media = 'screen, projection';
       headID.appendChild(cssNode);
     </script>
     {% endif %}
