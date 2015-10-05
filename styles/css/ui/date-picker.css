@@ -48,26 +48,42 @@ $green: #59A644;
 
 .DayPicker-NavButton {
   position: absolute;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   background-color: rgba(255, 255, 255, 0.86);
-  border: 0.5rem solid transparent;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   cursor: pointer;
-  margin: 1rem 0.6rem;
+  margin: 0.6rem 0.6rem;
+  color: rgba(30, 30, 30, 0.6);
 }
 
 .DayPicker-NavButton--prev {
+  font-family: Icons;
   left: 0;
-  background-image: url("./assets/prev.svg");
 }
 
 .DayPicker-NavButton--next {
+  font-family: Icons;
   right: 0;
-  background-image: url("./assets/next.svg");
+}
+
+.DayPicker-NavButton--prev:before {
+  content: '\f053';
+  font-size: 150%;
+  font-weight: bold;
+  line-height: 2.6rem;
+  padding-left: 0.5rem;
+}
+
+.DayPicker-NavButton--next:before {
+  content: '\f054';
+  font-size: 150%;
+  font-weight: bold;
+  line-height: 2.6rem;
+  padding-left: 0.7rem;
 }
 
 .DayPicker-Weekdays {
