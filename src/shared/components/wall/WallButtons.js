@@ -17,11 +17,11 @@ export default class WallButtons extends React.Component {
           <Link className="ui button" to="/w/today">
             <Translate content="header.overview" />
           </Link>
-          <Link className="ui button" to="/w/cprop">
-            <Translate content="header.cprop" />
-          </Link>
           <Link className="ui button" to="/w/cal">
             <Translate content="header.cal" />
+          </Link>
+          <Link className="ui button" to="/w/cprop">
+            <Translate content="header.cprop" />
           </Link>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default class Cprop extends BaseComponent {
         <div
           className="item" key={index}>
           <Link
-            className="fluid ui huge black button"
+            className="ui fluid huge orange button"
             to={`/w/cprop/${index}`}>
             {this.renderCardProp(index)}
           </Link>
@@ -57,7 +57,7 @@ export default class Cprop extends BaseComponent {
   /* eslint-disable max-len */
   render () {
     return (
-      <main className="ui one column has-header grid container">
+      <main className="ui column stackable has-header grid page container">
         <div className="column">
           <WallButtons />
           <div className="row">

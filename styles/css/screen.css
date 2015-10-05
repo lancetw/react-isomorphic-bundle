@@ -265,8 +265,10 @@ and (max-device-width : 667px) {
   margin-top: 10px;
 }
 
-.fluid.ui.black.button {
-  background: rgba(0, 0, 0, 0.42);
+.fluid.ui.orange.button {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 0 3px gold;
+  background: rgba(252, 88, 13, 0.67) !important;
 }
 
 .ui.stackable.container.menu, .ui.stackable.container.menu > .item {
