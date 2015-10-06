@@ -63,28 +63,28 @@ $green: #59A644;
 
 .DayPicker-NavButton--prev {
   font-family: Icons;
-  left: 0;
+  line-height: 2.563rem; /* MAGIC */
+  left: 0.1rem;
 }
 
 .DayPicker-NavButton--next {
   font-family: Icons;
-  right: 0;
+  line-height: 2.563rem; /* MAGIC */
+  right: 0.1rem;
 }
 
 .DayPicker-NavButton--prev:before {
   content: '\f053';
   font-size: 150%;
   font-weight: bold;
-  line-height: 2.6rem;
-  padding-left: 0.5rem;
+  padding-left: 0.53rem; /* MAGIC */
 }
 
 .DayPicker-NavButton--next:before {
   content: '\f054';
   font-size: 150%;
   font-weight: bold;
-  line-height: 2.6rem;
-  padding-left: 0.7rem;
+  padding-left: 0.76rem; /* MAGIC */
 }
 
 .DayPicker-Weekdays {
