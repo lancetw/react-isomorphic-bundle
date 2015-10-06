@@ -385,16 +385,13 @@ export default class Post extends BaseComponent {
               </div>
             </div>
             <div className="row">
-              {this.renderRegisterInfo(detail)}
-            </div>
-            { (detail.lat && detail.lat) &&
-              this.renderMoreList()
-            }
-          </div>
-          <div className="map column">
-            <div className="row">
               { this.renderImageAttachments() }
             </div>
+            <div className="row">
+              {this.renderRegisterInfo(detail)}
+            </div>
+          </div>
+          <div className="map column">
             <div className="row">
               { (detail.lat && detail.lat) &&
               <GMap
@@ -403,9 +400,7 @@ export default class Post extends BaseComponent {
                 defaultLocale={this.props.defaultLocale}
               />
               }
-              { (!detail.lat || !detail.lat) &&
-                this.renderMoreList()
-              }
+              {this.renderMoreList()}
             </div>
             <div className="row">
               <ADContent />
