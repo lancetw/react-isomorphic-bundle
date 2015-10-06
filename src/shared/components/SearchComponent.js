@@ -28,13 +28,14 @@ export default class Search extends React.Component {
                 <Translate content="search.title" keyword={search.pattern}/>
               </h1>)}
           </div>
+          <div className="ui hidden divider"></div>
           <div className="row">
             <Cards
               posts={search.data}
               loadFunc={loadFunc}
               hasMore={search.hasMore}
               isFetching={loading}
-              diff={126}
+              diff={171}
               defaultLocale={this.props.defaultLocale}
             />
             {loading && isEmpty(search.data) && (
