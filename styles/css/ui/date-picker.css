@@ -129,6 +129,12 @@ $green: #59A644;
 
 @media only screen and (min-width: 1280px) {
   .DayPicker-Day {
+    height: 3.7rem;
+  }
+}
+
+@media only screen and (min-width: 1680px) {
+  .DayPicker-Day {
     height: 4rem;
   }
 }
