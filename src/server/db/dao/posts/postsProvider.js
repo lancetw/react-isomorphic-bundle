@@ -568,6 +568,8 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
       'id',
       'title',
       'created_at',
+      'startDate',
+      'endDate',
       'status',
       'prop',
       'type',

@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
-import * as LocaleActions from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 
@@ -29,7 +28,6 @@ class PostDetailHandler extends BaseComponent {
     this.authActions = bindActionCreators(AuthActions, dispatch)
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.mapActions = bindActionCreators(MapActions, dispatch)
-    this.localeActions = bindActionCreators(LocaleActions, dispatch)
 
     resolver.resolve(this.postActions.prepare)
     resolver.resolve(this.mapActions.reload)
