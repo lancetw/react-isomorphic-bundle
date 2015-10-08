@@ -1,11 +1,7 @@
 const bcrypt = require('co-bcrypt')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
-
-exports.init = function *(user) {
-  // if no admin in the DB, create one.
-
-}
+import { isFinite } from 'lodash'
 
 exports.create = function *(user) {
   const fillable = [ 'email', 'name', 'passwd', 'status', 'comment' ]
@@ -20,6 +16,7 @@ exports.create = function *(user) {
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   return yield models.admins.findOne({
     where: { id: id },
     raw: true
@@ -36,6 +33,7 @@ exports.loadByEmail = function *(email) {
 exports.update = function *(hid, user) {
   const fillable = [ 'name', 'passwd', 'status', 'comment' ]
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   if (user.password) {
     const salt = yield bcrypt.genSalt(10)
     user.passwd = yield bcrypt.hash(user.password, salt)
@@ -48,8 +46,9 @@ exports.update = function *(hid, user) {
 
 exports.delete = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const user = yield models.admins.findOne({ where: { id: id } })
-  return yield user.destroy()
+  return yield user.destroy({ force: true })
 }
 
 exports.auth = function *(email, password) {
