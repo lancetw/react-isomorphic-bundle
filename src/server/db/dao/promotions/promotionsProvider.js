@@ -1,6 +1,7 @@
 const bcrypt = require('co-bcrypt')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
+import { isFinite } from 'lodash'
 
 exports.create = function *(promotion) {
   const fillable = [ 'script', 'name', 'status', 'comment' ]
@@ -10,6 +11,7 @@ exports.create = function *(promotion) {
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return {}
   return yield models.promotions.findOne({
     where: { id: id },
     raw: true
@@ -18,6 +20,7 @@ exports.load = function *(hid) {
 
 exports.delete = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const ad = yield models.promotions.findOne({ where: { id: id } })
   return yield ad.destroy()
 }

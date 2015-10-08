@@ -78,10 +78,10 @@ module.exports = function (sequelize, Sequelize) {
       associate: function (models) {
         UserInfo.belongsTo(models.users, {
           foreignKey: 'uid'
-        });
+        })
         UserInfo.belongsTo(models.posts, {
           foreignKey: 'uid'
-        });
+        })
       }
     },
     validate: {
@@ -105,5 +105,5 @@ module.exports = function (sequelize, Sequelize) {
     }
   });
 
-  return UserInfo;
+  return UserInfo
 }

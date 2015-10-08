@@ -70,7 +70,7 @@ exports.list = function *(offset=0, limit=20) {
     order: [[ 'start_date', 'DESC' ]],
     where: {
       end_date: {
-        $gte: new Date(moment(_start))
+        $gte: new Date(_start)
       },
       status: 0
     },
@@ -238,7 +238,7 @@ exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
 
   if (!isFinite(_start)) return {}
   if (!isFinite(_end)) return {}
-  if (!isFinite(status)) return {}
+  if (!isFinite(+status)) return {}
 
   const items = yield Post.findAndCountAll({
     offset: offset,
@@ -311,7 +311,7 @@ exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
       uid: +uid,
       status: 0,
       end_date: {
-        $gte: new Date(moment(_start))
+        $gte: new Date(_start)
       }
     },
     raw: true

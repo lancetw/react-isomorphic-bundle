@@ -11,6 +11,7 @@ import queryType from 'query-types'
 
 const Post = db.posts
 const UsersInfo = db.usersInfo
+const Location = db.locations
 
 /* eslint-disable max-len */
 export default new Resource('posts', {
@@ -127,10 +128,18 @@ export default new Resource('posts', {
       } catch (err) {/* no userinfo */}
 
       const post = yield Post.create(body)
+
+      if (post.id && body.lat && body.lng) {
+        yield Location.create(post.id, {
+          geometry: [body.lng , body.lat]
+        })
+      }
+
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(post)
     } catch (err) {
+      console.log(err)
       this.type = 'json'
       this.status = 403
       this.body = err
@@ -231,6 +240,12 @@ export default new Resource('posts', {
       } catch (err) {/* no userinfo */}
       const post = yield Post.update(this.params.post, body)
 
+      if (post.id && body.lat && body.lng) {
+        yield Location.update(post.id, {
+          geometry: [body.lng , body.lat]
+        })
+      }
+
       this.type = 'json'
       this.status = 201
       this.body = hashids.encodeJson(post)
@@ -249,6 +264,11 @@ export default new Resource('posts', {
       }
 
       const post = yield Post.destroy(this.params.post)
+
+      if (post.id) {
+        yield Location.destroy(post.id)
+      }
+
       this.type = 'json'
       this.status = 200
       this.body = hashids.encodeJson(post)

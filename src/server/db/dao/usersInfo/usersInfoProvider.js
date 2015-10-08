@@ -1,6 +1,7 @@
 const bcrypt = require('co-bcrypt')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
+import { isFinite } from 'lodash'
 
 exports.createOrUpdate = function *(hid, info) {
   const fillable = [
@@ -21,9 +22,9 @@ exports.createOrUpdate = function *(hid, info) {
     'email'
   ]
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const userInfo = yield models.usersInfo.findOne({
-    where: { uid: id },
-    paranoid: false
+    where: { uid: id }
   })
 
   if (!userInfo) {
@@ -36,6 +37,7 @@ exports.createOrUpdate = function *(hid, info) {
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return {}
   return yield models.usersInfo.findOne({
     where: { uid: id },
     raw: true

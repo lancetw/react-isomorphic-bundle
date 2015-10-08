@@ -1,6 +1,7 @@
 const bcrypt = require('co-bcrypt')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
+import { isFinite } from 'lodash'
 
 exports.create = function *(user) {
   const fillable = [ 'email', 'name', 'passwd', 'status' ]
@@ -35,6 +36,7 @@ exports.recreate = function *(unuser) {
 
 exports.load = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return {}
   return yield models.users.findOne({
     where: { id: id },
     raw: true
@@ -43,6 +45,7 @@ exports.load = function *(hid) {
 
 exports.loadDetail = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return {}
   return yield models.users.findOne({
     where: { id: id },
     attributes: ['id', 'name', 'email', 'created_at', 'status'],
@@ -77,6 +80,7 @@ exports.loadByEmail = function *(email) {
 exports.update = function *(hid, user) {
   const fillable = [ 'name', 'passwd', 'status' ]
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const salt = yield bcrypt.genSalt(10)
   if (!!user.password) {
     user.passwd = yield bcrypt.hash(user.password, salt)
@@ -89,6 +93,7 @@ exports.update = function *(hid, user) {
 
 exports.delete = function *(hid) {
   const id = +hashids.decode(hid)
+  if (!isFinite(id)) return false
   const user = yield models.users.findOne({ where: { id: id } })
   return yield user.destroy()
 }

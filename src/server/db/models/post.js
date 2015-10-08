@@ -132,10 +132,13 @@ module.exports = function (sequelize, Sequelize) {
       associate: function (models) {
         Post.belongsTo(models.users, {
           foreignKey: 'uid'
-        });
+        })
         Post.hasOne(models.usersInfo, {
           foreignKey: 'uid'
-        });
+        })
+        Post.hasOne(models.locations, {
+          foreignKey: 'postId'
+        })
       }
     },
     validate: {
@@ -155,7 +158,7 @@ module.exports = function (sequelize, Sequelize) {
         return values
       }
     }
-  });
+  })
 
-  return Post;
+  return Post
 }
