@@ -621,6 +621,16 @@ export default class Post extends BaseComponent {
                 <div className="ui hidden divider" />
                 <div className={LatLngInput}>
                   <div className="ui label">
+                    <Translate content="post.map.lng" />
+                  </div>
+                  <input type="text"
+                    placeholder="longitude"
+                    ref="lng"
+                    defaultValue={this.props.map.lng} />
+                </div>
+                <div className="ui hidden divider" />
+                <div className={LatLngInput}>
+                  <div className="ui label">
                     <Translate content="post.map.lat" />
                   </div>
                   <input
@@ -630,21 +640,11 @@ export default class Post extends BaseComponent {
                     defaultValue={this.props.map.lat} />
                 </div>
                 <div className="ui hidden divider" />
-                <div className={LatLngInput}>
-                  <div className="ui label">
-                    <Translate content="post.map.lng" />
-                  </div>
-                  <input type="text"
-                    placeholder="longitude"
-                    ref="lng"
-                    defaultValue={this.props.map.lng} />
-                </div>
-                <div className="ui hidden divider" />
                 <div className="ui list">
                   <div className="item">
                     <div className="left floated content">
                       <button
-                        className="ui circular yellow icon button"
+                        className="ui circular yellow large icon button"
                         onClick={::this.handleGeo}>
                         <i className="icon large map"></i>
                       </button>
