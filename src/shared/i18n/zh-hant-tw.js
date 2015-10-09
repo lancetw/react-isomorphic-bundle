@@ -15,7 +15,8 @@ export default {
     redirect: '重新導向中...',
     cal: '月曆瀏覽',
     cprop: '類別瀏覽',
-    search: '搜尋'
+    search: '搜尋',
+    nearby: '附近'
   },
   header: {
     home: '首頁',
@@ -153,5 +154,12 @@ export default {
   news: {
     header: '最新公告',
     unnamed: '未提供單位名稱'
+  },
+  geoloc: {
+    nosupported: '您的瀏覽器不支援定址功能',
+    denied: '您已經拒絕提供個人位置資訊',
+    unavailable: '位置資訊現在無法取得，請重試',
+    timeout: '要求逾時',
+    unknown: '發生未知的錯誤'
   }
 }

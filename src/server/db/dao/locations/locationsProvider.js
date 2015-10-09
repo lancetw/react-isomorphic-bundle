@@ -33,26 +33,29 @@ exports.destroy = function *(postId) {
 }
 
 /* eslint-disable max-len, camelcase */
-exports.nearBy = function *(limit=20, dist=1000, center) {
+exports.nearBy = function *(limit=20, pattern) {
   const { sequelize } = models
   const { dialect } = sequelize.options
-  /*** PostGIS only ***/
+  /* PostGIS only */
   if ( dialect !== 'postgres') return {}
-  if (!isFinite(+dist)) return {}
-  console.log(center)
-  if (typeof center === 'undefined' || center === null) return {}
-  if (!isFinite(parseFloat(center.lat))) return {}
-  if (!isFinite(parseFloat(center.lng))) return {}
+
+  if (typeof pattern === 'undefined' || pattern === null) return {}
+  if (!isFinite(parseFloat(pattern.lat))) return {}
+  if (!isFinite(parseFloat(pattern.lng))) return {}
+  if (!isFinite(parseFloat(pattern.dist))) return {}
 
   const status = 0
   const todayStart = moment().startOf('day').utc().format('YYYY-MM-DD HH:mm:ss.SSS Z')
 
+  /* Thanks to http://gis.stackexchange.com/questions/41242/how-to-find-the-nearest-point-from-poi-in-postgis */
   const sql = `SELECT posts.id,
                       posts.title,
-                      ST_Distance(geometry, poi)/1000 AS distance_km
+                      posts.lat,
+                      posts.lng,
+                      ST_Distance(geometry, poi)/1000 AS distance
                FROM locations INNER JOIN posts ON (posts.id = locations.post_id),
-                    (select ST_MakePoint(${center.lng},${center.lat})::geography as poi) as poi
-               WHERE ST_DWithin(geometry, poi, ${dist})
+                    (select ST_MakePoint(${pattern.lng},${pattern.lat})::geography as poi) as poi
+               WHERE ST_DWithin(geometry, poi, ${pattern.dist})
                      AND posts.end_date >= '${todayStart}'
                      AND posts.status = ${status}
                ORDER BY ST_Distance(geometry, poi)

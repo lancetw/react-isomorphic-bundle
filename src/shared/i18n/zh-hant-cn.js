@@ -15,7 +15,8 @@ export default {
     redirect: '重新导向中...',
     cal: '月历浏览',
     cprop: '类别浏览',
-    search: '搜寻'
+    search: '搜寻',
+    nearby: '附近'
   },
   header: {
     home: '首页',
@@ -153,5 +154,12 @@ export default {
   news: {
     header: '最新公告',
     unnamed: '未提供单位名称'
+  },
+  geoloc: {
+    nosupported: '您的浏览器不支援定址功能',
+    denied: '您已经拒绝提供个人位置资讯',
+    unavailable: '位置资讯现在无法取得，请重试',
+    timeout: '要求逾时',
+    unknown: '发生未知的错误'
   }
 }

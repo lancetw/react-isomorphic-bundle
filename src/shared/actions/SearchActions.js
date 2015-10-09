@@ -64,3 +64,44 @@ export function searchPost (pattern, offset=0, limit=10, reload=false) {
     }
   }
 }
+
+export function nearby (pattern, limit=30, reload=false) {
+  return async (dispatch, getState) => {
+    /* cache service */
+    const _pattern = getState().search.pattern
+    if (!reload
+        && _pattern.lat === pattern.lat
+        && _pattern.lng === pattern.lng
+        && _pattern.dist === pattern.dist) {
+      return null
+    }
+
+    if (reload) {
+      dispatch({ type: SEARCH_POST_RELOADED })
+    }
+
+    dispatch({ type: SEARCH_POST_STARTED })
+    try {
+      const data = await search('nearby', JSON.stringify(pattern), 0, limit)
+      if (isArray(data)) {
+        return dispatch({
+          type: SEARCH_POST_COMPLETED,
+          pattern: pattern,
+          data: data,
+          offset: 0,
+          limit: limit
+        })
+      } else {
+        return dispatch({
+          type: SEARCH_POST_FAILED,
+          errors: data.errors ? data.errors : data
+        })
+      }
+    } catch (err) {
+      return dispatch({
+        type: SEARCH_POST_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}

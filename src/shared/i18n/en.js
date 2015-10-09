@@ -15,7 +15,8 @@ export default {
     redirect: 'Redirecting...',
     cal: 'Calendar View',
     cprop: 'Property View',
-    search: 'Search'
+    search: 'Search',
+    nearby: 'Nearby'
   },
   header: {
     home: 'Home',
@@ -153,5 +154,12 @@ export default {
   news: {
     header: 'News',
     unnamed: 'Unknown'
+  },
+  geoloc: {
+    nosupported: 'Geolocation is not supported in your browser',
+    denied: 'User denied the request for Geolocation.',
+    unavailable: 'Location information is unavailable.',
+    timeout: 'The request to get user location timed out.',
+    unknown: 'An unknown error occurred.'
   }
 }

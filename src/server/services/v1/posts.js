@@ -139,7 +139,6 @@ export default new Resource('posts', {
       this.status = 201
       this.body = hashids.encodeJson(post)
     } catch (err) {
-      console.log(err)
       this.type = 'json'
       this.status = 403
       this.body = err

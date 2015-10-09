@@ -16,7 +16,8 @@ import {
   Cprop,
   ChangePassword,
   SyncToken,
-  Search
+  Search,
+  Nearby
 } from './components'
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
@@ -27,6 +28,7 @@ export default function (store) {
       <Route path="/" component={Home} />
       <Route path="/home" component={Home} />
       <Route path="/search" component={Search} />
+      <Route path="/nearby" component={Nearby} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
       <Route path="/signup" component={Signup} />

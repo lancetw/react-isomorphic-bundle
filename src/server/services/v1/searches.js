@@ -19,9 +19,14 @@ export default new Resource('searches', {
     }
 
     if (scope === 'nearby') {
-      const { limit, lat, lng, dist } = this.request.query
+      const { limit, pattern } = this.request.query
+      let q = {}
+      try {
+        q = JSON.parse(pattern)
+      } catch (err) {/* error */}
+
       this.body = hashids.encodeJson(
-        yield Location.nearBy(limit, dist, {lat, lng}))
+        yield Location.nearBy(limit, q))
     }
   }
 })

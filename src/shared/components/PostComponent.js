@@ -21,6 +21,7 @@ import {
 } from 'shared/components/addon/tabs'
 import { toDate } from 'shared/utils/date-utils'
 import { getFileExt } from 'shared/utils/file-utils'
+import { runGeoLoc } from 'shared/utils/geoloc-utils'
 import { each } from 'lodash'
 import $ from 'jquery'
 import { createHistory } from 'history'
@@ -156,25 +157,6 @@ export default class Post extends BaseComponent {
     this.props.setPin(map)
   }
 
-  showError (error) {
-    switch (error.code) {
-    case error.PERMISSION_DENIED:
-      sweetAlert('User denied the request for Geolocation.')
-      break
-    case error.POSITION_UNAVAILABLE:
-      sweetAlert('Location information is unavailable.')
-      break
-    case error.TIMEOUT:
-      sweetAlert('The request to get user location timed out.')
-      break
-    case error.UNKNOWN_ERROR:
-      sweetAlert('An unknown error occurred.')
-      break
-    default:
-      break
-    }
-  }
-
   handleMapSubmit (event) {
     event.preventDefault()
     const map = {
@@ -266,29 +248,15 @@ export default class Post extends BaseComponent {
     event.preventDefault()
     const address = React.findDOMNode(this.refs.place).value.trim()
     if (!address || address === counterpart('post.map.my')) {
-      this.runGeoLoc()
+      runGeoLoc(this.showPosition.bind(this))
     } else {
       this.props.search(address)
     }
   }
 
-  runGeoLoc () {
-    if (navigator.geolocation) {
-      const optn = {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-      }
-      navigator.geolocation
-        .getCurrentPosition(this.showPosition.bind(this), this.showError, optn)
-    } else {
-      sweetAlert('Geolocation is not supported in your browser')
-    }
-  }
-
   handleGeo (event) {
     event.preventDefault()
-    this.runGeoLoc()
+    runGeoLoc(this.showPosition.bind(this))
   }
 
   handleSubmit (evt) {
