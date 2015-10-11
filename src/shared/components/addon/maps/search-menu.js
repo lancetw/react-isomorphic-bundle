@@ -83,12 +83,12 @@ export default class SearchMenu extends Component {
               搜尋範圍
               <i className="dropdown icon"></i>
               <div className="menu">
-                <div onClick={this.props.onDegreeChange} value="1000" className="item">1 公里</div>
                 <div onClick={this.props.onDegreeChange} value="3000" className="item">3 公里</div>
                 <div onClick={this.props.onDegreeChange} value="5000" className="item">5 公里</div>
                 <div onClick={this.props.onDegreeChange} value="10000" className="item">10 公里</div>
                 <div onClick={this.props.onDegreeChange} value="20000" className="item">20 公里</div>
                 <div onClick={this.props.onDegreeChange} value="50000" className="item">50 公里</div>
+                <div onClick={this.props.onDegreeChange} value="100000" className="item">100 公里</div>
               </div>
             </div>
           </div>
