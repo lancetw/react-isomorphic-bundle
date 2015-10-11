@@ -20,10 +20,10 @@ class Loading extends React.Component {
   render () {
     return (
       <CSSTransitionGroup
-        transitionName="loading"
+        transitionName="xloading"
         transitionAppear="true">
-        <div className="loading">
-          <div className="loading-wrap">
+        <div className="xloading">
+          <div className="xloading-wrap">
             <Spinner spinnerName="wordpress" />
             {this.props.children}
           </div>

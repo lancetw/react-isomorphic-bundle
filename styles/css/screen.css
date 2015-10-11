@@ -621,3 +621,7 @@ and (orientation : portrait) {
 .ui.horizontal.header.divider:after {
   background-image: none !important;
 }
+
+.ui.form.loading:before {
+  background: transparent !important;
+}

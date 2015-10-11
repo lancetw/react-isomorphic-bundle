@@ -1,4 +1,4 @@
-.loading {
+.xloading {
   position: fixed;
   z-index: 999;
   width: 100%;
@@ -10,21 +10,21 @@
   color: white !important;
 }
 
-.loading-wrap {
+.xloading-wrap {
   width: 100%;
   height: 100%;
   display: inline-block;
   vertical-align: middle;
 }
 
-.loading-wrap:before {
+.xloading-wrap:before {
   content: '';
   display: inline-block;
   height: 100%;
   vertical-align: middle;
 }
 
-.loading-wrap .fade-in.spinner {
+.xloading-wrap .fade-in.spinner {
   display: inline-block;
   vertical-align: middle;
   position: relative;
@@ -36,20 +36,20 @@
   }
 }
 
-.loading-appear {
+.xloading-appear {
   opacity: 0.01;
   transition: opacity .4s ease-in;
 }
 
-.loading-appear.loading-appear-active {
+.xloading-appear.xloading-appear-active {
   opacity: 1;
 }
 
-.loading-appear {
+.xloading-appear {
   opacity: 0.01;
   transition: opacity .4s ease-in;
 }
 
-.loading-appear.loading-appear-active {
+.xloading-appear.xloading-appear-active {
   opacity: 1;
 }
