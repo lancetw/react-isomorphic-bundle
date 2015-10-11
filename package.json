@@ -135,7 +135,7 @@
     "react-dropzone": "^2.0.1",
     "react-google-recaptcha": "^0.4.0",
     "react-interpolate-component": "^0.7.1",
-    "react-list": "^0.6.5",
+    "react-list": "0.6.5",
     "react-paginate": "^0.2.0",
     "react-prefixr": "^0.1.0",
     "react-pure-render": "^1.0.2",
