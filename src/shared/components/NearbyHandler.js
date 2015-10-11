@@ -36,7 +36,7 @@ class NearbyHandler extends BaseComponent {
 
     runGeoLoc().then((position) => {
       dispatch(SearchActions.nearby({
-        dist: 3000,
+        dist: 3000,   // 3 km
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }, 50)).then((info) => {
