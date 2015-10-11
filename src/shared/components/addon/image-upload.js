@@ -72,24 +72,28 @@ export default class ImageUpload extends React.Component {
   }
 
   render () {
-    let img
+    let imgsrc
     if (typeof this.props.upload.images !== 'undefined') {
-      img = this.props.upload.images[this.props.index]
+      imgsrc = this.props.upload.images[this.props.index]
     }
 
     return (
-      <Dropzone
-        multiple={false}
-        style={{}}
-        size={120}
-        className="column"
-        onDrop={::this.handleDrop}>
-        <img
-          className="ui image centered placeholder"
-          alt=""
-          src={ img || this.props.src } />
-        {::this.renderPrecentage(this.props.index)}
-      </Dropzone>
+      <div className="column" onTouchStart={(event) => {
+        return this.refs.dropzone.open()
+      } }>
+        <Dropzone
+          ref="dropzone"
+          multiple={false}
+          style={{}}
+          size={120}
+          onDrop={::this.handleDrop}>
+          <img
+            className="ui image centered placeholder"
+            alt=""
+            src={ imgsrc || this.props.src } />
+          {::this.renderPrecentage(this.props.index)}
+        </Dropzone>
+      </div>
     )
   }
 }
