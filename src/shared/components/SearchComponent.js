@@ -41,9 +41,7 @@ export default class Search extends React.Component {
             {loading && isEmpty(search.data) && (
               <div className="ui segment basic has-header">
                 <div className="ui active inverted dimmer">
-                  <div className="ui large text loader">
-                    <Translate content="wall.loading" />
-                  </div>
+                  <div className="ui text loader"></div>
                 </div>
               </div>
             )}
