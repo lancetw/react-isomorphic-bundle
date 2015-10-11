@@ -18,10 +18,11 @@ class Loading extends React.Component {
   }
 
   render () {
+    const isAppear = true
     return (
       <CSSTransitionGroup
         transitionName="xloading"
-        transitionAppear="true">
+        transitionAppear={isAppear}>
         <div className="xloading">
           <div className="xloading-wrap">
             <Spinner spinnerName="wordpress" />

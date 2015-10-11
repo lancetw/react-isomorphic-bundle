@@ -7,11 +7,13 @@
 [![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
 [![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
 
-# DEMO
+Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
+
+## DEMO
 
 http://react.deliverwork.co
 
-Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
+### Installation
 
 ```bash
 $ npm install -g nodemon webpack babel
@@ -23,7 +25,7 @@ edit `./config/sequelize/config.json`
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
 (You need to run `npm install --save sequelize@3.4.0` to avoid datatime bugs.)
 
-## DEV mode
+### DEV mode
 
 `npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
 
@@ -31,23 +33,23 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 * open `http://127.0.0.1:3000`
 
-## PRODUCTION mode
+### PRODUCTION mode
 
-### Linux / Mac
+#### Linux / Mac
 `npm start`
 
-### Windows (Git Bash)
+#### Windows (Git Bash)
 `npm run prestart && NODE_ENV=production npm run win-start`
 
 
-## DEBUG mode
+### DEBUG mode
 
 `npm run debug`
 
 * open `http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=5858`
 * open `http://127.0.0.1:3000`
 
-# Features
+## Features
 
 - [x] isomorphic flux, support JSON Web Tokens (JWT) and Sessions (levelDB)
 - [x] change flummox to redux@3.0.0
@@ -77,7 +79,7 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 - [ ] testing suite
 - [ ] more ...
 
-# You might be interested in...
+## You might be interested in...
 
 * [redux](https://github.com/gaearon/redux)
 * [flummox](https://github.com/acdlite/flummox)

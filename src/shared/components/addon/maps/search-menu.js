@@ -23,6 +23,12 @@ export default class SearchMenu extends Component {
     this.autocomplete.addListener('place_changed', this.onPlaceChange)
   }
 
+  componentWillUnmount () {
+    if (this.searchBox) {
+      this.searchBox.removeListener('place_changed', this.onPlaceChange)
+    }
+  }
+
   onPlaceChange = () => {
     const place = this.autocomplete.getPlace()
     if (this.props.onPlaceChange) {
@@ -66,12 +72,6 @@ export default class SearchMenu extends Component {
     google.maps.event.trigger(input, 'keydown', { keyCode: 40 })
     google.maps.event.trigger(input, 'keydown', { keyCode: 13 })
     google.maps.event.trigger(input, 'keydown', { keyCode: 13 })
-  }
-
-  componentDidUnmount () {
-    if (this.searchBox) {
-      this.searchBox.removeListener('place_changed', this.onPlaceChange)
-    }
   }
 
   render () {

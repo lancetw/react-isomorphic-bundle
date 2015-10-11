@@ -16,10 +16,11 @@ class Lightbox extends React.Component {
   }
 
   render () {
+    const isAppear = true
     return (
       <CSSTransitionGroup
         transitionName="lightbox"
-        transitionAppear="true">
+        transitionAppear={isAppear}>
         <div className="lightbox">
           <div className="lightbox-wrap">
             <a onClick={Lightbox.remove}>

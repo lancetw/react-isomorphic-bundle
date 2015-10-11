@@ -28,7 +28,7 @@ class HomeHandler extends BaseComponent {
     this.authActions = bindActionCreators(AuthActions, dispatch)
     this.postActions = bindActionCreators(PostActions, dispatch)
     resolver.resolve(this.authActions.sync)
-    resolver.resolve(this.postActions.newsList, 0, 5)
+    resolver.resolve(this.postActions.newsList, 0, 6)
     resolver.resolve(this.authActions.showUser, props.auth.token)
   }
 

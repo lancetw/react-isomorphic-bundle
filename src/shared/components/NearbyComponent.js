@@ -6,6 +6,7 @@ import Marker from 'shared/components/addon/maps/marker'
 import SearchMenu from 'shared/components/addon/maps/search-menu'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import controllable from 'react-controllables'
+import counterpart from 'counterpart'
 
 @controllable(['zoom', 'hoverKey', 'clickKey'])
 export default class Nearby extends React.Component {
@@ -14,6 +15,9 @@ export default class Nearby extends React.Component {
     nearby: PropTypes.func.isRequired,
     updateNearbyCenter: PropTypes.func.isRequired,
     search: PropTypes.object.isRequired,
+    defaultCenter: PropTypes.object.isRequired,
+    center: PropTypes.object,
+    defaultZoom: PropTypes.number.isRequired,
     zoom: PropTypes.number, // @controllable
     hoverKey: PropTypes.string, // @controllable
     clickKey: PropTypes.string, // @controllable
@@ -27,11 +31,17 @@ export default class Nearby extends React.Component {
   }
 
   static defaultProps = {
+    defaultCenter: { lat: 25.018536, lng: 121.529146 },
+    defaultZoom: 15,
+    center: { lat: 25.018536, lng: 121.529146 },
     zoom: 15
   }
 
   constructor (props) {
     super(props)
+
+    this.map = null
+    this.maps = null
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
@@ -39,11 +49,12 @@ export default class Nearby extends React.Component {
   openInfoWindow = (key, childProps) => {
     this.props.onClickKeyChange(key)
     this.props.updateNearbyCenter({
-      center: [ childProps.lat, childProps.lng ]
+      center: { lat: childProps.lat, lng: childProps.lng }
     })
   }
 
-  handleBoundsChange = (center, zoom) => {
+  handleChange = (event) => {
+    const { center, zoom, bounds, marginBounds } = event
     this.props.updateNearbyCenter({ center })
     this.props.onZoomChange(zoom)
   }
@@ -85,7 +96,9 @@ export default class Nearby extends React.Component {
       lat: location.J,
       lng: location.M
     }, 50).then(() => {
-      this.props.updateNearbyCenter({ center: [ location.J, location.M ] })
+      this.props.updateNearbyCenter({
+        center: { lat: location.J, lng: location.M }
+      })
       this.props.onZoomChange(15)
     })
   }
@@ -106,6 +119,14 @@ export default class Nearby extends React.Component {
 
   render () {
     const { center, key, pattern, data } = this.props.search
+    let MyPlace
+    if (typeof pattern.lat !== 'undefined'
+        && typeof pattern.lng !== 'undefined') {
+      MyPlace = (<Pin {...pattern} />)
+    } else {
+      MyPlace = (<Pin {...this.props.center} />)
+    }
+
     let Markers
     if (data) {
       Markers = data.map((m, index) => (
@@ -128,23 +149,29 @@ export default class Nearby extends React.Component {
         <div id="loading-container" />
         <div id="nearby">
           <GoogleMap
+            onGoogleApiLoaded={({map, maps}) => {
+              google.maps.event.addDomListener(window, 'resize', function () {
+                google.maps.event.trigger(maps, 'resize')
+              })
+            }}
+            yesIWantToUseGoogleMapApiInternals
             ref="nearby"
+            defaultCenter={this.props.defaultCenter}
             center={center}
-            onBoundsChange={this.handleBoundsChange}
+            onChange={this.handleChange}
             onChildClick={this.handleChildClick}
             onChildMouseEnter={this.handleChildMouseEnter}
             onChildMouseLeave={this.handleChildMouseLeave}
             options={this.createMapOptions}
+            defaultZoom={this.props.defaultZoom}
             zoom={this.props.zoom}>
-            <Pin
-              lat={pattern.lat}
-              lng={pattern.lng} />
+            {MyPlace}
             {Markers}
           </GoogleMap>
           <SearchMenu
             onDegreeChange={this.handleDegreeChange}
             onPlaceChange={this.handlePlaceChange}
-            placeholder={`我的位置`}
+            placeholder={counterpart('post.map.my')}
           />
         </div>
       </main>

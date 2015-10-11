@@ -1,8 +1,8 @@
-
 import React, { PropTypes, Component } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import classNames from 'classnames'
 import { toShortDate } from 'shared/utils/date-utils'
+import { Link } from 'react-router'
 
 export default class Marker extends Component {
 
@@ -95,12 +95,11 @@ export default class Marker extends Component {
             </div>
             <div className={actionClasses}>
               <div className="ui two buttons">
-                <a
-                  href={`/w/p/${data.id}`}
-                  target="_blank"
+                <Link
+                  to={`/w/p/${data.id}`}
                   className="ui basic green button">
                   詳細佈告
-                </a>
+                </Link>
                 <a onClick={this.props.handleCloseClick}
                   className="ui basic red button">
                   關閉

@@ -31,7 +31,7 @@ class NearbyHandler extends BaseComponent {
     const { dispatch } = context.store
     dispatch(updateTitle('title.nearby'))
 
-    const center = [25.018536, 121.529146]
+    const center = { lat: 25.018536, lng: 121.529146 }
     dispatch(SearchActions.updateNearbyCenter({ center }))
 
     runGeoLoc().then((position) => {
@@ -42,9 +42,9 @@ class NearbyHandler extends BaseComponent {
       }, 50)).then((info) => {
         const { pattern } = info
         setTimeout(() => {
-          dispatch(SearchActions.updateNearbyCenter({ center: [
-            pattern.lat, pattern.lng
-          ] }))
+          dispatch(SearchActions.updateNearbyCenter({
+            center: { lat: pattern.lat, lng: pattern.lng }
+          }))
         }, 500)
       })
     }).catch((err) => {
