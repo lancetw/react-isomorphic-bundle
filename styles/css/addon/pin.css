@@ -1,0 +1,48 @@
+
+/* ref: http://cssdeck.com/labs/tedyvui4 */
+.pin {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(0, 0, 0, 1);
+  border-radius: 50% 1% 50% 1%;
+  background: #00cae9;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -20px 0 0 -20px;
+}
+.pin:after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin: 6px 0 0 6px;
+  background: #e6e6e6;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.pin.has-label {
+  margin-top: -42px;
+  margin-left: -14px;
+}
+.pin.has-label:after {
+  margin-left: -7px;
+  border-radius: 50% 15% 50% 10%;
+  background: rgba(255, 215, 0, 0.9);
+}
+
+.red.pin {
+  background: rgba(248, 43, 1, 0.9);
+  border: 3px solid rgba(208, 53, 20, 0.1);
+}
+
+.red.pin:after {
+  background: rgba(255, 215, 0, 0.9);
+  margin-left: -8px;
+}
+
+.ui.orange.label.with-pin {
+  margin-top: 50px;
+}
