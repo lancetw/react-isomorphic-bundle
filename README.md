@@ -61,6 +61,7 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 - [x] modify posts
 - [x] delete posts
 - [x] i18n / language switcher
+- [x] Traditional Chinese and Simplified Chinese Conversion (New Tong Wen Tang)
 - [x] files/images uploader (dropzone)
 - [x] advertisement scripts support
 - [x] location Settings (Google maps with HTML5 Geolocation)
@@ -70,6 +71,7 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 - [x] full text Search
 - [x] image slider
 - [x] admin pages (manage posts and users)
+- [x] nearby map (PostGIS)
 - [ ] sitemap
 - [ ] static archive pages
 - [ ] testing suite
@@ -111,3 +113,5 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 * [react-paginate](https://github.com/AdeleD/react-paginate)
 * [nuka-carousel](https://github.com/kenwheeler/nuka-carousel)
 * [react-google-recaptcha](https://github.com/dozoisch/react-google-recaptcha)
+* [新同文堂 for Web](http://tongwen.openfoundry.org)
+* [react-spinkit](https://github.com/KyleAMathews/react-spinkit)

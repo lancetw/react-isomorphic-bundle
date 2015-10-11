@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
+import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 export default class HomeComponent extends BaseComponent {
 
@@ -36,11 +37,12 @@ export default class HomeComponent extends BaseComponent {
       <div className="content">
         <h3>
           <Link to={`/w/p/${post.id}`}>
-            {post.ocname || <Translate content="news.unnamed" />}
+            {tongwenAutoStr(post.ocname, this.getLocale())
+              || <Translate content="news.unnamed" />}
           </Link>
         </h3>
         <div className="header">
-          {post.title}
+          {tongwenAutoStr(post.title, this.getLocale())}
         </div>
       </div>
     </div>
@@ -67,7 +69,7 @@ export default class HomeComponent extends BaseComponent {
     const loading = this.props.post.isFetching
 
     return (
-      <main className="ui column centered stackable page grid">
+      <main className="ui one column centered stackable page grid">
         <div className="column">
           { ::this.renderNews(posts) }
           {loading && isEmpty(posts) && (

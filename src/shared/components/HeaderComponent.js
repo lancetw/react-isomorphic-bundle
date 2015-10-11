@@ -122,6 +122,9 @@ export default class Header extends React.Component {
             <Link activeClassName="active" to="/home" className="item">
               <Translate content="header.home" />
             </Link>
+            <Link activeClassName="active" to="/nearby" className="item">
+              <Translate content="header.nearby" />
+            </Link>
             <Link activeClassName="active" to="/w/today" className="item">
               <Translate content="header.wall" />
             </Link>

@@ -52,6 +52,10 @@ exports.nearBy = function *(limit=20, pattern) {
                       posts.title,
                       posts.lat,
                       posts.lng,
+                      posts.start_date,
+                      posts.end_date,
+                      posts.open_date,
+                      posts.close_date,
                       ST_Distance(geometry, poi)/1000 AS distance
                FROM locations INNER JOIN posts ON (posts.id = locations.post_id),
                     (select ST_MakePoint(${pattern.lng},${pattern.lat})::geography as poi) as poi

@@ -7,6 +7,7 @@ import { at } from 'lodash'
 import moment from 'moment'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import counterpart from 'counterpart'
+import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 const Translate = require('react-translate-component')
 
@@ -42,12 +43,12 @@ export default class PostCard extends BaseComponent {
     if (card.place && card.lat && card.lng) {
       return (
         <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>
-          {card.place}
+          {tongwenAutoStr(card.place, this.getLocale())}
         </a>
       )
     } else {
       return (
-        <span>{card.ocname}</span>
+        <span>{tongwenAutoStr(card.ocname, this.getLocale())}</span>
       )
     }
     return <Translate content="post.detail.nomap" />
@@ -80,7 +81,9 @@ export default class PostCard extends BaseComponent {
         <div className="ui fluid post card">
           <div className="content">
             <h2 className="title">
-              <Link to={`/w/p/${card.id}`}>{card.title}</Link>
+              <Link to={`/w/p/${card.id}`}>
+                {tongwenAutoStr(card.title, this.getLocale())}
+              </Link>
             </h2>
             <div className="ui orange top left attached label">
               {this.renderCardProp(card)}

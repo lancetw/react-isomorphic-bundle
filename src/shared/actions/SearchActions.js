@@ -5,7 +5,12 @@ import {
   SEARCH_POST_RELOADED,
   SEARCH_POST_STARTED,
   SEARCH_POST_COMPLETED,
-  SEARCH_POST_FAILED
+  SEARCH_POST_FAILED,
+  SEARCH_NEARBY_RELOADED,
+  SEARCH_NEARBY_STARTED,
+  SEARCH_NEARBY_COMPLETED,
+  SEARCH_NEARBY_FAILED,
+  SEARCH_UPDATE_CENTER_COMPLETED
 } from 'shared/constants/ActionTypes'
 
 async function search (scope, pattern, offset, limit) {
@@ -77,15 +82,15 @@ export function nearby (pattern, limit=30, reload=false) {
     }
 
     if (reload) {
-      dispatch({ type: SEARCH_POST_RELOADED })
+      dispatch({ type: SEARCH_NEARBY_RELOADED })
     }
 
-    dispatch({ type: SEARCH_POST_STARTED })
+    dispatch({ type: SEARCH_NEARBY_STARTED })
     try {
       const data = await search('nearby', JSON.stringify(pattern), 0, limit)
       if (isArray(data)) {
         return dispatch({
-          type: SEARCH_POST_COMPLETED,
+          type: SEARCH_NEARBY_COMPLETED,
           pattern: pattern,
           data: data,
           offset: 0,
@@ -93,15 +98,24 @@ export function nearby (pattern, limit=30, reload=false) {
         })
       } else {
         return dispatch({
-          type: SEARCH_POST_FAILED,
+          type: SEARCH_NEARBY_FAILED,
           errors: data.errors ? data.errors : data
         })
       }
     } catch (err) {
       return dispatch({
-        type: SEARCH_POST_FAILED,
+        type: SEARCH_NEARBY_FAILED,
         errors: err.message
       })
     }
+  }
+}
+
+export function updateNearbyCenter ({ center }) {
+  return async (dispatch, getState) => {
+    return dispatch({
+      type: SEARCH_UPDATE_CENTER_COMPLETED,
+      center: center
+    })
   }
 }

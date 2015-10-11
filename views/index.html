@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="{{ style }}" media="screen, projection">
     {% endfor %}
     {% endif %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css" media="screen, projection">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css" media="screen, projection">
     {{ stateFromServer | safe }}
   </head>
   <body>
     <div id="app">{{ appString | safe }}</div>
+    <script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
     {% if env.NODE_ENV == 'production' %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -40,5 +41,10 @@
     {% endfor %}
     {% endif %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
+    <script src="//tongwen.openfoundry.org/src/web/tongwen_core.js"></script>
+    <script async src="//tongwen.openfoundry.org/src/web/tongwen_table_s2t.js"></script>
+    <script async src="//tongwen.openfoundry.org/src/web/tongwen_table_t2s.js"></script>
+    <script async src="//tongwen.openfoundry.org/src/web/tongwen_table_ps2t.js"></script>
+    <script async src="//tongwen.openfoundry.org/src/web/tongwen_table_pt2s.js"></script>
   </body>
 </html>

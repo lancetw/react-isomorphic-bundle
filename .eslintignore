@@ -9,3 +9,4 @@ tests/
 uploads/
 views/
 webpack/
+src/vendor/

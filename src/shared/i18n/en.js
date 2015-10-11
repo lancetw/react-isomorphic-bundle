@@ -29,7 +29,8 @@ export default {
     login: 'Log In',
     logout: 'Log Out',
     password: 'Password',
-    search: 'Search...'
+    search: 'Search...',
+    nearby: 'Nearby'
   },
   search_input: {
     placeholder: 'Search...',

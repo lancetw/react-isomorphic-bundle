@@ -85,7 +85,7 @@ export default class ImageUpload extends React.Component {
         className="column"
         onDrop={::this.handleDrop}>
         <img
-          className="ui image centered"
+          className="ui image centered placeholder"
           alt=""
           src={ img || this.props.src } />
         {::this.renderPrecentage(this.props.index)}

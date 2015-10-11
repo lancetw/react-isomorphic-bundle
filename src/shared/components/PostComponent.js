@@ -248,7 +248,7 @@ export default class Post extends BaseComponent {
     event.preventDefault()
     const address = React.findDOMNode(this.refs.place).value.trim()
     if (!address || address === counterpart('post.map.my')) {
-      runGeoLoc(this.showPosition.bind(this))
+      runGeoLoc().then(this.showPosition.bind(this))
     } else {
       this.props.search(address)
     }
@@ -256,7 +256,7 @@ export default class Post extends BaseComponent {
 
   handleGeo (event) {
     event.preventDefault()
-    runGeoLoc(this.showPosition.bind(this))
+    runGeoLoc().then(this.showPosition.bind(this))
   }
 
   handleSubmit (evt) {

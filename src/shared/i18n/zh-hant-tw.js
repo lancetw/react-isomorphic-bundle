@@ -29,7 +29,8 @@ export default {
     login: '登入',
     logout: '登出',
     password: '密碼',
-    search: '搜尋⋯'
+    search: '搜尋⋯',
+    nearby: '附近'
   },
   search_input: {
     placeholder: '搜尋...',

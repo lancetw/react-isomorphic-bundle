@@ -234,7 +234,7 @@ export default class Post extends BaseComponent {
       return (
         <main className="ui two column post detail stackable has-header grid container">
           <div className="column">
-            <div className="ui huge orange ribbon label">
+            <div className="ui huge orange label">
               <Translate content="post.detail.noexist" />
             </div>
           </div>

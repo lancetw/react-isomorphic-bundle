@@ -29,7 +29,8 @@ export default {
     login: '登入',
     logout: '登出',
     password: '密码',
-    search: '搜寻⋯'
+    search: '搜寻⋯',
+    nearby: '附近'
   },
   search_input: {
     placeholder: '搜寻...',

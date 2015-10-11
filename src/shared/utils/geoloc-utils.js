@@ -19,19 +19,26 @@ function showError (error) {
   }
 }
 
-export function runGeoLoc (func, highAccuracy=true, timeout=10000, maximumAge=0) {
-  if (typeof navigator === 'undefined') return false
+export function runGeoLoc (highAccuracy=true, timeout=10000, maximumAge=0) {
+  return new Promise((resolve, reject) => {
+    if (typeof navigator === 'undefined') resolve('navigator is undefined')
 
-  if (navigator.geolocation) {
-    const optn = {
-      enableHighAccuracy: highAccuracy,
-      timeout: timeout,
-      maximumAge: maximumAge
+    if (navigator.geolocation) {
+      const optn = {
+        enableHighAccuracy: highAccuracy,
+        timeout: timeout,
+        maximumAge: maximumAge
+      }
+      navigator.geolocation.getCurrentPosition(
+        (position) => resolve(position),
+        (error) => {
+          showError(error)
+          reject(error)
+        }, optn)
+    } else {
+      sweetAlert(counterpart('geoloc.nosupported'))
+      resolve('geolocation is not supported')
     }
-    navigator.geolocation
-      .getCurrentPosition(func, showError, optn)
-  } else {
-    sweetAlert(counterpart('geoloc.nosupported'))
-  }
+  })
 }
 

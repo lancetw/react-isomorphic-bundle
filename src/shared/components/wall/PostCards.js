@@ -95,7 +95,7 @@ export default class PostCards extends BaseComponent {
     /* eslint-disable max-len */
     if (!this.state.triggered && nodeScroll.scrollTop > checkPoint) {
       $('body').bind('touchmove', function(e) { e.preventDefault() })
-      $('<div id="overlay"><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.ui.scrollable')
+      $('<div id="overlay"><div id="loading"><div class="scroll-spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.ui.scrollable')
       this.setState({ triggered: true })
 
       this.props.loadFunc()

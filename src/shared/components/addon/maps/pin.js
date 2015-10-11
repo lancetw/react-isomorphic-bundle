@@ -11,8 +11,6 @@ const Pintyle = {
   height: K_HEIGHT,
   left: -K_WIDTH / 2,
   top: -K_HEIGHT / 2,
-
-  backgroundImage: '/images/marker.png',
   textAlign: 'center',
   color: '#000',
   fontSize: 18,
@@ -38,9 +36,12 @@ export default class Pin extends Component {
     return (
       <div style={Pintyle}>
         <div>
-          <img alt="" src={'/images/marker.png'} />
+          <div className="pin red has-label"></div>
         </div>
-        <div className="ui orange pointing label">{ this.props.place }</div>
+        { this.props.place
+          && <div className="ui orange label with-pin">
+          { this.props.place }
+        </div> }
       </div>
     )
   }

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react/addons'
 import Header from './HeaderHandler'
-
 const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
@@ -9,6 +8,7 @@ if (process.env.BROWSER) {
   require('css/screen')
   require('css/addon/csshake.min')
   require('css/images')
+  require('css/addon/pin')
 }
 
 export default class AppHandler extends React.Component {

@@ -7,6 +7,13 @@ import { updateTitle } from '../actions/LocaleActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
 import { runGeoLoc } from 'shared/utils/geoloc-utils'
+import { Loading } from 'shared/components/addon/loading'
+import { isEmpty } from 'lodash'
+
+if (process.env.BROWSER) {
+  require('css/addon/pin')
+  require('css/addon/nearby')
+}
 
 class NearbyHandler extends BaseComponent {
 
@@ -24,20 +31,50 @@ class NearbyHandler extends BaseComponent {
     const { dispatch } = context.store
     dispatch(updateTitle('title.nearby'))
 
-    runGeoLoc((position) => {
-      dispatch(SearchActions.nearby(
-        {
-          dist: 5000,
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        },
-        30
-      ))
+    const center = [25.018536, 121.529146]
+    dispatch(SearchActions.updateNearbyCenter({ center }))
+
+    runGeoLoc().then((position) => {
+      dispatch(SearchActions.nearby({
+        dist: 1000,
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }, 50)).then((info) => {
+        const { pattern } = info
+        setTimeout(() => {
+          dispatch(SearchActions.updateNearbyCenter({ center: [
+            pattern.lat, pattern.lng
+          ] }))
+        }, 500)
+      })
+    }).catch((err) => {
+      // fallback
+      dispatch(SearchActions.nearby({
+        dist: 1000,
+        lat: center[0],
+        lng: center[1]
+      }, 30)).then(() => {
+        setTimeout(() => {
+          dispatch(SearchActions.updateNearbyCenter({ center }))
+        }, 500)
+      })
     })
   }
 
+  componentDidMount () {
+    Loading.show('正在努力找尋您附近的活動...')
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.search.isFetching) {
+      setTimeout(() => {
+        Loading.hide()
+      }, 2400)
+    }
+  }
+
   render () {
-    const { dispatch } = this.props
+    const { dispatch, search } = this.props
 
     const title = this._T('title.nearby')
     const defaultTitle = this._T('title.site')

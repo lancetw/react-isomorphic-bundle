@@ -7,6 +7,7 @@ import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
 import DocumentTitle from './addon/document-title'
 import { BaseComponent } from 'shared/components'
+import { tongwenAuto } from 'shared/utils/tongwen'
 
 class PostDetailHandler extends BaseComponent {
 
@@ -47,6 +48,10 @@ class PostDetailHandler extends BaseComponent {
         dispatch(PostActions.loadPostDetail(id))
       }, 0)
     }
+  }
+
+  componentDidUpdate () {
+    tongwenAuto(document, this.getLocale())
   }
 
   render () {

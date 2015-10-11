@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import { connect } from 'react-redux'
+import { toSimpChinese, toTradChinese } from 'shared/utils/tongwen'
 
 class LocaleSwitcher extends React.Component {
 
@@ -29,6 +30,14 @@ class LocaleSwitcher extends React.Component {
       document.title = `${title} | ${defaultTitle}`
     } else {
       document.title = `${title}`
+    }
+
+    if (lang.endsWith('cn')) {
+      TongWen.trans2Simp(document)
+    } else if (lang.endsWith('tw')) {
+      TongWen.trans2Trad(document)
+    } else {
+      TongWen.trans2Trad(document)
     }
   }
 
