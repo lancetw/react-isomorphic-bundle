@@ -8,12 +8,12 @@ import { toShortDate } from 'shared/utils/date-utils'
 export default class Marker extends Component {
 
   static propTypes = {
-    key: PropTypes.any,
     hover: PropTypes.bool.isRequired,
     pulse: PropTypes.bool.isRequired,
     isOpen: PropTypes.bool.isRequired,
     data: PropTypes.object.isRequired,
-    handleCloseClick: PropTypes.func.isRequired
+    handleCloseClick: PropTypes.func,
+    handleTouchStart: PropTypes.func
   }
 
   constructor (props) {
@@ -21,6 +21,13 @@ export default class Marker extends Component {
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
+
+  onTouchStart = (key, childProps, event) => {
+    if (this.props.handleTouchStart) {
+      this.props.handleTouchStart(key, childProps)
+      return false
+    }
+  }
 
   render () {
     const pinClasses = classNames(
@@ -59,7 +66,8 @@ export default class Marker extends Component {
     : toShortDate(data.start_date) + ' - ' + toShortDate(data.end_date)
 
     return (
-      <div key={this.props.key}>
+      <div
+        onTouchStart={this.onTouchStart.bind(null, data.id, data)}>
         <div>
           <div className={pinClasses}></div>
           <div className={pulseClasses}></div>

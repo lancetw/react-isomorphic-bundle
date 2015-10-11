@@ -41,6 +41,17 @@ export default class Nearby extends React.Component {
     this.props.onZoomChange(zoom)
   }
 
+  handleTouchStart = (key, childProps) => {
+    if (key === this.props.clickKey) {
+      this.props.onClickKeyChange(null)
+    } else {
+      this.props.onClickKeyChange(key)
+      this.props.updateNearbyCenter({
+        center: [ childProps.lat, childProps.lng ]
+      })
+    }
+  }
+
   handleChildClick = (key, childProps) => {
     this.props.onClickKeyChange(key)
     this.props.updateNearbyCenter({
@@ -110,6 +121,7 @@ export default class Nearby extends React.Component {
           pulse={!this.props.hoverKey}
           isOpen={m.id === this.props.clickKey}
           handleCloseClick={this.handleChildCloseClick}
+          handleTouchStart={this.handleTouchStart}
         />
       ))
     }
