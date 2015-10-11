@@ -69,7 +69,7 @@ class NearbyHandler extends BaseComponent {
     if (!nextProps.search.isFetching) {
       setTimeout(() => {
         Loading.hide()
-      }, 2400)
+      }, 3200)
     }
   }
 
