@@ -36,27 +36,24 @@ export default class Nearby extends React.Component {
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
+  openInfoWindow = (key, childProps) => {
+    this.props.onClickKeyChange(key)
+    this.props.updateNearbyCenter({
+      center: [ childProps.lat, childProps.lng ]
+    })
+  }
+
   handleBoundsChange = (center, zoom) => {
     this.props.updateNearbyCenter({ center })
     this.props.onZoomChange(zoom)
   }
 
   handleTouchStart = (key, childProps) => {
-    if (key === this.props.clickKey) {
-      this.props.onClickKeyChange(null)
-    } else {
-      this.props.onClickKeyChange(key)
-      this.props.updateNearbyCenter({
-        center: [ childProps.lat, childProps.lng ]
-      })
-    }
+    return this.openInfoWindow(key, childProps)
   }
 
   handleChildClick = (key, childProps) => {
-    this.props.onClickKeyChange(key)
-    this.props.updateNearbyCenter({
-      center: [ childProps.lat, childProps.lng ]
-    })
+    return this.openInfoWindow(key, childProps)
   }
 
   handleChildMouseEnter = (key, childProps) => {

@@ -2,7 +2,6 @@
 import React, { PropTypes, Component } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import classNames from 'classnames'
-import { Link } from 'react-router'
 import { toShortDate } from 'shared/utils/date-utils'
 
 export default class Marker extends Component {
@@ -24,8 +23,7 @@ export default class Marker extends Component {
 
   onTouchStart = (key, childProps, event) => {
     if (this.props.handleTouchStart) {
-      this.props.handleTouchStart(key, childProps)
-      return false
+      return this.props.handleTouchStart(key, childProps)
     }
   }
 
@@ -97,11 +95,12 @@ export default class Marker extends Component {
             </div>
             <div className={actionClasses}>
               <div className="ui two buttons">
-                <Link
-                  to={`/w/p/${data.id}`}
+                <a
+                  href={`/w/p/${data.id}`}
+                  target="_blank"
                   className="ui basic green button">
                   詳細佈告
-                </Link>
+                </a>
                 <a onClick={this.props.handleCloseClick}
                   className="ui basic red button">
                   關閉
