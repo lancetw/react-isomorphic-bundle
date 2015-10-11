@@ -82,14 +82,15 @@ export default class Marker extends Component {
               <i className="ui orange icon large compass"></i>
               { data.distance >= 1
                 && `距離我約為 ${data.distance.toFixed(3)} 公里`}
-              { data.distance < 1
+              { data.distance < 1 && data.distance >= 0.01
                 && `距離我約為 ${(data.distance * 1000).toFixed(2)} 公尺`}
+              { data.distance < 0.01
+                && `我在這裡`}
             </div>
             <div className={actionClasses}>
               <div className="ui two buttons">
                 <Link
                   to={`/w/p/${data.id}`}
-                  target="_blank"
                   className="ui basic green button">
                   詳細佈告
                 </Link>

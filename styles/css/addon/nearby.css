@@ -158,7 +158,7 @@
   font-size: 1rem;
   position: relative;
   top: -12rem;
-  left: 8.64rem;
+  left: 8.97rem;
   width: 18rem;
   z-index: 1000;
 
@@ -225,4 +225,22 @@ and (max-device-width : 736px) {
 
 .extra.content.hidden {
   display: none;
+}
+
+.search.simple {
+  display: block;
+}
+@media only screen and (min-width : 1224px) {
+  .search.simple {
+    display: none;
+  }
+}
+
+.search.autocomplete {
+  display: none;
+}
+@media only screen and (min-width : 1224px) {
+  .search.autocomplete {
+    display: block;
+  }
 }

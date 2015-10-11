@@ -1,38 +1,76 @@
 import React, { Component, PropTypes } from 'react'
+import { isArray } from 'lodash'
 
 export default class SearchMenu extends Component {
 
   static propTypes = {
     placeholder: PropTypes.string,
     onDegreeChange: PropTypes.func,
-    onPlacesChange: PropTypes.func
+    onPlaceChange: PropTypes.func
   }
 
   constructor (props) {
     super(props)
 
-    this.searchBox = null
+    this.autocomplete = null
+    this.timer = null
+    this.state = { value: '' }
   }
 
   componentDidMount () {
     const input = React.findDOMNode(this.refs.googlesearch)
-    this.searchBox = new google.maps.places.SearchBox(input)
-    this.searchBox.addListener('places_changed', this.onPlacesChange)
+    this.autocomplete = new google.maps.places.Autocomplete(input)
+    this.autocomplete.addListener('place_changed', this.onPlaceChange)
   }
 
-  onPlacesChange = () => {
-    if (this.props.onPlacesChange) {
-      this.props.onPlacesChange(this.searchBox.getPlaces())
+  onPlaceChange = () => {
+    const place = this.autocomplete.getPlace()
+    if (this.props.onPlaceChange) {
+      if (place.geometry) {
+        const { location } = place.geometry
+        this.props.onPlaceChange(location)
+        this.setState({ value: place.name })
+      }
     }
   }
 
-  onSearchSubmit = (event) => {
+  handleChange = () => {
+    const value = React.findDOMNode(this.refs.simplesearch).value
+    this.setState({ value })
+  }
+
+  handleSimpleSubmit = (event) => {
     event.preventDefault()
+    const input = React.findDOMNode(this.refs.simplesearch)
+    input.blur()
+    const value = input.value
+    const geocoder = new google.maps.Geocoder()
+    const self = this.props
+    geocoder.geocode({ address: value }, function (results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        const { location } = results[0].geometry
+        self.onPlaceChange(location)
+      }
+    })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+
+    this.doSubmit()
+  }
+
+  doSubmit () {
+    const input = React.findDOMNode(this.refs.googlesearch)
+    google.maps.event.trigger(input, 'focus')
+    google.maps.event.trigger(input, 'keydown', { keyCode: 40 })
+    google.maps.event.trigger(input, 'keydown', { keyCode: 13 })
+    google.maps.event.trigger(input, 'keydown', { keyCode: 13 })
   }
 
   componentDidUnmount () {
     if (this.searchBox) {
-      this.searchBox.removeListener('places_changed', this.onPlacesChange)
+      this.searchBox.removeListener('place_changed', this.onPlaceChange)
     }
   }
 
@@ -54,15 +92,39 @@ export default class SearchMenu extends Component {
               </div>
             </div>
           </div>
-          <form action="" method="post" onSubmit={this.onSearchSubmit}>
-            <div className="ui search">
+          <div className="ui search simple">
+            <form
+              action=""
+              method="get"
+              onSubmit={this.handleSimpleSubmit}>
               <div className="ui icon input">
-                <input ref="googlesearch" type="search" placeholder="我的位置" />
-                <i className="search icon"></i>
+                <input
+                  ref="simplesearch"
+                  type="input"
+                  placeholder={this.props.placeholder}
+                  onChange={this.handleChange}
+                  value={this.state.value} />
+                <i className="compass icon"></i>
               </div>
               <input type="submit" className="hide-submit" />
-            </div>
-          </form>
+            </form>
+          </div>
+          <div className="ui search autocomplete">
+            <form
+              action=""
+              method="get"
+              onSubmit={this.handleSubmit}>
+              <div className="ui icon input">
+                <input
+                  ref="googlesearch"
+                  type="input"
+                  placeholder={this.props.placeholder}
+                  onChange={this.handleChange} />
+                <i className="compass icon"></i>
+              </div>
+              <input type="submit" className="hide-submit" />
+            </form>
+          </div>
         </div>
       </div>
     )

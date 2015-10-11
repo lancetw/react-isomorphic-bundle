@@ -70,19 +70,16 @@ export default class Nearby extends React.Component {
     }, 50)
   }
 
-  handlePlacesChange = (place) => {
-    if (isArray(place) && place.length > 0) {
-      const { location } = place[0].geometry
-      const { pattern, center } = this.props.search
-      this.props.nearby({
-        dist: pattern.dist ? pattern.dist : 1000,
-        lat: location.J,
-        lng: location.M
-      }, 50).then(() => {
-        this.props.updateNearbyCenter({ center: [ location.J, location.M ] })
-        this.props.onZoomChange(15)
-      })
-    }
+  handlePlaceChange = (location) => {
+    const { pattern, center } = this.props.search
+    this.props.nearby({
+      dist: pattern.dist ? pattern.dist : 1000,
+      lat: location.J,
+      lng: location.M
+    }, 50).then(() => {
+      this.props.updateNearbyCenter({ center: [ location.J, location.M ] })
+      this.props.onZoomChange(15)
+    })
   }
 
   createMapOptions (maps) {
@@ -137,7 +134,8 @@ export default class Nearby extends React.Component {
           </GoogleMap>
           <SearchMenu
             onDegreeChange={this.handleDegreeChange}
-            onPlacesChange={this.handlePlacesChange}
+            onPlaceChange={this.handlePlaceChange}
+            placeholder={`我的位置`}
           />
         </div>
       </main>
