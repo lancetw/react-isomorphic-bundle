@@ -45,7 +45,7 @@ export default class Marker extends Component {
     )
 
     const pulseClasses = classNames(
-      { 'pulse': this.props.pulse ? true : false },
+      { 'xpulse': this.props.pulse ? true : false },
       'green',
       { 'hover': this.props.hover },
       { 'open': this.props.isOpen }
