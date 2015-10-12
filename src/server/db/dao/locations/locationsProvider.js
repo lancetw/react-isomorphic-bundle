@@ -14,16 +14,25 @@ exports.create = function *(postId, info) {
   return yield models.locations.create(info, { fields: fillable })
 }
 
-exports.update = function *(postId, info) {
-  const fillable = [
-    'geometry'
-  ]
+exports.createOrUpdate = function *(postId, info) {
   if (!isFinite(+postId)) return false
   const location = yield models.locations.findOne({
     where: { postId: postId }
   })
 
-  return yield location.update(info, { fields: fillable })
+  if (!location) {
+    const fillable = [
+      'postId',
+      'geometry'
+    ]
+    info.postId = postId
+    return yield models.locations.create(info, { fields: fillable })
+  } else {
+    const fillable = [
+      'geometry'
+    ]
+    return yield location.update(info, { fields: fillable })
+  }
 }
 
 exports.destroy = function *(postId) {

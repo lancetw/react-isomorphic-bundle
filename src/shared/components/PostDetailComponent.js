@@ -282,131 +282,131 @@ export default class Post extends BaseComponent {
       )
 
       return (
-        <main
-          className={mainClasses}>
-          <div className="column">
-            <div className="row">
-              <div id="lightbox-container" />
-            </div>
-            <div className="row">
-              <div className="ui fluid detail card">
-                {this.props.post.isFetching && !detail.id &&
-                <div className="ui segment basic has-header">
-                  <div className="ui active inverted dimmer">
-                    <div className="ui large loader"></div>
+        <div>
+          <div id="lightbox-container" />
+          <main
+            className={mainClasses}>
+            <div className="column">
+              <div className="row">
+                <div className="ui fluid detail card">
+                  {this.props.post.isFetching && !detail.id &&
+                  <div className="ui segment basic has-header">
+                    <div className="ui active inverted dimmer">
+                      <div className="ui large loader"></div>
+                    </div>
                   </div>
-                </div>
-                }
-                <div className={detailClass}>
-                  <div className="ui left floated">
-                  {eventDate && (
-                      <span className="ui large orange ribbon label">
-                        {eventDate}
-                      </span>
-                    )}
-                  </div>
-                  <div className="ui large right floated">
-                    {eventStartYear && (
-                      <span className="ui top right attached label label">
-                        {eventStartYear}
-                        { eventEndYear
-                          && <Translate content="post.detail.start" /> }
-                      </span>
-                    )}
-                    {eventEndYear && (
-                      <div>
-                        <span className="ui teal label">
-                          <Translate content="post.detail.end" /> {eventEndYear}
+                  }
+                  <div className={detailClass}>
+                    <div className="ui left floated">
+                    {eventDate && (
+                        <span className="ui large orange ribbon label">
+                          {eventDate}
                         </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="ui hidden divider" />
-                  <h1 className="title">
-                    {detail.title}
-                  </h1>
-                  <div className="description">
-                    {finalContent}
-                    { files && !isEmpty(files)
-                      &&
-                      <h4 className="ui horizontal divider header">
-                        <Translate content="post.detail.attachments" />
-                      </h4> }
-                    <ul className="fileList">
-                    {
-                      files && !isEmpty(files)
-                      && files.map(function (file, i) {
-                        return (
-                          <li
-                            key={i}>
-                            <div
-                              className="ui teal label"
-                              data-filetype={getFileExt(file)}>
-                              <a
-                                className="ui teal button"
-                                target="_blank"
-                                href={'/uploads/' + file}>
-                                <div >
-                                  <div className="fileName">
-                                    { getFileName(file) }
-                                  </div>
+                      )}
+                    </div>
+                    <div className="ui large right floated">
+                      {eventStartYear && (
+                        <span className="ui top right attached label label">
+                          {eventStartYear}
+                          { eventEndYear
+                            && <Translate content="post.detail.start" /> }
+                        </span>
+                      )}
+                      {eventEndYear && (
+                        <div>
+                          <span className="ui teal label">
+                            <Translate content="post.detail.end" /> {eventEndYear}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="ui hidden divider" />
+                    <h1 className="title">
+                      {detail.title}
+                    </h1>
+                    <div className="description">
+                      {finalContent}
+                      { files && !isEmpty(files)
+                        &&
+                        <h4 className="ui horizontal divider header">
+                          <Translate content="post.detail.attachments" />
+                        </h4> }
+                      <ul className="fileList">
+                      {
+                        files && !isEmpty(files)
+                        && files.map(function (file, i) {
+                          return (
+                            <li
+                              key={i}>
+                              <div
+                                className="ui teal label"
+                                data-filetype={getFileExt(file)}>
+                                <a
+                                  className="ui teal button"
+                                  target="_blank"
+                                  href={'/uploads/' + file}>
+                                  <div >
+                                    <div className="fileName">
+                                      { getFileName(file) }
+                                    </div>
+                                </div>
+                                </a>
                               </div>
-                              </a>
-                            </div>
-                          </li>
-                        )
-                      })
-                    }
-                    </ul>
+                            </li>
+                          )
+                        })
+                      }
+                      </ul>
+                    </div>
+                    <div className="taglist right aligned">
+                      <span
+                        className="ui large tag label category">
+                        {this.renderDetailProp(detail)}
+                      </span>
+                    </div>
                   </div>
-                  <div className="taglist right aligned">
-                    <span
-                      className="ui large tag label category">
-                      {this.renderDetailProp(detail)}
-                    </span>
+                  {!isEmpty(detail.uid) && this.props.auth.user.id === detail.uid &&
+                  <div className="extra content">
+                    <div className="ui two buttons">
+                      <Link
+                        className="ui basic green button"
+                        to={`/post/${detail.id}/edit`}>
+                        <Translate content="post.detail.edit" />
+                      </Link>
+                      <a
+                        className="ui basic red button"
+                        onClick={::this.deletePost}>
+                        <Translate content="post.detail.delete.confirm" />
+                      </a>
+                    </div>
                   </div>
+                  }
                 </div>
-                {!isEmpty(detail.uid) && this.props.auth.user.id === detail.uid &&
-                <div className="extra content">
-                  <div className="ui two buttons">
-                    <Link
-                      className="ui basic green button"
-                      to={`/post/${detail.id}/edit`}>
-                      <Translate content="post.detail.edit" />
-                    </Link>
-                    <a
-                      className="ui basic red button"
-                      onClick={::this.deletePost}>
-                      <Translate content="post.detail.delete.confirm" />
-                    </a>
-                  </div>
-                </div>
-                }
+              </div>
+              <div className="row">
+                { this.renderImageAttachments() }
+              </div>
+              <div className="row">
+                {this.renderRegisterInfo(detail)}
               </div>
             </div>
-            <div className="row">
-              { this.renderImageAttachments() }
+            <div className="map column">
+              <div className="row">
+                { (detail.lat && detail.lat) &&
+                <GMap
+                  ref="gmap"
+                  {...this.props.map}
+                  defaultLocale={this.props.defaultLocale}
+                />
+                }
+                {this.renderMoreList()}
+              </div>
+              <div className="row">
+                <ADContent />
+              </div>
             </div>
-            <div className="row">
-              {this.renderRegisterInfo(detail)}
-            </div>
-          </div>
-          <div className="map column">
-            <div className="row">
-              { (detail.lat && detail.lat) &&
-              <GMap
-                ref="gmap"
-                {...this.props.map}
-                defaultLocale={this.props.defaultLocale}
-              />
-              }
-              {this.renderMoreList()}
-            </div>
-            <div className="row">
-              <ADContent />
-            </div>
-          </div>
-        </main>
+          </main>
+        </div>
       )
     }
   }

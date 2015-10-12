@@ -240,7 +240,7 @@ export default new Resource('posts', {
       const post = yield Post.update(this.params.post, body)
 
       if (post.id && body.lat && body.lng) {
-        yield Location.update(post.id, {
+        yield Location.createOrUpdate(post.id, {
           geometry: [body.lng , body.lat]
         })
       }
@@ -265,7 +265,9 @@ export default new Resource('posts', {
       const post = yield Post.destroy(this.params.post)
 
       if (post.id) {
-        yield Location.destroy(post.id)
+        try {
+          yield Location.destroy(post.id)
+        } catch (err) {/* DON'T CARE */}
       }
 
       this.type = 'json'
