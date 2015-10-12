@@ -3,23 +3,41 @@
 }
 
 #nearby {
-  position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-  user-select: none;
-
-  div:first-child {
-    opacity: .99;
-  }
-
-  .ui.serachbox {
+  & {
     position: absolute;
-    top: 60px;
-    left: 15px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    user-select: none;
 
-    .ui.compact.menu {
-      position: absolute;
-      top: 70px;
-      left: 0;
+    div:first-child {
+      opacity: .99;
     }
+  }
+}
+
+.ui.mini.serachbox {
+  position: absolute !important;
+  top: 60px;
+  left: 15px;
+
+  .ui.menu {
+    position: absolute;
+    top: 5px;
+    left: 0;
+  }
+}
+
+.ui.serachbox {
+  position: absolute !important;
+  top: 60px;
+  left: 15px;
+
+  .ui.menu {
+    position: absolute;
+    top: 70px;
+    left: 0;
   }
 }
 
