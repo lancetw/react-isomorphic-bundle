@@ -13,6 +13,18 @@
   }
 }
 
+.ui.card.popupbox {
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
+
+  .content > .header {
+    font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
+  }
+}
+
+.ui.dropdown {
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
+}
+
 .ui.mini.serachbox {
   position: absolute !important;
   top: 60px;
