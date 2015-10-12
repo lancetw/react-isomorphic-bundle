@@ -130,6 +130,11 @@ export default {
           title: 'This post was deleted!',
           text: 'The post is deleted successfully.',
           confirm: 'Done'
+        },
+        err: {
+          title: 'Error',
+          text: 'An error occurred',
+          confirm: 'Close'
         }
       },
       'start': ' started',

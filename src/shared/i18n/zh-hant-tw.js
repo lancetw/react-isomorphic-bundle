@@ -130,6 +130,11 @@ export default {
           title: '佈告已刪除！',
           text: '佈告成功刪除',
           confirm: '確定'
+        },
+        err: {
+          title: '錯誤',
+          text: '無法刪除這則佈告',
+          confirm: '確定'
         }
       },
       'start': ' 開始',

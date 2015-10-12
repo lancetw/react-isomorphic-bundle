@@ -93,16 +93,22 @@ export default class Post extends BaseComponent {
     }, () => {
       Promise.all([
         remove(detail.id)
-      ]).then(() => {
-        swal({
-          title: _t('post.detail.delete.ok.title'),
-          text: _t('post.detail.delete.ok.text'),
-          type: 'success',
-          confirmButtonText: _t('post.detail.delete.ok.confirm'),
-          closeOnConfirm: true
-        }, () => {
-          transitionTo(createLocation('/w'))
-        })
+      ]).then((res) => {
+        if (res[0].type === 'REMOVE_POST_COMPLETED') {
+          swal({
+            title: _t('post.detail.delete.ok.title'),
+            text: _t('post.detail.delete.ok.text'),
+            type: 'success',
+            confirmButtonText: _t('post.detail.delete.ok.confirm'),
+            closeOnConfirm: true
+          }, () => {
+            transitionTo(createLocation('/w'))
+          })
+        } else {
+          swal(_t('post.detail.delete.err.title')
+            , _t('post.detail.delete.err.text'),
+            'error')
+        }
       })
     })
   }
