@@ -83,19 +83,29 @@ export default class SearchMenu extends Component {
           <Translate content="geoloc.range.text" />
           <i className="dropdown icon"></i>
           <div className="menu">
-            <div onClick={this.props.onDegreeChange} value="3000" className="item">
+            <div
+              onClick={this.props.onDegreeChange.bind(null, 3000)}
+              className="item">
               <Translate content="geoloc.range.lv1" />
             </div>
-            <div onClick={this.props.onDegreeChange} value="5000" className="item">
+            <div
+              onClick={this.props.onDegreeChange.bind(null, 5000)}
+              className="item">
               <Translate content="geoloc.range.lv2" />
             </div>
-            <div onClick={this.props.onDegreeChange} value="10000" className="item">
+            <div
+              onClick={this.props.onDegreeChange.bind(null, 10000)}
+              className="item">
               <Translate content="geoloc.range.lv3" />
             </div>
-            <div onClick={this.props.onDegreeChange} value="20000" className="item">
+            <div
+              onClick={this.props.onDegreeChange.bind(null, 20000)}
+              className="item">
               <Translate content="geoloc.range.lv4" />
             </div>
-            <div onClick={this.props.onDegreeChange} value="50000" className="item">
+            <div
+              onClick={this.props.onDegreeChange.bind(null, 50000)}
+              className="item">
               <Translate content="geoloc.range.lv5" />
             </div>
           </div>

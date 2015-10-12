@@ -6,6 +6,7 @@ import Marker from 'shared/components/addon/maps/marker'
 import SearchMenu from 'shared/components/addon/maps/search-menu'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import controllable from 'react-controllables'
+import { isFinite } from 'lodash'
 
 @controllable(['zoom', 'hoverKey', 'clickKey'])
 export default class Nearby extends React.Component {
@@ -78,12 +79,11 @@ export default class Nearby extends React.Component {
     this.props.onClickKeyChange(null)
   }
 
-  handleDegreeChange = (e) => {
-    const dist = e.target.getAttribute('value')
+  handleDegreeChange = (dist) => {
     const { pattern } = this.props.search
     if (pattern) {
       this.props.nearby({
-        dist: dist ? +dist : 1000,
+        dist: isFinite(+dist) ? +dist : 1000,
         lat: pattern.lat,
         lng: pattern.lng
       }, 50)
