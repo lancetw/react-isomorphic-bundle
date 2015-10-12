@@ -166,6 +166,24 @@ export default {
     denied: '您已經拒絕提供個人位置資訊',
     unavailable: '您的裝置無法提供位置資訊',
     timeout: '要求逾時',
-    unknown: '發生未知的錯誤'
+    unknown: '發生未知的錯誤',
+    loading: '正在努力找尋您附近的活動...',
+    range: {
+      text: '範圍',
+      'lv1': '3 公里',
+      'lv2': '5 公里',
+      'lv3': '10 公里',
+      'lv4': '20 公里',
+      'lv5': '50 公里'
+    },
+    distance: {
+      km: '距離我約為 %(dist)s 公里',
+      m: '距離我約為 %(dist)s 公尺',
+      here: '我在這裡'
+    },
+    button: {
+      go: '詳細佈告',
+      close: '關閉'
+    }
   }
 }

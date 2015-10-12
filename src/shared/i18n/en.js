@@ -166,6 +166,24 @@ export default {
     denied: 'User denied the request for Geolocation.',
     unavailable: 'Location information is unavailable.',
     timeout: 'The request to get user location timed out.',
-    unknown: 'An unknown error occurred.'
+    unknown: 'An unknown error occurred.',
+    loading: 'We are trying to find some events near you ...',
+    range: {
+      text: 'range',
+      'lv1': '3 km',
+      'lv2': '5 km',
+      'lv3': '10 km',
+      'lv4': '20 km',
+      'lv5': '50 km'
+    },
+    distance: {
+      km: '%(dist)s km from you',
+      m: '%(dist)s m from you',
+      here: 'I am here'
+    },
+    button: {
+      go: 'more...',
+      close: 'close'
+    }
   }
 }

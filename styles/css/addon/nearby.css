@@ -179,13 +179,13 @@
 }
 
 .ui.box.tooltips.hover, .ui.box.tooltips.open {
-  opacity: .99;
+  opacity: 1;
   float: right;
   display: block;
   font-size: 1rem;
   position: relative;
-  top: -12rem;
-  left: 8.97rem;
+  top: -12.5rem;
+  left: 8.96rem;
   width: 18rem;
   z-index: 1000;
 
@@ -217,7 +217,7 @@
 
 .ui.box.tooltips.open {
   z-index: 1000;
-  top: -16.1rem;
+  top: -16.7rem;
 }
 
 /* small screen */

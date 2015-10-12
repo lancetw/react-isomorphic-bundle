@@ -6,7 +6,6 @@ import Marker from 'shared/components/addon/maps/marker'
 import SearchMenu from 'shared/components/addon/maps/search-menu'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import controllable from 'react-controllables'
-import counterpart from 'counterpart'
 
 @controllable(['zoom', 'hoverKey', 'clickKey'])
 export default class Nearby extends React.Component {
@@ -175,7 +174,7 @@ export default class Nearby extends React.Component {
           <SearchMenu
             onDegreeChange={this.handleDegreeChange}
             onPlaceChange={this.handlePlaceChange}
-            placeholder={counterpart('post.map.my')}
+            placeholder={``}
           />
         </div>
       </main>

@@ -9,6 +9,7 @@ import { BaseComponent } from 'shared/components'
 import { runGeoLoc } from 'shared/utils/geoloc-utils'
 import { Loading } from 'shared/components/addon/loading'
 import { isEmpty } from 'lodash'
+import counterpart from 'counterpart'
 
 if (process.env.BROWSER) {
   require('css/addon/pin')
@@ -28,6 +29,7 @@ class NearbyHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
+
     const { dispatch } = context.store
     dispatch(updateTitle('title.nearby'))
 
@@ -62,7 +64,7 @@ class NearbyHandler extends BaseComponent {
   }
 
   componentDidMount () {
-    Loading.show('正在努力找尋您附近的活動...')
+    Loading.show(counterpart('geoloc.loading'))
   }
 
   componentWillReceiveProps (nextProps) {

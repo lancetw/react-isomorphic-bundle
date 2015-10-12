@@ -1,10 +1,12 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import classNames from 'classnames'
 import { toShortDate } from 'shared/utils/date-utils'
 import { Link } from 'react-router'
+import { BaseComponent } from 'shared/components'
+import { tongwenAutoStr } from 'shared/utils/tongwen'
 
-export default class Marker extends Component {
+export default class Marker extends BaseComponent {
 
   static propTypes = {
     hover: PropTypes.bool.isRequired,
@@ -28,6 +30,8 @@ export default class Marker extends Component {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+
     const pinClasses = classNames(
       'pin',
       'bounce',
@@ -82,27 +86,29 @@ export default class Marker extends Component {
               </div>
             </div>
             <div className="content">
-              <div className="header">{data.title}</div>
+              <div className="header">
+              {tongwenAutoStr(data.title, this.getLocale())}
+              </div>
             </div>
             <div className="content">
               <i className="ui orange icon large compass"></i>
               { data.distance >= 1
-                && `距離我約為 ${data.distance.toFixed(3)} 公里`}
+                && <Translate content="geoloc.distance.km" dist={data.distance.toFixed(3)}/> }
               { data.distance < 1 && data.distance >= 0.01
-                && `距離我約為 ${(data.distance * 1000).toFixed(2)} 公尺`}
+                && <Translate content="geoloc.distance.m" dist={(data.distance * 1000).toFixed(2)}/> }
               { data.distance < 0.01
-                && `我在這裡`}
+                && <Translate content="geoloc.distance.here" /> }
             </div>
             <div className={actionClasses}>
               <div className="ui two buttons">
                 <Link
                   to={`/w/p/${data.id}`}
                   className="ui basic green button">
-                  詳細佈告
+                  <Translate content="geoloc.button.go" />
                 </Link>
                 <a onClick={this.props.handleCloseClick}
                   className="ui basic red button">
-                  關閉
+                  <Translate content="geoloc.button.close" />
                 </a>
               </div>
             </div>

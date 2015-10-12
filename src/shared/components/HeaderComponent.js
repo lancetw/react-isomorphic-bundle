@@ -67,19 +67,6 @@ export default class Header extends React.Component {
     const { dispatch, auth } = this.props
 
     const Translate = require('react-translate-component')
-    const TranslateProps = React.createFactory(Translate)
-
-    const searchProps = {
-      component: 'input',
-      type: 'search',
-      name: 'q',
-      ref: 'search',
-      scope: 'search_input',
-      attributes: {
-        placeholder: 'placeholder',
-        title: 'tooltip'
-      }
-    }
 
     let AuthLink
     if (!auth.token) {

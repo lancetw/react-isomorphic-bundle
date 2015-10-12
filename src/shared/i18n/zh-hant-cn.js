@@ -166,6 +166,24 @@ export default {
     denied: '您已经拒绝提供个人位置资讯',
     unavailable: '您的装置无法提供位置资讯',
     timeout: '要求逾时',
-    unknown: '发生未知的错误'
+    unknown: '发生未知的错误',
+    loading: '正在努力找寻您附近的活动...',
+    range: {
+      text: '范围',
+      'lv1': '3 公里',
+      'lv2': '5 公里',
+      'lv3': '10 公里',
+      'lv4': '20 公里',
+      'lv5': '50 公里'
+    },
+    distance: {
+      km: '距离我约为 %(dist)s 公里',
+      m: '距离我约为 %(dist)s 公尺',
+      here: '我在这里'
+    },
+    button: {
+      go: '详细布告',
+      close: '关闭'
+    }
   }
 }

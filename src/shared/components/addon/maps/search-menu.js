@@ -75,18 +75,29 @@ export default class SearchMenu extends Component {
   }
 
   render () {
+    const Translate = require('react-translate-component')
+
     const DegreeMenu = (
       <div className="ui compact small menu">
         <div className="ui simple dropdown item">
-          搜尋範圍
+          <Translate content="geoloc.range.text" />
           <i className="dropdown icon"></i>
           <div className="menu">
-            <div onClick={this.props.onDegreeChange} value="3000" className="item">3 公里</div>
-            <div onClick={this.props.onDegreeChange} value="5000" className="item">5 公里</div>
-            <div onClick={this.props.onDegreeChange} value="10000" className="item">10 公里</div>
-            <div onClick={this.props.onDegreeChange} value="20000" className="item">20 公里</div>
-            <div onClick={this.props.onDegreeChange} value="50000" className="item">50 公里</div>
-            <div onClick={this.props.onDegreeChange} value="100000" className="item">100 公里</div>
+            <div onClick={this.props.onDegreeChange} value="3000" className="item">
+              <Translate content="geoloc.range.lv1" />
+            </div>
+            <div onClick={this.props.onDegreeChange} value="5000" className="item">
+              <Translate content="geoloc.range.lv2" />
+            </div>
+            <div onClick={this.props.onDegreeChange} value="10000" className="item">
+              <Translate content="geoloc.range.lv3" />
+            </div>
+            <div onClick={this.props.onDegreeChange} value="20000" className="item">
+              <Translate content="geoloc.range.lv4" />
+            </div>
+            <div onClick={this.props.onDegreeChange} value="50000" className="item">
+              <Translate content="geoloc.range.lv5" />
+            </div>
           </div>
         </div>
       </div>

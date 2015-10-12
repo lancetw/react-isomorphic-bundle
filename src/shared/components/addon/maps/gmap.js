@@ -40,8 +40,6 @@ export default class Gmap extends Component {
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
-  handleLocaleChange () {}
-
   _onBoundsChange = (center, zoom, bounds, marginBounds) => {
     if (this.props.onBoundsChange) {
       this.props.onBoundsChange({ center, zoom, bounds, marginBounds })
