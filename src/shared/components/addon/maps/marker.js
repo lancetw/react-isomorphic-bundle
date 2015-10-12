@@ -73,7 +73,7 @@ export default class Marker extends Component {
         <div className={tooltipsClasses}>
           <div className="ui card popupbox">
             <div className="content">
-              <div className="ui center floated">
+              <div className="ui right aligned">
               {eventDate && (
                 <span className="ui attached top orange label">
                   {eventDate}
