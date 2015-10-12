@@ -82,14 +82,18 @@ export default class Nearby extends React.Component {
   handleDegreeChange = (e) => {
     const dist = e.target.getAttribute('value')
     const { pattern } = this.props.search
-    this.props.nearby({
-      dist: dist ? +dist : 1000,
-      lat: pattern.lat,
-      lng: pattern.lng
-    }, 50)
+    if (pattern) {
+      this.props.nearby({
+        dist: dist ? +dist : 1000,
+        lat: pattern.lat,
+        lng: pattern.lng
+      }, 50)
+    }
   }
 
   handlePlaceChange = (location) => {
+    if (!location) return
+
     const { pattern, center } = this.props.search
     this.props.nearby({
       dist: pattern.dist ? pattern.dist : 1000,

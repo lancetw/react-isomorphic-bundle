@@ -51,8 +51,8 @@ class NearbyHandler extends BaseComponent {
       // fallback
       dispatch(SearchActions.nearby({
         dist: 1000,
-        lat: center[0],
-        lng: center[1]
+        lat: center.lat,
+        lng: center.lng
       }, 30)).then(() => {
         setTimeout(() => {
           dispatch(SearchActions.updateNearbyCenter({ center }))
