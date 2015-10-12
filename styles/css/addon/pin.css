@@ -23,12 +23,13 @@
   border-radius: 50%;
 }
 
-.pin.has-label {
+.has-label.pin {
   margin-top: -42px;
-  margin-left: -14px;
+  margin-left: -16px;
 }
-.pin.has-label:after {
-  margin-left: -7px;
+.has-label.pin:after {
+  margin-top: 7px;
+  margin-left: 3px;
   border-radius: 50% 15% 50% 10%;
   background: rgba(255, 215, 0, 0.9);
 }
@@ -36,13 +37,25 @@
 .red.pin {
   background: rgba(248, 43, 1, 0.9);
   border: 3px solid rgba(208, 53, 20, 0.1);
+  z-index: -5;
 }
 
 .red.pin:after {
   background: rgba(255, 215, 0, 0.9);
-  margin-left: -8px;
+  z-index: -5;
+}
+
+.pin-label-box {
+  position: absolute;
+  left: -500px;
+  top: -25px;
+  width: 1000px;
+  height: 50px;
+  text-align: center;
 }
 
 .ui.orange.label.with-pin {
-  margin-top: 50px;
+  display: inline-block;
+  white-space: nowrap;
+  margin-top: 25px;
 }

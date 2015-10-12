@@ -45,8 +45,8 @@
   user-select: none;
   touch-callout: none;
 
-  margin-top: -35px;
-  margin-left: -15px;
+  margin-top: -42px;
+  margin-left: -16px;
 }
 .green.pin:after {
   background: rgba(211, 255, 175, 1);
@@ -97,7 +97,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  margin: -6px 0 0 -7px;
+  margin: -12px 0 0 -8px;
   transform: rotateX(55deg);
   z-index: -2;
 }
