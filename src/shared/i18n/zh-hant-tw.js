@@ -159,7 +159,7 @@ export default {
   geoloc: {
     nosupported: '您的瀏覽器不支援定址功能',
     denied: '您已經拒絕提供個人位置資訊',
-    unavailable: '位置資訊現在無法取得',
+    unavailable: '您的裝置無法提供位置資訊',
     timeout: '要求逾時',
     unknown: '發生未知的錯誤'
   }
