@@ -33,12 +33,13 @@ class NearbyHandler extends BaseComponent {
     const { dispatch } = context.store
     dispatch(updateTitle('title.nearby'))
 
+    const defaultDistance = 3000
     const center = { lat: 25.018536, lng: 121.529146 }
     dispatch(SearchActions.updateNearbyCenter({ center }))
 
     runGeoLoc().then((position) => {
       dispatch(SearchActions.nearby({
-        dist: 3000,   // 3 km
+        dist: defaultDistance,   // 3 km
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }, 50)).then((info) => {
@@ -52,7 +53,7 @@ class NearbyHandler extends BaseComponent {
     }).catch((err) => {
       // fallback
       dispatch(SearchActions.nearby({
-        dist: 1000,
+        dist: defaultDistance,
         lat: center.lat,
         lng: center.lng
       }, 30)).then(() => {
