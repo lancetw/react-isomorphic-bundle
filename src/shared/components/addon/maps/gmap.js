@@ -16,7 +16,7 @@ export default class Gmap extends Component {
     onCenterChange: PropTypes.func, // @controllable generated fn
     onZoomChange: PropTypes.func, // @controllable generated fn
     onHoverKeyChange: PropTypes.func, // @controllable generated fn
-    onBoundsChange: PropTypes.func,
+    onChange: PropTypes.func,
     place: PropTypes.string,
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
@@ -40,9 +40,10 @@ export default class Gmap extends Component {
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
-  _onBoundsChange = (center, zoom, bounds, marginBounds) => {
-    if (this.props.onBoundsChange) {
-      this.props.onBoundsChange({ center, zoom, bounds, marginBounds })
+  _onChange = (event) => {
+    const { center, zoom, bounds, marginBounds } = event
+    if (this.props.onChange) {
+      this.props.onChange(event)
     }
   }
 
@@ -69,7 +70,7 @@ export default class Gmap extends Component {
         <div id="map" className={this.props.className}>
           <GoogleMap
             ref="gmap"
-            onBoundsChange={this._onBoundsChange}
+            onChange={this._onChange}
             onChildClick={this._onChildClick}
             center={this.props.center}
             zoom={this.props.zoom}>

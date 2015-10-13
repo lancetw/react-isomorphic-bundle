@@ -186,7 +186,7 @@ export default class Post extends BaseComponent {
   }
 
   handleRegChange (regValue) {
-    this.refs.regForm.getValue()
+    this.refs.regForm.validate()
     this.setState({ regValue })
   }
 
@@ -235,12 +235,13 @@ export default class Post extends BaseComponent {
     }
   }
 
-  handleBoundsChange (event) {
+  handleMapChange (event) {
+    const { center } = event
     if (this.refs.lat) {
-      React.findDOMNode(this.refs.lat).value = event.center[0]
+      React.findDOMNode(this.refs.lat).value = center.lat
     }
     if (this.refs.lng) {
-      React.findDOMNode(this.refs.lng).value = event.center[1]
+      React.findDOMNode(this.refs.lng).value = center.lng
     }
   }
 
@@ -489,7 +490,7 @@ export default class Post extends BaseComponent {
             ref="gmap"
             {...this.props.map}
             defaultLocale={this.props.defaultLocale}
-            onBoundsChange={::this.handleBoundsChange}
+            onChange={::this.handleMapChange}
           />
         </div>
         <div className="column">

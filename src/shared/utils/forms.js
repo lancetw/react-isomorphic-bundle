@@ -7,6 +7,11 @@ t.form.Form.templates = semantic
 
 const Password = t.subtype(t.Str, s => s.length >= 6)
 
+// https://gist.github.com/dperini/729294
+const URL_RE = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/i;
+
+const Url = t.subtype(t.Str, s => ((new RegExp(URL_RE)).test(s)))
+
 exports.SignupForm = t.struct({
   email: t.Str,
   password: Password,
@@ -692,7 +697,7 @@ exports.PostFormOptions = function (locale) {
 const RegFormEn = t.subtype(t.struct({
   openDate: t.Dat,
   closeDate: t.Dat,
-  url: t.maybe(t.Str)
+  url: t.maybe(Url)
 }), function (value) {
   return (
     (value.openDate <= value.closeDate)
@@ -701,7 +706,7 @@ const RegFormEn = t.subtype(t.struct({
 const RegFormZhHantTW = t.subtype(t.struct({
   openDate: t.Dat,
   closeDate: t.Dat,
-  url: t.maybe(t.Str)
+  url: t.maybe(Url)
 }), function (value) {
   return (
     (value.openDate <= value.closeDate)
@@ -710,7 +715,7 @@ const RegFormZhHantTW = t.subtype(t.struct({
 const RegFormZhHantCN = t.subtype(t.struct({
   openDate: t.Dat,
   closeDate: t.Dat,
-  url: t.maybe(t.Str)
+  url: t.maybe(Url)
 }), function (value) {
   return (
     (value.openDate <= value.closeDate)
@@ -738,6 +743,7 @@ const RegFormOptionsEn = {
       order: [ 'YYYY', 'M', 'D' ]
     },
     url: {
+      error: 'invalid format',
       attrs: {
         placeholder: 'Enrollment Link'
       }
@@ -757,6 +763,7 @@ const RegFormOptionsZhHantTW = {
       order: [ 'YYYY', 'M', 'D' ]
     },
     url: {
+      error: '無效的格式',
       attrs: {
         placeholder: '報名網址'
       }
@@ -776,6 +783,7 @@ const RegFormOptionsZhHantCN = {
       order: [ 'YYYY', 'M', 'D' ]
     },
     url: {
+      error: '无效的格式',
       attrs: {
         placeholder: '报名网址'
       }
