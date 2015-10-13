@@ -56,7 +56,7 @@ class NearbyHandler extends BaseComponent {
         dist: defaultDistance,
         lat: center.lat,
         lng: center.lng
-      }, 30)).then(() => {
+      }, 50)).then(() => {
         setTimeout(() => {
           dispatch(SearchActions.updateNearbyCenter({ center }))
         }, 500)

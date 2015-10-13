@@ -99,6 +99,7 @@ export function nearby (pattern, limit=30, reload=false) {
       } else {
         return dispatch({
           type: SEARCH_NEARBY_FAILED,
+          pattern: pattern,
           errors: data.errors ? data.errors : data
         })
       }
