@@ -117,3 +117,4 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 * [react-google-recaptcha](https://github.com/dozoisch/react-google-recaptcha)
 * [新同文堂 for Web](http://tongwen.openfoundry.org)
 * [react-spinkit](https://github.com/KyleAMathews/react-spinkit)
+* [react-helmet](https://github.com/nfl/react-helmet)
