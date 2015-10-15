@@ -65,10 +65,13 @@ class PostDetailHandler extends BaseComponent {
       ? JSON.parse(detail.file)
       : []
 
+    const host = this.context.host
     const meta = []
     files && files.map(function (file) {
       if (getFileExt(file) !== 'pdf') {
-        meta.push({ 'property': 'og:image', 'content': '/uploads/' + file })
+        meta.push({
+          'property': 'og:image', 'content': '//' + host + '/uploads/' + file
+        })
       }
     })
 

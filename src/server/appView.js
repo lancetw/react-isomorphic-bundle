@@ -101,7 +101,7 @@ export default function (app) {
       }
 
       const elements = (
-        <AppContainer translator={translator}>
+        <AppContainer translator={translator} host={this.host}>
           {() =>
             <Provider store={store}>
               {() =>
@@ -138,7 +138,7 @@ export default function (app) {
       )
 
       siteUrl = this.href
-      ogImage = this.protocol + '://' + this.host + '/images/icon.png'
+      ogImage = '//' + this.host + '/images/icon.png'
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
