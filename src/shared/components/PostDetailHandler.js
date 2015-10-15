@@ -76,7 +76,7 @@ class PostDetailHandler extends BaseComponent {
       if (getFileExt(file) !== 'pdf') {
         meta.push({
           'property': 'og:image',
-          'content': `${protocol}//${host}/uploads/${file}`
+          'content': `${protocol}://${host}/uploads/${file}`
         })
       }
     })
