@@ -117,7 +117,7 @@ export default function (app) {
       appString = React.renderToString(elements)
 
       head = Helmet.rewind()
-      console.log(head)
+
       const env = process.env.NODE_ENV
       if (env === 'development') {
         assets = fs.readFileSync(
