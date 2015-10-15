@@ -140,7 +140,7 @@ export default function (app) {
       )
 
       siteUrl = this.href
-      ogImage = this.protocol + '//' + this.host + '/images/icon.png'
+      ogImage = this.protocol + '://' + this.host + '/images/icon.png'
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
