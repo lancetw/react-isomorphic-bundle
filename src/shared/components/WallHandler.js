@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
@@ -62,13 +62,13 @@ export default class WallHandler extends BaseComponent {
       : this._T('title.wall')
 
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Wall
           {...this.props}
           defaultLocale={this.getLocale()}
-          loadFunc={::this.loadFunc}
-        />
-      </DocumentTitle>
+          loadFunc={::this.loadFunc} />
+      </div>
     )
   }
 }

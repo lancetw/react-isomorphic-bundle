@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import moment from 'moment'
 import { BaseComponent } from 'shared/components'
 import queryString from 'query-string'
@@ -54,12 +54,12 @@ class CalHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Cal
           {...bindActionCreators(PostActions, dispatch)}
-          {...this.props}
-        />
-      </DocumentTitle>
+          {...this.props} />
+      </div>
     )
   }
 }

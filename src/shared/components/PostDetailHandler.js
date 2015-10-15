@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 import { tongwenAuto } from 'shared/utils/tongwen'
+import { getFileExt } from 'shared/utils/file-utils'
 
 class PostDetailHandler extends BaseComponent {
 
@@ -57,17 +58,32 @@ class PostDetailHandler extends BaseComponent {
   render () {
     const { dispatch } = this.props
     const { getState } = this.context.store
-    const title = getState().post.detail.title
+    const { detail } = getState().post
+    const title = detail.title
     const defaultTitle = this._T('title.site')
+    const files = typeof detail.file !== 'undefined'
+      ? JSON.parse(detail.file)
+      : []
+
+    const meta = []
+    files && files.map(function (file) {
+      if (getFileExt(file) !== 'pdf') {
+        meta.push({ 'property': 'og:image', 'content': '/uploads/' + file })
+      }
+    })
+
+    meta.push({ 'property': 'og:type', 'content': 'article' })
+
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet
+          title={`${title} | ${defaultTitle}`} meta={meta} />
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
           {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()}
-        />
-      </DocumentTitle>
+          defaultLocale={this.getLocale()} />
+      </div>
     )
   }
 }

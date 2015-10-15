@@ -10,7 +10,7 @@ import routes from 'shared/routes'
 import fs from 'fs'
 import path from 'path'
 import nunjucks from 'nunjucks'
-import DocumentTitle from 'shared/components/addon/document-title'
+import Helmet from 'react-helmet'
 import * as AuthActions from 'shared/actions/AuthActions'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import url from 'url'
@@ -74,7 +74,7 @@ export default function (app) {
 
       let appString
       let assets
-      let title
+      let head
       let siteUrl
       let ogImage
       const { error, redirectLocation, renderProps }
@@ -116,8 +116,8 @@ export default function (app) {
       yield resolver.dispatch()
       appString = React.renderToString(elements)
 
-      title = DocumentTitle.rewind()
-
+      head = Helmet.rewind()
+      console.log(head)
       const env = process.env.NODE_ENV
       if (env === 'development') {
         assets = fs.readFileSync(
@@ -144,8 +144,9 @@ export default function (app) {
         assets,
         siteUrl,
         ogImage,
+        meta: head.meta,
         env: process.env,
-        title,
+        title: head.title,
         stateFromServer: serverState
       })
 

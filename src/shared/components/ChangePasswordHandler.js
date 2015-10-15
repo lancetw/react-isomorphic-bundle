@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from '../actions/UserActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class ChangePasswordHandler extends BaseComponent {
@@ -33,13 +33,13 @@ class ChangePasswordHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <ChangePassword
           {...bindActionCreators(UserActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()}
-        />
-      </DocumentTitle>
+          defaultLocale={this.getLocale()} />
+      </div>
     )
   }
 }

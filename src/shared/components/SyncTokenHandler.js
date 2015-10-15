@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { save } from '../actions/AuthActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 import createLocation from 'history/lib/createLocation'
 
@@ -39,7 +39,8 @@ export default class SyncTokenHandler extends BaseComponent {
       : <div><a href="/"><Translate content="redirect.click" /></a></div>
 
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <main className="ui has-header grid page container">
           <div className="column">
             <div className="ui center aligned orange segment">
@@ -47,7 +48,7 @@ export default class SyncTokenHandler extends BaseComponent {
             </div>
           </div>
         </main>
-      </DocumentTitle>
+      </div>
     )
   }
 }

@@ -7,7 +7,7 @@ import * as PostActions from '../actions/PostActions'
 import * as UploadActions from '../actions/UploadActions'
 import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class PostEditHandler extends BaseComponent {
@@ -57,16 +57,16 @@ class PostEditHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Post
           {...bindActionCreators(PostActions, dispatch)}
           {...bindActionCreators(UploadActions, dispatch)}
           {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
           defaultLocale={this.getLocale()}
-          disableSubmit={this.state.disableSubmit}
-        />
-      </DocumentTitle>
+          disableSubmit={this.state.disableSubmit} />
+      </div>
     )
   }
 }

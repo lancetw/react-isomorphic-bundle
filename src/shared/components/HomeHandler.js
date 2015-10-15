@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class HomeHandler extends BaseComponent {
@@ -35,12 +35,15 @@ class HomeHandler extends BaseComponent {
   render () {
     const title = this._T('title.home')
     const defaultTitle = this._T('title.site')
+
+    const meta = []
+    meta.push({ 'property': 'og:type', 'content': 'article' })
+
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
-        <Home
-          {...this.props}
-        />
-      </DocumentTitle>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} meta={meta} />
+        <Home {...this.props} />
+      </div>
     )
   }
 }

@@ -134,6 +134,7 @@
     "react-dom": "^0.14.0",
     "react-dropzone": "^2.0.1",
     "react-google-recaptcha": "^0.4.0",
+    "react-helmet": "^1.1.5",
     "react-interpolate-component": "^0.7.1",
     "react-list": "0.6.5",
     "react-paginate": "^0.2.0",

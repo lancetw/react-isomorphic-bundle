@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Cprop from './CpropComponent'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 export default class CpropHandler extends BaseComponent {
@@ -26,11 +26,10 @@ export default class CpropHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
 
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
-        <Cprop
-          {...this.props}
-        />
-      </DocumentTitle>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
+        <Cprop {...this.props} />
+      </div>
     )
   }
 }

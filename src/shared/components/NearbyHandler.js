@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as SearchActions from '../actions/SearchActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 import { runGeoLoc } from 'shared/utils/geoloc-utils'
 import { Loading } from 'shared/components/addon/loading'
@@ -83,13 +83,13 @@ class NearbyHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
 
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Nearby
           {...this.props}
           {...bindActionCreators(SearchActions, dispatch)}
-          defaultLocale={this.getLocale()}
-        />
-      </DocumentTitle>
+          defaultLocale={this.getLocale()} />
+      </div>
     )
   }
 }

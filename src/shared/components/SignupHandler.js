@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as SignupActions from '../actions/SignupActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class SignupHandler extends BaseComponent {
@@ -32,14 +32,13 @@ class SignupHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Signup
           {...bindActionCreators(SignupActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()}
-
-        />
-      </DocumentTitle>
+          defaultLocale={this.getLocale()} />
+      </div>
     )
   }
 }

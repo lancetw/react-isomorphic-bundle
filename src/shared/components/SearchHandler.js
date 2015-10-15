@@ -3,7 +3,7 @@ import Search from './SearchComponent'
 import { connect } from 'react-redux'
 import * as SearchActions from '../actions/SearchActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class SearchHandler extends BaseComponent {
@@ -35,13 +35,13 @@ class SearchHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
 
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Search
           {...this.props}
           defaultLocale={this.getLocale()}
-          loadFunc={::this.loadFunc}
-        />
-      </DocumentTitle>
+          loadFunc={::this.loadFunc} />
+      </div>
     )
   }
 }

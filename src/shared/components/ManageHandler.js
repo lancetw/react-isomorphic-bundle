@@ -6,7 +6,7 @@ import * as PostActions from '../actions/PostActions'
 import * as AuthActions from '../actions/AuthActions'
 import * as UserActions from '../actions/UserActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class ManageHandler extends BaseComponent {
@@ -52,14 +52,14 @@ class ManageHandler extends BaseComponent {
     const { dispatch } = this.props
 
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Manage
           {...bindActionCreators(UserActions, dispatch)}
           {...this.props}
           loadFunc={::this.loadFunc}
-          defaultLocale={this.getLocale()}
-        />
-      </DocumentTitle>
+          defaultLocale={this.getLocale()} />
+      </div>
     )
   }
 }

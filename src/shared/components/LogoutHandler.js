@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import * as CacheActions from '../actions/CacheActions'
 import { updateTitle } from '../actions/LocaleActions'
-import DocumentTitle from './addon/document-title'
+import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
 class LogoutHandler extends BaseComponent {
@@ -35,12 +35,12 @@ class LogoutHandler extends BaseComponent {
     const defaultTitle = this._T('title.site')
     const { dispatch } = this.props
     return (
-      <DocumentTitle title={title} defaultTitle={defaultTitle}>
+      <div>
+        <Helmet title={`${title} | ${defaultTitle}`} />
         <Logout
           {...bindActionCreators(AuthActions, dispatch)}
-          {...this.props}
-        />
-      </DocumentTitle>
+          {...this.props} />
+      </div>
     )
   }
 }
