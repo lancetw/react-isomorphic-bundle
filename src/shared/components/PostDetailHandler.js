@@ -59,6 +59,9 @@ class PostDetailHandler extends BaseComponent {
     const { dispatch } = this.props
     const { getState } = this.context.store
     const { detail } = getState().post
+    const protocol = process.env.BROWSER
+      ? window.location.protocol
+      : this.context.store.protocol
     const host = process.env.BROWSER
       ? window.location.host
       : this.context.store.host
@@ -73,7 +76,7 @@ class PostDetailHandler extends BaseComponent {
       if (getFileExt(file) !== 'pdf') {
         meta.push({
           'property': 'og:image',
-          'content': `//${host}/uploads/${file}`
+          'content': `${protocol}//${host}/uploads/${file}`
         })
       }
     })

@@ -54,6 +54,7 @@ export default function (app) {
       const store = finalCreateStore(reducer)
       const resolver = new ReduxUniversalResolver()
       store.resolver = resolver
+      store.protocol = this.protocol
       store.host = this.host
 
       const history = createMemoryHistory()
@@ -139,7 +140,7 @@ export default function (app) {
       )
 
       siteUrl = this.href
-      ogImage = '//' + this.host + '/images/icon.png'
+      ogImage = this.protocol + '//' + this.host + '/images/icon.png'
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
