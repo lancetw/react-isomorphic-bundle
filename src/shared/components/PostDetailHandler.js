@@ -59,18 +59,21 @@ class PostDetailHandler extends BaseComponent {
     const { dispatch } = this.props
     const { getState } = this.context.store
     const { detail } = getState().post
+    const host = process.env.BROWSER
+      ? window.location.host
+      : this.context.store.host
     const title = detail.title
     const defaultTitle = this._T('title.site')
     const files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
       : []
 
-    const host = this.context.host
     const meta = []
     files && files.map(function (file) {
       if (getFileExt(file) !== 'pdf') {
         meta.push({
-          'property': 'og:image', 'content': '//' + host + '/uploads/' + file
+          'property': 'og:image',
+          'content': `//${host}/uploads/${file}`
         })
       }
     })

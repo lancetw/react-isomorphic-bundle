@@ -54,6 +54,7 @@ export default function (app) {
       const store = finalCreateStore(reducer)
       const resolver = new ReduxUniversalResolver()
       store.resolver = resolver
+      store.host = this.host
 
       const history = createMemoryHistory()
       const location = history.createLocation(this.url)
@@ -101,7 +102,7 @@ export default function (app) {
       }
 
       const elements = (
-        <AppContainer translator={translator} host={this.host}>
+        <AppContainer translator={translator}>
           {() =>
             <Provider store={store}>
               {() =>

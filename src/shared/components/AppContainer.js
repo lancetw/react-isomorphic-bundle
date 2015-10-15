@@ -10,19 +10,16 @@ export default class AppContainer extends React.Component {
 
   static propTypes = {
     children: PropTypes.any,
-    translator: Translate.translatorType,
-    host: PropTypes.string
+    translator: Translate.translatorType
   }
 
   static childContextTypes = {
-    translator: Translate.translatorType,
-    host: PropTypes.string
+    translator: Translate.translatorType
   }
 
   getChildContext () {
     return {
-      translator: this.props.translator,
-      host: this.props.host
+      translator: this.props.translator
     }
   }
 
