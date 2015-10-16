@@ -85,7 +85,7 @@ export default function (app) {
           (_error, _redirectLocation, _renderProps) => {
             resolve({
               error: _error,
-              _redirectLocation: _redirectLocation,
+              redirectLocation: _redirectLocation,
               renderProps: _renderProps
             })
           })
@@ -146,9 +146,9 @@ export default function (app) {
         assets,
         siteUrl,
         ogImage,
-        meta: head.meta,
+        meta: head ? head.meta : null,
         env: process.env,
-        title: head.title,
+        title: head ? head.title : null,
         stateFromServer: serverState
       })
 
