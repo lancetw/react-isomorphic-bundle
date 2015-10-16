@@ -25,7 +25,7 @@ edit `./config/sequelize/config.json`
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
 (You need to run `npm install --save sequelize@3.4.0` to avoid datatime bugs.)
 
-### DEV mode
+#### DEV mode
 
 `npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
 
@@ -33,16 +33,16 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 * open `http://127.0.0.1:3000`
 
-### PRODUCTION mode
+#### PRODUCTION mode
 
-#### Linux / Mac
+##### Linux / Mac
 `npm start`
 
-#### Windows (Git Bash)
+##### Windows (Git Bash)
 `npm run prestart && NODE_ENV=production npm run win-start`
 
 
-### DEBUG mode
+#### DEBUG mode
 
 `npm run debug`
 
@@ -51,7 +51,7 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 ## Features
 
-- [x] isomorphic flux, support JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] isomorphic, support JSON Web Tokens (JWT) and Sessions (levelDB)
 - [x] change flummox to redux@3.0.0
 - [x] react-router@1.0.0rc1
 - [x] register (with recaptcha)
@@ -66,10 +66,11 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 - [x] Traditional Chinese and Simplified Chinese Conversion (New Tong Wen Tang)
 - [x] files/images uploader (dropzone)
 - [x] advertisement scripts support
-- [x] location Settings (Google maps with HTML5 Geolocation)
+- [x] Google maps with HTML5 Geolocation
+- [x] Google maps with driving directions
 - [x] post list with infinite scroll
 - [x] post list with calendar
-- [x] serverside Async data-fetching (great thanks [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
+- [x] serverside Async data-fetching (great thanks to [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
 - [x] full text Search
 - [x] image slider
 - [x] admin pages (manage posts and users)
