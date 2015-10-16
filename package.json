@@ -126,7 +126,7 @@
     "postscribe": "^1.4.0",
     "query-string": "^2.4.1",
     "query-types": "^0.1.4",
-    "react": "0.13.3",
+    "react": "^0.13.3",
     "react-a11y": "^0.2.6",
     "react-autolink-text": "^1.0.2",
     "react-controllables": "^0.6.0",

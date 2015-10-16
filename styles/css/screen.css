@@ -630,3 +630,7 @@ and (orientation : portrait) {
 .ui.form.loading:before {
   background: transparent !important;
 }
+
+.ui.directions.segment {
+  font-size: 90%;
+}

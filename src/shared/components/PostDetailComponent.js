@@ -402,6 +402,7 @@ export default class Post extends BaseComponent {
                 <GMap
                   ref="gmap"
                   {...this.props.map}
+                  directionMode="true"
                   defaultLocale={this.props.defaultLocale}
                 />
                 }
