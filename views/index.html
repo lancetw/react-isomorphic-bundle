@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>{{ title | safe }}</title>
+    <title>{{ head.title | safe }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="author" content="中華基督教網路發展協會 Chinese Christian Network Development Association" />
     <meta property="og:title" content="{{ title | safe }}" />
     <meta property="og:url" content="{{ siteUrl }}" />
-    {{ meta | safe }}
+    {{ head.meta | safe }}
     <meta property="og:image" content="{{ ogImage }}" />
     {% if env.NODE_ENV != 'development' %}
     {% for style in assets.style %}

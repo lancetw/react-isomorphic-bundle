@@ -146,9 +146,8 @@ export default function (app) {
         assets,
         siteUrl,
         ogImage,
-        meta: head ? head.meta : null,
+        head,
         env: process.env,
-        title: head ? head.title : null,
         stateFromServer: serverState
       })
 
