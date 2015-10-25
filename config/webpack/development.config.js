@@ -17,7 +17,7 @@ const writeAdminStats = require('webpack/utils/write-admin-stats');
 const LOCAL_IP = require('dev-ip')();
 const PROTOCOL = 'http';
 const HOST = isArray(LOCAL_IP) && LOCAL_IP[0] || LOCAL_IP || 'localhost';
-const PORT = process.env.PORT + 1 || 3001;
+const PORT = process.env.PORT || 3000;
 const PUBLIC_PATH = `${PROTOCOL}://${HOST}:${PORT}/assets/`;
 
 export default {
@@ -43,14 +43,12 @@ export default {
     devtool: 'eval-source-map',
     entry: {
       app: [
-        `webpack-dev-server/client?http://${HOST}:${PORT}`,
-        'webpack/hot/dev-server',
+        `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=60000`,
         './src/client/index',
         './src/client/fallback'
       ],
       admin: [
-        `webpack-dev-server/client?http://${HOST}:${PORT}`,
-        'webpack/hot/dev-server',
+        `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=60000`,
         './src/client/admin',
         './src/client/fallback'
       ]
@@ -62,6 +60,8 @@ export default {
       publicPath: PUBLIC_PATH
     },
     plugins: [
+      new webpack.PrefetchPlugin('react/addons'),
+      new webpack.PrefetchPlugin('react'),
       new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
@@ -98,7 +98,23 @@ export default {
         },
         {
           test: /\.jsx?$/,
-          loader: 'react-hot!babel?optional[]=runtime&stage=0',
+          loader: 'babel',
+          query: {
+            stage: 0,
+            optional: ['runtime'],
+            plugins: [
+              'react-transform'
+            ],
+            extra: {
+              'react-transform': {
+                'transforms': [{
+                  'transform': 'react-transform-hmr',
+                  'imports': ['react'],
+                  'locals': ['module']
+                }]
+              }
+            }
+          },
           exclude: (/node_modules|styles/)
         },
         { test: /\.css$/, loader: 'style!css?sourceMap&importLoaders=1!postcss' },

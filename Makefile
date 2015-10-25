@@ -56,10 +56,10 @@ fast-build: storage fast-js build
 
 # Watch for changes
 watch:
-	@NODE_ENV=development $(MAKE) -j5 storage dev-server webpack-server
+	@NODE_ENV=development $(MAKE) -j5 storage dev-server
 
 debug:
-	@NODE_ENV=debug $(MAKE) -j5 webpack-dev node-debug dev-debug
+	@NODE_ENV=debug $(MAKE) -j5 node-debug dev-debug
 
 node-debug:
 	node-inspector --no-preload
@@ -82,12 +82,6 @@ dev-server: $(SRC_JS)
 
 dev-debug:
 	node --harmony --debug ./src/server
-
-webpack-dev:
-	node ./webpack/server.js
-
-webpack-server:
-	node ./webpack/server.js
 
 webpack: public/assets
 

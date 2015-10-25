@@ -18,7 +18,7 @@ const writeAdminStats = require('webpack/utils/write-admin-stats');
 const LOCAL_IP = require('dev-ip')();
 const PROTOCOL = 'http';
 const HOST = isArray(LOCAL_IP) && LOCAL_IP[0] || LOCAL_IP || 'localhost';
-const PORT = process.env.PORT + 1 || 3001;
+const PORT = process.env.PORT || 3000;
 const PUBLIC_PATH = `${PROTOCOL}://${HOST}:${PORT}/assets/`;
 
 require('webpack/utils/clean-dist')();

@@ -52,7 +52,8 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     counterpart.setLocale(locale || 'zh-hant-tw')
 
     const history = createBrowserHistory()
-    React.render((
+    const appRoot = document.getElementById('app')
+    const elements = (
       <div>
         <Provider store={store}>
           {() =>
@@ -67,8 +68,9 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
           <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
         </DebugPanel>
       </div>
-    ), document.getElementById('app'))
+    )
 
+    React.render(elements, appRoot)
     resolver.clear()
   } else {
     finalCreateStore = compose(
@@ -86,7 +88,8 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     counterpart.setLocale(locale || 'zh-hant-tw')
 
     const history = createBrowserHistory()
-    React.render((
+    const appRoot = document.getElementById('app')
+    const elements = (
       <Provider store={store}>
         {() =>
           <Router
@@ -96,8 +99,8 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
           />
         }
       </Provider>
-    ), document.getElementById('app'))
-
+    )
+    React.render(elements, appRoot)
     resolver.clear()
   }
 })()

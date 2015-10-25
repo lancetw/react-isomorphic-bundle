@@ -26,13 +26,22 @@ const debug = require('debug')
 const leveldb = level('./storage/leveldb')
 
 const app = koa()
-const env = process.env.NODE_ENV || 'development'
-
-locale(app, 'lang')
-
 // ES7 async
 // app.experimental = true
 
+const env = process.env.NODE_ENV || 'development'
+
+co(function *() {
+  if (env === 'development') {
+    const webpack = require('webpack')
+    const config = require('config/webpack/'+ env +'.config')
+    const compiler = webpack(config.webpack)
+    app.use(require('koa-webpack-dev-middleware')(compiler, config.server.options))
+    app.use(require('koa-webpack-hot-middleware')(compiler))
+  }
+})
+
+locale(app, 'lang')
 app.use(responseTime())
 app.use(logger())
 app.use(helmet())

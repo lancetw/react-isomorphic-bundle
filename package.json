@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-bundle",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
@@ -166,6 +166,7 @@
     "babel-core": "^5.8.25",
     "babel-eslint": "^4.1.1",
     "babel-loader": "^5.3.2",
+    "babel-plugin-react-transform": "^1.1.1",
     "babel-runtime": "^5.8.20",
     "chai": "^3.2.0",
     "clean-css": "^3.3.1",
@@ -190,6 +191,8 @@
     "imports-loader": "^0.6.4",
     "istanbul": "^0.3.14",
     "json-loader": "^0.5.2",
+    "koa-webpack-dev-middleware": "^1.0.1",
+    "koa-webpack-hot-middleware": "^1.0.1",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "mocha": "^2.3.3",
@@ -204,13 +207,14 @@
     "postcss-loader": "^0.6.0",
     "postcss-reporter": "^1.1.0",
     "precss": "^1.1.2",
-    "react-hot-loader": "^1.2.8",
+    "react-transform-hmr": "^1.0.1",
     "redux-devtools": "^2.1.2",
     "style-loader": "^0.12.3",
     "supertest": "^1.0.1",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.10.1"
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.4.1"
   },
   "engines": {
     "iojs": "^2.3.4",
