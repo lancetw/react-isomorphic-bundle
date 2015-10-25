@@ -298,6 +298,7 @@ and (max-device-width : 667px) {
 
 .switch-btns {
   margin-top: -16px;
+  margin-bottom: 10px;
   text-align: center;
   a.button {
     display: block;

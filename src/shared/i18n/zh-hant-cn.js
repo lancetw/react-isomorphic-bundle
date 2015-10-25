@@ -36,12 +36,8 @@ export default {
     placeholder: '搜寻...',
     tooltip: '随意输入 :)'
   },
-  home_token: {
-    placeholder: '验证码...'
-  },
   home: {
-    jwt_header: '您的 JWT 验证码',
-    key: '金钥'
+    browse: '浏览活动讯息布告 ...'
   },
   login: {
     email: '电子邮件地址',

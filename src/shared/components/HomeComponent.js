@@ -29,11 +29,6 @@ export default class HomeComponent extends BaseComponent {
     const Translate = require('react-translate-component')
     return (
     <div key={post.id} className="ui orange icon message">
-      <div className="icon">
-        <Link to={`/w/p/${post.id}`}>
-          <div className="image logo-mini"></div>
-        </Link>
-      </div>
       <div className="content">
         <h3>
           <Link to={`/w/p/${post.id}`}>
@@ -71,6 +66,9 @@ export default class HomeComponent extends BaseComponent {
     return (
       <main className="ui one column centered stackable page grid">
         <div className="column">
+          <Link to="/w/today" className="ui orange fluid huge button">
+            <Translate content="home.browse" />
+          </Link>
           { ::this.renderNews(posts) }
           {loading && isEmpty(posts) && (
             <div className="ui segment basic has-header">

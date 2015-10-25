@@ -24,11 +24,10 @@ export default class Search extends React.Component {
         <div className="column">
           <div className="row">
             {search.pattern
-              && (<h1>
+              && (<h4>
                 <Translate content="search.title" keyword={search.pattern}/>
-              </h1>)}
+              </h4>)}
           </div>
-          <div className="ui hidden divider"></div>
           <div className="row">
             <Cards
               posts={search.data}

@@ -36,12 +36,8 @@ export default {
     placeholder: '搜尋...',
     tooltip: '隨意輸入 :)'
   },
-  home_token: {
-    placeholder: '驗證碼...'
-  },
   home: {
-    jwt_header: '您的 JWT 驗證碼',
-    key: '金鑰'
+    browse: '瀏覽活動訊息佈告 ...'
   },
   login: {
     email: '電子郵件地址',

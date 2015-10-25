@@ -36,12 +36,8 @@ export default {
     placeholder: 'Search...',
     tooltip: 'Enter a search term'
   },
-  home_token: {
-    placeholder: 'token'
-  },
   home: {
-    jwt_header: 'Your JSON Web Token',
-    key: 'Key'
+    browse: 'Browse OursEvents...'
   },
   login: {
     email: 'Email',

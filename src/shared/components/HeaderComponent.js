@@ -101,6 +101,30 @@ export default class Header extends React.Component {
       )
     }
 
+    const SearchBox = (
+      <form
+        className="item"
+        action=""
+        method="post"
+        onSubmit={::this.handleSearchSubmit}>
+        <div className="ui inverted transparent icon input">
+          <input
+            type="search"
+            ref="search"
+            onChange={::this.handleChange}
+            onFocus={::this.handleFocus}
+            onKeyDown={::this.handleSubmit}
+            value={this.state.userInput}
+          />
+          <i
+            onClick={::this.handleSearchSubmit}
+            className="search inverted link icon">
+          </i>
+          <input type="submit" className="hide-submit" />
+        </div>
+      </form>
+    )
+
     return (
       <header
         className="ui orange top inverted pointing menu grid fixed top">
@@ -125,40 +149,32 @@ export default class Header extends React.Component {
           <div className="right menu">
             {AuthLink}
             <LocaleSwitcher dispatch={dispatch} />
-            <div className="item">
-              <form
-                action=""
-                method="post"
-                onSubmit={::this.handleSearchSubmit}>
-                <div className="ui inverted transparent icon input">
-                  <input
-                    type="search"
-                    ref="search"
-                    onChange={::this.handleChange}
-                    onFocus={::this.handleFocus}
-                    onKeyDown={::this.handleSubmit}
-                    value={this.state.userInput}
-                  />
-                  <i
-                    onClick={::this.handleSearchSubmit}
-                    className="search inverted link icon">
-                  </i>
-                  <input type="submit" className="hide-submit" />
-                </div>
-              </form>
-            </div>
+            {SearchBox}
           </div>
         </div>
         <div className="mobile only row">
           <div className="left menu">
-            <Link activeClassName="active" to="/nearby" className="item left">
-              <Translate content="header.nearby" />
-            </Link>
-            <Link activeClassName="active" to="/post" className="item">
-              <Translate content="header.post" />
-            </Link>
-            <LocaleSwitcher dispatch={dispatch} />
-            {AuthLink}
+            <div className="ui simple dropdown item">
+              <i className="sidebar icon"></i>
+              <div className="menu">
+                <Link to="/nearby" className="item">
+                  <Translate content="header.nearby" />
+                </Link>
+                <Link to="/post" className="item">
+                  <Translate content="header.post" />
+                </Link>
+                <Link to="/w/today" className="item">
+                  <Translate content="header.wall" />
+                </Link>
+                <Link to="/home" className="item">
+                  <Translate content="header.home" />
+                </Link>
+                {AuthLink}
+              </div>
+            </div>
+          </div>
+          <div className="right fluid menu">
+            {SearchBox}
           </div>
         </div>
       </header>
