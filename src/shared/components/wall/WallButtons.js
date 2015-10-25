@@ -14,13 +14,13 @@ export default class WallButtons extends React.Component {
     return (
       <div className="switch-btns">
         <div className="ui red small buttons">
-          <Link className="ui button" to="/w/today">
+          <Link activeClassName="active" className="ui button" to="/w/today">
             <Translate content="header.overview" />
           </Link>
-          <Link className="ui button" to="/w/cal">
+          <Link activeClassName="active" className="ui button" to="/w/cal">
             <Translate content="header.cal" />
           </Link>
-          <Link className="ui button" to="/w/cprop">
+          <Link activeClassName="active" className="ui button" to="/w/cprop">
             <Translate content="header.cprop" />
           </Link>
         </div>
