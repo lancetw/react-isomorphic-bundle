@@ -143,5 +143,3 @@ export default class NavWidget extends React.Component {
     )
   }
 }
-
-

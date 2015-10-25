@@ -34,44 +34,43 @@ export default class DetailWidget extends React.Component {
     const clearInput = ::this.clearInput
     if (!password) return false
     const { detail } = this.props.collect
-    swal(
-      {
-        title: '確認變更',
-        text: '請輸入使用者的 Email 以確定修改',
-        type: 'input',
-        showCancelButton: true,
-        closeOnConfirm: false,
-        animation: 'slide-from-top',
-        inputPlaceholder: 'Email',
-        confirmButtonText: '確認',
-        cancelButtonText: '取消',
-        confirmButtonColor: '#ff8800',
-        showLoaderOnConfirm: true
-      }, function (inputValue) {
-        if (inputValue === false) {
-          return false
-        }
-        if (inputValue !== detail.email) {
-          swal.showInputError('輸入有誤')
-          return false
-        }
+    swal({
+      title: '確認變更',
+      text: '請輸入使用者的 Email 以確定修改',
+      type: 'input',
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: 'slide-from-top',
+      inputPlaceholder: 'Email',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消',
+      confirmButtonColor: '#ff8800',
+      showLoaderOnConfirm: true
+    }, function (inputValue) {
+      if (inputValue === false) {
+        return false
+      }
+      if (inputValue !== detail.email) {
+        swal.showInputError('輸入有誤')
+        return false
+      }
 
-        _changePassword({ id: detail.id, password: password })
-        .then((res) => {
-          const { info } = res
-          if (info && info.email === detail.email) {
-            swal('完成', inputValue + ' 的密碼已修改', 'success')
-            clearInput()
-          } else {
-            swal('失敗', inputValue + ' 修改失敗', 'error')
-            clearInput()
-          }
-        })
-        .catch(() => {
-          swal('失敗', '無法連接伺服器', 'error')
+      _changePassword({ id: detail.id, password: password })
+      .then((res) => {
+        const { info } = res
+        if (info && info.email === detail.email) {
+          swal('完成', inputValue + ' 的密碼已修改', 'success')
           clearInput()
-        })
+        } else {
+          swal('失敗', inputValue + ' 修改失敗', 'error')
+          clearInput()
+        }
       })
+      .catch(() => {
+        swal('失敗', '無法連接伺服器', 'error')
+        clearInput()
+      })
+    })
   }
 
   render () {
@@ -139,5 +138,3 @@ export default class DetailWidget extends React.Component {
     }
   }
 }
-
-

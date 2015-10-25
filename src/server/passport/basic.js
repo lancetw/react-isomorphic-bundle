@@ -29,5 +29,3 @@ export default passport.use(new BasicStrategy(
     })
   }
 ))
-
-

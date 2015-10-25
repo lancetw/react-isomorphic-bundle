@@ -4,10 +4,6 @@ const Translate = require('react-translate-component')
 
 export default class AppContainer extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     children: PropTypes.any,
     translator: Translate.translatorType
@@ -15,6 +11,10 @@ export default class AppContainer extends React.Component {
 
   static childContextTypes = {
     translator: Translate.translatorType
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   getChildContext () {

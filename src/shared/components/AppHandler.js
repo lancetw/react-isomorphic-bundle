@@ -36,5 +36,3 @@ export default class AppHandler extends React.Component {
     )
   }
 }
-
-

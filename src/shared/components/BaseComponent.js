@@ -11,6 +11,15 @@ export default class BaseComponent extends React.Component {
     super(props, context)
   }
 
+  getLocale () {
+    if (typeof this.context !== 'undefined'
+      && typeof this.context.translator !== 'undefined') {
+      return this.context.translator.getLocale()
+    } else {
+      return counterpart.getLocale()
+    }
+  }
+
   _bind (...methods) {
     methods.forEach(
       (method) => this[method] = this[method].bind(this)
@@ -34,14 +43,4 @@ export default class BaseComponent extends React.Component {
       return counterpart(key)
     }
   }
-
-  getLocale () {
-    if (typeof this.context !== 'undefined'
-      && typeof this.context.translator !== 'undefined') {
-      return this.context.translator.getLocale()
-    } else {
-      return counterpart.getLocale()
-    }
-  }
-
 }

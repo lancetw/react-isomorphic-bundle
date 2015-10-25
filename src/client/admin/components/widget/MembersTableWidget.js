@@ -173,5 +173,3 @@ export default class MembersTableWidget extends React.Component {
     )
   }
 }
-
-

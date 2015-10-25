@@ -162,5 +162,3 @@ export default class TableWidget extends React.Component {
     )
   }
 }
-
-

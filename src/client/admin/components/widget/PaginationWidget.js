@@ -43,5 +43,3 @@ export default class PaginationWidget extends React.Component {
     )
   }
 }
-
-

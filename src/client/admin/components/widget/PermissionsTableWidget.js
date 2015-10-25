@@ -308,5 +308,3 @@ export default class PermissionsTableWidget extends React.Component {
     )
   }
 }
-
-

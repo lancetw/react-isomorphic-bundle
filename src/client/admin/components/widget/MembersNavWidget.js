@@ -3,9 +3,6 @@ import { Link } from 'react-router'
 import classNames from 'classnames'
 import { isFinite } from 'lodash'
 
-if (process.env.BROWSER) {
-}
-
 export default class MembersNavWidget extends React.Component {
 
   static propTypes = {
@@ -126,5 +123,3 @@ export default class MembersNavWidget extends React.Component {
     )
   }
 }
-
-

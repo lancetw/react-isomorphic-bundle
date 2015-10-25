@@ -42,5 +42,3 @@ export default passport.use(new LocalStrategy({
     return done(err)
   })
 }))
-
-

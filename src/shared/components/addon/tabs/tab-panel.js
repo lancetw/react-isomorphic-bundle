@@ -3,10 +3,6 @@ import classNames from 'classnames'
 
 export default class TabPanel extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   static propTypes = {
     children: PropTypes.any,
     selectedIndex: PropTypes.number,
@@ -15,6 +11,10 @@ export default class TabPanel extends React.Component {
 
   static defaultProps = {
     index: 0
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   render () {

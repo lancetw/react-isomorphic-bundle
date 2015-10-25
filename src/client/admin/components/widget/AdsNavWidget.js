@@ -127,5 +127,3 @@ export default class AdsNavWidget extends React.Component {
     )
   }
 }
-
-

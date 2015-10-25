@@ -127,5 +127,3 @@ export default class PermissionsNavWidget extends React.Component {
     )
   }
 }
-
-

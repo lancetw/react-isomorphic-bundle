@@ -67,5 +67,3 @@ export default class MenuWidget extends React.Component {
     )
   }
 }
-
-
