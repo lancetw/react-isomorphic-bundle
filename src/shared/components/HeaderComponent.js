@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import LocaleSwitcher from './LocaleSwitcher'
+import classNames from 'classnames'
 
 export default class Header extends React.Component {
 
@@ -19,7 +20,7 @@ export default class Header extends React.Component {
   constructor (props, context) {
     super(props, context)
 
-    this.state = { userInput: '' }
+    this.state = { userInput: '', hideSearchBox: true }
 
     this.releaseTimeout = undefined
   }
@@ -36,6 +37,10 @@ export default class Header extends React.Component {
 
   handleFocus () {
     this.setState({ userInput: '' })
+  }
+
+  handleBlur () {
+    this.setState({ hideSearchBox: true })
   }
 
   doSubmit () {
@@ -61,6 +66,14 @@ export default class Header extends React.Component {
   handleSearchSubmit (event) {
     event.preventDefault()
     this.doSubmit()
+  }
+
+  handleSearchBox (evt) {
+    evt.preventDefault()
+    this.setState({ hideSearchBox: !this.state.hideSearchBox })
+    setTimeout(() => {
+      React.findDOMNode(this.refs.search).focus()
+    }, 300)
   }
 
   render () {
@@ -113,6 +126,7 @@ export default class Header extends React.Component {
             ref="search"
             onChange={::this.handleChange}
             onFocus={::this.handleFocus}
+            onBlur={::this.handleBlur}
             onKeyDown={::this.handleSubmit}
             value={this.state.userInput}
           />
@@ -123,6 +137,24 @@ export default class Header extends React.Component {
           <input type="submit" className="hide-submit" />
         </div>
       </form>
+    )
+
+    const searchBoxClasses = classNames(
+      'right',
+      'fluid',
+      'menu',
+      'searchbox-switch',
+      { 'show': !this.state.hideSearchBox },
+      { 'hide': this.state.hideSearchBox }
+    )
+
+    const siteTitleClasses = classNames(
+      'item',
+      'inverted',
+      'header',
+      'searchbox-switch',
+      { 'show': this.state.hideSearchBox },
+      { 'hide': !this.state.hideSearchBox }
     )
 
     return (
@@ -157,9 +189,6 @@ export default class Header extends React.Component {
             <div className="ui simple dropdown item">
               <i className="sidebar icon"></i>
               <div className="menu">
-                <Link to="/nearby" className="item">
-                  <Translate content="header.nearby" />
-                </Link>
                 <Link to="/post" className="item">
                   <Translate content="header.post" />
                 </Link>
@@ -173,7 +202,12 @@ export default class Header extends React.Component {
               </div>
             </div>
           </div>
-          <div className="right fluid menu">
+          <div
+            onClick={::this.handleSearchBox}
+            className={siteTitleClasses}>
+            <Translate content="title.site" />
+          </div>
+          <div className={searchBoxClasses}>
             {SearchBox}
           </div>
         </div>

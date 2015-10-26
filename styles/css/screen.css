@@ -635,3 +635,11 @@ and (orientation : portrait) {
 .ui.directions.segment {
   font-size: 90%;
 }
+
+.searchbox-switch.show {
+  display: inline-block;
+}
+
+.searchbox-switch.hide {
+  display: none !important;
+}
