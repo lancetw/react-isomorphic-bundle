@@ -43,37 +43,36 @@ export default class Header extends React.Component {
     this.setState({ hideSearchBox: true })
   }
 
-  doSubmit () {
+  doSubmit (event) {
     const pattern = this.state.userInput
     if (!pattern) return
 
     if (process.env.BROWSER) {
+      event.target.blur()
       this.props.searchPost(pattern, 0, 10, true)
       this.releaseTimeout =
         setTimeout(() => this.context.history.replaceState({}, '/search'), 500)
     }
-
-    React.findDOMNode(this.refs.search).blur()
   }
 
   handleSubmit (event) {
     if (event.which === 13) {
       event.preventDefault()
-      this.doSubmit()
+      this.doSubmit(event)
     }
   }
 
   handleSearchSubmit (event) {
     event.preventDefault()
-    this.doSubmit()
+    this.doSubmit(event)
   }
 
-  handleSearchBox (evt) {
-    evt.preventDefault()
+  handleSearchBox (event) {
+    event.preventDefault()
     this.setState({ hideSearchBox: !this.state.hideSearchBox })
     setTimeout(() => {
       React.findDOMNode(this.refs.search).focus()
-    }, 300)
+    }, 500)
   }
 
   render () {
@@ -202,11 +201,11 @@ export default class Header extends React.Component {
               </div>
             </div>
           </div>
-          <div
+          <a
             onClick={::this.handleSearchBox}
             className={siteTitleClasses}>
             <Translate content="title.site" />
-          </div>
+          </a>
           <div className={searchBoxClasses}>
             {SearchBox}
           </div>
