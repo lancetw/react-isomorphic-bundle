@@ -188,11 +188,14 @@ export default class Header extends React.Component {
             <div className="ui simple dropdown item">
               <i className="sidebar icon"></i>
               <div className="menu">
-                <Link to="/post" className="item">
-                  <Translate content="header.post" />
+                <Link to="/nearby" className="item">
+                  <Translate content="header.nearby" />
                 </Link>
                 <Link to="/w/today" className="item">
                   <Translate content="header.wall" />
+                </Link>
+                <Link to="/post" className="item">
+                  <Translate content="header.post" />
                 </Link>
                 <Link to="/home" className="item">
                   <Translate content="header.home" />
