@@ -4,6 +4,7 @@ node_js:
   - "iojs-v3.3.0"
   - "0.12.7"
   - "4"
+  - "5"
 sudo: false
 env:
   - CXX=g++-4.8
