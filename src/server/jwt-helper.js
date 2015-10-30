@@ -4,8 +4,7 @@ import hashids from 'src/shared/utils/hashids-plus'
 
 const opts = {}
 opts.algorithm = config.jwt.OPTIONS.ALG
-opts.expiresInMinutes = config.jwt.OPTIONS.EXP
-opts.expiresInMinutes = config.jwt.OPTIONS.EXP
+opts.expiresIn = config.jwt.OPTIONS.EXP
 opts.issuer = config.jwt.OPTIONS.ISS
 opts.audience = config.jwt.OPTIONS.AUD
 
