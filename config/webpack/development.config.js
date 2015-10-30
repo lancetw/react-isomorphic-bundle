@@ -68,7 +68,7 @@ export default {
         "window.jQuery": "jquery"
       }),
       new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.HotModuleReplacementPlugin({ multiStep: true }),
+      new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/, /webpack-stats\.json$/),
       new webpack.DefinePlugin({
