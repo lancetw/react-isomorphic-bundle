@@ -192,7 +192,7 @@
     "istanbul": "^0.3.14",
     "json-loader": "^0.5.2",
     "koa-webpack-dev-middleware": "^1.0.1",
-    "koa-webpack-hot-middleware": "git@github.com:dayAlone/koa-webpack-hot-middleware.git#c8e121ae5f2a189ddfeb1ed696a9bc577c137114",
+    "koa-webpack-hot-middleware": "https://github.com/dayAlone/koa-webpack-hot-middleware.git#c8e121ae5f2a189ddfeb1ed696a9bc577c137114",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "mocha": "^2.3.3",
