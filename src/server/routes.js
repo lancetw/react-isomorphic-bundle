@@ -9,6 +9,7 @@ import hashids from 'src/shared/utils/hashids-plus'
 import { nl2br } from 'src/shared/utils/common-utils'
 import { TranslatorInit } from './translator-helper'
 import { isArray } from 'lodash'
+import moment from 'moment'
 
 const router = require('koa-router')()
 const User = db.users
@@ -237,29 +238,21 @@ router
     const descriptionLength = 20
     const items = yield Post.list(0, limit, 'rss')
     items.forEach((post) => {
-      let image
-      if (isArray(post.file) && post.file.length > 0) {
-        image = `${this.protocol}://${this.host}/uploads/${post.file[0]}`
-      } else {
-        image = `${this.protocol}://${this.host}/images/icon.png`
-      }
-
       feed.addItem({
         title: post.title,
         link: `${this.protocol}://${this.host}/w/p/${hashids.encode(post.id)}`,
         description: post.content.substr(0, descriptionLength),
-        date: post.created_at,
+        date: moment(post.created_at).format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
         author: [{
           name: post.ocname,
           link: post.url
         }],
-        content: nl2br(post.content),
-        image: image
+        content: nl2br(post.content)
       })
     })
 
     this.type = 'application/atom+xml; charset=utf-8'
-    this.body = feed.render('atom-1.0')
+    this.body = feed.render('rss-2.0')
   })
 
 module.exports = router
