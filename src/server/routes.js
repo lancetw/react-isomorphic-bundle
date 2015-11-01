@@ -242,7 +242,7 @@ router
         title: post.title,
         link: `${this.protocol}://${this.host}/w/p/${hashids.encode(post.id)}`,
         description: post.content.substr(0, descriptionLength),
-        date: moment(post.created_at).format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
+        date: post.created_at,
         author: [{
           name: post.ocname,
           link: post.url
