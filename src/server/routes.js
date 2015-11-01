@@ -252,7 +252,7 @@ router
     })
 
     this.type = 'application/atom+xml; charset=utf-8'
-    this.body = feed.render('rss-2.0')
+    this.body = feed.render('atom-1.0')
   })
 
 module.exports = router
