@@ -11,7 +11,7 @@
     <meta property="og:url" content="{{ siteUrl }}" />
     {{ head.meta | safe }}
     <meta property="og:image" content="{{ ogImage }}" />
-    <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ siteUrl }}/rss" />
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ siteUrl }}rss" />
     {% if env.NODE_ENV != 'development' %}
     {% for style in assets.style %}
     <link rel="stylesheet" href="{{ style }}" media="screen, projection" />
