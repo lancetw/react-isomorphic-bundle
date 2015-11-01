@@ -17,9 +17,7 @@ import url from 'url'
 import AppContainer from 'shared/components/AppContainer'
 import route from 'koa-route'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
-import { originLocaleName } from 'shared/utils/locale-utils'
-
-const Translator = require('counterpart').Instance
+import { TranslatorInit } from './translator-helper'
 
 nunjucks.configure('views', {
   autoescape: true
@@ -63,16 +61,9 @@ export default function (app) {
       if (this.session.token && this.session.token !== null) {
         store.dispatch(AuthActions.sync(this.session.token))
       }
-      /* eslint-disable max-len */
-      const translator = new Translator()
-      translator.registerTranslations('en', require('shared/i18n/en'))
-      translator.registerTranslations('zh-hant-tw', require('shared/i18n/zh-hant-tw'))
-      translator.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
-      translator.setFallbackLocale('zh-hant-tw')
 
-      const lang = originLocaleName(this.getLocaleFromHeader())
+      const { translator, lang } = TranslatorInit(this.getLocaleFromHeader())
       store.dispatch(LocaleActions.sync(lang || 'zh-hant-tw'))
-      translator.setLocale(lang || 'zh-hant-tw')
 
       let appString
       let assets

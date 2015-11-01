@@ -62,20 +62,32 @@ exports.load = function *(hid) {
 }
 
 /* eslint-disable camelcase */
-exports.list = function *(offset=0, limit=20) {
-  const _start = moment().startOf('day').valueOf()
-  return yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
-    where: {
-      end_date: {
-        $gte: new Date(_start)
+exports.list = function *(offset=0, limit=20, mode='default') {
+  if (mode === 'rss') {
+    return yield Post.findAll({
+      offset: offset,
+      limit: limit,
+      order: [[ 'id', 'DESC' ]],
+      where: {
+        status: 0
       },
-      status: 0
-    },
-    raw: true
-  })
+      raw: true
+    })
+  } else {
+    const _start = moment().startOf('day').valueOf()
+    return yield Post.findAll({
+      offset: offset,
+      limit: limit,
+      order: [[ 'start_date', 'DESC' ]],
+      where: {
+        end_date: {
+          $gte: new Date(_start)
+        },
+        status: 0
+      },
+      raw: true
+    })
+  }
 }
 
 /* eslint-disable camelcase */

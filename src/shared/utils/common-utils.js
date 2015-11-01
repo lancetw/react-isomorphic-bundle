@@ -6,3 +6,7 @@ export function EQUAL (a, b) {
 
   return (_a === _b)
 }
+
+export function nl2br (str) {
+  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br />$2')
+}

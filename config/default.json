@@ -9,7 +9,7 @@
   },
   "ReCAPTCHA": {
     "KEY": "see https://github.com/dozoisch/react-google-recaptcha",
-    "SECRET": "KEEP SECRET"
+    "SECRET": "KEEPSECRETS"
   },
   "passport": {
     "FACEBOOK_APP_ID": "1234",

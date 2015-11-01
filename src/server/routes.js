@@ -3,8 +3,12 @@ import passport from 'koa-passport'
 import parse from 'co-body'
 import validate from 'parameter'
 import db from 'src/server/db'
-import debug from 'debug'
 import * as AuthActions from 'shared/actions/AuthActions'
+import Feed from 'feed'
+import hashids from 'src/shared/utils/hashids-plus'
+import { nl2br } from 'src/shared/utils/common-utils'
+import { TranslatorInit } from './translator-helper'
+import { isArray } from 'lodash'
 
 const router = require('koa-router')()
 const User = db.users
@@ -216,6 +220,46 @@ router
         + JSON.stringify(err) + '"')
       this.body = err
     }
+  })
+
+router
+  .get('/rss', function *(next) {
+    const { translator } = TranslatorInit(this.getLocaleFromHeader())
+
+    const feed = new Feed({
+      title: translator.translate('title.site'),
+      link: `${this.protocol}://${this.host}`,
+      image: `${this.protocol}://${this.host}/images/icon.png`
+    })
+
+    const Post = db.posts
+    const limit = 12
+    const descriptionLength = 20
+    const items = yield Post.list(0, limit, 'rss')
+    items.forEach((post) => {
+      let image
+      if (isArray(post.file) && post.file.length > 0) {
+        image = `${this.protocol}://${this.host}/uploads/${post.file[0]}`
+      } else {
+        image = `${this.protocol}://${this.host}/images/icon.png`
+      }
+
+      feed.addItem({
+        title: post.title,
+        link: `${this.protocol}://${this.host}/w/p/${hashids.encode(post.id)}`,
+        description: post.content.substr(0, descriptionLength),
+        date: post.created_at,
+        author: [{
+          name: post.ocname,
+          link: post.url
+        }],
+        content: nl2br(post.content),
+        image: image
+      })
+    })
+
+    this.type = 'application/atom+xml; charset=utf-8'
+    this.body = feed.render('atom-1.0')
   })
 
 module.exports = router
