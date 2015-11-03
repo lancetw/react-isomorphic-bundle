@@ -27,7 +27,7 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 #### DEV mode
 
-`npm run dev` (*wait until console show: "webpack: bundle is now VALID".*)
+`npm run dev` (*wait until the terminal shows: "webpack: bundle is now VALID".*)
 
 **Press "Ctrl + h" to switch redux devtools**
 
