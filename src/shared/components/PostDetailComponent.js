@@ -120,7 +120,9 @@ export default class Post extends BaseComponent {
   }
 
   handleLocaleChange () {
-    this.forceUpdate()
+    if (process.env.BROWSER) {
+      this.forceUpdate()
+    }
   }
 
   renderDetailProp (detail) {
