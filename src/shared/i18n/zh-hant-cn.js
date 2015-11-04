@@ -176,7 +176,12 @@ export default {
     distance: {
       km: '距离我约为 %(dist)s 公里',
       m: '距离我约为 %(dist)s 公尺',
-      here: '我在这里'
+      here: '我在这里',
+      basic: {
+        km: '%(dist)s 公里',
+        m: '%(dist)s 公尺',
+        here: '非常近'
+      }
     },
     button: {
       go: '详细布告',

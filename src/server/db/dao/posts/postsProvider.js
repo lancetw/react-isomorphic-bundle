@@ -180,7 +180,7 @@ exports.listWithOg = function *(offset=0, limit=20, cid) {
   return yield Post.findAll({
     offset: offset,
     limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
+    order: [[ 'start_date', 'DESC' ], [ 'id', 'DESC' ]],
     where: {
       cid: +cid,
       status: 0

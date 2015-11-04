@@ -6,7 +6,8 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import request from 'superagent'
-import { isFinite } from 'lodash'
+import { isNumber, isFinite } from 'lodash'
+import { fetchOrgDataByCid } from './ogs'
 
 const UserInfo = db.usersInfo
 
@@ -86,7 +87,13 @@ export default new Resource('usersinfo', {
       }
       // fetch cid by ocname
       try {
-        const org = yield fetchOrgData(body.ocname)
+        let org = {}
+        if (isNumber(body.ocname)) {
+          org = yield fetchOrgDataByCid(body.ocname)
+        } else {
+          org = yield fetchOrgData(body.ocname)
+        }
+        body.ocname = org.ocname
         body.cid = org.oid
         if (org.lat && org.lng) {
           body.lat = parseFloat(org.lat)

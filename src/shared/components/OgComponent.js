@@ -20,6 +20,7 @@ export default class OgComponent extends React.Component {
   }
 
   renderList = (posts, isFetching) => {
+    const Translate = require('react-translate-component')
     return (
       <div className="ui fluid detail card">
         {isFetching &&
@@ -37,6 +38,16 @@ export default class OgComponent extends React.Component {
                   <div className="ui orange horizontal label">
                     { toShortDate(item.startDate) }
                   </div>
+                  { item.distance && (
+                    <div className="ui teal horizontal label">
+                      { item.distance >= 1
+                        && <Translate content="geoloc.distance.basic.km" dist={item.distance.toFixed(3)}/> }
+                      { item.distance < 1 && item.distance >= 0.01
+                        && <Translate content="geoloc.distance.basic.m" dist={(item.distance * 1000).toFixed(2)}/> }
+                      { item.distance < 0.01
+                        && <Translate content="geoloc.distance.basic.here" /> }
+                    </div>
+                  )}
                   <span>{ item.title }</span>
                 </div>
               </Link>

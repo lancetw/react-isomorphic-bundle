@@ -176,7 +176,12 @@ export default {
     distance: {
       km: '%(dist)s km from you',
       m: '%(dist)s m from you',
-      here: 'I am here'
+      here: 'I am here',
+      basic: {
+        km: '%(dist)s km',
+        m: '%(dist)s m',
+        here: 'very close'
+      }
     },
     button: {
       go: 'more...',
