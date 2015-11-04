@@ -81,7 +81,7 @@ export default class PostCard extends BaseComponent {
         <div className="ui fluid post card">
           <div className="content">
             <h2 className="title">
-              <Link to={`/w/p/${card.id}`}>
+              <Link to={`/w/${card.id}`}>
                 {tongwenAutoStr(card.title, this.getLocale())}
               </Link>
             </h2>

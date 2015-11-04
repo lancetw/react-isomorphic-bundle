@@ -16,7 +16,8 @@ export default {
     cal: '月历浏览',
     cprop: '类别浏览',
     search: '搜寻',
-    nearby: '附近'
+    nearby: '附近',
+    ogpage: '机构专页'
   },
   header: {
     home: '首页',

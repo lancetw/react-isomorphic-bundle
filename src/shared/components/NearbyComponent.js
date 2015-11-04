@@ -120,7 +120,7 @@ export default class Nearby extends React.Component {
   }
 
   render () {
-    const { center, key, pattern, data } = this.props.search
+    const { center, pattern, data } = this.props.search
     let MyPlace
     if (typeof pattern.lat !== 'undefined'
         && typeof pattern.lng !== 'undefined') {

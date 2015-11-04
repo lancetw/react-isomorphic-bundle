@@ -240,7 +240,7 @@ router
     items.forEach((post) => {
       feed.addItem({
         title: post.title,
-        link: `${this.protocol}://${this.host}/w/p/${hashids.encode(post.id)}`,
+        link: `${this.protocol}://${this.host}/w/${hashids.encode(post.id)}`,
         description: post.content.substr(0, descriptionLength),
         date: post.created_at,
         author: [{

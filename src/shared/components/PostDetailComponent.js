@@ -3,13 +3,6 @@ import { BaseComponent } from 'shared/components'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
 import moment from 'moment'
-import {
-  toMoment,
-  isBetween,
-  isPastDay,
-  toShortDate,
-  toYear
-} from 'shared/utils/date-utils'
 import { getFileName, getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
 import { PostPropArray } from 'shared/utils/forms'
@@ -21,6 +14,13 @@ import AutoLinkText from 'react-autolink-text'
 import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
 import { Lightbox } from 'shared/components/addon/lightbox'
+import {
+  toMoment,
+  isBetween,
+  isPastDay,
+  toShortDate,
+  toYear
+} from 'shared/utils/date-utils'
 
 const { CSSTransitionGroup } = React.addons
 
@@ -219,7 +219,7 @@ export default class Post extends BaseComponent {
         <div className="ui divided selection animated list content">
           { !isEmpty(posts) && posts.map(function (item, i) {
             return (
-              <Link className="item" to={`/w/p/${item.id}`}>
+              <Link className="item" to={`/w/${item.id}`}>
                 <div className="more">
                   <div className="ui orange horizontal label">
                     { toShortDate(item.startDate) }
@@ -234,13 +234,13 @@ export default class Post extends BaseComponent {
     )
   }
 
-  /* eslint-disable max-len */
   render () {
     const Translate = require('react-translate-component')
 
     if (!isEmpty(this.props.post.errors)) {
       return (
-        <main className="ui two column post detail stackable has-header grid container">
+        <main className="
+          ui two column post detail stackable has-header grid container">
           <div className="column">
             <div className="ui huge orange label">
               <Translate content="post.detail.noexist" />
@@ -373,7 +373,8 @@ export default class Post extends BaseComponent {
                       </span>
                     </div>
                   </div>
-                  {!isEmpty(detail.uid) && this.props.auth.user.id === detail.uid &&
+                  {!isEmpty(detail.uid)
+                    && this.props.auth.user.id === detail.uid &&
                   <div className="extra content">
                     <div className="ui two buttons">
                       <Link
@@ -399,6 +400,15 @@ export default class Post extends BaseComponent {
               </div>
             </div>
             <div className="map column">
+              {detail.cid && (
+              <div className="og row">
+                <Link
+                  className="ui orange fluid large top attached button"
+                  to={`/c/${detail.cid}`}>
+                  {detail.ocname}
+                </Link>
+              </div>
+              )}
               <div className="row">
                 { (detail.lat && detail.lat) &&
                 <GMap

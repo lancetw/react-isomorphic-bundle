@@ -7,7 +7,6 @@ import { tongwenAutoStr } from 'shared/utils/tongwen'
 export default class HomeComponent extends BaseComponent {
 
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired
   }
 
@@ -31,7 +30,7 @@ export default class HomeComponent extends BaseComponent {
     <div key={post.id} className="ui orange icon message">
       <div className="content">
         <h3>
-          <Link to={`/w/p/${post.id}`}>
+          <Link to={`/w/${post.id}`}>
             {tongwenAutoStr(post.ocname, this.getLocale())
               || <Translate content="news.unnamed" />}
           </Link>
@@ -46,20 +45,6 @@ export default class HomeComponent extends BaseComponent {
 
   render () {
     const Translate = require('react-translate-component')
-    const TranslateProps = React.createFactory(Translate)
-    const tokenProps = {
-      component: 'input',
-      type: 'text',
-      name: 'token',
-      scope: 'home_token',
-      readOnly: true,
-      attributes: {
-        placeholder: 'placeholder'
-      },
-      value: this.props.auth.token
-    }
-
-    const { user } = this.props.auth
     const { posts } = this.props.post
     const loading = this.props.post.isFetching
 

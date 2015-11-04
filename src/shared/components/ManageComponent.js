@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
+import { Link } from 'react-router'
 import Cards from 'shared/components/wall/PostCards'
 import {
   Form,
@@ -173,9 +174,9 @@ export default class Manage extends BaseComponent {
           <i className="check square icon"></i>
           <div className="content">
             <div className="header">
-              <a target="_blank" href={`http://church.oursweb.net/church.php?pkey=${cid}`}>
+              <Link to={`/c/${cid}`}>
                 已綁定華人教會機構名錄 ^_^
-              </a>
+              </Link>
             </div>
           </div>
         </div> )

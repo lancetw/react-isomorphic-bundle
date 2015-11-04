@@ -130,12 +130,12 @@ export default class TableWidget extends React.Component {
               </td>
               <td className="table title">
                 { (checked)
-                  && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
+                  && (<a className="delete" target="_blank" href={`../w/${item.id}`}>
                     { item.title }
                   </a>)
                 }
                 { (!checked)
-                  && (<a target="_blank" href={`../w/p/${item.id}`}>
+                  && (<a target="_blank" href={`../w/${item.id}`}>
                     { item.title }
                   </a>)
                 }

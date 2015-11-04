@@ -35,7 +35,8 @@ exports.create = function *(post) {
     'place',
     'url',
     'status',
-    'ocname'
+    'ocname',
+    'cid'
   ]
 
   return yield Post.create(post, { fields: fillable })
@@ -53,7 +54,7 @@ exports.load = function *(hid) {
       required: true,
       include: [{
         model: UserInfo,
-        attributes: ['ocname'],
+        attributes: ['ocname', 'cid'],
         required: false
       }]
     }],
@@ -155,7 +156,6 @@ exports.listWithType = function *(type, offset=0, limit=20) {
   })
 }
 
-/* eslint-disable camelcase */
 exports.listWithUser = function *(offset=0, limit=20, uid) {
   if (!uid) return []
   if (!isFinite(+uid)) return []
@@ -166,6 +166,23 @@ exports.listWithUser = function *(offset=0, limit=20, uid) {
     order: [[ 'id', 'DESC' ]],
     where: {
       uid: +uid,
+      status: 0
+    },
+    raw: true
+  })
+}
+
+/* eslint-disable camelcase */
+exports.listWithOg = function *(offset=0, limit=20, cid) {
+  if (!cid) return []
+  if (!isFinite(+cid)) return []
+
+  return yield Post.findAll({
+    offset: offset,
+    limit: limit,
+    order: [[ 'start_date', 'DESC' ]],
+    where: {
+      cid: +cid,
       status: 0
     },
     raw: true
@@ -534,7 +551,8 @@ exports.update = function *(hid, post) {
     'place',
     'url',
     'status',
-    'ocname'
+    'ocname',
+    'cid'
   ]
   const id = +hashids.decode(hid)
   if (!isFinite(id)) return false
@@ -586,6 +604,7 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
       'prop',
       'type',
       'ocname',
+      'cid',
       'place',
       'lat',
       'lng'

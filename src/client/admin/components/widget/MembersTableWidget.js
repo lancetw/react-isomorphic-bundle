@@ -131,7 +131,7 @@ export default class MembersTableWidget extends React.Component {
               </td>
               <td className="table email">
                 { (checked)
-                  && (<a className="delete" target="_blank" href={`../w/p/${item.id}`}>
+                  && (<a className="delete" target="_blank" href={`../w/${item.id}`}>
                     { item.email }
                   </a>)
                 }
@@ -143,7 +143,7 @@ export default class MembersTableWidget extends React.Component {
               </td>
               <td className="table ocname">
                 { (!!item['userInfo.url']) &&
-                  <a target="_blank" href={`../w/p/${item['userInfo.url']}`}>
+                  <a target="_blank" href={`../w/${item['userInfo.url']}`}>
                     { item['usersInfo.ocname'] }
                   </a>
                 }

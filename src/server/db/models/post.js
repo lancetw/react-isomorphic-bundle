@@ -79,6 +79,10 @@ module.exports = function (sequelize, Sequelize) {
       allowNull: true,
       type: Sequelize.STRING
     },
+    cid: {
+      allowNull: true,
+      type: Sequelize.BIGINT
+    },
     lat: {
       validate: { min: -90, max: 90 },
       allowNull: true,

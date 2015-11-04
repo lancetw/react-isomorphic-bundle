@@ -10,7 +10,7 @@ import { isFinite } from 'lodash'
 
 const UserInfo = db.usersInfo
 
-function fetchOrgData (ocname) {
+export function fetchOrgData (ocname) {
   return new Promise((resolve, reject) => {
     request
       .get('http://church.oursweb.net/lite/mapsearch')

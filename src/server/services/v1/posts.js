@@ -119,6 +119,7 @@ export default new Resource('posts', {
 
       try {
         const userinfo = yield UsersInfo.load(+this.user.id)
+        body.cid = userinfo.cid
         body.ocname = userinfo.ocname
         body.zipcode = userinfo.zipcode
         body.contact = userinfo.contact
@@ -230,6 +231,7 @@ export default new Resource('posts', {
 
       try {
         const userinfo = yield UsersInfo.load(+this.user.id)
+        body.cid = userinfo.cid
         body.ocname = userinfo.ocname
         body.zipcode = userinfo.zipcode
         body.contact = userinfo.contact

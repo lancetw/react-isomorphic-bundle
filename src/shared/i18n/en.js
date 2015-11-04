@@ -16,7 +16,8 @@ export default {
     cal: 'Calendar View',
     cprop: 'Property View',
     search: 'Search',
-    nearby: 'Nearby'
+    nearby: 'Nearby',
+    ogpage: 'Organization Pages'
   },
   header: {
     home: 'Home',

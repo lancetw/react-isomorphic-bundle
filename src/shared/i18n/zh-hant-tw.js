@@ -16,7 +16,8 @@ export default {
     cal: '月曆瀏覽',
     cprop: '類別瀏覽',
     search: '搜尋',
-    nearby: '附近'
+    nearby: '附近',
+    ogpage: '機構專頁'
   },
   header: {
     home: '首頁',

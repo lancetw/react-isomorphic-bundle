@@ -89,7 +89,6 @@ class PostDetailHandler extends BaseComponent {
           title={`${title} | ${defaultTitle}`} meta={meta} />
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
-          {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
           defaultLocale={this.getLocale()} />
       </div>

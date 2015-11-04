@@ -102,7 +102,7 @@ export default class Marker extends BaseComponent {
             <div className={actionClasses}>
               <div className="ui two buttons">
                 <Link
-                  to={`/w/p/${data.id}`}
+                  to={`/w/${data.id}`}
                   className="ui basic green button">
                   <Translate content="geoloc.button.go" />
                 </Link>
