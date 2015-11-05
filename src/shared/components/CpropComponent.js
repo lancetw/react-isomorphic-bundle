@@ -57,8 +57,8 @@ export default class Cprop extends BaseComponent {
   /* eslint-disable max-len */
   render () {
     return (
-      <main className="ui column stackable has-header grid page container">
-        <div className="column">
+      <main className="ui has-header grid centered container">
+        <div className="sixteen wide tablet six wide computer column">
           <WallButtons />
           <div className="ui relaxed list">
             { this.renderCprop() }

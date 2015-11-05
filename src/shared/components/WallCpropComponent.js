@@ -24,8 +24,8 @@ export default class WallCprop extends React.Component {
     const loading = post.isFetching || false
 
     return (
-      <main className="ui has-header grid container">
-        <div className="column">
+      <main className="ui has-header grid centered container">
+        <div className="sixteen wide tablet eight wide computer column">
           <WallButtons />
           <Cards
             posts={post.posts}
