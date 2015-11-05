@@ -21,7 +21,7 @@ export default class Search extends React.Component {
 
     return (
       <main className="ui has-header grid centered container">
-        <div className="sixteen wide tablet eight wide computer column">
+        <div className="sixteen wide tablet twelve wide computer column">
           <div className="row">
             {search.pattern
               && (<h4>

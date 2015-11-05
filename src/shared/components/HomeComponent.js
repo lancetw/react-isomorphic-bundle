@@ -50,7 +50,7 @@ export default class HomeComponent extends BaseComponent {
 
     return (
       <main className="ui has-header grid centered container">
-        <div className="sixteen wide tablet eight wide computer column">
+        <div className="sixteen wide tablet twelve wide computer column">
           <Link to="/w/today" className="ui orange fluid huge button">
             <Translate content="home.browse" />
           </Link>
