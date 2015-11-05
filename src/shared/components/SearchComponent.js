@@ -20,8 +20,8 @@ export default class Search extends React.Component {
     const loading = !!search.isFetching
 
     return (
-      <main className="ui stackable page grid">
-        <div className="column">
+      <main className="ui has-header grid centered container">
+        <div className="sixteen wide tablet eight wide computer column">
           <div className="row">
             {search.pattern
               && (<h4>
