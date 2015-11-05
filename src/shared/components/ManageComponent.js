@@ -228,7 +228,7 @@ export default class Manage extends BaseComponent {
               loadFunc={loadFunc}
               hasMore={post.hasMore}
               isFetching={loading}
-              diff={0}
+              diff={120}
               threshold={200}
               defaultLocale={this.props.defaultLocale}
             />
