@@ -39,7 +39,6 @@ class OgHandler extends BaseComponent {
   render () {
     const { dispatch } = this.props
     const { getState } = this.context.store
-    console.log(getState().og)
     const title = getState().ognearby.oginfo.ocname + ' | ' + this._T('title.ogpage')
     const defaultTitle = this._T('title.site')
     const meta = []
