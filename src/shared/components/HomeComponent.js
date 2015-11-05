@@ -49,8 +49,8 @@ export default class HomeComponent extends BaseComponent {
     const loading = this.props.post.isFetching
 
     return (
-      <main className="ui one column centered stackable page grid">
-        <div className="column">
+      <main className="ui has-header grid centered container">
+        <div className="sixteen wide tablet eight wide computer column">
           <Link to="/w/today" className="ui orange fluid huge button">
             <Translate content="home.browse" />
           </Link>
