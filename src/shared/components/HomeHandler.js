@@ -42,7 +42,10 @@ class HomeHandler extends BaseComponent {
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} meta={meta} />
-        <Home {...this.props} />
+        <Home
+          {...this.props}
+          defaultLocale={this.getLocale()}
+        />
       </div>
     )
   }

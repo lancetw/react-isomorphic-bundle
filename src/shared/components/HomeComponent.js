@@ -1,17 +1,31 @@
 import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
-import { isEmpty } from 'lodash'
+import { isEmpty, at } from 'lodash'
+import { toShortDate } from 'shared/utils/date-utils'
+import { PostPropArray } from 'shared/utils/forms'
+import counterpart from 'counterpart'
+import { originLocaleName } from 'shared/utils/locale-utils'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 export default class HomeComponent extends BaseComponent {
 
   static propTypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
     super(props)
+
+    counterpart.setLocale(props.defaultLocale)
+    counterpart.onLocaleChange(::this.handleLocaleChange)
+  }
+
+  handleLocaleChange (newLocale) {
+    if (process.env.BROWSER) {
+      this.forceUpdate()
+    }
   }
 
   renderNews (posts) {
@@ -26,6 +40,11 @@ export default class HomeComponent extends BaseComponent {
 
   renderItem (post) {
     const Translate = require('react-translate-component')
+
+    const eventDate = (post.startDate === post.endDate)
+    ? toShortDate(post.endDate)
+    : toShortDate(post.startDate) + ' - ' + toShortDate(post.endDate)
+
     return (
     <div key={post.id} className="ui orange icon message">
       <div className="content">
@@ -36,7 +55,9 @@ export default class HomeComponent extends BaseComponent {
           </Link>
         </h3>
         <div className="header">
-          {tongwenAutoStr(post.title, this.getLocale())}
+          <span className="ui orange label">
+            {at(PostPropArray(originLocaleName(counterpart.getLocale())), post.prop)}
+          </span> {tongwenAutoStr(post.title, this.getLocale())}
         </div>
       </div>
     </div>
@@ -50,7 +71,7 @@ export default class HomeComponent extends BaseComponent {
 
     return (
       <main className="ui has-header grid centered container">
-        <div className="sixteen wide tablet twelve wide computer column">
+        <div className="sixteen wide tablet ten wide computer column">
           <Link to="/w/today" className="ui orange fluid huge button">
             <Translate content="home.browse" />
           </Link>
