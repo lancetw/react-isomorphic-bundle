@@ -13,7 +13,7 @@ import * as LocaleActions from 'shared/actions/LocaleActions'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 
 (async () => {
-  /* eslint-disable max-len */
+  /* eslint-disable react/no-multi-comp */
   counterpart.registerTranslations('en', require('shared/i18n/en'))
   counterpart.registerTranslations('zh-hant-tw', require('shared/i18n/zh-hant-tw'))
   counterpart.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
