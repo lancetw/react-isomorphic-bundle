@@ -31,13 +31,17 @@ function stat (file) {
 }
 
 export default function (app) {
-  app.use(route.get('/uploads/*', function *() {
+  app.use(route.get('/uploads/*', function *(ctx, next) {
     const location = path.join(__dirname, '../../', decodeURI(this.path))
-    const fstat = yield stat(location)
-
-    if (fstat.isFile()) {
-      this.type = path.extname(location)
-      this.body = fs.createReadStream(location)
+    try {
+      const fstat = yield stat(location)
+      if (fstat.isFile()) {
+        this.type = path.extname(location)
+        this.body = fs.createReadStream(location)
+      }
+    } catch (err) {
+      this.status = 404
+      this.body = '404'
     }
   }))
 
