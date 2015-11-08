@@ -8,11 +8,10 @@ import routes from 'client/admin/routes'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
 (async () => {
-  let finalCreateStore
-
+  /* eslint-disable react/no-multi-comp */
   const initialState = window.STATE_FROM_SERVER
-  const reducer = combineReducers(reducers)
 
+  const reducer = combineReducers(reducers)
   const {
     DevTools,
     DebugPanel,
@@ -21,7 +20,7 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 
   const { devTools, persistState } = require('redux-devtools')
 
-  finalCreateStore = compose(
+  const finalCreateStore = compose(
     applyMiddleware(
       thunk
     ),
