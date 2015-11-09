@@ -22,7 +22,7 @@
       "charset": "utf8",
       "collate": "utf8_general_ci"
     },
-    "logging": true
+    "logging": false
   },
   "test": {
     "storage": "storage/db.test.sqlite",

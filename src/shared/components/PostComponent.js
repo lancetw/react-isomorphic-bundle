@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { BaseComponent } from 'shared/components'
 import {
   Form,
@@ -33,8 +35,6 @@ if (process.env.BROWSER) {
   history = createHistory()
 }
 
-const { CSSTransitionGroup } = React.addons
-
 export default class Post extends BaseComponent {
 
   static propTypes = {
@@ -57,6 +57,10 @@ export default class Post extends BaseComponent {
     history: PropTypes.object.isRequired
   }
 
+  static defaultProps = {
+    disableSubmit: false
+  }
+
   constructor (props, context) {
     super(props, context)
     this._bind(
@@ -70,11 +74,6 @@ export default class Post extends BaseComponent {
 
     counterpart.setLocale(props.defaultLocale)
     const locale = counterpart.getLocale()
-
-    let tab
-    if (process.env.BROWSER) {
-      tab = queryString.parse(window.location.search).tab
-    }
 
     this.state = {
       formInited: false,
@@ -101,17 +100,33 @@ export default class Post extends BaseComponent {
       locale: locale,
       placeError: false,
       latlngError: false,
-      disableSubmit: props.disableSubmit,
-      tabIndex: +tab || 0
+      disableSubmit: props.disableSubmit
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
+  }
 
+  componentWillMount () {
     if (process.env.BROWSER) {
+      let tab
+      tab = queryString.parse(window.location.search).tab
+
+      this.setState({ tabIndex: +tab || 0 })
+
       unlisten = history.listen((location) => {
         tab = queryString.parse(location.search).tab
         this.setState({ tabIndex: +tab })
       })
+    }
+  }
+
+  componentDidUpdate () {
+    if (process.env.BROWSER) {
+      if (!isEmpty(this.props.post.content)) {
+        this.releaseTimeout = setTimeout(() => {
+          this.context.history.replaceState({}, '/w')
+        }, 1000)
+      }
     }
   }
 
@@ -126,10 +141,10 @@ export default class Post extends BaseComponent {
     this.checkSubmited(nextProps.post.content)
 
     if (this.refs.lat) {
-      React.findDOMNode(this.refs.lat).value = nextProps.map.lat
+      ReactDOM.findDOMNode(this.refs.lat).value = nextProps.map.lat
     }
     if (this.refs.lng) {
-      React.findDOMNode(this.refs.lng).value = nextProps.map.lng
+      ReactDOM.findDOMNode(this.refs.lng).value = nextProps.map.lng
     }
   }
 
@@ -160,9 +175,9 @@ export default class Post extends BaseComponent {
   handleMapSubmit (event) {
     event.preventDefault()
     const map = {
-      place: React.findDOMNode(this.refs.place).value.trim(),
-      lat: parseFloat(React.findDOMNode(this.refs.lat).value.trim()),
-      lng: parseFloat(React.findDOMNode(this.refs.lng).value.trim())
+      place: ReactDOM.findDOMNode(this.refs.place).value.trim(),
+      lat: parseFloat(ReactDOM.findDOMNode(this.refs.lat).value.trim()),
+      lng: parseFloat(ReactDOM.findDOMNode(this.refs.lng).value.trim())
     }
 
     if (!map.lat || !map.lng || !map.place) {
@@ -238,16 +253,16 @@ export default class Post extends BaseComponent {
   handleMapChange (event) {
     const { center } = event
     if (this.refs.lat) {
-      React.findDOMNode(this.refs.lat).value = center.lat
+      ReactDOM.findDOMNode(this.refs.lat).value = center.lat
     }
     if (this.refs.lng) {
-      React.findDOMNode(this.refs.lng).value = center.lng
+      ReactDOM.findDOMNode(this.refs.lng).value = center.lng
     }
   }
 
   handleSearch (event) {
     event.preventDefault()
-    const address = React.findDOMNode(this.refs.place).value.trim()
+    const address = ReactDOM.findDOMNode(this.refs.place).value.trim()
     if (!address || address === counterpart('post.map.my')) {
       runGeoLoc().then(this.showPosition.bind(this))
     } else {
@@ -415,14 +430,6 @@ export default class Post extends BaseComponent {
   }
 
   render () {
-    if (process.env.BROWSER) {
-      if (!isEmpty(this.props.post.content)) {
-        this.releaseTimeout = setTimeout(() => {
-          this.context.history.replaceState({}, '/w')
-        }, 1000)
-      }
-    }
-
     const Translate = require('react-translate-component')
 
     const submitClass = classNames(
@@ -550,9 +557,12 @@ export default class Post extends BaseComponent {
             </TabPanel>
             <TabPanel index={2}>
               {this.renderTips()}
-              <CSSTransitionGroup transitionName="MessageTransition">
+              <ReactCSSTransitionGroup
+                transitionName="MessageTransition"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}>
                 {UploadErrorMessage}
-              </CSSTransitionGroup>
+              </ReactCSSTransitionGroup>
               <p>
                 <Translate content="post.tabs.msg.upload" />
               </p>

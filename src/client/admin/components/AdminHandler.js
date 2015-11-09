@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react/addons'
-const { CSSTransitionGroup } = React.addons
+import React, { PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 if (process.env.BROWSER) {
   require('css/ui/base')
@@ -26,9 +26,12 @@ export default class AdminHandler extends React.Component {
 
   render () {
     return (
-      <CSSTransitionGroup transitionName="RouteTransition">
+      <ReactCSSTransitionGroup
+        transitionName="RouteTransition"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}>
         {this.props.children}
-      </CSSTransitionGroup>
+      </ReactCSSTransitionGroup>
     )
   }
 }

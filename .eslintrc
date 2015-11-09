@@ -31,7 +31,9 @@
     "space-before-function-paren": 0,
     "new-cap": 0,
     "no-unused-vars": 0,
+    "no-unused-expressions": 0,
     "space-infix-ops": 0,
-    "no-empty": 0
+    "no-empty": 0,
+    "no-undef": 0
   }
 }

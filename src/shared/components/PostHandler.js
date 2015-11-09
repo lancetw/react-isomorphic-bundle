@@ -22,8 +22,12 @@ class PostHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
+  }
 
-    const {dispatch, resolver} = context.store
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver, getState } } = this.context
+
     dispatch(updateTitle('title.post'))
 
     this.uploadActions = bindActionCreators(UploadActions, dispatch)

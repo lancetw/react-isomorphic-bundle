@@ -100,7 +100,7 @@ $green: #59A644;
 }
 
 .DayPicker-Weekday {
-  display: table-cell;
+  display: table-cell !important;
   text-align: center;
   height: 2rem;
 }

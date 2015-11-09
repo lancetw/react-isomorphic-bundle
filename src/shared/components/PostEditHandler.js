@@ -26,8 +26,11 @@ class PostEditHandler extends BaseComponent {
     super(props)
 
     this.state = { disableSubmit: true }
+  }
 
-    const { dispatch, resolver, getState } = context.store
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver, getState } } = this.context
 
     dispatch(updateTitle('title.post'))
 
@@ -39,16 +42,16 @@ class PostEditHandler extends BaseComponent {
     resolver.resolve(this.postActions.init)
     resolver.resolve(this.uploadActions.init)
     resolver.resolve(this.mapActions.reload)
-    resolver.resolve(this.authActions.showUser, props.auth.token)
+    resolver.resolve(this.authActions.showUser, this.props.auth.token)
 
-    const { id } = props.params
+    const { id } = this.props.params
     if (id) {
       resolver.resolve(this.postActions.loadPostEdit, id)
-      setTimeout(() => {
-        if (process.env.BROWSER) {
+      if (process.env.BROWSER) {
+        setTimeout(() => {
           this.setState({ disableSubmit: false })
-        }
-      }, 0)
+        }, 0)
+      }
     }
   }
 

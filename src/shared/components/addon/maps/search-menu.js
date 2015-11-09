@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { isArray } from 'lodash'
 
 export default class SearchMenu extends Component {
@@ -18,7 +19,7 @@ export default class SearchMenu extends Component {
   }
 
   componentDidMount () {
-    const input = React.findDOMNode(this.refs.googlesearch)
+    const input = ReactDOM.findDOMNode(this.refs.googlesearch)
     this.autocomplete = new google.maps.places.Autocomplete(input)
     this.autocomplete.addListener('place_changed', this.onPlaceChange)
   }
@@ -41,13 +42,13 @@ export default class SearchMenu extends Component {
   }
 
   handleChange = () => {
-    const value = React.findDOMNode(this.refs.simplesearch).value
+    const value = ReactDOM.findDOMNode(this.refs.simplesearch).value
     this.setState({ value })
   }
 
   handleSimpleSubmit = (event) => {
     event.preventDefault()
-    const input = React.findDOMNode(this.refs.simplesearch)
+    const input = ReactDOM.findDOMNode(this.refs.simplesearch)
     input.blur()
     const value = input.value
     const geocoder = new google.maps.Geocoder()
@@ -67,7 +68,7 @@ export default class SearchMenu extends Component {
   }
 
   doSubmit () {
-    const input = React.findDOMNode(this.refs.googlesearch)
+    const input = ReactDOM.findDOMNode(this.refs.googlesearch)
     google.maps.event.trigger(input, 'focus')
     google.maps.event.trigger(input, 'keydown', { keyCode: 40 })
     google.maps.event.trigger(input, 'keydown', { keyCode: 13 })

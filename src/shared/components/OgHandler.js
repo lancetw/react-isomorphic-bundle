@@ -22,11 +22,15 @@ class OgHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
-    const { dispatch, resolver } = context.store
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver } } = this.context
 
     this.ogActions = bindActionCreators(OgActions, dispatch)
 
-    const { cid } = props.params
+    const { cid } = this.props.params
     if (cid) {
       const limit = 10
       resolver.resolve(this.ogActions.fetchList, 0, limit, cid)

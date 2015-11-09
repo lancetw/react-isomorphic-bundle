@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Router } from 'react-router'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
@@ -32,15 +33,13 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
   const history = createBrowserHistory()
 
   if (process.env.NODE_ENV !== 'production') {
-    React.render((
+    ReactDOM.render((
       <div>
         <Provider store={store}>
-          {() =>
-            <Router
-              children={routes(store)}
-              history={history}
-            />
-          }
+          <Router
+            children={routes(store)}
+            history={history}
+          />
         </Provider>
         <DebugPanel top right bottom>
           <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
@@ -48,14 +47,12 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
       </div>
     ), document.getElementById('admin'))
   } else {
-    React.render((
+    ReactDOM.render((
       <Provider store={store}>
-        {() =>
-          <Router
-            children={routes(store)}
-            history={history}
-          />
-        }
+        <Router
+          children={routes(store)}
+          history={history}
+        />
       </Provider>
     ), document.getElementById('admin'))
   }

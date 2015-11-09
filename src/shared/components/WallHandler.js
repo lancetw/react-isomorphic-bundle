@@ -11,7 +11,7 @@ import { at } from 'lodash'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
 
-export default class WallHandler extends BaseComponent {
+class WallHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -30,13 +30,16 @@ export default class WallHandler extends BaseComponent {
     this.state = {
       locale: fixLocaleName(this.getLocale())
     }
+  }
 
-    const { dispatch, resolver } = context.store
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver } } = this.context
 
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.authActions = bindActionCreators(AuthActions, dispatch)
-    resolver.resolve(this.authActions.showUser, props.auth.token)
-    const { cprop } = props.params
+    resolver.resolve(this.authActions.showUser, this.props.auth.token)
+    const { cprop } = this.props.params
 
     dispatch(updateTitle('title.wall'))
     resolver.resolve(this.postActions.overviewList, 0, 10)

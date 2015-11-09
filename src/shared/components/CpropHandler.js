@@ -1,23 +1,22 @@
 import React, { PropTypes } from 'react'
 import Cprop from './CpropComponent'
+import { connect } from 'react-redux'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
 import { BaseComponent } from 'shared/components'
 
-export default class CpropHandler extends BaseComponent {
+class CpropHandler extends BaseComponent {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
-  }
-
   constructor (props, context) {
     super(props)
-    const { dispatch } = context.store
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
     dispatch(updateTitle('title.cal'))
   }
 
@@ -33,3 +32,6 @@ export default class CpropHandler extends BaseComponent {
     )
   }
 }
+
+export default connect(state => ({
+}))(CpropHandler)

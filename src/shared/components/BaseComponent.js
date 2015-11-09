@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import counterpart from 'counterpart'
 
 export default class BaseComponent extends React.Component {
@@ -8,7 +9,7 @@ export default class BaseComponent extends React.Component {
   }
 
   constructor (props, context) {
-    super(props, context)
+    super(props)
   }
 
   getLocale () {
@@ -28,7 +29,7 @@ export default class BaseComponent extends React.Component {
 
   isMounted () {
     try {
-      React.findDOMNode(this)
+      ReactDOM.findDOMNode(this)
       return true
     } catch (e) {
       return false

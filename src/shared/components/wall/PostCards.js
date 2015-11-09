@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import ReactDOM from 'react-dom'
 import { BaseComponent } from 'shared/components'
 import { isEmpty, debounce } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
@@ -83,8 +84,8 @@ export default class PostCards extends BaseComponent {
   }
 
   handleInfiniteLoad (threshold) {
-    const nodeScroll = React.findDOMNode(this.refs.scroll)
-    const nodeList = React.findDOMNode(this.refs.scrollList)
+    const nodeScroll = ReactDOM.findDOMNode(this.refs.scroll)
+    const nodeList = ReactDOM.findDOMNode(this.refs.scrollList)
     const contentHeight = $(nodeList).height() - $(nodeScroll).height()
     const scrollTop = nodeScroll.scrollTop
     const loading = this.props.isFetching

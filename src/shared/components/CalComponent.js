@@ -35,22 +35,23 @@ export default class Cal extends BaseComponent {
 
     counterpart.setLocale(this.getLocale())
     moment.locale(fixLocaleName(this.getLocale()))
+    counterpart.onLocaleChange(::this.handleLocaleChange)
+  }
 
+  componentWillMount () {
     let day
     if (process.env.BROWSER) {
       day = queryString.parse(window.location.search).day
-      if (typeof day === 'undefined') day = props.post.day
+      if (typeof day === 'undefined') day = this.props.post.day
     }
 
-    this.state = {
+    this.setState({
       date: day
         ? moment(day).startOf('day').valueOf()
         : moment(new Date()).startOf('day').valueOf(),
       selectedDay: day ? new Date(day) : new Date(),
       locale: fixLocaleName(this.getLocale())
-    }
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
+    })
 
     if (process.env.BROWSER) {
       unlisten = history.listen((location) => {

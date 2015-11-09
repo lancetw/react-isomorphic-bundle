@@ -24,8 +24,12 @@ class PostDetailHandler extends BaseComponent {
   }
 
   constructor (props, context) {
-    super(props, context)
-    const { dispatch, resolver, getState } = context.store
+    super(props)
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver } } = this.context
 
     this.authActions = bindActionCreators(AuthActions, dispatch)
     this.postActions = bindActionCreators(PostActions, dispatch)
@@ -33,9 +37,9 @@ class PostDetailHandler extends BaseComponent {
 
     resolver.resolve(this.postActions.prepare)
     resolver.resolve(this.mapActions.reload)
-    resolver.resolve(this.authActions.showUser, props.auth.token)
+    resolver.resolve(this.authActions.showUser, this.props.auth.token)
 
-    const { id } = props.params
+    const { id } = this.props.params
     if (id) {
       resolver.resolve(this.postActions.loadPostDetail, id)
     }

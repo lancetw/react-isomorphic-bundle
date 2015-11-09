@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react/addons'
+import React, { PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { BaseComponent } from 'shared/components'
 import {
   Form,
@@ -8,7 +9,6 @@ import {
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
-const { CSSTransitionGroup } = React.addons
 
 export default class ChangePassword extends BaseComponent {
 
@@ -164,9 +164,12 @@ export default class ChangePassword extends BaseComponent {
     return (
       <main className="ui two column stackable centered page grid">
         <div className="column">
-          <CSSTransitionGroup transitionName="MessageTransition">
+          <ReactCSSTransitionGroup
+            transitionName="MessageTransition"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}>
             {Message}
-          </CSSTransitionGroup>
+          </ReactCSSTransitionGroup>
           <form
             className={LoadingClass}
             action="/auth/changePassword"

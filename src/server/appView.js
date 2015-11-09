@@ -1,4 +1,5 @@
 import React from 'react'
+import { renderToString } from 'react-dom/server'
 import { Router, RoutingContext, match } from 'react-router'
 import { createMemoryHistory } from 'history'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
@@ -99,19 +100,17 @@ export default function (app) {
 
       const elements = (
         <AppContainer translator={translator}>
-          {() =>
-            <Provider store={store}>
-              {() =>
-                <RoutingContext {...renderProps} />
-              }
-            </Provider>
+          {()=>
+          <Provider store={store}>
+            <RoutingContext {...renderProps} />
+          </Provider>
           }
         </AppContainer>
       )
 
-      React.renderToString(elements)  // need this line to collect data
+      renderToString(elements)  // need this line to collect data
       yield resolver.dispatch()
-      appString = React.renderToString(elements)
+      appString = renderToString(elements)
 
       head = Helmet.rewind()
 
@@ -125,7 +124,7 @@ export default function (app) {
         assets = require('storage/webpack-stats.json')
       }
 
-      const serverState = React.renderToString(
+      const serverState = renderToString(
         <script
           dangerouslySetInnerHTML=
             {{

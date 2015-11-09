@@ -41,6 +41,15 @@ export default class Signup extends BaseComponent {
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
+  componentDidUpdate () {
+    if (process.env.BROWSER) {
+      if (this.props.signup.response && this.props.signup.response.token) {
+        this.releaseTimeout1 =
+          setTimeout(() => this.context.history.replaceState({}, '/home'), 1000)
+      }
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.signup.errors)
   }
@@ -146,13 +155,6 @@ export default class Signup extends BaseComponent {
   }
 
   render () {
-    if (process.env.BROWSER) {
-      if (this.props.signup.response && this.props.signup.response.token) {
-        this.releaseTimeout1 =
-          setTimeout(() => this.context.history.replaceState({}, '/home'), 1000)
-      }
-    }
-
     const LoadingClass = classNames(
       'ui',
       'form',

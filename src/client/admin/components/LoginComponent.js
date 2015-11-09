@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash'
-const { CSSTransitionGroup } = React.addons
 
 export default class Login extends React.Component {
 
@@ -23,21 +23,7 @@ export default class Login extends React.Component {
     this.releaseTimeout = null
   }
 
-  componentWillUnmount () {
-    typeof this.releaseTimeout === 'function'
-      && clearTimeout(this.releaseTimeout)
-  }
-
-  handleSubmit (evt) {
-    evt.preventDefault()
-    const email = React.findDOMNode(this.refs.email).value
-    const passwd = React.findDOMNode(this.refs.passwd).value
-    this.props.login({ email, passwd }).then((info) => {
-      return this.props.sync()
-    })
-  }
-
-  render () {
+  componentDidUpdate () {
     if (process.env.BROWSER) {
       if (this.props.auth.isAuthenticated) {
         this.releaseTimeout =
@@ -46,7 +32,23 @@ export default class Login extends React.Component {
           }, 1500)
       }
     }
+  }
 
+  componentWillUnmount () {
+    typeof this.releaseTimeout === 'function'
+      && clearTimeout(this.releaseTimeout)
+  }
+
+  handleSubmit (evt) {
+    evt.preventDefault()
+    const email = ReactDOM.findDOMNode(this.refs.email).value
+    const passwd = ReactDOM.findDOMNode(this.refs.passwd).value
+    this.props.login({ email, passwd }).then((info) => {
+      return this.props.sync()
+    })
+  }
+
+  render () {
     const LoginClasses = classNames(
       'ui',
       'login',

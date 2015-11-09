@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import Cards from 'shared/components/wall/PostCards'
@@ -10,7 +11,6 @@ import {
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
-const { CSSTransitionGroup } = React.addons
 
 let $
 if (process.env.BROWSER) {
@@ -190,9 +190,12 @@ export default class Manage extends BaseComponent {
         <div className="eight wide computer sixteen wide tablet column">
           <div className="ui row padding center">
             <h3><Translate content="manage.org_title" /></h3>
-            <CSSTransitionGroup transitionName="MessageTransition">
+            <ReactCSSTransitionGroup
+              transitionName="MessageTransition"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}>
               {Message}
-            </CSSTransitionGroup>
+            </ReactCSSTransitionGroup>
             <form
               className={LoadingClass}
               onSubmit={this.handleSubmit}>

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash'
@@ -29,7 +30,7 @@ export default class DetailWidget extends React.Component {
   }
 
   changePassword () {
-    const password = React.findDOMNode(this.refs.password).value
+    const password = ReactDOM.findDOMNode(this.refs.password).value
     const _changePassword = this.props.changePassword
     const clearInput = ::this.clearInput
     if (!password) return false

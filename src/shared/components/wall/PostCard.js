@@ -46,12 +46,13 @@ export default class PostCard extends BaseComponent {
           {tongwenAutoStr(card.place, this.getLocale())}
         </a>
       )
-    } else {
+    } else if (card.ocname) {
       return (
         <span>{tongwenAutoStr(card.ocname, this.getLocale())}</span>
       )
+    } else {
+      return <Translate content="post.detail.nomap" />
     }
-    return <Translate content="post.detail.nomap" />
   }
 
   render () {

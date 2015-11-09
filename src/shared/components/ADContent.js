@@ -9,6 +9,7 @@ import { isEmpty, find, endsWith } from 'lodash'
 class ADContent extends React.Component {
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     collect: PropTypes.object.isRequired
   }
 
@@ -18,16 +19,18 @@ class ADContent extends React.Component {
 
   constructor (props, context) {
     super(props)
-    const { dispatch, resolver } = context.store
-    this.adActions = bindActionCreators(AdActions, dispatch)
-    resolver.resolve(this.adActions.fetchSet)
 
     this.AdL = null
     this.AdS = null
   }
 
   componentWillMount () {
-    const { collect } = this.props
+    const { dispatch, collect } = this.props
+    const { store: { resolver } } = this.context
+
+    this.adActions = bindActionCreators(AdActions, dispatch)
+    resolver.resolve(this.adActions.fetchSet)
+
     this.AdL = this.renderADItem('1L', find(collect))
     this.AdS = this.renderADItem('1S', find(collect))
   }

@@ -84,8 +84,6 @@ export default {
       }
     ],
     externals: {
-      'react': 'React',
-      'react/addons': 'React',
       'jquery': 'jQuery'
     },
     module: {

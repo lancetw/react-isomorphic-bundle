@@ -1,4 +1,5 @@
 import React from 'react'
+import { render } from 'react-dom'
 import { Router } from 'react-router'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
@@ -56,13 +57,11 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     const elements = (
       <div>
         <Provider store={store}>
-          {() =>
-            <Router
-              children={routes(store)}
-              history={history}
-              onUpdate={() => window.scrollTo(0, 0)}
-            />
-          }
+          <Router
+            children={routes(store)}
+            history={history}
+            onUpdate={() => window.scrollTo(0, 0)}
+          />
         </Provider>
         <DebugPanel top right bottom>
           <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
@@ -70,14 +69,14 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
       </div>
     )
 
-    React.render(elements, appRoot)
+    render(elements, appRoot)
     resolver.clear()
   } else {
     finalCreateStore = compose(
       applyMiddleware(
         thunk,
         reduxPromise
-      ),
+      )
     )(createStore)
 
     const store = finalCreateStore(reducer, initialState)
@@ -91,16 +90,14 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
     const appRoot = document.getElementById('app')
     const elements = (
       <Provider store={store}>
-        {() =>
-          <Router
-            children={routes(store)}
-            history={history}
-            onUpdate={() => window.scrollTo(0, 0)}
-          />
-        }
+        <Router
+          children={routes(store)}
+          history={history}
+          onUpdate={() => window.scrollTo(0, 0)}
+        />
       </Provider>
     )
-    React.render(elements, appRoot)
+    render(elements, appRoot)
     resolver.clear()
   }
 })()

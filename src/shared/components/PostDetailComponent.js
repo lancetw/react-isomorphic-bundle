@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react/addons'
+import React, { PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
@@ -21,8 +21,6 @@ import {
   toShortDate,
   toYear
 } from 'shared/utils/date-utils'
-
-const { CSSTransitionGroup } = React.addons
 
 export default class Post extends BaseComponent {
 
@@ -289,6 +287,8 @@ export default class Post extends BaseComponent {
         'container'
       )
 
+      const directionMode = true
+
       return (
         <div>
           <div id="lightbox-container" />
@@ -414,7 +414,7 @@ export default class Post extends BaseComponent {
                 <GMap
                   ref="gmap"
                   {...this.props.map}
-                  directionMode="true"
+                  directionMode={directionMode}
                   defaultLocale={this.props.defaultLocale}
                 />
                 }

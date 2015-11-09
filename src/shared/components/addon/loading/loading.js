@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react/addons'
-const { CSSTransitionGroup } = React.addons
+import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import Spinner from 'react-spinkit'
 
@@ -20,16 +21,19 @@ class Loading extends React.Component {
   render () {
     const isAppear = true
     return (
-      <CSSTransitionGroup
+      <ReactCSSTransitionGroup
         transitionName="xloading"
-        transitionAppear={isAppear}>
+        transitionAppear={isAppear}
+        transitionAppearTimeout={500}
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}>
         <div className="xloading">
           <div className="xloading-wrap">
             <Spinner spinnerName="wordpress" />
             {this.props.children}
           </div>
         </div>
-      </CSSTransitionGroup>
+      </ReactCSSTransitionGroup>
     )
   }
 }
@@ -42,14 +46,14 @@ Loading.show = function (newComponent) {
   }
   Loading.component = newComponent
 
-  React.render(
+  ReactDOM.render(
     <Loading>{newComponent}</Loading>,
     document.getElementById('loading-container')
   )
 }
 Loading.hide = function () {
   if (!Loading.component) return
-  React.unmountComponentAtNode(document.getElementById('loading-container'))
+  ReactDOM.unmountComponentAtNode(document.getElementById('loading-container'))
   Loading.component = null
 }
 

@@ -16,7 +16,7 @@ http://react.deliverwork.co
 ### Installation
 
 ```bash
-$ npm install -g nodemon webpack babel
+$ npm install -g nodemon webpack babel@5
 $ npm install
 ```
 
@@ -35,12 +35,16 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 #### PRODUCTION mode
 
+##### Manual build
+
+`make build`
+or `make clean && make fast-build` (clean up and rebuild all)
+
 ##### Linux / Mac
 `npm start`
 
 ##### Windows (Git Bash)
 `npm run prestart && NODE_ENV=production npm run win-start`
-
 
 #### DEBUG mode
 

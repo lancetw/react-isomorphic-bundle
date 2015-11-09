@@ -22,11 +22,16 @@ class CalHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
-    const { dispatch, resolver } = context.store
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver } } = this.context
+
     dispatch(updateTitle('title.cal'))
     this.postActions = bindActionCreators(PostActions, dispatch)
 
-    const { query } = props.location
+    const { query } = this.props.location
     let date
     if (query && query.day) {
       const { day } = query
@@ -36,8 +41,8 @@ class CalHandler extends BaseComponent {
         moment(day).year(), moment(day).month() + 1)
     } else {
       date = moment(new Date()).startOf('day').valueOf()
-      if (props.post.day) {
-        const { day } = props.post
+      if (this.props.post.day) {
+        const { day } = this.props.post
         date = moment(day).startOf('day').valueOf()
         resolver.resolve(
           this.postActions.countPostsWithCal,

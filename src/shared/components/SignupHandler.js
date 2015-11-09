@@ -20,7 +20,11 @@ class SignupHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
-    const { dispatch } = context.store
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+
     dispatch(updateTitle('title.signup'))
 
     dispatch(SignupActions.init())

@@ -29,39 +29,44 @@ class NearbyHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
+  }
 
-    const { dispatch } = context.store
+  componentWillMount () {
+    const { dispatch } = this.props
+
     dispatch(updateTitle('title.nearby'))
 
     const defaultDistance = 3000
     const center = { lat: 25.018536, lng: 121.529146 }
     dispatch(SearchActions.updateNearbyCenter({ center }))
 
-    runGeoLoc().then((position) => {
-      dispatch(SearchActions.nearby({
-        dist: defaultDistance,
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }, 50)).then((info) => {
-        const { pattern } = info
-        setTimeout(() => {
-          dispatch(SearchActions.updateNearbyCenter({
-            center: { lat: pattern.lat, lng: pattern.lng }
-          }))
-        }, 500)
+    if (process.env.BROWSER) {
+      runGeoLoc().then((position) => {
+        dispatch(SearchActions.nearby({
+          dist: defaultDistance,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }, 50)).then((info) => {
+          const { pattern } = info
+          setTimeout(() => {
+            dispatch(SearchActions.updateNearbyCenter({
+              center: { lat: pattern.lat, lng: pattern.lng }
+            }))
+          }, 500)
+        })
+      }).catch((err) => {
+        // fallback
+        dispatch(SearchActions.nearby({
+          dist: defaultDistance,
+          lat: center.lat,
+          lng: center.lng
+        }, 50)).then(() => {
+          setTimeout(() => {
+            dispatch(SearchActions.updateNearbyCenter({ center }))
+          }, 500)
+        })
       })
-    }).catch((err) => {
-      // fallback
-      dispatch(SearchActions.nearby({
-        dist: defaultDistance,
-        lat: center.lat,
-        lng: center.lng
-      }, 50)).then(() => {
-        setTimeout(() => {
-          dispatch(SearchActions.updateNearbyCenter({ center }))
-        }, 500)
-      })
-    })
+    }
   }
 
   componentDidMount () {

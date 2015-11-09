@@ -28,7 +28,7 @@ export default new Resource('posts', {
       return
     }
 
-    const {  offset, limit, start, end, keyword, status } = body
+    const { offset, limit, start, end, keyword, status } = body
 
     let data
     if (!!keyword) {

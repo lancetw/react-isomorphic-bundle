@@ -21,7 +21,11 @@ class HomeHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
-    const { dispatch, resolver } = context.store
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver } } = this.context
 
     dispatch(updateTitle('title.home'))
 
@@ -29,7 +33,7 @@ class HomeHandler extends BaseComponent {
     this.postActions = bindActionCreators(PostActions, dispatch)
     resolver.resolve(this.authActions.sync)
     resolver.resolve(this.postActions.newsList, 0, 6)
-    resolver.resolve(this.authActions.showUser, props.auth.token)
+    resolver.resolve(this.authActions.showUser, this.props.auth.token)
   }
 
   render () {

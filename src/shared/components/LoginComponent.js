@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
 import { BaseComponent } from 'shared/components'
 import {
@@ -9,7 +10,6 @@ import {
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
-const { CSSTransitionGroup } = React.addons
 
 export default class Login extends BaseComponent {
 
@@ -44,6 +44,25 @@ export default class Login extends BaseComponent {
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
+  }
+
+  componentDidUpdate () {
+    if (process.env.BROWSER) {
+      if (this.props.auth.isAuthenticated) {
+        let path
+        const { location } = this.context.history
+        if (typeof location !== 'undefined') {
+          const { nextPathname } = location.state
+          if (nextPathname) {
+            path = nextPathname
+          } else {
+            path = '/home'
+          }
+        }
+        this.releaseTimeout =
+          setTimeout(() => this.context.history.replaceState({}, path), 1000)
+      }
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -143,23 +162,6 @@ export default class Login extends BaseComponent {
         </div> )
       : null
 
-    if (process.env.BROWSER) {
-      if (this.props.auth.isAuthenticated) {
-        let path
-        const { location } = this.context.history
-        if (typeof location !== 'undefined') {
-          const { nextPathname } = location.state
-          if (nextPathname) {
-            path = nextPathname
-          } else {
-            path = '/home'
-          }
-        }
-        this.releaseTimeout =
-          setTimeout(() => this.context.history.replaceState({}, path), 1000)
-      }
-    }
-
     const LoginClasses = classNames(
       'ui',
       'login',
@@ -177,9 +179,12 @@ export default class Login extends BaseComponent {
         <div className="column">
           <div className="ui two column middle aligned relaxed fitted stackable grid">
             <div className="column">
-              <CSSTransitionGroup transitionName="MessageTransition">
+              <ReactCSSTransitionGroup
+                transitionName="MessageTransition"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}>
                 {Message}
-              </CSSTransitionGroup>
+              </ReactCSSTransitionGroup>
               <form
                 className={LoginClasses}
                 action="/auth/login"

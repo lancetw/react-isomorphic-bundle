@@ -12,13 +12,12 @@
     <link rel="stylesheet" href="{{ style }}" media="screen, projection">
     {% endfor %}
     {% endif %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css" media="screen, projection">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.1/sweetalert.min.css" media="screen, projection">
   </head>
   <body>
     <div id="admin"></div>
     {% if env.NODE_ENV == 'production' %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
       var headID = document.getElementsByTagName("head")[0];
       var cssNode = document.createElement('link');
@@ -34,6 +33,6 @@
     <script src="{{ script }}"></script>
     {% endfor %}
     {% endif %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.1/sweetalert.min.js"></script>
   </body>
 </html>

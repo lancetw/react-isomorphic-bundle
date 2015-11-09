@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react/addons'
-const { CSSTransitionGroup } = React.addons
+import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 if (process.env.BROWSER) {
   require('css/addon/lightbox')
@@ -18,9 +19,11 @@ class Lightbox extends React.Component {
   render () {
     const isAppear = true
     return (
-      <CSSTransitionGroup
+      <ReactCSSTransitionGroup
         transitionName="lightbox"
-        transitionAppear={isAppear}>
+        transitionAppear={isAppear}
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}>
         <div className="lightbox">
           <div className="lightbox-wrap">
             <a onClick={Lightbox.remove}>
@@ -28,7 +31,7 @@ class Lightbox extends React.Component {
             </a>
           </div>
         </div>
-      </CSSTransitionGroup>
+      </ReactCSSTransitionGroup>
     )
   }
 }
@@ -41,7 +44,7 @@ Lightbox.show = function (newComponent) {
   }
   Lightbox.component = newComponent
 
-  React.render(
+  ReactDOM.render(
     <Lightbox>{newComponent}</Lightbox>,
     document.getElementById('lightbox-container')
   )

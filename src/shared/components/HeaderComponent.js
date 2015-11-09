@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import LocaleSwitcher from './LocaleSwitcher'
 import classNames from 'classnames'
@@ -71,7 +72,7 @@ export default class Header extends React.Component {
     event.preventDefault()
     this.setState({ hideSearchBox: !this.state.hideSearchBox })
     setTimeout(() => {
-      React.findDOMNode(this.refs.search).focus()
+      ReactDOM.findDOMNode(this.refs.search).focus()
     }, 500)
   }
 

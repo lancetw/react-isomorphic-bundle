@@ -17,6 +17,13 @@ export default class Logout extends BaseComponent {
     props.logout()
   }
 
+  componentDidUpdate () {
+    if (process.env.BROWSER) {
+      this.releaseTimeout =
+        setTimeout(() => this.context.history.replaceState({}, '/'), 1500)
+    }
+  }
+
   componentWillUnmount () {
     if (this.op) {
       clearTimeout(this.releaseTimeout)
@@ -24,11 +31,6 @@ export default class Logout extends BaseComponent {
   }
 
   render () {
-    if (process.env.BROWSER) {
-      this.releaseTimeout =
-        setTimeout(() => this.context.history.replaceState({}, '/'), 1500)
-    }
-
     const Translate = require('react-translate-component')
 
     const msg = !!process.env.BROWSER

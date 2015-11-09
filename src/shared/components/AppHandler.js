@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react/addons'
+import React, { PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Header from './HeaderHandler'
-const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
   require('css/ui/base')
@@ -29,9 +29,12 @@ export default class AppHandler extends React.Component {
     return (
       <div>
         <Header/>
-        <CSSTransitionGroup transitionName="RouteTransition">
+        <ReactCSSTransitionGroup
+          transitionName="RouteTransition"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}>
           {this.props.children}
-        </CSSTransitionGroup>
+        </ReactCSSTransitionGroup>
       </div>
     )
   }

@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react/addons'
+import React, { PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
 import {
   Pagination
 } from 'client/admin/components/widget'
-const { CSSTransitionGroup } = React.addons
 
 if (process.env.BROWSER) {
 }
@@ -155,9 +155,12 @@ export default class TableWidget extends React.Component {
             </tr>
           </tfoot>
         </table>
-        <CSSTransitionGroup transitionName="MessageTransition">
+        <ReactCSSTransitionGroup
+          transitionName="MessageTransition"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}>
           {Message}
-        </CSSTransitionGroup>
+        </ReactCSSTransitionGroup>
       </div>
     )
   }

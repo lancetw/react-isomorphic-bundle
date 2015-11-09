@@ -33,17 +33,20 @@ class WallCpropHandler extends BaseComponent {
       locale: fixLocaleName(counterpart.getLocale())
     }
 
-    const { dispatch, resolver } = context.store
+    counterpart.onLocaleChange(::this.handleLocaleChange)
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver } } = this.context
 
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.authActions = bindActionCreators(AuthActions, dispatch)
-    resolver.resolve(this.authActions.showUser, props.auth.token)
-    const { cprop } = props.params
+    resolver.resolve(this.authActions.showUser, this.props.auth.token)
+    const { cprop } = this.props.params
 
     dispatch(updateTitle(::this.getCardProp(cprop)))
     resolver.resolve(this.postActions.cpropList, cprop, 0, 10)
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   getCardProp (index) {

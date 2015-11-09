@@ -20,8 +20,11 @@ class LoginHandler extends BaseComponent {
 
   constructor (props, context) {
     super(props)
+  }
 
-    const { dispatch } = context.store
+
+  componentWillMount () {
+    const { dispatch } = this.props
     dispatch(updateTitle('title.login'))
   }
 
