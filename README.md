@@ -55,9 +55,10 @@ or `make clean && make fast-build` (clean up and rebuild all)
 
 ## Features
 
+- [x] based on React 0.14
 - [x] isomorphic, support JSON Web Tokens (JWT) and Sessions (levelDB)
-- [x] change flummox to redux@3.0.0
-- [x] react-router@1.0.0rc1
+- [x] change flummox to redux
+- [x] react-router@1.0.0rc4
 - [x] register (with recaptcha)
 - [x] log in
 - [x] Facebook sign in
