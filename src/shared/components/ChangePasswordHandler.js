@@ -18,7 +18,7 @@ class ChangePasswordHandler extends BaseComponent {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 

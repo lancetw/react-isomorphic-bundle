@@ -117,7 +117,7 @@ export default class TableWidget extends React.Component {
           {!isEmpty(items) && items.map(function(item, i) {
             const checked = isChecked(item.id)
             return (
-            <tr>
+            <tr key={item.id}>
               <td className="collapsing">
                 <div className="ui checkbox">
                   <input

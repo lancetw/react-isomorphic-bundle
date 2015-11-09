@@ -22,7 +22,7 @@ class PostEditHandler extends BaseComponent {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
 
     this.state = { disableSubmit: true }

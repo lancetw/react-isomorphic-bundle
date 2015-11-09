@@ -5,7 +5,9 @@ import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import { toDate } from 'shared/utils/date-utils'
 
+let swal
 if (process.env.BROWSER) {
+  swal = require('sweetalert')
 }
 
 export default class DetailWidget extends React.Component {
@@ -15,7 +17,7 @@ export default class DetailWidget extends React.Component {
     changePassword: PropTypes.func.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
 
     this.state = { password: '' }

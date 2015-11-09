@@ -17,8 +17,8 @@ export default class Login extends React.Component {
     history: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
 
     this.releaseTimeout = null
   }

@@ -4,7 +4,9 @@ import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
 import { endsWith } from 'lodash'
 
+let swal
 if (process.env.BROWSER) {
+  swal = require('sweetalert')
 }
 
 export default class AdsTableWidget extends React.Component {
@@ -163,7 +165,7 @@ export default class AdsTableWidget extends React.Component {
         {!isEmpty(items) && items.map(function(item, i) {
           const checked = isChecked(item.id)
           return (
-          <tr>
+          <tr key={item.id}>
             <td className="collapsing">
               <div className="ui checkbox">
                 <input

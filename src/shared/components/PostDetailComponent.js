@@ -22,6 +22,11 @@ import {
   toYear
 } from 'shared/utils/date-utils'
 
+let swal
+if (process.env.BROWSER) {
+  swal = require('sweetalert')
+}
+
 export default class Post extends BaseComponent {
 
   static propTypes = {
@@ -37,8 +42,8 @@ export default class Post extends BaseComponent {
     history: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
 
     counterpart.setLocale(props.defaultLocale)
 
@@ -218,7 +223,7 @@ export default class Post extends BaseComponent {
           { !isEmpty(posts) && posts.map(function (item, i) {
             return (
               <Link className="item" to={`/w/${item.id}`}>
-                <div className="more">
+                <div key={item.id} className="more">
                   <div className="ui orange horizontal label">
                     { toShortDate(item.startDate) }
                   </div>

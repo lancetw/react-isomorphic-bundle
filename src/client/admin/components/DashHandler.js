@@ -12,12 +12,15 @@ class DashHandler extends React.Component {
     collect: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
-    const { dispatch } = props
-    dispatch(PostActions.fetchList({ offset: 0, limit: 8, status: 0 }))
 
     this.state = { page: { selected: 0 } }
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    dispatch(PostActions.fetchList({ offset: 0, limit: 8, status: 0 }))
   }
 
   handlePageClick (page) {

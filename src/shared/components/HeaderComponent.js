@@ -18,8 +18,8 @@ export default class Header extends React.Component {
     history: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
 
     this.state = { userInput: '', hideSearchBox: true }
 

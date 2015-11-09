@@ -8,6 +8,7 @@ if (process.env.BROWSER) {
   require('css/admin')
   require('css/addon/csshake.min')
   require('css/images')
+  require('sweetalert/dist/sweetalert')
 }
 
 export default class AdminHandler extends React.Component {
@@ -16,7 +17,7 @@ export default class AdminHandler extends React.Component {
     children: PropTypes.any
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 

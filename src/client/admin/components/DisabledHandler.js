@@ -6,6 +6,11 @@ import * as AdminActions from 'client/admin/actions/AdminActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
 import { isEmpty, contains } from 'lodash'
 
+let swal
+if (process.env.BROWSER) {
+  swal = require('sweetalert')
+}
+
 class DisabledHandler extends React.Component {
 
   static propTypes = {
@@ -14,12 +19,15 @@ class DisabledHandler extends React.Component {
     auth: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
-    const { dispatch } = props
-    dispatch(AdminActions.fetchList({ offset: 0, limit: 8, status: 1 }))
 
     this.state = { page: { selected: 0 } }
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    dispatch(AdminActions.fetchList({ offset: 0, limit: 8, status: 1 }))
   }
 
   handlePageClick (page) {

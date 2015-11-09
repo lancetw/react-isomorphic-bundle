@@ -9,6 +9,7 @@ if (process.env.BROWSER) {
   require('css/addon/csshake.min')
   require('css/images')
   require('css/addon/pin')
+  require('sweetalert/dist/sweetalert')
 }
 
 export default class AppHandler extends React.Component {

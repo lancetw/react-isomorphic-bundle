@@ -11,8 +11,8 @@ export default class Logout extends BaseComponent {
     history: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
     this.releaseTimeout = undefined
     props.logout()
   }

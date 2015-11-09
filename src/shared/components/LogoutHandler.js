@@ -19,10 +19,14 @@ class LogoutHandler extends BaseComponent {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
+  }
 
-    const {dispatch, resolver} = context.store
+  componentWillMount () {
+    const { dispatch } = this.props
+    const { store: { resolver, getState } } = this.context
+
     dispatch(updateTitle('title.logout'))
 
     // clear all cache

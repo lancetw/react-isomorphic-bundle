@@ -7,6 +7,11 @@ import Pin from './pin'
 import { runGeoLoc } from 'shared/utils/geoloc-utils'
 import classNames from 'classnames'
 
+let swal
+if (process.env.BROWSER) {
+  swal = require('sweetalert')
+}
+
 @controllable([ 'center', 'zoom', 'hoverKey', 'clickKey' ])
 export default class Gmap extends Component {
 

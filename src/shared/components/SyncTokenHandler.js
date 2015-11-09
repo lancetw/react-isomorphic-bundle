@@ -16,8 +16,8 @@ export default class SyncTokenHandler extends BaseComponent {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
   }
 
   componentDidMount () {

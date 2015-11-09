@@ -61,8 +61,8 @@ export default class Post extends BaseComponent {
     disableSubmit: false
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
     this._bind(
       'handleSubmit',
       'validation',

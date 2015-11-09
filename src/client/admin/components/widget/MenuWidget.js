@@ -23,8 +23,8 @@ export default class MenuWidget extends React.Component {
     menuIndex: 0
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
   }
 
   doLogout () {

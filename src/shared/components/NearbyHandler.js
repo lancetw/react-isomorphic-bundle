@@ -27,7 +27,7 @@ class NearbyHandler extends BaseComponent {
     store: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 

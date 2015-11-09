@@ -20,7 +20,7 @@ class OgHandler extends BaseComponent {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 

@@ -17,9 +17,13 @@ class SearchHandler extends BaseComponent {
     store: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
-    const { dispatch } = context.store
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+
     dispatch(updateTitle('title.search'))
   }
 

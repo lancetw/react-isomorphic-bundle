@@ -24,7 +24,7 @@ class WallHandler extends BaseComponent {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
 
     this.state = {

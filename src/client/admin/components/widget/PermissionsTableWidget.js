@@ -6,7 +6,9 @@ import {
   Pagination
 } from 'client/admin/components/widget'
 
+let swal
 if (process.env.BROWSER) {
+  swal = require('sweetalert')
 }
 
 export default class PermissionsTableWidget extends React.Component {
@@ -262,7 +264,7 @@ export default class PermissionsTableWidget extends React.Component {
         {!isEmpty(items) && items.map(function(item, i) {
           const checked = isChecked(item.id)
           return (
-          <tr>
+          <tr key={item.id}>
             <td className="collapsing">
               <div className="ui checkbox">
                 <input

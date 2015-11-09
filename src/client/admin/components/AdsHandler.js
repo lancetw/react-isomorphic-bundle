@@ -5,6 +5,11 @@ import { connect } from 'react-redux'
 import * as AdActions from 'client/admin/actions/AdActions'
 import { isEmpty } from 'lodash'
 
+let swal
+if (process.env.BROWSER) {
+  swal = require('sweetalert')
+}
+
 class AdsHandler extends React.Component {
 
   static propTypes = {
@@ -12,12 +17,15 @@ class AdsHandler extends React.Component {
     collect: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
-    const { dispatch } = props
-    dispatch(AdActions.fetchList({ offset: 0, limit: 10 }))
 
     this.state = { page: { selected: 0 } }
+  }
+
+  componentWillMount () {
+    const { dispatch } = this.props
+    dispatch(AdActions.fetchList({ offset: 0, limit: 10 }))
   }
 
   asyncDeportAction (arr) {

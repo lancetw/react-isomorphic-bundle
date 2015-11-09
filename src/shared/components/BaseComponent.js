@@ -8,7 +8,7 @@ export default class BaseComponent extends React.Component {
     translator: PropTypes.object
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 

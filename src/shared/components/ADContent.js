@@ -17,7 +17,7 @@ class ADContent extends React.Component {
     store: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
 
     this.AdL = null

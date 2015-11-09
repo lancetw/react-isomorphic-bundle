@@ -1,6 +1,8 @@
 import counterpart from 'counterpart'
 
 function showError (error) {
+  const sweetAlert = require('sweetalert')
+
   switch (error.code) {
   case error.PERMISSION_DENIED:
     sweetAlert(counterpart('geoloc.denied'))
@@ -20,6 +22,8 @@ function showError (error) {
 }
 
 export function runGeoLoc (highAccuracy=true, timeout=10000, maximumAge=0) {
+  const sweetAlert = require('sweetalert')
+
   return new Promise((resolve, reject) => {
     if (typeof navigator === 'undefined') resolve('navigator is undefined')
 

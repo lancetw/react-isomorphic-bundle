@@ -8,12 +8,16 @@ class MembersDetailHandler extends React.Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
     collect: PropTypes.object.isRequired
   }
 
-  constructor (props, context) {
-    super(props, context)
-    const { dispatch, params } = props
+  constructor (props) {
+    super(props)
+  }
+
+  componentWillMount () {
+    const { dispatch, params } = this.props
     const { id } = params
     if (id) {
       dispatch(UserActions.getDetail(id))

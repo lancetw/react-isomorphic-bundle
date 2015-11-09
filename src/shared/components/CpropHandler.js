@@ -11,7 +11,7 @@ class CpropHandler extends BaseComponent {
     dispatch: PropTypes.func.isRequired
   }
 
-  constructor (props, context) {
+  constructor (props) {
     super(props)
   }
 
