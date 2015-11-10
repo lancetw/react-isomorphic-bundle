@@ -55,12 +55,8 @@ class PostDetailHandler extends BaseComponent {
     }
   }
 
-  componentDidMount () {
-    tongwenAuto(document, this.getLocale())
-  }
-
   componentDidUpdate () {
-    _jf.flush()
+    tongwenAuto(document, this.getLocale())
   }
 
   render () {

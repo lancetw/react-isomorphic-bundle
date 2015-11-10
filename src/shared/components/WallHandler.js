@@ -45,10 +45,6 @@ class WallHandler extends BaseComponent {
     resolver.resolve(this.postActions.overviewList, 0, 20)
   }
 
-  componentDidUpdate () {
-    _jf.flush()
-  }
-
   getCardProp (index) {
     const _lang = originLocaleName(this.getLocale())
     return at(PostPropArray(_lang), index)

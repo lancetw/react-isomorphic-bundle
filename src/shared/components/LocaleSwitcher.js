@@ -33,11 +33,11 @@ class LocaleSwitcher extends React.Component {
     }
 
     if (lang.endsWith('cn')) {
-      TongWen.trans2Simp(document) && _jf.flush()
+      TongWen.trans2Simp(document)
     } else if (lang.endsWith('tw')) {
-      TongWen.trans2Trad(document) && _jf.flush()
+      TongWen.trans2Trad(document)
     } else {
-      TongWen.trans2Trad(document) && _jf.flush()
+      TongWen.trans2Trad(document)
     }
   }
 

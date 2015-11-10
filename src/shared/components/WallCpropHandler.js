@@ -49,10 +49,6 @@ class WallCpropHandler extends BaseComponent {
     resolver.resolve(this.postActions.cpropList, cprop, 0, 20)
   }
 
-  componentDidUpdate () {
-    _jf.flush()
-  }
-
   getCardProp (index) {
     const _lang = originLocaleName(this.state.locale)
     return at(PostPropArray(_lang), index)
