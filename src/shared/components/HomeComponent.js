@@ -74,9 +74,18 @@ export default class HomeComponent extends BaseComponent {
     return (
       <main className="ui has-header grid centered container">
         <div className="sixteen wide tablet ten wide computer column">
-          <Link to="/w/today" className="ui orange fluid huge button">
-            <Translate content="home.browse" />
-          </Link>
+          <div className="ui grid">
+            <div className="tablet computer only row">
+              <Link to="/w/cal" className="ui orange fluid huge button">
+                <Translate content="home.browse" />
+              </Link>
+            </div>
+            <div className="mobile only row">
+              <Link to="/w/today" className="ui orange fluid huge button">
+                <Translate content="home.browse" />
+              </Link>
+            </div>
+          </div>
           { ::this.renderNews(posts) }
           {loading && isEmpty(posts) && (
             <div className="ui segment basic has-header">

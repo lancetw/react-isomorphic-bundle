@@ -36,6 +36,10 @@ class HomeHandler extends BaseComponent {
     resolver.resolve(this.authActions.showUser, this.props.auth.token)
   }
 
+  componentDidUpdate () {
+    _jf.flush()
+  }
+
   render () {
     const title = this._T('title.home')
     const defaultTitle = this._T('title.site')

@@ -20,6 +20,10 @@ class CpropHandler extends BaseComponent {
     dispatch(updateTitle('title.cal'))
   }
 
+  componentDidMount () {
+    _jf.flush()
+  }
+
   render () {
     const title = this._T('title.cprop')
     const defaultTitle = this._T('title.site')

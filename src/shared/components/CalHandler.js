@@ -54,6 +54,10 @@ class CalHandler extends BaseComponent {
     resolver.resolve(this.postActions.fetchList, 0, 20, date, null)
   }
 
+  componentDidUpdate () {
+    _jf.flush()
+  }
+
   render () {
     const title = this._T('title.cal')
     const defaultTitle = this._T('title.site')

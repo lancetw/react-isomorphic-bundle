@@ -26,10 +26,6 @@ export default class AppHandler extends React.Component {
     require('fastclick').attach(document.body)
   }
 
-  componentDidUpdate () {
-    _jf.flush()
-  }
-
   render () {
     return (
       <div>
