@@ -26,10 +26,6 @@ export default class Nearby extends React.Component {
     onClickKeyChange: PropTypes.func // @controllable generated fn
   }
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  }
-
   static defaultProps = {
     defaultCenter: { lat: 25.018536, lng: 121.529146 },
     defaultZoom: 15,
@@ -167,8 +163,8 @@ export default class Nearby extends React.Component {
             options={this.createMapOptions}
             defaultZoom={this.props.defaultZoom}
             zoom={this.props.zoom}>
-            {MyPlace}
             {Markers}
+            {MyPlace}
           </GoogleMap>
           <SearchMenu
             onDegreeChange={this.handleDegreeChange}

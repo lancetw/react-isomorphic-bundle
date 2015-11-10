@@ -5,6 +5,7 @@ import { toShortDate } from 'shared/utils/date-utils'
 import { Link } from 'react-router'
 import { BaseComponent } from 'shared/components'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
+import history from 'history'
 
 export default class Marker extends BaseComponent {
 
@@ -101,11 +102,12 @@ export default class Marker extends BaseComponent {
             </div>
             <div className={actionClasses}>
               <div className="ui two buttons">
-                <Link
-                  to={`/w/${data.id}`}
+                <a
+                  target="_blank"
+                  href={`/w/${data.id}`}
                   className="ui basic green button">
                   <Translate content="geoloc.button.go" />
-                </Link>
+                </a>
                 <a onClick={this.props.handleCloseClick}
                   className="ui basic red button">
                   <Translate content="geoloc.button.close" />

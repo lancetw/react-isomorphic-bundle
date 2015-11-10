@@ -24,7 +24,8 @@ class NearbyHandler extends BaseComponent {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
 
   constructor (props) {
