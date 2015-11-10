@@ -107,7 +107,7 @@ export default class Cal extends BaseComponent {
   handleDayClick (e, day) {
     const date = moment(day).valueOf()
     const reload = true
-    this.props.fetchList(0, 10, date, null, reload)
+    this.props.fetchList(0, 20, date, null, reload)
 
     this.setHistory(day)
 
