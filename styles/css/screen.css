@@ -1,20 +1,5 @@
 @charset "UTF-8";
 
-.jf-loading body {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.jf-active body {
-  opacity: 1;
-  visibility: visible;
-}
-
-.jf-inactive body {
-  opacity: 1;
-  visibility: visible;
-}
-
 html {
   font-size: 1rem;
   -webkit-overflow-scrolling: touch;
@@ -44,7 +29,7 @@ body {
     text-decoration: none;
     font-smoothing: antialiased;
     hyphens: auto;
-    font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+    font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif!important;
 
     &:hover {
       text-decoration: underline;
@@ -63,11 +48,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .ui.header.divider, .ui.pointing.label, .ui.message > .header, .ui.button > span {
-  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif!important;
 }
 
 .header {
-  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif;
+  font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 }
 
 
@@ -273,7 +258,6 @@ and (max-device-width : 667px) {
 @media only screen and (min-width: 1080px) {
   .ui.detail {
     .description {
-      font-size: 1.08rem;
       padding: 1em 2.2em;
 
       > div, span {
@@ -670,21 +654,4 @@ and (orientation : portrait) {
 
 .searchbox-switch.hide {
   display: none !important;
-}
-
-.DayPicker-Caption,
-.DayPicker-Weekday,
-a.ui.orange.button span,
-.ui.orange.icon.message .header,
-.ui.detail.card .content h1.title,
-.ui.post.card .content h2.title a,
-.ui.orange.icon.message .content h3 a,
-.extra.content .location {
-  font-family: 'Short Stack', 'setofont', cursive;
-  font-weight: 400;
-}
-
-.ui.detail.card .content .description p {
-  font-family: 'Helvetica Neue', Arial, Verdana, 'xingothic-tc', sans-serif;
-  font-weight: 500;
 }
