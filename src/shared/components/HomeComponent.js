@@ -50,14 +50,16 @@ export default class HomeComponent extends BaseComponent {
       <div className="content">
         <h3>
           <Link to={`/w/${post.id}`}>
+            <span className="ui orange">
+              [{at(PostPropArray(originLocaleName(counterpart.getLocale())), post.prop)}]
+            </span>
+            <span> </span>
             {tongwenAutoStr(post.ocname, this.getLocale())
               || <Translate content="news.unnamed" />}
           </Link>
         </h3>
         <div className="header">
-          <span className="ui orange label">
-            {at(PostPropArray(originLocaleName(counterpart.getLocale())), post.prop)}
-          </span> {tongwenAutoStr(post.title, this.getLocale())}
+          {tongwenAutoStr(post.title, this.getLocale())}
         </div>
       </div>
     </div>

@@ -42,9 +42,7 @@ export default class PostCard extends BaseComponent {
   renderLocationInfo (card) {
     if (card.place && card.lat && card.lng) {
       return (
-        <a target="_blank" href={`http://maps.google.com/maps?z=18&q=${card.lat},${card.lng}`}>
-          {tongwenAutoStr(card.place, this.getLocale())}
-        </a>
+        <span>{tongwenAutoStr(card.place, this.getLocale())}</span>
       )
     } else if (card.ocname) {
       return (

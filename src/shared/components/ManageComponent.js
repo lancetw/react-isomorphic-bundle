@@ -171,7 +171,6 @@ export default class Manage extends BaseComponent {
       = !!cid
       ? (
         <div className="ui orange small icon message">
-          <i className="check square icon"></i>
           <div className="content">
             <div className="header">
               <Link to={`/c/${cid}`}>
