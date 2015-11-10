@@ -30,7 +30,6 @@ export default class Manage extends BaseComponent {
 
   constructor (props) {
     super(props)
-
     this._bind(
       'handleSubmit',
       'handleChange',
@@ -38,15 +37,34 @@ export default class Manage extends BaseComponent {
     )
     this.messageTimeout = undefined
     this.releaseTimeout = undefined
+
+    counterpart.setLocale(props.defaultLocale)
+    const locale = counterpart.getLocale()
+
     this.state = {
       formInited: false,
-      value: {},
-      options: ManageFormOptions(this.getLocale()),
+      value: {
+        ocname: null,
+        email: null,
+        contact: null,
+        url: null,
+        zipcode: null,
+        country: null,
+        city: null,
+        address: null,
+        tel: null,
+        fax: null
+      },
+      options: ManageFormOptions(locale),
       submited: false,
       updated: false
     }
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
+  }
+
+  componentWillMount () {
+    this.initForm(this.props.user.orginfo)
   }
 
   componentWillReceiveProps (nextProps) {

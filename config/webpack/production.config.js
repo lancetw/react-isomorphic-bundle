@@ -72,7 +72,7 @@ export default {
           if_return: true,
           join_vars: true,
           cascade: true,
-          drop_console: true
+          drop_console: false
         },
         output: {
           comments: false

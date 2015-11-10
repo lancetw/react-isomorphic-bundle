@@ -28,7 +28,7 @@ class ManageHandler extends BaseComponent {
 
   componentWillMount () {
     const { dispatch } = this.props
-    const { store: { resolver, getState } } = this.context
+    const { store: { resolver } } = this.context
 
     dispatch(updateTitle('title.manage'))
 
@@ -36,11 +36,10 @@ class ManageHandler extends BaseComponent {
     this.postActions = bindActionCreators(PostActions, dispatch)
     this.userActions = bindActionCreators(UserActions, dispatch)
 
-    resolver.resolve(this.userActions.getInfo, this.props.auth.token)
     resolver.resolve(this.authActions.showUser, this.props.auth.token)
-
     const user = this.props.auth.user.id
     resolver.resolve(this.postActions.manageList, 0, 20, user)
+    resolver.resolve(this.userActions.getInfo, this.props.auth.token)
   }
 
   loadFunc () {
