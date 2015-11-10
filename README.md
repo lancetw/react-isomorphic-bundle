@@ -58,7 +58,7 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [x] based on React 0.14
 - [x] isomorphic, support JSON Web Tokens (JWT) and Sessions (levelDB)
 - [x] change flummox to redux
-- [x] react-router@1.0.0rc4
+- [x] react-router@1.0.0
 - [x] register (with recaptcha)
 - [x] log in
 - [x] Facebook sign in

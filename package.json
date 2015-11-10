@@ -144,7 +144,7 @@
     "react-pure-render": "^1.0.2",
     "react-redux": "^4.0.0",
     "react-responsive": "0.0.8",
-    "react-router": "^1.0.0-rc4",
+    "react-router": "^1.0.0",
     "react-side-effect": "^1.0.1",
     "react-spinkit": "^1.1.4",
     "react-suitcss": "^1.1.1",
