@@ -42,7 +42,7 @@ class WallHandler extends BaseComponent {
     const { cprop } = this.props.params
 
     dispatch(updateTitle('title.wall'))
-    resolver.resolve(this.postActions.overviewList, 0, 10)
+    resolver.resolve(this.postActions.overviewList, 0, 20)
   }
 
   getCardProp (index) {

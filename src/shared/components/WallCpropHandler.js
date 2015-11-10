@@ -46,7 +46,7 @@ class WallCpropHandler extends BaseComponent {
     const { cprop } = this.props.params
 
     dispatch(updateTitle(::this.getCardProp(cprop)))
-    resolver.resolve(this.postActions.cpropList, cprop, 0, 10)
+    resolver.resolve(this.postActions.cpropList, cprop, 0, 20)
   }
 
   getCardProp (index) {

@@ -28,7 +28,7 @@ export default class PostCards extends BaseComponent {
   static defaultProps = {
     diff: 0,
     isFetching: false,
-    threshold: 400
+    threshold: 540
   }
 
   constructor (props) {
@@ -125,6 +125,7 @@ export default class PostCards extends BaseComponent {
 
     if (process.env.BROWSER && cards.length > 0) {
       const containerHeight = this.state.windowHeight - this.props.diff
+      const useTranslate3d = true
       return (
         <div
           className={scrollClass}
@@ -135,12 +136,14 @@ export default class PostCards extends BaseComponent {
           }}>
           <ReactList
             ref="scrollList"
-            threshold={150}
-            pageSize={10}
+            threshold={100}
+            pageSize={20}
             initialIndex={0}
             itemRenderer={::this.renderItem}
             length={cards.length}
-            type="variable" />
+            type="uniform"
+            useTranslate3d={useTranslate3d}
+            />
           {this.elementInfiniteLoad}
         </div>
       )

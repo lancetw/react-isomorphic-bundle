@@ -50,7 +50,7 @@ export default class Header extends React.Component {
 
     if (process.env.BROWSER) {
       event.target.blur()
-      this.props.searchPost(pattern, 0, 10, true)
+      this.props.searchPost(pattern, 0, 20, true)
       this.releaseTimeout =
         setTimeout(() => this.context.history.replaceState({}, '/search'), 500)
     }

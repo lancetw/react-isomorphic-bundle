@@ -51,7 +51,7 @@ class CalHandler extends BaseComponent {
         resolver.resolve(this.postActions.countPostsWithCal)
       }
     }
-    resolver.resolve(this.postActions.fetchList, 0, 10, date, null)
+    resolver.resolve(this.postActions.fetchList, 0, 20, date, null)
   }
 
   render () {

@@ -40,7 +40,7 @@ class ManageHandler extends BaseComponent {
     resolver.resolve(this.authActions.showUser, this.props.auth.token)
 
     const user = this.props.auth.user.id
-    resolver.resolve(this.postActions.manageList, 0, 5, user)
+    resolver.resolve(this.postActions.manageList, 0, 20, user)
   }
 
   loadFunc () {
