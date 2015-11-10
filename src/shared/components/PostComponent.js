@@ -116,8 +116,12 @@ export default class Post extends BaseComponent {
       this.setState({ tabIndex: +tab || 0 })
 
       unlisten = history.listen((location) => {
-        tab = queryString.parse(location.search).tab
-        this.setState({ tabIndex: +tab })
+        if (this.state.inited) {
+          tab = queryString.parse(location.search).tab
+          this.setState({ tabIndex: +tab })
+        } else {
+          this.setState({ inited: true })
+        }
       })
     }
   }
