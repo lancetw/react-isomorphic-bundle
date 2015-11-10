@@ -384,7 +384,7 @@ export default class Post extends BaseComponent {
                     <div className="ui two buttons">
                       <Link
                         className="ui basic green button"
-                        to={`/post/${detail.id}/edit`}>
+                        to={`/post/${detail.id}/edit?tab=0`}>
                         <Translate content="post.detail.edit" />
                       </Link>
                       <a
