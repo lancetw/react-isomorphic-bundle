@@ -21,6 +21,7 @@
   </head>
   <body>
     <div id="app">{{ appString | safe }}</div>
+    <script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
     {% if env.NODE_ENV == 'production' %}
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
@@ -38,7 +39,6 @@
     <script src="{{ script }}"></script>
     {% endfor %}
     {% endif %}
-    <script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="//tongwen.openfoundry.org/src/web/tongwen_core.js"></script>
     <script async src="//tongwen.openfoundry.org/src/web/tongwen_table_s2t.js"></script>
     <script async src="//tongwen.openfoundry.org/src/web/tongwen_table_t2s.js"></script>
