@@ -28,14 +28,11 @@ export default class AppHandler extends React.Component {
 
   render () {
     return (
-      <div>
-        <Header/>
-        <ReactCSSTransitionGroup
-          transitionName="RouteTransition"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}>
+      <div id="outer-container">
+        <Header />
+        <div id="page-wrap">
           {this.props.children}
-        </ReactCSSTransitionGroup>
+        </div>
       </div>
     )
   }

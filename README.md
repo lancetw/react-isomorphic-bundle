@@ -1,17 +1,17 @@
 # React Redux Universal (isomorphic) bundle
-
 [![works badge](https://cdn.rawgit.com/nikku/works-on-my-machine/v0.2.0/badge.svg)](https://github.com/nikku/works-on-my-machine)
 [![Build Status](https://travis-ci.org/lancetw/react-isomorphic-bundle.svg)](https://travis-ci.org/lancetw/react-isomorphic-bundle)
 [![Dependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle)
 [![devDependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle/dev-status.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
 [![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
+=================
 
 Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
 
 ## DEMO
 
-http://react.deliverwork.co
+Demo site: [react.deliverwork.co](http://react.deliverwork.co)
 
 ### Installation
 
@@ -25,7 +25,7 @@ edit `./config/sequelize/config.json`
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
 (You need to run `npm install --save sequelize@3.4.0` to avoid datatime bugs.)
 
-#### DEV mode
+##### DEVELOPMENT
 
 `npm run dev` (*wait until the terminal shows: "webpack: bundle is now VALID".*)
 
@@ -33,20 +33,20 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 * open `http://127.0.0.1:3000`
 
-#### PRODUCTION mode
+##### PRODUCTION
 
-##### Manual build
+###### Manual build
 
 `make build`
 or `make clean && make fast-build` (clean up and rebuild all)
 
-##### Linux / Mac
+* Linux / Mac
 `npm start`
 
-##### Windows (Git Bash)
+* Windows (Git Bash)
 `npm run prestart && NODE_ENV=production npm run win-start`
 
-#### DEBUG mode
+##### DEBUG
 
 `npm run debug`
 
@@ -55,8 +55,8 @@ or `make clean && make fast-build` (clean up and rebuild all)
 
 ## Features
 
-- [x] based on React 0.14
-- [x] isomorphic, support JSON Web Tokens (JWT) and Sessions (levelDB)
+- [x] based on React 0.14.*
+- [x] universal(isomorphic), supported JSON Web Tokens (JWT) and Sessions (levelDB)
 - [x] change flummox to redux
 - [x] react-router@1.0.0
 - [x] register (with recaptcha)
@@ -85,7 +85,9 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [ ] testing suite
 - [ ] more ...
 
-## You might be interested in...
+---
+
+### You might be interested in...
 
 * [redux](https://github.com/gaearon/redux)
 * [flummox](https://github.com/acdlite/flummox)
@@ -124,3 +126,4 @@ or `make clean && make fast-build` (clean up and rebuild all)
 * [新同文堂 for Web](http://tongwen.openfoundry.org)
 * [react-spinkit](https://github.com/KyleAMathews/react-spinkit)
 * [react-helmet](https://github.com/nfl/react-helmet)
+* [react-burger-menu](http://negomi.github.io/react-burger-menu/)

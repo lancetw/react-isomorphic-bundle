@@ -33,14 +33,12 @@ export default function (store) {
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
       <Route path="/signup" component={Signup} />
+      <Route path="/w/today" component={Wall} />
+      <Route path="/w/cal" component={Cal} />
+      <Route path="/w/cprop" component={Cprop} />
+      <Route path="/w/cprop/:cprop" component={WallCprop} />
+      <Route path="/w/:id" component={PostDetail} />
       <Redirect from="/w" to="/w/today" />
-      <Route path="/w">
-        <Route path="today" component={Wall} />
-        <Route path="cal" component={Cal} />
-        <Route path="cprop" component={Cprop} />
-        <Route path="cprop/:cprop" component={WallCprop} />
-        <Route path=":id" component={PostDetail} />
-      </Route>
       <Route path="/post" component={Post} store={store} onEnter={auth}/>
       <Route
         path="/post/:id/edit"

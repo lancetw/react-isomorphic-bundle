@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import LocaleSwitcher from './LocaleSwitcher'
+import Sidebar from './Sidebar'
 import classNames from 'classnames'
 
 export default class Header extends React.Component {
@@ -84,13 +85,13 @@ export default class Header extends React.Component {
     let AuthLink
     if (!auth.token) {
       AuthLink = (
-        <Link activeClassName="active" to="/login" className="item">
+        <Link to="/login" className="item">
           <Translate content="header.login" />
         </Link>
       )
     } else {
       AuthLink = (
-        <Link activeClassName="active" to="/logout" className="item">
+        <Link to="/logout" className="item">
           <Translate content="header.logout" />
         </Link>
       )
@@ -99,7 +100,7 @@ export default class Header extends React.Component {
     let ChangePasswordLink
     if (auth.token) {
       ChangePasswordLink = (
-        <Link activeClassName="active" to="/password" className="item">
+        <Link to="/password" className="item">
           <Translate content="header.password" />
         </Link>
       )
@@ -108,7 +109,7 @@ export default class Header extends React.Component {
     let ManageLink
     if (auth.token) {
       ManageLink = (
-        <Link activeClassName="active" to="/manage" className="item">
+        <Link to="/manage" className="item">
           <Translate content="header.manage" />
         </Link>
       )
@@ -162,16 +163,16 @@ export default class Header extends React.Component {
         className="ui orange top inverted pointing menu grid fixed top">
         <div className="computer tablet only row">
           <div className="left menu">
-            <Link activeClassName="active" to="/home" className="item">
+            <Link to="/home" className="item">
               <Translate content="header.home" />
             </Link>
-            <Link activeClassName="active" to="/nearby" className="item">
+            <Link to="/nearby" className="item">
               <Translate content="header.nearby" />
             </Link>
-            <Link activeClassName="active" to="/w/cal" className="item">
+            <Link to="/w/cal" className="item">
               <Translate content="header.wall" />
             </Link>
-            <Link activeClassName="active" to="/post" className="item">
+            <Link to="/post" className="item">
               <Translate content="header.post" />
             </Link>
             {ChangePasswordLink}
@@ -186,24 +187,23 @@ export default class Header extends React.Component {
         </div>
         <div className="mobile only row">
           <div className="left menu">
-            <div className="ui simple dropdown item">
-              <i className="sidebar icon"></i>
-              <div className="menu">
-                <Link to="/nearby" className="item">
-                  <Translate content="header.nearby" />
-                </Link>
-                <Link to="/w/today" className="item">
-                  <Translate content="header.wall" />
-                </Link>
-                <Link to="/post" className="item">
-                  <Translate content="header.post" />
-                </Link>
-                <Link to="/home" className="item">
-                  <Translate content="header.home" />
-                </Link>
-                {AuthLink}
-              </div>
-            </div>
+            <Sidebar>
+              <Link to="/home" className="link item">
+                <Translate content="header.home" />
+              </Link>
+              <Link to="/nearby" className="link item">
+                <Translate content="header.nearby" />
+              </Link>
+              <Link to="/w/today" className="link item">
+                <Translate content="header.wall" />
+              </Link>
+              <Link to="/post" className="link item">
+                <Translate content="header.post" />
+              </Link>
+              {ChangePasswordLink}
+              {ManageLink}
+              {AuthLink}
+            </Sidebar>
           </div>
           <a
             onClick={::this.handleSearchBox}

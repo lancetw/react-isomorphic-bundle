@@ -655,3 +655,40 @@ and (orientation : portrait) {
 .searchbox-switch.hide {
   display: none !important;
 }
+
+.bm-burger-button {
+  position: fixed;
+  width: 30px;
+  height: 24px;
+  left: 10px;
+  top: 10px;
+}
+
+.bm-burger-bars {
+  background: #f5f5f5;
+}
+
+.bm-cross {
+  width: 50px;
+  height: 50px;
+  background: gold;
+}
+
+.bm-morph-shape {
+  fill: rgba(0, 0, 0, .77);
+}
+
+.bm-menu {
+  padding: 1em 1.5em 0;
+  font-size: 1.1em;
+  background: transparent;
+}
+
+.bm-item-list a {
+  padding: 1em;
+
+  &:hover {
+    background: transparent;
+  }
+
+}
