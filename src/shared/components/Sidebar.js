@@ -1,13 +1,15 @@
 import React, { PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 
 const Menu = require('react-burger-menu').bubble
 
-class Sidebar extends React.Component {
+export default class Sidebar extends React.Component {
 
   static propTypes = {
     children: PropTypes.any
+  }
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -20,11 +22,11 @@ class Sidebar extends React.Component {
         width={ 230 }
         pageWrapId={'page-wrap'}
         outerContainerId={'outer-container'}>
-        { this.props.children }
+        <div>
+          { this.props.children }
+        </div>
       </Menu>
     )
   }
 }
 
-export default connect(state => ({
-}))(Sidebar)
