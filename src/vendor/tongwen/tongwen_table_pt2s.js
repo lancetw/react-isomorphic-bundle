@@ -1,3 +1,5 @@
+module.exports = function(TongWen) {
+
 TongWen.addT2STable({
 "搜寻":"搜索",
 "专着":"专著",
@@ -88,3 +90,5 @@ TongWen.addT2STable({
 "颇着":"颇著",
 "鲇鱼":"鲶鱼"
 });
+
+}

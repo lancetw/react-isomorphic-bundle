@@ -1,3 +1,5 @@
+module.exports = function(TongWen) {
+
 TongWen.addS2TTable({
 "·" :"‧",
 "―":"─",
@@ -2536,3 +2538,5 @@ TongWen.addS2TTable({
 "龟":"龜",
 "":"　"
 });
+
+}

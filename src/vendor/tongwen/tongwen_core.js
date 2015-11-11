@@ -15,7 +15,7 @@
  * 12 	NOTATION_NODE
  ****************************/
 
-var TongWen = (function () {
+exports.TongWen = (function () {
 	var
 		version  = "0.2",         // 版本
 
@@ -39,7 +39,7 @@ var TongWen = (function () {
 
 	function init() {
 		var that = this;
-		toolbarId = "tongwen-" + Math.ceil(Math.random() * 1000000);
+		var toolbarId = "tongwen-" + Math.ceil(Math.random() * 1000000);
 
 		if (document.addEventListener) {
 			document.addEventListener("DOMContentLoaded", function () { winLoad() }, false);

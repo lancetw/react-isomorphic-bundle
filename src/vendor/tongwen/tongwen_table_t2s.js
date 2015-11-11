@@ -1,3 +1,5 @@
+module.exports = function(TongWen) {
+
 TongWen.addT2STable({
 "¯" :"ˉ",
 "‥":"¨" ,
@@ -2900,3 +2902,5 @@ TongWen.addT2STable({
 "﹪":"％",
 "﹫":"＠"
 });
+
+}
