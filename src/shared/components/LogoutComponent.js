@@ -14,7 +14,10 @@ export default class Logout extends BaseComponent {
   constructor (props) {
     super(props)
     this.releaseTimeout = undefined
-    props.logout()
+  }
+
+  componentWillMount () {
+    this.props.logout()
   }
 
   componentDidUpdate () {
