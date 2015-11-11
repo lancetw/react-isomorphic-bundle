@@ -5,6 +5,7 @@
 [![devDependency Status](https://david-dm.org/lancetw/react-isomorphic-bundle/dev-status.svg)](https://david-dm.org/lancetw/react-isomorphic-bundle#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/lancetw/react-isomorphic-bundle/badge.svg?branch=master)](https://coveralls.io/r/lancetw/react-isomorphic-bundle?branch=master)
 [![Code Climate](https://codeclimate.com/github/lancetw/react-isomorphic-bundle/badges/gpa.svg)](https://codeclimate.com/github/lancetw/react-isomorphic-bundle)
+
 =================
 
 Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-flux-boilerplate) but use [Redux](https://github.com/gaearon/redux).
@@ -23,7 +24,8 @@ $ npm install
 edit `./config/sequelize/config.json`
 
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
-(You need to run `npm install --save sequelize@3.4.0` to avoid datatime bugs.)
+(You have to run `npm install --save sequelize@3.4.0` to avoid datatime bugs.)
+
 
 ##### DEVELOPMENT
 
@@ -35,16 +37,18 @@ change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
 ##### PRODUCTION
 
-###### Manual build
-
-`make build`
-or `make clean && make fast-build` (clean up and rebuild all)
+###### Build and run
 
 * Linux / Mac
 `npm start`
 
 * Windows (Git Bash)
 `npm run prestart && NODE_ENV=production npm run win-start`
+
+###### Manual build
+
+`make build`
+or `make clean && make fast-build` (clean up and rebuild all)
 
 ##### DEBUG
 
@@ -75,7 +79,7 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [x] Google maps with driving directions
 - [x] post list with infinite scroll
 - [x] post list with calendar
-- [x] serverside Async data-fetching (great thanks to [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
+- [x] serverside async data-fetching (great thanks to [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
 - [x] full text Search
 - [x] image slider
 - [x] admin pages (manage posts and users)
@@ -85,9 +89,7 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [ ] testing suite
 - [ ] more ...
 
----
-
-### You might be interested in...
+## You might be interested in...
 
 * [redux](https://github.com/gaearon/redux)
 * [flummox](https://github.com/acdlite/flummox)
