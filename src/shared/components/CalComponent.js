@@ -39,16 +39,11 @@ export default class Cal extends BaseComponent {
   }
 
   componentWillMount () {
+    let day
+
     if (process.env.BROWSER) {
-      let day = queryString.parse(window.location.search).day
+      day = queryString.parse(window.location.search).day
       if (typeof day === 'undefined') day = this.props.post.day
-      this.setState({
-        date: day
-          ? moment(day).startOf('day').valueOf()
-          : moment(new Date()).startOf('day').valueOf(),
-        selectedDay: day ? new Date(day) : new Date(),
-        locale: fixLocaleName(this.getLocale())
-      })
 
       unlisten = history.listen((location) => {
         day = queryString.parse(location.search).day
@@ -60,6 +55,14 @@ export default class Cal extends BaseComponent {
         })
       })
     }
+
+    this.setState({
+      date: day
+        ? moment(day).startOf('day').valueOf()
+        : moment(new Date()).startOf('day').valueOf(),
+      selectedDay: day ? new Date(day) : new Date(),
+      locale: fixLocaleName(this.getLocale())
+    })
   }
 
   componentDidMount () {

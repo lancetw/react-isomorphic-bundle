@@ -140,7 +140,8 @@ export default class Post extends BaseComponent {
 
   componentWillReceiveProps (nextProps) {
     if (!this.state.formInited) {
-      if (this.initForm(nextProps.post.detail)) {
+      const { id } = this.props.params
+      if (id && this.initForm(nextProps.post.detail)) {
         this.setState({ formInited: true })
       }
     }
