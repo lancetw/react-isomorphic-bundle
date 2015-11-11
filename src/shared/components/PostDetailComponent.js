@@ -224,12 +224,10 @@ export default class Post extends BaseComponent {
             return (
               <div className="item" key={item.id}>
                 <Link to={`/w/${item.id}`}>
-                  <div className="more">
-                    <div className="ui orange horizontal label">
-                      { toShortDate(item.startDate) }
-                    </div>
-                    <span>{ item.title }</span>
+                  <div className="ui orange horizontal label">
+                    { toShortDate(item.startDate) }
                   </div>
+                  { item.title }
                 </Link>
               </div>
             )})

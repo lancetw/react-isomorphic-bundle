@@ -88,22 +88,25 @@ input.hide-submit {
   background: rgba(1, 1, 1, 0.72);
 }
 
-.ui.list > .item > .more {
+.ui.list > .item {
+  width: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
   .label {
     vertical-align: top !important;
     font-size: 80%;
   }
 
-  & {
-    display: inline-block;
-    white-space: nowrap;
-    width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  a {
+    vertical-align: middle !important;
+  }
 
-    span {
-      vertical-align: middle !important;
-    }
+  a:hover {
+    color: gold;
+    text-decoration: none;
   }
 }
 
@@ -654,11 +657,6 @@ and (orientation : portrait) {
 
 .searchbox-switch.hide {
   display: none !important;
-}
-
-.ui.divided.selection.animated.list a:hover {
-  color: gold;
-  text-decoration: none;
 }
 
 .bm-burger-button {
