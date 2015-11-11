@@ -222,14 +222,16 @@ export default class Post extends BaseComponent {
         <div className="ui divided selection animated list content">
           { !isEmpty(posts) && posts.map(function (item, i) {
             return (
-              <Link className="item" to={`/w/${item.id}`}>
-                <div key={item.id} className="more">
-                  <div className="ui orange horizontal label">
-                    { toShortDate(item.startDate) }
+              <div className="item" key={item.id}>
+                <Link to={`/w/${item.id}`}>
+                  <div className="more">
+                    <div className="ui orange horizontal label">
+                      { toShortDate(item.startDate) }
+                    </div>
+                    <span>{ item.title }</span>
                   </div>
-                  <span>{ item.title }</span>
-                </div>
-              </Link>
+                </Link>
+              </div>
             )})
           }
         </div>

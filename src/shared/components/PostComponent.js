@@ -107,8 +107,10 @@ export default class Post extends BaseComponent {
   }
 
   componentWillMount () {
-    this.initForm(this.props.post.detail)
-
+    const { id } = this.props.params
+    if (id) {
+      this.initForm(this.props.post.detail)
+    }
     if (process.env.BROWSER) {
       let tab
       tab = queryString.parse(window.location.search).tab

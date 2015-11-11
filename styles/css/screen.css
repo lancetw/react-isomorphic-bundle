@@ -656,6 +656,11 @@ and (orientation : portrait) {
   display: none !important;
 }
 
+.ui.divided.selection.animated.list a:hover {
+  color: gold;
+  text-decoration: none;
+}
+
 .bm-burger-button {
   position: fixed;
   width: 30px;
@@ -690,5 +695,4 @@ and (orientation : portrait) {
   &:hover {
     background: transparent;
   }
-
 }

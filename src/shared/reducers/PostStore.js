@@ -42,7 +42,9 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  [CREATE_POST_STARTED]: () => (initialState),
+  [CREATE_POST_STARTED]: () => ({
+    content: {}
+  }),
   [CREATE_POST_COMPLETED]: (state, action) =>
     ({ content: action.content }),
   [CREATE_POST_FAILED]: (state, action) =>
