@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { toShortDate, toYear } from 'shared/utils/date-utils'
 import { PostPropArray } from 'shared/utils/forms'
@@ -11,30 +10,32 @@ import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 const Translate = require('react-translate-component')
 
-export default class PostCard extends BaseComponent {
+export default class PostCard extends React.Component {
 
   static propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
     super(props)
 
     counterpart.onLocaleChange(::this.handleLocaleChange)
+    this.state = { locale: props.defaultLocale}
   }
 
   handleLocaleChange (newLocale) {
     if (process.env.BROWSER) {
       const locale = fixLocaleName(newLocale)
       moment.locale(locale)
-      this.forceUpdate()
+      this.setState({ locale: newLocale })
     }
   }
 
   renderCardProp (card) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(counterpart.getLocale())), card.prop)}
+        {at(PostPropArray(originLocaleName(this.state.locale)), card.prop)}
       </span>
     )
   }
@@ -42,11 +43,11 @@ export default class PostCard extends BaseComponent {
   renderLocationInfo (card) {
     if (card.place && card.lat && card.lng) {
       return (
-        <span>{tongwenAutoStr(card.place, this.getLocale())}</span>
+        <span>{tongwenAutoStr(card.place, this.state.locale)}</span>
       )
     } else if (card.ocname) {
       return (
-        <span>{tongwenAutoStr(card.ocname, this.getLocale())}</span>
+        <span>{tongwenAutoStr(card.ocname, this.state.locale)}</span>
       )
     } else {
       return <Translate content="post.detail.nomap" />
@@ -81,7 +82,7 @@ export default class PostCard extends BaseComponent {
           <div className="content">
             <h2 className="title">
               <Link to={`/w/${card.id}`}>
-                {tongwenAutoStr(card.title, this.getLocale())}
+                {tongwenAutoStr(card.title, this.state.locale)}
               </Link>
             </h2>
             <div className="ui orange top left attached label">

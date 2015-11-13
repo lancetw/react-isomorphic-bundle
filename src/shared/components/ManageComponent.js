@@ -38,7 +38,6 @@ export default class Manage extends BaseComponent {
     this.messageTimeout = undefined
     this.releaseTimeout = undefined
 
-    counterpart.setLocale(props.defaultLocale)
     const locale = counterpart.getLocale()
 
     this.state = {

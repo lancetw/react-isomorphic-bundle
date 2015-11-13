@@ -107,6 +107,7 @@ export default class PostCards extends BaseComponent {
       <Card
         key={key}
         data={card}
+        defaultLocale={this.getLocale()}
       />
     )
   }

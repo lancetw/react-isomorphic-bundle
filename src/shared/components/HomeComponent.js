@@ -20,11 +20,12 @@ export default class HomeComponent extends BaseComponent {
 
     counterpart.setLocale(props.defaultLocale)
     counterpart.onLocaleChange(::this.handleLocaleChange)
+    this.state = { locale: props.defaultLocale}
   }
 
   handleLocaleChange (newLocale) {
     if (process.env.BROWSER) {
-      this.forceUpdate()
+      this.setState({ locale: newLocale })
     }
   }
 
@@ -51,15 +52,15 @@ export default class HomeComponent extends BaseComponent {
         <h3>
           <Link to={`/w/${post.id}`}>
             <span className="ui orange">
-              [{at(PostPropArray(originLocaleName(counterpart.getLocale())), post.prop)}]
+              [{at(PostPropArray(originLocaleName(this.state.locale)), post.prop)}]
             </span>
             <span> </span>
-            {tongwenAutoStr(post.ocname, this.getLocale())
+            {tongwenAutoStr(post.ocname, this.state.locale)
               || <Translate content="news.unnamed" />}
           </Link>
         </h3>
         <div className="header">
-          {tongwenAutoStr(post.title, this.getLocale())}
+          {tongwenAutoStr(post.title, this.state.locale)}
         </div>
       </div>
     </div>

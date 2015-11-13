@@ -14,8 +14,6 @@ export default class WallCprop extends React.Component {
 
   constructor (props) {
     super(props)
-
-    counterpart.setLocale(props.defaultLocale)
   }
 
   render () {

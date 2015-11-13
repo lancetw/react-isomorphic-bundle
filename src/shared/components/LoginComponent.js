@@ -28,8 +28,6 @@ export default class Login extends BaseComponent {
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-
     this._bind(
       'handleSubmit',
       'clearFormErrors',

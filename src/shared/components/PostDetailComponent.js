@@ -45,14 +45,9 @@ export default class Post extends BaseComponent {
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-
-    this.state = {
-      locale: fixLocaleName(counterpart.getLocale())
-    }
-
     counterpart.onLocaleChange(::this.handleLocaleChange)
     this.releaseTimeout = undefined
+    this.state = { locale: props.defaultLocale }
   }
 
   componentWillUnmount () {
@@ -122,16 +117,16 @@ export default class Post extends BaseComponent {
     )
   }
 
-  handleLocaleChange () {
+  handleLocaleChange (newLocale) {
     if (process.env.BROWSER) {
-      this.forceUpdate()
+      this.setState({ locale: newLocale })
     }
   }
 
   renderDetailProp (detail) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(counterpart.getLocale())), detail.prop)}
+        {at(PostPropArray(originLocaleName(this.state.locale)), detail.prop)}
       </span>
     )
   }

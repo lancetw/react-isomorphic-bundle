@@ -33,7 +33,6 @@ export default class Cal extends BaseComponent {
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(this.getLocale())
     moment.locale(fixLocaleName(this.getLocale()))
     counterpart.onLocaleChange(::this.handleLocaleChange)
   }

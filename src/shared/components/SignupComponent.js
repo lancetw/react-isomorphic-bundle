@@ -21,8 +21,6 @@ export default class Signup extends BaseComponent {
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-
     this._bind(
       'handleSubmit',
       'validation',
