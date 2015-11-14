@@ -206,7 +206,7 @@ export default class Post extends Component {
   }
 
   renderMoreList () {
-    const { posts } = this.props.moreList
+    const { titleList } = this.props.moreList
     return (
       <div className="ui fluid detail card">
         {this.props.moreList.isFetching &&
@@ -217,7 +217,7 @@ export default class Post extends Component {
         </div>
         }
         <div className="ui divided selection animated list content">
-          { !isEmpty(posts) && posts.map(function (item, i) {
+          { !isEmpty(titleList) && titleList.map(function (item, i) {
             return (
               <div className="item" key={item.id}>
                 <Link to={`/w/${item.id}`}>

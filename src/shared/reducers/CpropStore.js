@@ -10,10 +10,12 @@ const initialState = {
   isFetching: false,
   errors: {},
   posts: [],
+  titleList: [],
   offset: 0,
   limit: 0,
   hasMore: true,
-  cprop: ''
+  cprop: '',
+  titleCprop: ''
 }
 
 export default createReducer(initialState, {
@@ -22,6 +24,15 @@ export default createReducer(initialState, {
     isFetching: true
   }),
   [LIST_CPROP_POST_COMPLETED]: (state, action) => {
+    if (action.nocontent) {
+      return {
+        errors: {},
+        titleList: action.posts,
+        titleCprop: action.cprop,
+        isFetching: false
+      }
+    }
+
     let hasMore = false
     if (action.posts.length === action.limit) {
       hasMore = true
@@ -30,7 +41,6 @@ export default createReducer(initialState, {
     return {
       errors: {},
       content: {},
-      loading: false,
       posts: posts,
       offset: state.offset + action.limit,
       limit: action.limit,

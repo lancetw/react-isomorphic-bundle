@@ -463,15 +463,25 @@ export function manageList (offset=0, limit=5, user, reload=false) {
 export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=false) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().cprop.posts
-    if (!reload
-      && offset <= 0
-      && !isEmpty(cached)
-      && cprop === getState().cprop.cprop) {
-      return null
+    let cached
+    if (nocontent) {
+      cached = getState().cprop.titleList
+      if (!reload
+        && !isEmpty(cached)
+        && cprop === getState().cprop.titleCprop) {
+        return null
+      }
+    } else {
+      cached = getState().cprop.posts
+      if (!reload
+        && offset <= 0
+        && !isEmpty(cached)
+        && cprop === getState().cprop.cprop) {
+        return null
+      }
     }
 
-    if (reload || cprop !== getState().cprop.cprop) {
+    if (reload) {
       dispatch({ type: LIST_CPROP_POST_RELOADED })
     }
 
@@ -485,20 +495,23 @@ export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=fal
           posts: posts,
           offset: offset,
           limit: limit,
-          cprop: cprop
+          cprop: cprop,
+          nocontent: nocontent
         })
       } else {
         return dispatch({
           type: LIST_CPROP_POST_FAILED,
           errors: posts.errors ? posts.errors : posts,
-          cprop: cprop
+          cprop: cprop,
+          nocontent: nocontent
         })
       }
     } catch (err) {
       return dispatch({
         type: LIST_CPROP_POST_FAILED,
         errors: err.message,
-        cprop: cprop
+        cprop: cprop,
+        nocontent: nocontent
       })
     }
   }
