@@ -147,10 +147,11 @@ export default class PostCards extends Component {
         </div>
       )
     } else {
+      const { defaultLocale } = this.props
       return (
         <div className="ui cards" ref="scrollable">
           {!isEmpty(cards) && cards.map(function (card) {
-            return <Card key={card.id} data={card} />
+            return <Card key={card.id} data={card} defaultLocale={defaultLocale} />
           })}
         </div>
       )

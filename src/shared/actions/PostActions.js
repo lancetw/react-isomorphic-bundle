@@ -471,6 +471,10 @@ export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=fal
         && cprop === getState().cprop.titleCprop) {
         return null
       }
+
+      if (reload) {
+        dispatch({ type: LIST_CPROP_POST_RELOADED })
+      }
     } else {
       cached = getState().cprop.posts
       if (!reload
@@ -479,10 +483,10 @@ export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=fal
         && cprop === getState().cprop.cprop) {
         return null
       }
-    }
 
-    if (reload) {
-      dispatch({ type: LIST_CPROP_POST_RELOADED })
+      if (reload || cprop !== getState().cprop.cprop) {
+        dispatch({ type: LIST_CPROP_POST_RELOADED })
+      }
     }
 
     dispatch({ type: LIST_CPROP_POST_STARTED })

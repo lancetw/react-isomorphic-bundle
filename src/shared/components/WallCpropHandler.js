@@ -28,10 +28,6 @@ class WallCpropHandler extends BaseComponent {
 
   constructor (props) {
     super(props)
-
-    this.state = {
-      locale: this.getLocale()
-    }
   }
 
   componentWillMount () {
@@ -56,7 +52,7 @@ class WallCpropHandler extends BaseComponent {
   }
 
   getCardProp = (index) => {
-    const _lang = originLocaleName(this.state.locale)
+    const _lang = originLocaleName(this.getLocale())
     return at(PostPropArray(_lang), index)
   }
 
@@ -84,7 +80,7 @@ class WallCpropHandler extends BaseComponent {
         <Helmet title={`${title} | ${defaultTitle}`} />
         <WallCprop
           {...this.props}
-          defaultLocale={this.state.locale}
+          defaultLocale={this.getLocale()}
           loadFunc={this.loadFunc} />
       </div>
     )

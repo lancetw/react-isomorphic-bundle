@@ -19,8 +19,6 @@ export default class PostCard extends Component {
 
   constructor (props) {
     super(props)
-
-    this.state = { locale: props.defaultLocale}
   }
 
   componentDidMount () {
@@ -33,13 +31,12 @@ export default class PostCard extends Component {
 
   handleLocaleChange = (newLocale) => {
     moment.locale(fixLocaleName(newLocale))
-    this.setState({ locale: newLocale })
   }
 
   renderCardProp (card) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.state.locale)), card.prop)}
+        {at(PostPropArray(originLocaleName(this.props.defaultLocale)), card.prop)}
       </span>
     )
   }
@@ -47,11 +44,11 @@ export default class PostCard extends Component {
   renderLocationInfo (card) {
     if (card.place && card.lat && card.lng) {
       return (
-        <span>{tongwenAutoStr(card.place, this.state.locale)}</span>
+        <span>{tongwenAutoStr(card.place, this.props.defaultLocale)}</span>
       )
     } else if (card.ocname) {
       return (
-        <span>{tongwenAutoStr(card.ocname, this.state.locale)}</span>
+        <span>{tongwenAutoStr(card.ocname, this.props.defaultLocale)}</span>
       )
     } else {
       return <Translate content="post.detail.nomap" />
@@ -86,7 +83,7 @@ export default class PostCard extends Component {
           <div className="content">
             <h2 className="title">
               <Link to={`/w/${card.id}`}>
-                {tongwenAutoStr(card.title, this.state.locale)}
+                {tongwenAutoStr(card.title, this.props.defaultLocale)}
               </Link>
             </h2>
             <div className="ui orange top left attached label">

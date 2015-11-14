@@ -17,7 +17,8 @@ class CalHandler extends BaseComponent {
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    translator: PropTypes.object
   }
 
   constructor (props) {
