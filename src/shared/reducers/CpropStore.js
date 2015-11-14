@@ -13,7 +13,7 @@ const initialState = {
   offset: 0,
   limit: 0,
   hasMore: true,
-  cprop: 0
+  cprop: ''
 }
 
 export default createReducer(initialState, {
