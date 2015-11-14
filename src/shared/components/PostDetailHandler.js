@@ -25,6 +25,8 @@ class PostDetailHandler extends BaseComponent {
 
   constructor (props) {
     super(props)
+
+    this.releaseTimeout = undefined
   }
 
   componentWillMount () {
@@ -49,7 +51,7 @@ class PostDetailHandler extends BaseComponent {
     const { id } = nextProps.params
     if (id !== this.props.params.id) {
       const { dispatch } = nextProps
-      setTimeout(() => {
+      this.releaseTimeout = setTimeout(() => {
         dispatch(PostActions.loadPostDetail(id))
       }, 0)
     }
@@ -57,6 +59,12 @@ class PostDetailHandler extends BaseComponent {
 
   componentDidUpdate () {
     tongwenAuto(document, this.getLocale())
+  }
+
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this.releaseTimeout)
+    }
   }
 
   render () {

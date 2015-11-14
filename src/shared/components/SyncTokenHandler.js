@@ -18,6 +18,8 @@ export default class SyncTokenHandler extends BaseComponent {
 
   constructor (props) {
     super(props)
+
+    this.releaseTimout = undefined
   }
 
   componentDidMount () {
@@ -25,8 +27,14 @@ export default class SyncTokenHandler extends BaseComponent {
     const token = this.props.location.query.token
 
     dispatch(save(token)).then(() => {
-      setTimeout(() => this.context.history.replaceState({}, '/home'), 1500)
+      this.releaseTimout = setTimeout(() => this.context.history.replaceState({}, '/home'), 1500)
     })
+  }
+
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this.releaseTimeout)
+    }
   }
 
   render () {

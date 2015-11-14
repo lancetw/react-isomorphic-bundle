@@ -12,13 +12,14 @@ import url from 'url'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
+import { supportedList } from 'shared/utils/locale-utils'
 
 (async () => {
   /* eslint-disable react/no-multi-comp */
-  counterpart.registerTranslations('en', require('shared/i18n/en'))
-  counterpart.registerTranslations('zh-hant-tw', require('shared/i18n/zh-hant-tw'))
-  counterpart.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
-  counterpart.setFallbackLocale('zh-hant-tw')
+  supportedList.forEach((locale) => {
+    counterpart.registerTranslations(locale, require('shared/i18n/' + locale))
+  })
+  counterpart.setFallbackLocale(supportedList[0])
 
   const initialState = window.STATE_FROM_SERVER
   const reducer = combineReducers(reducers)

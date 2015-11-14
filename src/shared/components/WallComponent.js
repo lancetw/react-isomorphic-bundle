@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 import WallButtons from 'shared/components/wall/WallButtons'
 
-export default class Wall extends React.Component {
+export default class Wall extends Component {
 
   static propTypes = {
     post: PropTypes.object.isRequired,

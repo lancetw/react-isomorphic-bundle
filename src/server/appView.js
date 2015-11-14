@@ -69,7 +69,6 @@ export default function (app) {
 
       const { translator, lang } = TranslatorInit(this.getLocaleFromHeader())
       store.dispatch(LocaleActions.sync(lang || 'zh-hant-tw'))
-
       let appString
       let assets
       let head

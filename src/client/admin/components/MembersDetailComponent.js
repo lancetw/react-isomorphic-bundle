@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import {
   Menu,
@@ -7,7 +7,7 @@ import {
   MembersNav as Nav
 } from 'client/admin/components/widget'
 
-export default class MembersDetail extends React.Component {
+export default class MembersDetail extends Component {
 
   constructor (props) {
     super(props)

@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Members from './MembersComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from 'client/admin/actions/UserActions'
 
-class MembersHandler extends React.Component {
+class MembersHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

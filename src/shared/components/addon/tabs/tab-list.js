@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default class TabList extends React.Component {
+export default class TabList extends Component {
 
   static propTypes = {
     children: PropTypes.any,

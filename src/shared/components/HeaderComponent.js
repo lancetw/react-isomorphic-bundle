@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import LocaleSwitcher from './LocaleSwitcher'
 import Sidebar from './Sidebar'
 import classNames from 'classnames'
 
-export default class Header extends React.Component {
+export default class Header extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func,
@@ -25,27 +25,29 @@ export default class Header extends React.Component {
     this.state = { userInput: '', hideSearchBox: true }
 
     this.releaseTimeout = undefined
+    this.searchboxTimeout = undefined
   }
 
   componentWillUnmount () {
     if (this.op) {
       clearTimeout(this.releaseTimeout)
+      clearTimeout(this.searchboxTimeout)
     }
   }
 
-  handleChange (event) {
+  handleChange = (event) => {
     this.setState({ userInput: event.target.value })
   }
 
-  handleFocus () {
+  handleFocus = () => {
     this.setState({ userInput: '' })
   }
 
-  handleBlur () {
+  handleBlur = () => {
     this.setState({ hideSearchBox: true })
   }
 
-  doSubmit (event) {
+  doSubmit = (event) => {
     const pattern = this.state.userInput
     if (!pattern) return
 
@@ -57,22 +59,22 @@ export default class Header extends React.Component {
     }
   }
 
-  handleSubmit (event) {
+  handleSubmit = (event) => {
     if (event.which === 13) {
       event.preventDefault()
       this.doSubmit(event)
     }
   }
 
-  handleSearchSubmit (event) {
+  handleSearchSubmit = (event) => {
     event.preventDefault()
     this.doSubmit(event)
   }
 
-  handleSearchBox (event) {
+  handleSearchBox = (event) => {
     event.preventDefault()
     this.setState({ hideSearchBox: !this.state.hideSearchBox })
-    setTimeout(() => {
+    this.searchboxTimeout =setTimeout(() => {
       ReactDOM.findDOMNode(this.refs.search).focus()
     }, 500)
   }
@@ -120,19 +122,19 @@ export default class Header extends React.Component {
         className="item"
         action=""
         method="post"
-        onSubmit={::this.handleSearchSubmit}>
+        onSubmit={this.handleSearchSubmit}>
         <div className="ui inverted transparent icon input">
           <input
             type="search"
             ref="search"
-            onChange={::this.handleChange}
-            onFocus={::this.handleFocus}
-            onBlur={::this.handleBlur}
-            onKeyDown={::this.handleSubmit}
+            onChange={this.handleChange}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            onKeyDown={this.handleSubmit}
             value={this.state.userInput}
           />
           <i
-            onClick={::this.handleSearchSubmit}
+            onClick={this.handleSearchSubmit}
             className="search inverted link icon">
           </i>
           <input type="submit" className="hide-submit" />
@@ -206,7 +208,7 @@ export default class Header extends React.Component {
             </Sidebar>
           </div>
           <a
-            onClick={::this.handleSearchBox}
+            onClick={this.handleSearchBox}
             className={siteTitleClasses}>
             <Translate content="title.site" />
           </a>

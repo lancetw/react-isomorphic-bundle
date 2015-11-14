@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 
-export default class Search extends React.Component {
+export default class Search extends Component {
 
   static propTypes = {
     loadFunc: PropTypes.func.isRequired,

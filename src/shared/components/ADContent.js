@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import MediaQuery from 'react-responsive'
 import Ad from 'shared/components/addon/ad'
 import { bindActionCreators } from 'redux'
@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as AdActions from 'shared/actions/AdActions'
 import { isEmpty, find, endsWith } from 'lodash'
 
-class ADContent extends React.Component {
+class ADContent extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

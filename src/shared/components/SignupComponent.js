@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Form, SignupForm, SignupFormOptions } from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import counterpart from 'counterpart'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-export default class Signup extends BaseComponent {
+export default class Signup extends Component {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
@@ -21,22 +21,23 @@ export default class Signup extends BaseComponent {
   constructor (props) {
     super(props)
 
-    this._bind(
-      'handleSubmit',
-      'validation',
-      'handleChange'
-    )
-    this.releaseTimeout0 = undefined
+    this.releaseTimeout = undefined
     this.releaseTimeout1 = undefined
     this.state = {
       value: {
         tos: false
       },
-      options: SignupFormOptions(counterpart.getLocale()),
+      options: SignupFormOptions(props.defaultLocale),
       submited: false
     }
+  }
 
-    counterpart.onLocaleChange(::this.handleLocaleChange)
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.validation(nextProps.signup.errors)
   }
 
   componentDidUpdate () {
@@ -48,29 +49,23 @@ export default class Signup extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.validation(nextProps.signup.errors)
-  }
-
   componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
-      clearTimeout(this.releaseTimeout0)
+      clearTimeout(this.releaseTimeout)
       clearTimeout(this.releaseTimeout1)
     }
   }
 
-  handleRecaptchaChange (value) {
+  handleRecaptchaChange = (value) => {}
+
+  handleLocaleChange = (newLocale) => {
+    this.setState({
+      options: SignupFormOptions(newLocale)
+    })
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: SignupFormOptions(newLocale)
-      })
-    }
-  }
-
-  handleChange (value, path) {
+  handleChange = (value, path) => {
     const pass = this.refs.form.getComponent('password')
     const check = this.refs.form.getComponent('passwordCheck')
 
@@ -93,7 +88,7 @@ export default class Signup extends BaseComponent {
     this.setState({ value })
   }
 
-  handleSubmit (evt) {
+  handleSubmit = (evt) => {
     evt.preventDefault()
     const form = this.refs.form.getValue()
     const value = clone(form)
@@ -110,7 +105,7 @@ export default class Signup extends BaseComponent {
       this.setState({ submited: true })
       this.refs.recaptcha.reset()
 
-      this.releaseTimeout0 =
+      this.releaseTimeout =
         setTimeout(() => this.props.submit(value), 1000)
     }
   }
@@ -130,7 +125,7 @@ export default class Signup extends BaseComponent {
     this.setState({ options: options })
   }
 
-  validation (errors) {
+  validation = (errors) => {
     if (typeof errors !== 'undefined' && !isEmpty(errors)) {
       const options = clone(this.state.options)
       options.fields = clone(options.fields)
@@ -197,7 +192,7 @@ export default class Signup extends BaseComponent {
               <ReCAPTCHA
                 ref="recaptcha"
                 sitekey={this.props.signup.sitekey}
-                onChange={::this.handleRecaptchaChange}
+                onChange={this.handleRecaptchaChange}
                 size="compact"
               />)
             }

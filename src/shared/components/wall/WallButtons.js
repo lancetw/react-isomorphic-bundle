@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-export default class WallButtons extends React.Component {
+export default class WallButtons extends Component {
 
   static propTypes = {}
 

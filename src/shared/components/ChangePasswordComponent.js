@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { BaseComponent } from 'shared/components'
 import {
@@ -10,31 +10,29 @@ import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
 
-export default class ChangePassword extends BaseComponent {
+export default class ChangePassword extends Component {
 
   static propTypes = {
     changePassword: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
     super(props)
 
-    this._bind(
-      'handleSubmit',
-      'handleChange',
-      'clearFormErrors'
-    )
     this.messageTimeout = undefined
     this.releaseTimeout = undefined
     this.state = {
       value: { password: '', passwordCheck: '' },
-      options: ChangePasswordFormOptions(this.getLocale()),
+      options: ChangePasswordFormOptions(props.defaultLocale),
       submited: false,
       updated: false
     }
+  }
 
-    counterpart.onLocaleChange(::this.handleLocaleChange)
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -43,20 +41,19 @@ export default class ChangePassword extends BaseComponent {
   }
 
   componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: ChangePasswordFormOptions(newLocale)
-      })
-    }
+  handleLocaleChange = (newLocale) => {
+    this.setState({
+      options: ChangePasswordFormOptions(newLocale)
+    })
   }
 
-  handleChange (value, path) {
+  handleChange = (value, path) => {
     const pass = this.refs.form.getComponent('password')
     const check = this.refs.form.getComponent('passwordCheck')
 
@@ -77,7 +74,7 @@ export default class ChangePassword extends BaseComponent {
     }
   }
 
-  handleSubmit (evt) {
+  handleSubmit = (evt) => {
     evt.preventDefault()
 
     const value = this.refs.form.getValue()
@@ -106,7 +103,7 @@ export default class ChangePassword extends BaseComponent {
     }
   }
 
-  clearFormErrors () {
+  clearFormErrors = () => {
     const options = clone(this.state.options)
     options.fields = clone(options.fields)
 

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -6,7 +6,7 @@ if (process.env.BROWSER) {
   require('css/addon/lightbox')
 }
 // thanks: https://gist.github.com/epeli/9887246
-class Lightbox extends React.Component {
+class Lightbox extends Component {
 
   static propTypes = {
     children: PropTypes.any

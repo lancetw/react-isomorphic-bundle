@@ -187,5 +187,125 @@ export default {
       go: '详细布告',
       close: '关闭'
     }
+  },
+  form: {
+    post: {
+      error: '日期区间有误',
+      startDate: {
+        label: '开始日期'
+      },
+      endDate: {
+        label: '结束日期'
+      },
+      title: {
+        placeholder: '布告标题'
+      },
+      content: {
+        placeholder: '内容'
+      },
+      type: {
+        news: '公告',
+        event: '活动'
+      },
+      prop: {
+        others: '其他',
+        general: '一般',
+        music: '音乐',
+        communication: '交流',
+        groupCommunity: '社群',
+        specialGroups: '特殊群体',
+        missions: '宣教',
+        evangelism: '福音',
+        sermon: '布道',
+        training: '培训',
+        welfare: '社福',
+        healthCare: '医疗',
+        counseling: '谘商'
+      }
+    },
+    reg: {
+      error: '日期区间有误',
+      openDate: {
+        label: '报名开放日期'
+      },
+      closeDate: {
+        label: '报名截止日期'
+      },
+      url: {
+        error: '无效的格式',
+        placeholder: '报名网址'
+      }
+    },
+    manage: {
+      ocname: {
+        error: '请修正后再送出',
+        placeholder: '组织名称'
+      },
+      email: {
+        error: '电子邮件信箱不合规定',
+        placeholder: '组织电子邮件信箱'
+      },
+      contact: {
+        placeholder: '组织联络人'
+      },
+      url: {
+        placeholder: '网站网址'
+      },
+      zipcode: {
+        placeholder: '邮递区号'
+      },
+      country: {
+        placeholder: '国家'
+      },
+      city: {
+        placeholder: '县市'
+      },
+      address: {
+        placeholder: '地址'
+      },
+      tel: {
+        placeholder: '联络电话'
+      },
+      fax: {
+        placeholder: '传真'
+      }
+    },
+    changePassword: {
+      password: {
+        error: '至少要 6 个字元',
+        placeholder: '密码'
+      },
+      passwordCheck: {
+        error: '不一致',
+        help: '请再输入一次密码',
+        placeholder: '重新输入密码'
+      }
+    },
+    login: {
+      email: {
+        placeholder: '电子邮件帐号'
+      },
+      password: {
+        placeholder: '密码'
+      }
+    },
+    signup: {
+      email: {
+        error: '电子邮件信箱不合规定',
+        placeholder: '电子邮件信箱'
+      },
+      password: {
+        error: '至少要 6 个字元',
+        placeholder: '密码'
+      },
+      passwordCheck: {
+        error: '不一致',
+        placeholder: '重新输入密码',
+        help: '请再输入一次密码'
+      },
+      tos: {
+        label: '我同意服务条款'
+      }
+    }
   }
 }

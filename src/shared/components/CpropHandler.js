@@ -27,7 +27,9 @@ class CpropHandler extends BaseComponent {
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
-        <Cprop {...this.props} />
+        <Cprop
+          {...this.props}
+          defaultLocale={this.getLocale()} />
       </div>
     )
   }

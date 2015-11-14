@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
@@ -10,7 +10,7 @@ import {
 if (process.env.BROWSER) {
 }
 
-export default class MembersTableWidget extends React.Component {
+export default class MembersTableWidget extends Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,

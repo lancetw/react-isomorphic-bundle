@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default class Tabs extends React.Component {
+export default class Tabs extends Component {
 
   static propTypes = {
     children: PropTypes.any,
@@ -16,14 +16,13 @@ export default class Tabs extends React.Component {
   constructor (props) {
     super(props)
     this.state = { selectedIndex: this.props.selectedIndex }
-    this.handleSelect = ::this.handleSelect
   }
 
   componentWillReceiveProps (nextProps) {
     this.setState({ selectedIndex: nextProps.selectedIndex })
   }
 
-  handleSelect (index) {
+  handleSelect = (index) => {
     this.setState({ selectedIndex: index })
     if (typeof this.props.onSelect === 'function') {
       this.props.onSelect(

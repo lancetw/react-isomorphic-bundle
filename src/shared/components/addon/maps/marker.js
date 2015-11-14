@@ -1,13 +1,12 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import classNames from 'classnames'
 import { toShortDate } from 'shared/utils/date-utils'
 import { Link } from 'react-router'
-import { BaseComponent } from 'shared/components'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
 import history from 'history'
 
-export default class Marker extends BaseComponent {
+export default class Marker extends Component {
 
   static propTypes = {
     hover: PropTypes.bool.isRequired,
@@ -15,7 +14,8 @@ export default class Marker extends BaseComponent {
     isOpen: PropTypes.bool.isRequired,
     data: PropTypes.object.isRequired,
     handleCloseClick: PropTypes.func,
-    handleTouchStart: PropTypes.func
+    handleTouchStart: PropTypes.func,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
@@ -88,7 +88,7 @@ export default class Marker extends BaseComponent {
             </div>
             <div className="content">
               <div className="header">
-              {tongwenAutoStr(data.title, this.getLocale())}
+              {tongwenAutoStr(data.title, this.props.defaultLocale)}
               </div>
             </div>
             <div className="content">

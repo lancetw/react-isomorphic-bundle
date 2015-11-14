@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 
-export default class Login extends React.Component {
+export default class Login extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,

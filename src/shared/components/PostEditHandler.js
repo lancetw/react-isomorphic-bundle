@@ -25,6 +25,7 @@ class PostEditHandler extends BaseComponent {
   constructor (props) {
     super(props)
 
+    this.releaseTimeout = undefined
     this.state = { disableSubmit: true }
   }
 
@@ -48,10 +49,16 @@ class PostEditHandler extends BaseComponent {
     if (id) {
       resolver.resolve(this.postActions.loadPostEdit, id)
       if (process.env.BROWSER) {
-        setTimeout(() => {
+        this.releaseTimeout = setTimeout(() => {
           this.setState({ disableSubmit: false })
         }, 0)
       }
+    }
+  }
+
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this.releaseTimeout)
     }
   }
 

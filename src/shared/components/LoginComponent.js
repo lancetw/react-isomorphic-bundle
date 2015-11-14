@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
 import { BaseComponent } from 'shared/components'
@@ -11,7 +11,7 @@ import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 import counterpart from 'counterpart'
 
-export default class Login extends BaseComponent {
+export default class Login extends Component {
 
   static propTypes = {
     login: PropTypes.func.isRequired,
@@ -28,20 +28,32 @@ export default class Login extends BaseComponent {
   constructor (props) {
     super(props)
 
-    this._bind(
-      'handleSubmit',
-      'clearFormErrors',
-      'fillFormAllErrors'
-    )
     this.releaseTimeout = undefined
     this.shakeTimeout = undefined
+    this.submitTimeout = undefined
     this.state = {
       submited: false,
       ok: false,
-      options: LoginFormOptions(counterpart.getLocale())
+      options: LoginFormOptions(props.defaultLocale)
+    }
+  }
+
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.state.submited) {
+      this.validation(nextProps.auth.errors)
     }
 
-    counterpart.onLocaleChange(::this.handleLocaleChange)
+    const { location } = this.context.history
+    if (typeof location !== 'undefined') {
+      const { nextPathname } = location.state
+      if (nextPathname) {
+        this.setState({ pleaseLogin: true })
+      }
+    }
   }
 
   componentDidUpdate () {
@@ -63,28 +75,16 @@ export default class Login extends BaseComponent {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.state.submited) {
-      this.validation(nextProps.auth.errors)
-    }
-
-    const { location } = this.context.history
-    if (typeof location !== 'undefined') {
-      const { nextPathname } = location.state
-      if (nextPathname) {
-        this.setState({ pleaseLogin: true })
-      }
-    }
-  }
-
   componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
       clearTimeout(this.shakeTimeout)
+      clearTimeout(this.submitTimeout)
     }
   }
 
-  handleLocaleChange (newLocale) {
+  handleLocaleChange = (newLocale) => {
     if (process.env.BROWSER) {
       this.setState({
         options: LoginFormOptions(newLocale)
@@ -92,7 +92,7 @@ export default class Login extends BaseComponent {
     }
   }
 
-  handleSubmit (evt) {
+  handleSubmit = (evt) => {
     evt.preventDefault()
     const value = this.refs.form.getValue()
     if (value) {
@@ -102,11 +102,11 @@ export default class Login extends BaseComponent {
       this.setState({ submited: true })
       this.clearFormErrors()
 
-      setTimeout(() => this.props.login(value), 100)
+      this.submitTimeout = setTimeout(() => this.props.login(value), 100)
     }
   }
 
-  clearFormErrors () {
+  clearFormErrors = () => {
     const options = clone(this.state.options)
     options.fields = clone(options.fields)
 
@@ -121,7 +121,7 @@ export default class Login extends BaseComponent {
     this.setState({ options: options })
   }
 
-  fillFormAllErrors () {
+  fillFormAllErrors = () => {
     const options = clone(this.state.options)
     options.fields = clone(options.fields)
 

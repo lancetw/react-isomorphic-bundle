@@ -42,7 +42,7 @@ class ManageHandler extends BaseComponent {
     resolver.resolve(this.userActions.getInfo, this.props.auth.token)
   }
 
-  loadFunc () {
+  loadFunc = () => {
     const { dispatch, auth, post } = this.props
     const user = auth.user.id
     dispatch(PostActions.manageList(post.offset, post.limit, user))
@@ -59,7 +59,7 @@ class ManageHandler extends BaseComponent {
         <Manage
           {...bindActionCreators(UserActions, dispatch)}
           {...this.props}
-          loadFunc={::this.loadFunc}
+          loadFunc={this.loadFunc}
           defaultLocale={this.getLocale()} />
       </div>
     )

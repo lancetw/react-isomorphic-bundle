@@ -1,7 +1,6 @@
-import React, { PropTypes } from 'react'
-import { BaseComponent } from 'shared/components'
+import React, { Component, PropTypes } from 'react'
 
-export default class Logout extends BaseComponent {
+export default class Logout extends Component {
 
   static propTypes = {
     logout: PropTypes.func.isRequired

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
@@ -27,7 +27,7 @@ if (process.env.BROWSER) {
   swal = require('sweetalert')
 }
 
-export default class Post extends BaseComponent {
+export default class Post extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -45,12 +45,16 @@ export default class Post extends BaseComponent {
   constructor (props) {
     super(props)
 
-    counterpart.onLocaleChange(::this.handleLocaleChange)
     this.releaseTimeout = undefined
     this.state = { locale: props.defaultLocale }
   }
 
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+  }
+
   componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
@@ -74,18 +78,18 @@ export default class Post extends BaseComponent {
     }
   }
 
-  deletePost () {
-    const _t = require('counterpart')
+  deletePost = () => {
     const { detail } = this.props.post
     const { remove } = this.props
     const { transitionTo, createLocation } = this.context.history
+    const _T = require('counterpart')
     swal({
-      title: _t('post.detail.delete.title'),
-      text: _t('post.detail.delete.text'),
+      title: _T('post.detail.delete.title'),
+      text: _T('post.detail.delete.text'),
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: _t('post.detail.delete.confirm'),
-      cancelButtonText: _t('post.detail.delete.cancel'),
+      confirmButtonText: _T('post.detail.delete.confirm'),
+      cancelButtonText: _T('post.detail.delete.cancel'),
       closeOnConfirm: false,
       showLoaderOnConfirm: true
     }, () => {
@@ -94,17 +98,17 @@ export default class Post extends BaseComponent {
       ]).then((res) => {
         if (res[0].type === 'REMOVE_POST_COMPLETED') {
           swal({
-            title: _t('post.detail.delete.ok.title'),
-            text: _t('post.detail.delete.ok.text'),
+            title: _T('post.detail.delete.ok.title'),
+            text: _T('post.detail.delete.ok.text'),
             type: 'success',
-            confirmButtonText: _t('post.detail.delete.ok.confirm'),
+            confirmButtonText: _T('post.detail.delete.ok.confirm'),
             closeOnConfirm: true
           }, () => {
             transitionTo(createLocation('/w'))
           })
         } else {
-          swal(_t('post.detail.delete.err.title')
-            , _t('post.detail.delete.err.text'),
+          swal(_T('post.detail.delete.err.title')
+            , _T('post.detail.delete.err.text'),
             'error')
         }
       })
@@ -117,10 +121,8 @@ export default class Post extends BaseComponent {
     )
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({ locale: newLocale })
-    }
+  handleLocaleChange = (newLocale) => {
+    this.setState({ locale: newLocale })
   }
 
   renderDetailProp (detail) {
@@ -384,7 +386,7 @@ export default class Post extends BaseComponent {
                       </Link>
                       <a
                         className="ui basic red button"
-                        onClick={::this.deletePost}>
+                        onClick={this.deletePost}>
                         <Translate content="post.detail.delete.confirm" />
                       </a>
                     </div>

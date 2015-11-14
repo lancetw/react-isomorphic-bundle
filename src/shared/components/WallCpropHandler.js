@@ -30,10 +30,8 @@ class WallCpropHandler extends BaseComponent {
     super(props)
 
     this.state = {
-      locale: fixLocaleName(counterpart.getLocale())
+      locale: this.getLocale()
     }
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   componentWillMount () {
@@ -45,24 +43,29 @@ class WallCpropHandler extends BaseComponent {
     resolver.resolve(this.authActions.showUser, this.props.auth.token)
     const { cprop } = this.props.params
 
-    dispatch(updateTitle(::this.getCardProp(cprop)))
+    dispatch(updateTitle(this.getCardProp(cprop)))
     resolver.resolve(this.postActions.cpropList, cprop, 0, 20)
   }
 
-  getCardProp (index) {
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+  }
+
+  componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
+  }
+
+  getCardProp = (index) => {
     const _lang = originLocaleName(this.state.locale)
     return at(PostPropArray(_lang), index)
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale })
-    }
+  handleLocaleChange = (newLocale) => {
+    moment.locale(fixLocaleName(newLocale))
+    this.setState({ locale: newLocale })
   }
 
-  loadFunc () {
+  loadFunc = () => {
     const { dispatch, params, post } = this.props
     const { cprop } = params
     dispatch(PostActions.cpropList(cprop, post.offset, post.limit))
@@ -73,7 +76,7 @@ class WallCpropHandler extends BaseComponent {
     const { cprop } = params
     const defaultTitle = this._T('title.site')
     const title = cprop > 0
-      ? ::this.getCardProp(cprop)
+      ? this.getCardProp(cprop)
       : this._T('title.wall')
 
     return (
@@ -81,8 +84,8 @@ class WallCpropHandler extends BaseComponent {
         <Helmet title={`${title} | ${defaultTitle}`} />
         <WallCprop
           {...this.props}
-          defaultLocale={this.getLocale()}
-          loadFunc={::this.loadFunc} />
+          defaultLocale={this.state.locale}
+          loadFunc={this.loadFunc} />
       </div>
     )
   }

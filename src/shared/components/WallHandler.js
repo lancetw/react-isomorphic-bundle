@@ -45,12 +45,12 @@ class WallHandler extends BaseComponent {
     resolver.resolve(this.postActions.overviewList, 0, 20)
   }
 
-  getCardProp (index) {
+  getCardProp = (index) => {
     const _lang = originLocaleName(this.getLocale())
     return at(PostPropArray(_lang), index)
   }
 
-  loadFunc () {
+  loadFunc = () => {
     const { dispatch, params, post } = this.props
     const { cprop } = params
     dispatch(PostActions.overviewList(post.offset, post.limit))
@@ -61,7 +61,7 @@ class WallHandler extends BaseComponent {
     const { cprop } = params
     const defaultTitle = this._T('title.site')
     const title = cprop > 0
-      ? ::this.getCardProp(cprop) + this._T('title.wall_cprop')
+      ? this.getCardProp(cprop) + this._T('title.wall_cprop')
       : this._T('title.wall')
 
     return (
@@ -70,7 +70,7 @@ class WallHandler extends BaseComponent {
         <Wall
           {...this.props}
           defaultLocale={this.getLocale()}
-          loadFunc={::this.loadFunc} />
+          loadFunc={this.loadFunc} />
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import { includes } from 'lodash'
-const supportedList = ['zh-hant-tw', 'zh-hant-cn', 'en']
+export const supportedList = ['zh-hant-tw', 'zh-hant-cn', 'en']
+import counterpart from 'counterpart'
 
 export function fallBackLocale (locale) {
   if (!locale) return locale

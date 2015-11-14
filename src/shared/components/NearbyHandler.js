@@ -30,6 +30,10 @@ class NearbyHandler extends BaseComponent {
 
   constructor (props) {
     super(props)
+
+    this.releaseTimeout = undefined
+    this.releaseTimeout1 = undefined
+    this.releaseTimeout2 = undefined
   }
 
   componentWillMount () {
@@ -49,7 +53,7 @@ class NearbyHandler extends BaseComponent {
           lng: position.coords.longitude
         }, 50)).then((info) => {
           const { pattern } = info
-          setTimeout(() => {
+          this.releaseTimeout = setTimeout(() => {
             dispatch(SearchActions.updateNearbyCenter({
               center: { lat: pattern.lat, lng: pattern.lng }
             }))
@@ -62,7 +66,7 @@ class NearbyHandler extends BaseComponent {
           lat: center.lat,
           lng: center.lng
         }, 50)).then(() => {
-          setTimeout(() => {
+          this.releaseTimeout1 = setTimeout(() => {
             dispatch(SearchActions.updateNearbyCenter({ center }))
           }, 500)
         })
@@ -76,9 +80,17 @@ class NearbyHandler extends BaseComponent {
 
   componentWillReceiveProps (nextProps) {
     if (!nextProps.search.isFetching) {
-      setTimeout(() => {
+      this.releaseTimeout2 = setTimeout(() => {
         Loading.hide()
       }, 5000)
+    }
+  }
+
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this.releaseTimeout)
+      clearTimeout(this.releaseTimeout1)
+      clearTimeout(this.releaseTimeout2)
     }
   }
 

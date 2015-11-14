@@ -1,6 +1,5 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import Cards from 'shared/components/wall/PostCards'
 import {
@@ -17,7 +16,7 @@ if (process.env.BROWSER) {
   $ = require('jquery')
 }
 
-export default class Manage extends BaseComponent {
+export default class Manage extends Component {
 
   static propTypes = {
     post: PropTypes.object.isRequired,
@@ -30,15 +29,11 @@ export default class Manage extends BaseComponent {
 
   constructor (props) {
     super(props)
-    this._bind(
-      'handleSubmit',
-      'handleChange',
-      'clearFormErrors'
-    )
+
     this.messageTimeout = undefined
     this.releaseTimeout = undefined
 
-    const locale = counterpart.getLocale()
+    const locale = this.props.defaultLocale
 
     this.state = {
       formInited: false,
@@ -58,12 +53,14 @@ export default class Manage extends BaseComponent {
       submited: false,
       updated: false
     }
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   componentWillMount () {
     this.initForm(this.props.user.orginfo)
+  }
+
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -72,12 +69,12 @@ export default class Manage extends BaseComponent {
         this.setState({ formInited: true })
       }
     }
-
     this.validation(nextProps.user.errors)
     this.checkSubmited(nextProps.user._orginfo)
   }
 
   componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
@@ -89,19 +86,17 @@ export default class Manage extends BaseComponent {
     }, 600)
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: ManageFormOptions(newLocale)
-      })
-    }
+  handleLocaleChange = (newLocale) => {
+    this.setState({
+      options: ManageFormOptions(newLocale)
+    })
   }
 
-  handleChange (value) {
+  handleChange = (value) => {
     this.setState({ value })
   }
 
-  handleSubmit (evt) {
+  handleSubmit = (evt) => {
     evt.preventDefault()
 
     const value = this.refs.form.getValue()
@@ -116,7 +111,7 @@ export default class Manage extends BaseComponent {
     }
   }
 
-  clearFormErrors () {
+  clearFormErrors = () => {
     const options = clone(this.state.options)
     options.fields = clone(options.fields)
 

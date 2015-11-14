@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Blocked from './BlockedComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from 'client/admin/actions/UserActions'
 
-class BlockedHandler extends React.Component {
+class BlockedHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

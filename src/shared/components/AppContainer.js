@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 const Translate = require('react-translate-component')
 
-export default class AppContainer extends React.Component {
+export default class AppContainer extends Component {
 
   static propTypes = {
     children: PropTypes.any,

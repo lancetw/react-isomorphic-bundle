@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import { isFinite } from 'lodash'
@@ -6,7 +6,7 @@ import { isFinite } from 'lodash'
 if (process.env.BROWSER) {
 }
 
-export default class AdsNavWidget extends React.Component {
+export default class AdsNavWidget extends Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,

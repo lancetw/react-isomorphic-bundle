@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import { isFinite } from 'lodash'
 
-export default class MembersNavWidget extends React.Component {
+export default class MembersNavWidget extends Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,

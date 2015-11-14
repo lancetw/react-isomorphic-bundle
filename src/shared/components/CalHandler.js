@@ -63,7 +63,8 @@ class CalHandler extends BaseComponent {
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Cal
           {...bindActionCreators(PostActions, dispatch)}
-          {...this.props} />
+          {...this.props}
+          defaultLocale={this.getLocale()} />
       </div>
     )
   }

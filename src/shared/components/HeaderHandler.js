@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Header from './HeaderComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from 'shared/actions/AuthActions'
 import * as SearchActions from 'shared/actions/SearchActions'
 
-class HeaderHandler extends React.Component {
+class HeaderHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired

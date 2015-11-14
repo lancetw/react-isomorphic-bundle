@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { isEmpty, contains, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
   swal = require('sweetalert')
 }
 
-export default class AdsTableWidget extends React.Component {
+export default class AdsTableWidget extends Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,

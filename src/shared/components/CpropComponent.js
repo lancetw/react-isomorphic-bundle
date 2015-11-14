@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import counterpart from 'counterpart'
 import WallButtons from 'shared/components/wall/WallButtons'
@@ -8,24 +8,30 @@ import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import { BaseComponent } from 'shared/components'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
-export default class Cprop extends BaseComponent {
+export default class Cprop extends Component {
 
-  static propTypes = {}
+  static propTypes = {
+    defaultLocale: PropTypes.string.isRequired
+  }
 
   constructor (props) {
     super(props)
 
-    counterpart.onLocaleChange(::this.handleLocaleChange)
-    this.state = { locale: this.getLocale() }
+    this.state = { locale: props.defaultLocale }
+  }
+
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
-  handleLocaleChange (newLocale) {
-    if (this.isMounted()) {
-      const locale = fixLocaleName(newLocale)
-      this.setState({ locale: locale })
-    }
+  componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
+  }
+
+  handleLocaleChange = (newLocale) => {
+    this.setState({ locale: newLocale })
   }
 
   renderCprop () {
@@ -49,7 +55,7 @@ export default class Cprop extends BaseComponent {
   renderCardProp (index) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.getLocale())), index)}
+        {at(PostPropArray(originLocaleName(this.state.locale)), index)}
       </span>
     )
   }

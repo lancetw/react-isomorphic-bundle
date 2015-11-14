@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import * as UploadActions from 'shared/actions/UploadActions'
@@ -7,7 +7,7 @@ import { isEmpty } from 'lodash'
 @connect(state => ({
   upload: state.upload
 }))
-export default class ImageUpload extends React.Component {
+export default class ImageUpload extends Component {
 
   static propTypes = {
     index: PropTypes.number.isRequired,
@@ -25,7 +25,7 @@ export default class ImageUpload extends React.Component {
     super(props)
   }
 
-  handleDrop (files) {
+  handleDrop = (files) => {
     const sizeLimit = 1024 * 1024 * 3
     const { dispatch } = this.props
     const file = files[0]
@@ -42,7 +42,7 @@ export default class ImageUpload extends React.Component {
     }
   }
 
-  renderPrecentage (index) {
+  renderPrecentage = (index) => {
     const percentage = this.props.upload.percentages[index]
     if (!percentage) {
       return (
@@ -86,12 +86,12 @@ export default class ImageUpload extends React.Component {
           multiple={false}
           style={{}}
           size={120}
-          onDrop={::this.handleDrop}>
+          onDrop={this.handleDrop}>
           <img
             className="ui image centered placeholder"
             alt=""
             src={ imgsrc || this.props.src } />
-          {::this.renderPrecentage(this.props.index)}
+          {this.renderPrecentage(this.props.index)}
         </Dropzone>
       </div>
     )

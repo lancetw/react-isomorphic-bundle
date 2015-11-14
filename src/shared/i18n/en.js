@@ -187,5 +187,125 @@ export default {
       go: 'more...',
       close: 'close'
     }
+  },
+  form: {
+    post: {
+      error: 'Date range is invalid.',
+      startDate: {
+        label: 'Start date'
+      },
+      endDate: {
+        label: 'End date'
+      },
+      title: {
+        placeholder: 'Title'
+      },
+      content: {
+        placeholder: 'Content'
+      },
+      type: {
+        news: 'News',
+        event: 'Event'
+      },
+      prop: {
+        others: 'Others',
+        general: 'General',
+        music: 'Music',
+        communication: 'Communication',
+        groupCommunity: 'Group Community',
+        specialGroups: 'Special Groups',
+        missions: 'Missions',
+        evangelism: 'Evangelism',
+        sermon: 'Sermon',
+        training: 'Training',
+        welfare: 'Welfare',
+        healthCare: 'Health Care',
+        counseling: 'Counseling'
+      }
+    },
+    reg: {
+      error: 'Date range is invalid.',
+      openDate: {
+        label: 'Open date'
+      },
+      closeDate: {
+        label: 'Close date'
+      },
+      url: {
+        error: 'invalid format',
+        placeholder: 'Enrollment Link'
+      }
+    },
+    manage: {
+      ocname: {
+        error: 'Please correct and submit again.',
+        placeholder: 'Organization Name'
+      },
+      email: {
+        error: 'email should be an email',
+        placeholder: 'Organization Email'
+      },
+      contact: {
+        placeholder: 'Contact Name'
+      },
+      url: {
+        placeholder: 'Website Link'
+      },
+      zipcode: {
+        placeholder: 'Zip Code'
+      },
+      country: {
+        placeholder: 'Country'
+      },
+      city: {
+        placeholder: 'City'
+      },
+      address: {
+        placeholder: 'Address'
+      },
+      tel: {
+        placeholder: 'Tel'
+      },
+      fax: {
+        placeholder: 'Fax'
+      }
+    },
+    changePassword: {
+      password: {
+        error: 'At least 6 characters',
+        placeholder: 'Password'
+      },
+      passwordCheck: {
+        error: 'do not match',
+        help: 'Please enter password again',
+        placeholder: 'password again'
+      }
+    },
+    login: {
+      email: {
+        placeholder: 'Email'
+      },
+      password: {
+        placeholder: 'Password'
+      }
+    },
+    signup: {
+      email: {
+        error: 'email should be an email',
+        placeholder: 'Email'
+      },
+      password: {
+        error: 'At least 6 characters',
+        placeholder: 'Password'
+      },
+      passwordCheck: {
+        error: 'do not match',
+        placeholder: 'password again',
+        help: 'Please enter password again'
+      },
+      tos: {
+        label: 'I agree to the Terms and Conditions.'
+      }
+    }
   }
 }

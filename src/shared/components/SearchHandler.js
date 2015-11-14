@@ -27,7 +27,7 @@ class SearchHandler extends BaseComponent {
     dispatch(updateTitle('title.search'))
   }
 
-  loadFunc () {
+  loadFunc = () => {
     const { dispatch, search } = this.props
 
     dispatch(SearchActions
@@ -44,7 +44,7 @@ class SearchHandler extends BaseComponent {
         <Search
           {...this.props}
           defaultLocale={this.getLocale()}
-          loadFunc={::this.loadFunc} />
+          loadFunc={this.loadFunc} />
       </div>
     )
   }

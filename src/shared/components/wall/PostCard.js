@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { toShortDate, toYear } from 'shared/utils/date-utils'
 import { PostPropArray } from 'shared/utils/forms'
@@ -10,7 +10,7 @@ import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 const Translate = require('react-translate-component')
 
-export default class PostCard extends React.Component {
+export default class PostCard extends Component {
 
   static propTypes = {
     data: PropTypes.object,
@@ -20,16 +20,20 @@ export default class PostCard extends React.Component {
   constructor (props) {
     super(props)
 
-    counterpart.onLocaleChange(::this.handleLocaleChange)
     this.state = { locale: props.defaultLocale}
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale: newLocale })
-    }
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+  }
+
+  componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
+  }
+
+  handleLocaleChange = (newLocale) => {
+    moment.locale(fixLocaleName(newLocale))
+    this.setState({ locale: newLocale })
   }
 
   renderCardProp (card) {

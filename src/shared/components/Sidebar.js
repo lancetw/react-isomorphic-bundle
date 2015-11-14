@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 const Menu = require('react-burger-menu').bubble
 
-export default class Sidebar extends React.Component {
+export default class Sidebar extends Component {
 
   static propTypes = {
     children: PropTypes.any

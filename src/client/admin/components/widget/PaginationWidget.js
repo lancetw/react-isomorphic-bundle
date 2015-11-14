@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactPaginate from 'react-paginate'
 
 if (process.env.BROWSER) {
 }
 
-export default class PaginationWidget extends React.Component {
+export default class PaginationWidget extends Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,

@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Spam from './SpamComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PostActions from 'client/admin/actions/PostActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
 
-class SpamHandler extends React.Component {
+class SpamHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

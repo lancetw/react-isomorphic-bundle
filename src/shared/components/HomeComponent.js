@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { isEmpty, at } from 'lodash'
@@ -8,7 +8,7 @@ import counterpart from 'counterpart'
 import { originLocaleName } from 'shared/utils/locale-utils'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
 
-export default class HomeComponent extends BaseComponent {
+export default class HomeComponent extends Component {
 
   static propTypes = {
     post: PropTypes.object.isRequired,
@@ -18,15 +18,19 @@ export default class HomeComponent extends BaseComponent {
   constructor (props) {
     super(props)
 
-    counterpart.setLocale(props.defaultLocale)
-    counterpart.onLocaleChange(::this.handleLocaleChange)
     this.state = { locale: props.defaultLocale}
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({ locale: newLocale })
-    }
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+  }
+
+  componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
+  }
+
+  handleLocaleChange = (newLocale) => {
+    this.setState({ locale: newLocale })
   }
 
   renderNews (posts) {

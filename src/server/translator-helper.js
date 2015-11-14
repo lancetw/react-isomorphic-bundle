@@ -1,13 +1,13 @@
-import { originLocaleName } from 'shared/utils/locale-utils'
+import { originLocaleName, supportedList } from 'shared/utils/locale-utils'
 
 export function TranslatorInit (defaultLocale) {
   const Translator = require('counterpart').Instance
   const lang = originLocaleName(defaultLocale)
   const translator = new Translator()
-  translator.registerTranslations('en', require('shared/i18n/en'))
-  translator.registerTranslations('zh-hant-tw', require('shared/i18n/zh-hant-tw'))
-  translator.registerTranslations('zh-hant-cn', require('shared/i18n/zh-hant-cn'))
-  translator.setFallbackLocale('zh-hant-tw')
+  supportedList.forEach((locale) => {
+    translator.registerTranslations(locale, require('shared/i18n/' + locale))
+  })
+  translator.setFallbackLocale(supportedList[0])
   translator.setLocale(lang)
 
   return { translator, lang }

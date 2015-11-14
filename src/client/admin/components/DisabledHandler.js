@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Disabled from './DisabledComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
   swal = require('sweetalert')
 }
 
-class DisabledHandler extends React.Component {
+class DisabledHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

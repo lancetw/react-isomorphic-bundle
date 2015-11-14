@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 // ref: https://gist.github.com/Ambroos/734933c4d3d11c3af847
-import React, { PropTypes } from 'react'
-import { BaseComponent } from 'shared/components'
+import React, { Component, PropTypes } from 'react'
 
-export default class Ad extends BaseComponent {
+export default class Ad extends Component {
 
   static propTypes = {
     size: PropTypes.string.isRequired,
@@ -12,17 +11,17 @@ export default class Ad extends BaseComponent {
 
   constructor (props) {
     super(props)
-    this._releaseTimeout = undefined
+    this.releaseTimeout = undefined
     this.state = { released: false }
   }
 
   componentDidMount () {
-    this._releaseTimeout = setTimeout(() => this.loadAd(), 500)
+    this.releaseTimeout = setTimeout(() => this.loadAd(), 500)
   }
 
   componentWillUnmount () {
     if (this.op) {
-      clearTimeout(this._releaseTimeout)
+      clearTimeout(this.releaseTimeout)
     }
   }
 

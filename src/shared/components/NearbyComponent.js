@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { isEmpty, isArray } from 'lodash'
 import GoogleMap from 'google-map-react'
 import Pin from 'shared/components/addon/maps/pin'
@@ -9,7 +9,7 @@ import controllable from 'react-controllables'
 import { isFinite } from 'lodash'
 
 @controllable(['zoom', 'hoverKey', 'clickKey'])
-export default class Nearby extends React.Component {
+export default class Nearby extends Component {
 
   static propTypes = {
     nearby: PropTypes.func.isRequired,
@@ -18,9 +18,10 @@ export default class Nearby extends React.Component {
     defaultCenter: PropTypes.object.isRequired,
     center: PropTypes.object,
     defaultZoom: PropTypes.number.isRequired,
+    defaultLocale: PropTypes.string.isRequired,
     zoom: PropTypes.number, // @controllable
-    hoverKey: PropTypes.string, // @controllable
-    clickKey: PropTypes.string, // @controllable
+    hoverKey: PropTypes.any, // @controllable
+    clickKey: PropTypes.any, // @controllable
     onZoomChange: PropTypes.func, // @controllable generated fn
     onHoverKeyChange: PropTypes.func, // @controllable generated fn
     onClickKeyChange: PropTypes.func // @controllable generated fn
@@ -138,6 +139,7 @@ export default class Nearby extends React.Component {
           isOpen={m.id === this.props.clickKey}
           handleCloseClick={this.handleChildCloseClick}
           handleTouchStart={this.handleTouchStart}
+          defaultLocale={this.props.defaultLocale}
         />
       ))
     }

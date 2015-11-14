@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { isEmpty } from 'lodash'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
@@ -7,7 +7,7 @@ import {
   toShortDate
 } from 'shared/utils/date-utils'
 
-export default class OgComponent extends React.Component {
+export default class OgComponent extends Component {
 
   static propTypes = {
     og: PropTypes.object.isRequired,

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import {
   Menu,
@@ -6,7 +6,7 @@ import {
   AdsNav as Nav
 } from 'client/admin/components/widget'
 
-export default class Ads extends React.Component {
+export default class Ads extends Component {
 
   constructor (props) {
     super(props)

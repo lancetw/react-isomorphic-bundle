@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Header from './HeaderHandler'
 
@@ -12,7 +12,7 @@ if (process.env.BROWSER) {
   require('sweetalert/dist/sweetalert')
 }
 
-export default class AppHandler extends React.Component {
+export default class AppHandler extends Component {
 
   static propTypes = {
     children: PropTypes.any

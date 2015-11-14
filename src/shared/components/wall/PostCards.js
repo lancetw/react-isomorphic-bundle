@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import { BaseComponent } from 'shared/components'
 import { isEmpty, debounce } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
 import classNames from 'classnames'
@@ -14,7 +13,7 @@ if (process.env.BROWSER) {
   require('css/ui/spinkit')
 }
 
-export default class PostCards extends BaseComponent {
+export default class PostCards extends Component {
 
   static propTypes = {
     posts: PropTypes.array.isRequired,
@@ -22,7 +21,8 @@ export default class PostCards extends BaseComponent {
     hasMore: PropTypes.bool.isRequired,
     diff: PropTypes.number.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    threshold: PropTypes.number
+    threshold: PropTypes.number,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static defaultProps = {
@@ -45,7 +45,7 @@ export default class PostCards extends BaseComponent {
   }
 
   componentDidMount () {
-    window.addEventListener('resize', ::this.handleResize)
+    window.addEventListener('resize', this.handleResize)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -68,14 +68,14 @@ export default class PostCards extends BaseComponent {
     }
   }
 
-  handleScroll (event) {
+  handleScroll = (event) => {
     if (!!this.props.hasMore) {
       this.setState({disablePointer: true })
       this.handleInfiniteLoad(this.props.threshold)
     }
   }
 
-  handleResize () {
+  handleResize = () => {
     this.setState({
       windowWidth: window.innerWidth, windowHeight: window.innerHeight
     })
@@ -101,13 +101,13 @@ export default class PostCards extends BaseComponent {
     }
   }
 
-  renderItem (index, key) {
+  renderItem = (index, key) => {
     const card = this.props.posts[index]
     return (
       <Card
         key={key}
         data={card}
-        defaultLocale={this.getLocale()}
+        defaultLocale={this.props.defaultLocale}
       />
     )
   }
@@ -129,7 +129,7 @@ export default class PostCards extends BaseComponent {
         <div
           className={scrollClass}
           ref="scroll"
-          onScroll={debounce(::this.handleScroll, 500)}
+          onScroll={debounce(this.handleScroll, 500)}
           style={{
             maxHeight: containerHeight
           }}>
@@ -138,7 +138,7 @@ export default class PostCards extends BaseComponent {
             threshold={100}
             pageSize={20}
             initialIndex={0}
-            itemRenderer={::this.renderItem}
+            itemRenderer={this.renderItem}
             length={cards.length}
             type="uniform"
             useTranslate3d={useTranslate3d}

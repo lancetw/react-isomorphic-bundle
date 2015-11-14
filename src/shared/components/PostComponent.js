@@ -1,7 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { BaseComponent } from 'shared/components'
 import {
   Form,
   PostForm,
@@ -35,7 +34,7 @@ if (process.env.BROWSER) {
   history = createHistory()
 }
 
-export default class Post extends BaseComponent {
+export default class Post extends Component {
 
   static propTypes = {
     submit: PropTypes.func.isRequired,
@@ -63,18 +62,11 @@ export default class Post extends BaseComponent {
 
   constructor (props) {
     super(props)
-    this._bind(
-      'handleSubmit',
-      'validation',
-      'handleChange',
-      'handleRegChange'
-    )
+
     this.releaseTimeout = undefined
+    this.releaseTimeout1 = undefined
     const today = this.dateToArray(moment().format('YYYY-M-D'))
-
-    counterpart.setLocale(props.defaultLocale)
-    const locale = counterpart.getLocale()
-
+    const locale = this.props.defaultLocale
     this.state = {
       formInited: false,
       uploadInited: false,
@@ -102,8 +94,6 @@ export default class Post extends BaseComponent {
       latlngError: false,
       disableSubmit: props.disableSubmit
     }
-
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   componentWillMount () {
@@ -128,14 +118,8 @@ export default class Post extends BaseComponent {
     }
   }
 
-  componentDidUpdate () {
-    if (process.env.BROWSER) {
-      if (!isEmpty(this.props.post.content)) {
-        this.releaseTimeout = setTimeout(() => {
-          this.context.history.replaceState({}, '/w')
-        }, 1000)
-      }
-    }
+  componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -157,12 +141,22 @@ export default class Post extends BaseComponent {
     }
   }
 
-  componentWillUnmount () {
+  componentDidUpdate () {
     if (process.env.BROWSER) {
-      typeof unlisten === 'function' && unlisten()
+      if (!isEmpty(this.props.post.content)) {
+        this.releaseTimeout = setTimeout(() => {
+          this.context.history.replaceState({}, '/w')
+        }, 1000)
+      }
     }
+  }
+
+  componentWillUnmount () {
+    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
+      typeof unlisten === 'function' && unlisten()
       clearTimeout(this.releaseTimeout)
+      clearTimeout(this.releaseTimeout1)
     }
   }
 
@@ -181,7 +175,7 @@ export default class Post extends BaseComponent {
     this.props.setPin(map)
   }
 
-  handleMapSubmit (event) {
+  handleMapSubmit = (event) => {
     event.preventDefault()
     const map = {
       place: ReactDOM.findDOMNode(this.refs.place).value.trim(),
@@ -205,11 +199,11 @@ export default class Post extends BaseComponent {
     this.setState({ placeError: false })
   }
 
-  handleChange (value) {
+  handleChange = (value) => {
     this.setState({ value })
   }
 
-  handleRegChange (regValue) {
+  handleRegChange = (regValue) => {
     this.refs.regForm.validate()
     this.setState({ regValue })
   }
@@ -220,7 +214,7 @@ export default class Post extends BaseComponent {
     return _date
   }
 
-  handleSelected (index) {
+  handleSelected = (index) => {
     this.setHistory(index)
     if (index === 2 && !this.state.uploadInited) {
       const { detail } = this.props.post
@@ -248,18 +242,16 @@ export default class Post extends BaseComponent {
     }
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: PostFormOptions(newLocale),
-        regOptions: RegFormOptions(newLocale),
-        formType: PostForm(newLocale),
-        regFormType: RegForm(newLocale)
-      })
-    }
+  handleLocaleChange = (newLocale) => {
+    this.setState({
+      options: PostFormOptions(newLocale),
+      regOptions: RegFormOptions(newLocale),
+      formType: PostForm(newLocale),
+      regFormType: RegForm(newLocale)
+    })
   }
 
-  handleMapChange (event) {
+  handleMapChange = (event) => {
     const { center } = event
     if (this.refs.lat) {
       ReactDOM.findDOMNode(this.refs.lat).value = center.lat
@@ -269,7 +261,7 @@ export default class Post extends BaseComponent {
     }
   }
 
-  handleSearch (event) {
+  handleSearch = (event) => {
     event.preventDefault()
     const address = ReactDOM.findDOMNode(this.refs.place).value.trim()
     if (!address || address === counterpart('post.map.my')) {
@@ -279,12 +271,12 @@ export default class Post extends BaseComponent {
     }
   }
 
-  handleGeo (event) {
+  handleGeo = (event) => {
     event.preventDefault()
     runGeoLoc().then(this.showPosition.bind(this))
   }
 
-  handleSubmit (evt) {
+  handleSubmit = (evt) => {
     evt.preventDefault()
 
     const value = this.refs.form.getValue()
@@ -305,7 +297,7 @@ export default class Post extends BaseComponent {
 
       const regValue = this.state.regValue
 
-      setTimeout(() => {
+      this.releaseTimeout1 = setTimeout(() => {
         const { id } = this.props.params
         if (id) {
           this.props.modify({ id, value, regValue, upload, map })
@@ -331,7 +323,7 @@ export default class Post extends BaseComponent {
     this.setState({ options: options })
   }
 
-  validation (errors) {
+  validation = (errors) => {
     if (typeof errors !== 'undefined' && !isEmpty(errors)) {
       this.setState({ disableSubmit: false })
 
@@ -506,13 +498,13 @@ export default class Post extends BaseComponent {
             ref="gmap"
             {...this.props.map}
             defaultLocale={this.props.defaultLocale}
-            onChange={::this.handleMapChange}
+            onChange={this.handleMapChange}
           />
         </div>
         <div className="column">
           <Tabs
             ref="tabs"
-            onSelect={::this.handleSelected}
+            onSelect={this.handleSelected}
             selectedIndex={ this.state.tabIndex || 0}>
             <TabList selectedIndex={ this.state.tabIndex || 0}>
               <Tab>
@@ -587,7 +579,7 @@ export default class Post extends BaseComponent {
             <TabPanel index={3}>
               {this.renderTips()}
               <form
-                onSubmit={::this.handleMapSubmit}>
+                onSubmit={this.handleMapSubmit}>
                 <div className={PlaceInput}>
                   <input
                     type="text"
@@ -599,7 +591,7 @@ export default class Post extends BaseComponent {
                     } />
                   <button
                     className="ui green button"
-                    onClick={::this.handleSearch}>
+                    onClick={this.handleSearch}>
                     <Translate content="post.map.search" />
                   </button>
                 </div>
@@ -633,7 +625,7 @@ export default class Post extends BaseComponent {
                     <div className="left floated content">
                       <button
                         className="ui circular yellow large icon button"
-                        onClick={::this.handleGeo}>
+                        onClick={this.handleGeo}>
                         <i className="icon large map"></i>
                       </button>
                     </div>

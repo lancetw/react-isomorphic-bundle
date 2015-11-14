@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 import DayPicker from 'react-day-picker'
@@ -22,22 +22,22 @@ if (process.env.BROWSER) {
   history = createHistory()
 }
 
-export default class Cal extends BaseComponent {
+export default class Cal extends Component {
 
   static propTypes = {
     fetchList: PropTypes.func.isRequired,
     countPostsWithCal: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
     super(props)
-
-    moment.locale(fixLocaleName(this.getLocale()))
-    counterpart.onLocaleChange(::this.handleLocaleChange)
   }
 
   componentWillMount () {
+    moment.locale(fixLocaleName(this.props.defaultLocale))
+
     let day
 
     if (process.env.BROWSER) {
@@ -60,11 +60,13 @@ export default class Cal extends BaseComponent {
         ? moment(day).startOf('day').valueOf()
         : moment(new Date()).startOf('day').valueOf(),
       selectedDay: day ? new Date(day) : new Date(),
-      locale: fixLocaleName(this.getLocale())
+      locale: fixLocaleName(this.props.defaultLocale)
     })
   }
 
   componentDidMount () {
+    counterpart.onLocaleChange(this.handleLocaleChange)
+
     const day = this.state.date
     if (day) {
       const date = moment(day).startOf('day').valueOf()
@@ -73,7 +75,8 @@ export default class Cal extends BaseComponent {
   }
 
   componentWillUnmount () {
-    if (process.env.BROWSER) {
+    counterpart.offLocaleChange(this.handleLocaleChange)
+    if (this.op) {
       typeof unlisten === 'function' && unlisten()
     }
   }
@@ -102,7 +105,7 @@ export default class Cal extends BaseComponent {
     history.pushState({ the: 'state' }, pathname + '?day=' + _day)
   }
 
-  handleDayClick (e, day) {
+  handleDayClick = (e, day) => {
     const date = moment(day).valueOf()
     const reload = true
     this.props.fetchList(0, 20, date, null, reload)
@@ -115,24 +118,21 @@ export default class Cal extends BaseComponent {
     })
   }
 
-  handleMonthChange (day) {
+  handleMonthChange = (day) => {
     this.props.countPostsWithCal(moment(day).year(), moment(day).month() + 1)
   }
 
-  handleLocaleChange (newLocale) {
-    if (process.env.BROWSER) {
-      const locale = fixLocaleName(newLocale)
-      moment.locale(locale)
-      this.setState({ locale })
-    }
+  handleLocaleChange = (newLocale) => {
+    moment.locale(fixLocaleName(newLocale))
+    this.setState({ locale: newLocale })
   }
 
-  loadFunc () {
+  loadFunc = () => {
     const { post } = this.props
     this.props.fetchList(post.offset, post.limit, this.state.date)
   }
 
-  renderDay (day) {
+  renderDay = (day) => {
     const date = day.getDate()
     const count = this.getTodayStartCount(date)
 
@@ -178,11 +178,11 @@ export default class Cal extends BaseComponent {
           <WallButtons />
           <DayPicker
             ref="daypicker"
-            renderDay={::this.renderDay}
+            renderDay={this.renderDay}
             modifiers={modifiers}
-            onDayClick={::this.handleDayClick}
-            onMonthChange={::this.handleMonthChange}
-            locale={locale}
+            onDayClick={this.handleDayClick}
+            onMonthChange={this.handleMonthChange}
+            locale={fixLocaleName(locale)}
             localeUtils={LocaleUtils}
           />
           <ADContent />
@@ -194,10 +194,11 @@ export default class Cal extends BaseComponent {
           <div className="row">
             <Cards
               posts={post.posts}
-              loadFunc={::this.loadFunc}
+              loadFunc={this.loadFunc}
               hasMore={post.hasMore}
               isFetching={loading}
               diff={129}
+              defaultLocale={this.props.defaultLocale}
             />
             {loading && isEmpty(post.posts) && (
               <div className="ui segment basic has-header">

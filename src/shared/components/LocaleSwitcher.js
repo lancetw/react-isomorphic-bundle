@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import { connect } from 'react-redux'
 import { trans2Simp, trans2Trad, toSimpChinese, toTradChinese } from 'shared/utils/tongwen'
 
-class LocaleSwitcher extends React.Component {
+class LocaleSwitcher extends Component {
 
   static propTypes = {
     locale: PropTypes.object.isRequired,
@@ -13,12 +13,10 @@ class LocaleSwitcher extends React.Component {
 
   constructor (props) {
     super(props)
-
-    this.handleChange = ::this.handleChange
   }
 
-  handleChange (e) {
-    const lang = e.target.getAttribute('value')
+  handleChange = (evt) => {
+    const lang = evt.target.getAttribute('value')
     counterpart.setLocale(lang)
 
     let title = counterpart(this.props.locale.title)

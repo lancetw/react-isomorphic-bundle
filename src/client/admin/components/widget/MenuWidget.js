@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 
@@ -7,7 +7,7 @@ import { logout } from 'client/admin/actions/AuthActions'
 if (process.env.BROWSER) {
 }
 
-export default class MenuWidget extends React.Component {
+export default class MenuWidget extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

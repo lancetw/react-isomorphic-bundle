@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import classNames from 'classnames'
@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
   swal = require('sweetalert')
 }
 
-export default class DetailWidget extends React.Component {
+export default class DetailWidget extends Component {
 
   static propTypes = {
     collect: PropTypes.object.isRequired,
