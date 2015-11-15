@@ -43,13 +43,11 @@ export default class PostCards extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      disablePointer: false,
       triggered: false,
       windowWidth: typeof window !== 'undefined' && window.innerWidth,
       windowHeight: typeof window !== 'undefined' && window.innerHeight
     }
 
-    this.disablePointerTimeout = null
     this.scrollTimeout = null
     this.lastPosition = -1
   }
@@ -62,13 +60,10 @@ export default class PostCards extends Component {
   componentWillReceiveProps (nextProps) {
     if (!nextProps.isFetching) {
       this.scrollTimeout = setTimeout(() => {
-        this.setState({ disablePointer: false })
         this.setState({ triggered: false })
         $('#overlay').remove()
         $('body').unbind('touchmove')
       }, 0)
-    } else {
-      this.setState({ disablePointer: true })
     }
   }
 
@@ -119,7 +114,6 @@ export default class PostCards extends Component {
       }
 
       if (!!this.props.hasMore) {
-        this.setState({ disablePointer: true })
         this.handleInfiniteLoad(scrollTop)
       }
     }
@@ -144,8 +138,7 @@ export default class PostCards extends Component {
     const scrollClass
       = classNames(
         'ui',
-        'scrollable',
-        {'disable-pointer': this.disablePointer}
+        'scrollable'
       )
 
     if (process.env.BROWSER && cards.length > 0) {
