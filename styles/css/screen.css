@@ -309,6 +309,10 @@ and (max-device-width : 667px) {
   overflow-x: hidden;
   user-select: none;
   -webkit-overflow-scrolling: touch;
+
+  div {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .switch-btns {

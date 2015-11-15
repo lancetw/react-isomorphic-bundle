@@ -17,7 +17,7 @@ Demo site: [react.deliverwork.co](http://react.deliverwork.co)
 ### Installation
 
 ```bash
-$ npm install -g nodemon webpack babel@5
+$ npm install -g nodemon webpack babel@5 node-inspector
 $ npm install
 ```
 
@@ -77,7 +77,7 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [x] advertisement scripts support
 - [x] Google maps with HTML5 Geolocation
 - [x] Google maps with driving directions
-- [x] post list with infinite scroll
+- [x] post list with infinite scroll (use requestAnimationFrame)
 - [x] post list with calendar
 - [x] serverside async data-fetching (great thanks to [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
 - [x] full text Search

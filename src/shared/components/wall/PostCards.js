@@ -7,10 +7,19 @@ import shouldPureComponentUpdate from 'react-pure-render/function'
 
 let $
 let ReactList
+let requestAnimationFrame
 if (process.env.BROWSER) {
   ReactList = require('react-list')
   $ = require('jquery')
   require('css/ui/spinkit')
+
+  requestAnimationFrame =
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    function (callback) { window.setTimeout(callback, 1000/60) }
 }
 
 export default class PostCards extends Component {
@@ -42,22 +51,24 @@ export default class PostCards extends Component {
 
     this.disablePointerTimeout = null
     this.scrollTimeout = null
+    this.lastPosition = -1
   }
 
   componentDidMount () {
     window.addEventListener('resize', this.handleResize)
+    this.fastScrollLoop()
   }
 
   componentWillReceiveProps (nextProps) {
     if (!nextProps.isFetching) {
       this.scrollTimeout = setTimeout(() => {
-        this.setState({disablePointer: false })
+        this.setState({ disablePointer: false })
         this.setState({ triggered: false })
         $('#overlay').remove()
         $('body').unbind('touchmove')
       }, 0)
     } else {
-      this.setState({disablePointer: true })
+      this.setState({ disablePointer: true })
     }
   }
 
@@ -66,13 +77,7 @@ export default class PostCards extends Component {
     if (this.op) {
       clearTimeout(this.scrollTimeout)
     }
-  }
-
-  handleScroll = (event) => {
-    if (!!this.props.hasMore) {
-      this.setState({disablePointer: true })
-      this.handleInfiniteLoad(this.props.threshold)
-    }
+    this.lastPosition = -1
   }
 
   handleResize = () => {
@@ -81,24 +86,45 @@ export default class PostCards extends Component {
     })
   }
 
-  handleInfiniteLoad (threshold) {
+  handleInfiniteLoad = (scrollTop) => {
     const nodeScroll = ReactDOM.findDOMNode(this.refs.scroll)
     const nodeList = ReactDOM.findDOMNode(this.refs.scrollList)
     const contentHeight = $(nodeList).height() - $(nodeScroll).height()
-    const scrollTop = nodeScroll.scrollTop
     const loading = this.props.isFetching
-    const checkPoint = (contentHeight - threshold) > 0
-      ? contentHeight - threshold
+    const checkPoint = (contentHeight - this.props.threshold) > 0
+      ? contentHeight - this.props.threshold
       : contentHeight
 
     /* eslint-disable max-len */
-    if (!this.state.triggered && nodeScroll.scrollTop > checkPoint) {
+    if (!this.state.triggered && scrollTop > checkPoint) {
       $('body').bind('touchmove', function(e) { e.preventDefault() })
       $('<div id="overlay"><div id="loading"><div class="scroll-spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.ui.scrollable')
       this.setState({ triggered: true })
 
       this.props.loadFunc()
     }
+  }
+
+  fastScrollLoop = () => {
+    const nodeScroll = ReactDOM.findDOMNode(this.refs.scroll)
+
+    if (nodeScroll) {
+      const scrollTop = nodeScroll.scrollTop
+
+      if (this.lastPosition === scrollTop) {
+        requestAnimationFrame(this.fastScrollLoop)
+        return false
+      } else {
+        this.lastPosition = scrollTop
+      }
+
+      if (!!this.props.hasMore) {
+        this.setState({ disablePointer: true })
+        this.handleInfiniteLoad(scrollTop)
+      }
+    }
+
+    requestAnimationFrame(this.fastScrollLoop)
   }
 
   renderItem = (index, key) => {
@@ -129,7 +155,6 @@ export default class PostCards extends Component {
         <div
           className={scrollClass}
           ref="scroll"
-          onScroll={debounce(this.handleScroll, 500)}
           style={{
             maxHeight: containerHeight
           }}>
