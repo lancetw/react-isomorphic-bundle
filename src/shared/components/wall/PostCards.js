@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import { isEmpty, debounce } from 'lodash'
+import { isEmpty } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
 import classNames from 'classnames'
 import shouldPureComponentUpdate from 'react-pure-render/function'
