@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-const Menu = require('react-burger-menu').bubble
+const Menu = require('react-burger-menu').push
 
 export default class Sidebar extends Component {
 
