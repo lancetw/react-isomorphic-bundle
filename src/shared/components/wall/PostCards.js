@@ -67,6 +67,8 @@ export default class PostCards extends Component {
     }
   }
 
+  shouldComponentUpdate = shouldPureComponentUpdate
+
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
     if (this.op) {

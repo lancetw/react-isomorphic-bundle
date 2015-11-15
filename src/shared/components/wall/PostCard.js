@@ -7,6 +7,7 @@ import moment from 'moment'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
 import counterpart from 'counterpart'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 
 const Translate = require('react-translate-component')
 
@@ -19,11 +20,15 @@ export default class PostCard extends Component {
 
   constructor (props) {
     super(props)
+
+    this.state = { locale: props.defaultLocale }
   }
 
   componentDidMount () {
     counterpart.onLocaleChange(this.handleLocaleChange)
   }
+
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   componentWillUnmount () {
     counterpart.offLocaleChange(this.handleLocaleChange)
@@ -31,12 +36,13 @@ export default class PostCard extends Component {
 
   handleLocaleChange = (newLocale) => {
     moment.locale(fixLocaleName(newLocale))
+    this.setState({ locale: newLocale })
   }
 
   renderCardProp (card) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.props.defaultLocale)), card.prop)}
+        {at(PostPropArray(originLocaleName(this.state.locale)), card.prop)}
       </span>
     )
   }
