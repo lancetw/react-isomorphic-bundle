@@ -1,19 +1,21 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { save } from '../actions/AuthActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import { connect } from 'react-redux'
 import createLocation from 'history/lib/createLocation'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-export default class SyncTokenHandler extends BaseComponent {
+class SyncTokenHandler extends Component {
 
   static propTypes = {
-    location: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
     history: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -23,11 +25,12 @@ export default class SyncTokenHandler extends BaseComponent {
   }
 
   componentDidMount () {
-    const dispatch = this.context.store.dispatch
-    const token = this.props.location.query.token
+    const { dispatch, location } = this.props
+    const { history } = this.context
+    const token = location.query.token
 
     dispatch(save(token)).then(() => {
-      this.releaseTimout = setTimeout(() => this.context.history.replaceState({}, '/home'), 1500)
+      this.releaseTimout = setTimeout(() => history.replaceState({}, '/home'), 1500)
     })
   }
 
@@ -38,9 +41,10 @@ export default class SyncTokenHandler extends BaseComponent {
   }
 
   render () {
+    const { _T } = this.props
     const Translate = require('react-translate-component')
-    const title = this._T('title.redirect')
-    const defaultTitle = this._T('title.site')
+    const title = _T('title.redirect')
+    const defaultTitle = _T('title.site')
 
     const msg = !!process.env.BROWSER
       ? <Translate content="redirect.msg" />
@@ -60,3 +64,5 @@ export default class SyncTokenHandler extends BaseComponent {
     )
   }
 }
+
+export default connect()(connectI18n()(SyncTokenHandler))

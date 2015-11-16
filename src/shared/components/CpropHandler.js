@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Cprop from './CpropComponent'
-import { connect } from 'react-redux'
 import { updateTitle } from '../actions/LocaleActions'
+import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class CpropHandler extends BaseComponent {
+class CpropHandler extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -21,19 +22,18 @@ class CpropHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.cprop')
-    const defaultTitle = this._T('title.site')
+    const { _T } = this.props
+    const title = _T('title.cprop')
+    const defaultTitle = _T('title.site')
 
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
-        <Cprop
-          {...this.props}
-          defaultLocale={this.getLocale()} />
+        <Cprop {...this.props} />
       </div>
     )
   }
 }
 
-export default connect(state => ({
-}))(CpropHandler)
+export default connect()(connectI18n()(CpropHandler))
+

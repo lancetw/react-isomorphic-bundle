@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import PostDetail from './PostDetailComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -6,21 +6,23 @@ import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
 import { tongwenAuto } from 'shared/utils/tongwen'
 import { getFileExt } from 'shared/utils/file-utils'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class PostDetailHandler extends BaseComponent {
+class PostDetailHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -58,7 +60,7 @@ class PostDetailHandler extends BaseComponent {
   }
 
   componentDidUpdate () {
-    tongwenAuto(document, this.getLocale())
+    tongwenAuto(document, this.props.defaultLocale)
   }
 
   componentWillUnmount () {
@@ -68,7 +70,7 @@ class PostDetailHandler extends BaseComponent {
   }
 
   render () {
-    const { dispatch } = this.props
+    const { dispatch, _T } = this.props
     const { getState } = this.context.store
     const { detail } = getState().post
     const protocol = process.env.BROWSER
@@ -78,7 +80,7 @@ class PostDetailHandler extends BaseComponent {
       ? window.location.host
       : this.context.store.host
     const title = detail.title
-    const defaultTitle = this._T('title.site')
+    const defaultTitle = _T('title.site')
     const files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
       : []
@@ -101,8 +103,7 @@ class PostDetailHandler extends BaseComponent {
           title={`${title} | ${defaultTitle}`} meta={meta} />
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
-          {...this.props}
-          defaultLocale={this.getLocale()} />
+          {...this.props} />
       </div>
     )
   }
@@ -113,4 +114,4 @@ export default connect(state => ({
   post: state.post,
   moreList: state.cprop,
   map: state.map
-}))(PostDetailHandler)
+}))(connectI18n()(PostDetailHandler))

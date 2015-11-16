@@ -1,21 +1,23 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Signup from './SignupComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as SignupActions from '../actions/SignupActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
+import { SignupFormOptions } from 'shared/utils/forms'
 
-class SignupHandler extends BaseComponent {
+class SignupHandler extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -32,8 +34,9 @@ class SignupHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.signup')
-    const defaultTitle = this._T('title.site')
+    const { _T } = this.props
+    const title = _T('title.signup')
+    const defaultTitle = _T('title.site')
     const { dispatch } = this.props
     return (
       <div>
@@ -41,7 +44,7 @@ class SignupHandler extends BaseComponent {
         <Signup
           {...bindActionCreators(SignupActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()} />
+          options={SignupFormOptions(this.props.defaultLocale)} />
       </div>
     )
   }
@@ -49,4 +52,6 @@ class SignupHandler extends BaseComponent {
 
 export default connect(state => ({
   signup: state.signup
-}))(SignupHandler)
+}))(connectI18n(locale => ({
+  options: SignupFormOptions(locale)
+}))(SignupHandler))

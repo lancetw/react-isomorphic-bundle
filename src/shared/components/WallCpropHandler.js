@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import WallCprop from './WallCpropComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -8,22 +8,22 @@ import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
-import counterpart from 'counterpart'
-import moment from 'moment'
-import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
-import { BaseComponent } from 'shared/components'
+import { originLocaleName } from 'shared/utils/locale-utils'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class WallCpropHandler extends BaseComponent {
+class WallCpropHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -43,22 +43,9 @@ class WallCpropHandler extends BaseComponent {
     resolver.resolve(this.postActions.cpropList, cprop, 0, 20)
   }
 
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
-  }
-
-  componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
-  }
-
   getCardProp = (index) => {
-    const _lang = originLocaleName(this.getLocale())
+    const _lang = originLocaleName(this.props.defaultLocale)
     return at(PostPropArray(_lang), index)
-  }
-
-  handleLocaleChange = (newLocale) => {
-    moment.locale(fixLocaleName(newLocale))
-    this.setState({ locale: newLocale })
   }
 
   loadFunc = () => {
@@ -68,19 +55,18 @@ class WallCpropHandler extends BaseComponent {
   }
 
   render () {
-    const { params } = this.props
+    const { _T, params } = this.props
     const { cprop } = params
-    const defaultTitle = this._T('title.site')
+    const defaultTitle = _T('title.site')
     const title = cprop > 0
       ? this.getCardProp(cprop)
-      : this._T('title.wall')
+      : _T('title.wall')
 
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <WallCprop
           {...this.props}
-          defaultLocale={this.getLocale()}
           loadFunc={this.loadFunc} />
       </div>
     )
@@ -90,4 +76,4 @@ class WallCpropHandler extends BaseComponent {
 export default connect(state => ({
   auth: state.auth,
   post: state.cprop
-}))(WallCpropHandler)
+}))(connectI18n()(WallCpropHandler))

@@ -2,14 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
 import Cards from 'shared/components/wall/PostCards'
-import {
-  Form,
-  ManageForm,
-  ManageFormOptions
-} from 'shared/utils/forms'
+import { Form, ManageForm } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
-import counterpart from 'counterpart'
 
 let $
 if (process.env.BROWSER) {
@@ -23,8 +18,9 @@ export default class Manage extends Component {
     auth: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     loadFunc: PropTypes.func.isRequired,
-    defaultLocale: PropTypes.string.isRequired,
-    changeInfo: PropTypes.func.isRequired
+    options: PropTypes.object.isRequired,
+    changeInfo: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   constructor (props) {
@@ -32,8 +28,6 @@ export default class Manage extends Component {
 
     this.messageTimeout = undefined
     this.releaseTimeout = undefined
-
-    const locale = this.props.defaultLocale
 
     this.state = {
       formInited: false,
@@ -49,7 +43,7 @@ export default class Manage extends Component {
         tel: null,
         fax: null
       },
-      options: ManageFormOptions(locale),
+      options: props.options,
       submited: false,
       updated: false
     }
@@ -57,10 +51,6 @@ export default class Manage extends Component {
 
   componentWillMount () {
     this.initForm(this.props.user.orginfo)
-  }
-
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -71,10 +61,11 @@ export default class Manage extends Component {
     }
     this.validation(nextProps.user.errors)
     this.checkSubmited(nextProps.user._orginfo)
+
+    this.setState({ options: nextProps.options })
   }
 
   componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
@@ -84,12 +75,6 @@ export default class Manage extends Component {
     $('body').stop().animate({
       scrollTop: 0
     }, 600)
-  }
-
-  handleLocaleChange = (newLocale) => {
-    this.setState({
-      options: ManageFormOptions(newLocale)
-    })
   }
 
   handleChange = (value) => {

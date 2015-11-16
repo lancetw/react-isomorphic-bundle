@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Manage from './ManageComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -7,19 +7,21 @@ import * as AuthActions from '../actions/AuthActions'
 import * as UserActions from '../actions/UserActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
+import { ManageFormOptions } from 'shared/utils/forms'
 
-class ManageHandler extends BaseComponent {
+class ManageHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired,
     auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -49,9 +51,9 @@ class ManageHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.manage')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
+    const { dispatch, _T } = this.props
+    const title = _T('title.manage')
+    const defaultTitle = _T('title.site')
 
     return (
       <div>
@@ -60,7 +62,7 @@ class ManageHandler extends BaseComponent {
           {...bindActionCreators(UserActions, dispatch)}
           {...this.props}
           loadFunc={this.loadFunc}
-          defaultLocale={this.getLocale()} />
+          options={ManageFormOptions(this.props.defaultLocale)} />
       </div>
     )
   }
@@ -70,4 +72,6 @@ export default connect(state => ({
   auth: state.auth,
   post: state.manage,
   user: state.user
-}))(ManageHandler)
+}))(connectI18n(locale => ({
+  options: ManageFormOptions(locale)
+}))(ManageHandler))

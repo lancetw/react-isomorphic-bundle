@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { BaseComponent } from 'shared/components'
-import { Form, SignupForm, SignupFormOptions } from 'shared/utils/forms'
-import { isEmpty, clone, omit } from 'lodash'
+import { Form, SignupForm } from 'shared/utils/forms'
+import { isEmpty, clone, omit, assign } from 'lodash'
 import classNames from 'classnames'
-import counterpart from 'counterpart'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 export default class Signup extends Component {
@@ -11,7 +9,7 @@ export default class Signup extends Component {
   static propTypes = {
     submit: PropTypes.func.isRequired,
     signup: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    options: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -20,24 +18,20 @@ export default class Signup extends Component {
 
   constructor (props) {
     super(props)
-
     this.releaseTimeout = undefined
     this.releaseTimeout1 = undefined
     this.state = {
       value: {
         tos: false
       },
-      options: SignupFormOptions(props.defaultLocale),
+      options: props.options,
       submited: false
     }
   }
 
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
-  }
-
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps, nextStates) {
     this.validation(nextProps.signup.errors)
+    this.setState({ options: nextProps.options })
   }
 
   componentDidUpdate () {
@@ -50,7 +44,6 @@ export default class Signup extends Component {
   }
 
   componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
       clearTimeout(this.releaseTimeout1)
@@ -59,13 +52,8 @@ export default class Signup extends Component {
 
   handleRecaptchaChange = (value) => {}
 
-  handleLocaleChange = (newLocale) => {
-    this.setState({
-      options: SignupFormOptions(newLocale)
-    })
-  }
-
   handleChange = (value, path) => {
+    this.refs.form.getComponent('email').validate();
     const pass = this.refs.form.getComponent('password')
     const check = this.refs.form.getComponent('passwordCheck')
 
@@ -91,8 +79,8 @@ export default class Signup extends Component {
   handleSubmit = (evt) => {
     evt.preventDefault()
     const form = this.refs.form.getValue()
-    const value = clone(form)
-    value.recaptcha = this.refs.recaptcha.getValue()
+    let value = clone(form)
+    value = assign(value, { recaptcha: this.refs.recaptcha.getValue() })
 
     if (value && value.tos === true
         && (value.password === value.passwordCheck)

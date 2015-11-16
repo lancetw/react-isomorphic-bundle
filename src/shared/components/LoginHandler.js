@@ -1,21 +1,23 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Login from './LoginComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AuthActions from '../actions/AuthActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
+import { LoginFormOptions } from 'shared/utils/forms'
 
-class LoginHandler extends BaseComponent {
+class LoginHandler extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -29,16 +31,17 @@ class LoginHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.login')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
+    const { dispatch, _T } = this.props
+    const title = _T('title.login')
+    const defaultTitle = _T('title.site')
+
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Login
           {...bindActionCreators(AuthActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()} />
+          options={LoginFormOptions(this.props.defaultLocale)} />
       </div>
     )
   }
@@ -46,4 +49,6 @@ class LoginHandler extends BaseComponent {
 
 export default connect(state => ({
   auth: state.auth
-}))(LoginHandler)
+}))(connectI18n(locale => ({
+  options: LoginFormOptions(locale)
+}))(LoginHandler))

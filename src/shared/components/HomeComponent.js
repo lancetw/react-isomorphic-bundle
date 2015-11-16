@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { BaseComponent } from 'shared/components'
 import { Link } from 'react-router'
 import { isEmpty, at } from 'lodash'
 import { toShortDate } from 'shared/utils/date-utils'
 import { PostPropArray } from 'shared/utils/forms'
-import counterpart from 'counterpart'
 import { originLocaleName } from 'shared/utils/locale-utils'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
 
@@ -17,20 +15,6 @@ export default class HomeComponent extends Component {
 
   constructor (props) {
     super(props)
-
-    this.state = { locale: props.defaultLocale}
-  }
-
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
-  }
-
-  componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
-  }
-
-  handleLocaleChange = (newLocale) => {
-    this.setState({ locale: newLocale })
   }
 
   renderNews (posts) {
@@ -45,29 +29,30 @@ export default class HomeComponent extends Component {
 
   renderItem (post) {
     const Translate = require('react-translate-component')
+    const { defaultLocale } = this.props
 
     const eventDate = (post.startDate === post.endDate)
     ? toShortDate(post.endDate)
     : toShortDate(post.startDate) + ' - ' + toShortDate(post.endDate)
 
     return (
-    <div key={post.id} className="ui orange icon message">
-      <div className="content">
-        <h3>
-          <Link to={`/w/${post.id}`}>
-            <span className="ui orange">
-              [{at(PostPropArray(originLocaleName(this.state.locale)), post.prop)}]
-            </span>
-            <span> </span>
-            {tongwenAutoStr(post.ocname, this.state.locale)
-              || <Translate content="news.unnamed" />}
-          </Link>
-        </h3>
-        <div className="header">
-          {tongwenAutoStr(post.title, this.state.locale)}
+      <div key={post.id} className="ui orange icon message">
+        <div className="content">
+          <h3>
+            <Link to={`/w/${post.id}`}>
+              <span className="ui orange">
+                [{at(PostPropArray(originLocaleName(defaultLocale)), post.prop)}]
+              </span>
+              <span> </span>
+              {tongwenAutoStr(post.ocname, defaultLocale)
+                || <Translate content="news.unnamed" />}
+            </Link>
+          </h3>
+          <div className="header">
+            {tongwenAutoStr(post.title, defaultLocale)}
+          </div>
         </div>
       </div>
-    </div>
     )
   }
 

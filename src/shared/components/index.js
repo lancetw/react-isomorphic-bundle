@@ -1,4 +1,3 @@
-export { default as BaseComponent } from './BaseComponent'
 export { default as App } from './AppHandler'
 export { default as Home } from './HomeHandler'
 export { default as Login } from './LoginHandler'

@@ -1,26 +1,25 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Nearby from './NearbyComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as SearchActions from '../actions/SearchActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
 import { runGeoLoc } from 'shared/utils/geoloc-utils'
 import { Loading } from 'shared/components/addon/loading'
-import { isEmpty } from 'lodash'
-import counterpart from 'counterpart'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
 if (process.env.BROWSER) {
   require('css/addon/pin')
   require('css/addon/nearby')
 }
 
-class NearbyHandler extends BaseComponent {
+class NearbyHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    search: PropTypes.object.isRequired
+    search: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -75,7 +74,7 @@ class NearbyHandler extends BaseComponent {
   }
 
   componentDidMount () {
-    Loading.show(counterpart('geoloc.loading'))
+    Loading.show(this.props._T('geoloc.loading'))
   }
 
   componentWillReceiveProps (nextProps) {
@@ -95,18 +94,17 @@ class NearbyHandler extends BaseComponent {
   }
 
   render () {
-    const { dispatch, search } = this.props
+    const { dispatch, search, _T } = this.props
 
-    const title = this._T('title.nearby')
-    const defaultTitle = this._T('title.site')
+    const title = _T('title.nearby')
+    const defaultTitle = _T('title.site')
 
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Nearby
           {...this.props}
-          {...bindActionCreators(SearchActions, dispatch)}
-          defaultLocale={this.getLocale()} />
+          {...bindActionCreators(SearchActions, dispatch)} />
       </div>
     )
   }
@@ -114,4 +112,4 @@ class NearbyHandler extends BaseComponent {
 
 export default connect(state => ({
   search: state.search
-}))(NearbyHandler)
+}))(connectI18n()(NearbyHandler))

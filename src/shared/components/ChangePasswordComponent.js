@@ -1,21 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { BaseComponent } from 'shared/components'
-import {
-  Form,
-  ChangePasswordForm,
-  ChangePasswordFormOptions
-} from 'shared/utils/forms'
+import { Form, ChangePasswordForm } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
-import counterpart from 'counterpart'
 
 export default class ChangePassword extends Component {
 
   static propTypes = {
     changePassword: PropTypes.func.isRequired,
+    changePasswordInit: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    options: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -25,32 +20,23 @@ export default class ChangePassword extends Component {
     this.releaseTimeout = undefined
     this.state = {
       value: { password: '', passwordCheck: '' },
-      options: ChangePasswordFormOptions(props.defaultLocale),
+      options: props.options,
       submited: false,
       updated: false
     }
   }
 
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
-  }
-
   componentWillReceiveProps (nextProps) {
     this.validation(nextProps.user.errors)
     this.checkSubmited(nextProps.user._info)
+
+    this.setState({ options: nextProps.options })
   }
 
   componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
-  }
-
-  handleLocaleChange = (newLocale) => {
-    this.setState({
-      options: ChangePasswordFormOptions(newLocale)
-    })
   }
 
   handleChange = (value, path) => {
@@ -126,6 +112,7 @@ export default class ChangePassword extends Component {
 
   checkSubmited (info) {
     if (!isEmpty(info)) {
+      this.props.changePasswordInit()
       this.setState({ submited: false })
       if (info.email) {
         this.setState({ updated: true })

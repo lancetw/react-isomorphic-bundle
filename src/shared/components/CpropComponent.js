@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
-import counterpart from 'counterpart'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { PostPropArray } from 'shared/utils/forms'
 import { keys, map, range, at } from 'lodash'
 import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
-import { BaseComponent } from 'shared/components'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 export default class Cprop extends Component {
@@ -16,26 +14,12 @@ export default class Cprop extends Component {
 
   constructor (props) {
     super(props)
-
-    this.state = { locale: props.defaultLocale }
-  }
-
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
-  componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
-  }
-
-  handleLocaleChange = (newLocale) => {
-    this.setState({ locale: newLocale })
-  }
-
   renderCprop () {
-    const _lang = originLocaleName(this.state.locale)
+    const _lang = originLocaleName(this.props.defaultLocale)
     const _size = keys(PostPropArray(_lang)).length
     const _range = range(1, _size)
     return map(_range, (index) => {
@@ -55,7 +39,7 @@ export default class Cprop extends Component {
   renderCardProp (index) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.state.locale)), index)}
+        {at(PostPropArray(originLocaleName(this.props.defaultLocale)), index)}
       </span>
     )
   }

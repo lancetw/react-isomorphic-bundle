@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Og from './OgComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -6,18 +6,18 @@ import * as OgActions from '../actions/OgActions'
 import * as SearchActions from '../actions/SearchActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class OgHandler extends BaseComponent {
+class OgHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func,
-    params: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -41,10 +41,10 @@ class OgHandler extends BaseComponent {
   }
 
   render () {
-    const { dispatch } = this.props
+    const { dispatch, _T } = this.props
     const { getState } = this.context.store
-    const title = getState().ognearby.oginfo.ocname + ' | ' + this._T('title.ogpage')
-    const defaultTitle = this._T('title.site')
+    const title = getState().ognearby.oginfo.ocname + ' | ' + _T('title.ogpage')
+    const defaultTitle = _T('title.site')
     const meta = []
     meta.push({ 'property': 'og:type', 'content': 'article' })
 
@@ -54,7 +54,6 @@ class OgHandler extends BaseComponent {
         <Og
           {...this.props}
           {...bindActionCreators(SearchActions, dispatch)}
-          defaultLocale={this.getLocale()}
         />
       </div>
     )
@@ -66,4 +65,4 @@ export default connect(state => ({
   user: state.user,
   og: state.og,
   ognearby: state.ognearby
-}))(OgHandler)
+}))(connectI18n()(OgHandler))

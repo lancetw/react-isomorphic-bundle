@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Post from './PostComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -8,18 +8,26 @@ import * as UploadActions from '../actions/UploadActions'
 import * as MapActions from '../actions/MapActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
+import {
+  PostForm,
+  PostFormOptions,
+  RegForm,
+  RegFormOptions
+} from 'shared/utils/forms'
 
-class PostEditHandler extends BaseComponent {
+class PostEditHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -63,9 +71,10 @@ class PostEditHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.post')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
+    const { dispatch, _T, defaultLocale } = this.props
+    const title = _T('title.post')
+    const defaultTitle = _T('title.site')
+
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
@@ -74,8 +83,11 @@ class PostEditHandler extends BaseComponent {
           {...bindActionCreators(UploadActions, dispatch)}
           {...bindActionCreators(MapActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()}
-          disableSubmit={this.state.disableSubmit} />
+          disableSubmit={this.state.disableSubmit}
+          options={PostFormOptions(defaultLocale)}
+          regOptions={RegFormOptions(defaultLocale)}
+          formType={PostForm(defaultLocale)}
+          regFormType={RegForm(defaultLocale)} />
       </div>
     )
   }
@@ -86,4 +98,9 @@ export default connect(state => ({
   post: state.post,
   upload: state.upload,
   map: state.map
-}))(PostEditHandler)
+}))(connectI18n(locale => ({
+  options: PostFormOptions(locale),
+  regOptions: RegFormOptions(locale),
+  formType: PostForm(locale),
+  regFormType: RegForm(locale)
+}))(PostEditHandler))

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Cal from './CalComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -6,19 +6,20 @@ import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
 import moment from 'moment'
-import { BaseComponent } from 'shared/components'
 import queryString from 'query-string'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class CalHandler extends BaseComponent {
+class CalHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -56,16 +57,15 @@ class CalHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.cal')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
+    const { dispatch, _T } = this.props
+    const title = _T('title.cal')
+    const defaultTitle = _T('title.site')
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Cal
           {...bindActionCreators(PostActions, dispatch)}
-          {...this.props}
-          defaultLocale={this.getLocale()} />
+          {...this.props} />
       </div>
     )
   }
@@ -73,4 +73,4 @@ class CalHandler extends BaseComponent {
 
 export default connect(state => ({
   post: state.post
-}))(CalHandler)
+}))(connectI18n()(CalHandler))

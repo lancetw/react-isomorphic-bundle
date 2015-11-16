@@ -11,7 +11,6 @@ import {
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment'
-import counterpart from 'counterpart'
 import ImageUpload from 'shared/components/addon/image-upload'
 import GMap from 'shared/components/addon/maps/gmap'
 import {
@@ -49,7 +48,12 @@ export default class Post extends Component {
     map: PropTypes.object.isRequired,
     params: PropTypes.object,
     defaultLocale: PropTypes.string.isRequired,
-    disableSubmit: PropTypes.bool.isRequired
+    disableSubmit: PropTypes.bool.isRequired,
+    options: PropTypes.object.isRequired,
+    regOptions: PropTypes.object.isRequired,
+    formType: PropTypes.func.isRequired,
+    regFormType: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -66,7 +70,6 @@ export default class Post extends Component {
     this.releaseTimeout = undefined
     this.releaseTimeout1 = undefined
     const today = this.dateToArray(moment().format('YYYY-M-D'))
-    const locale = this.props.defaultLocale
     this.state = {
       formInited: false,
       uploadInited: false,
@@ -83,13 +86,12 @@ export default class Post extends Component {
         openDate: today,
         closeDate: today
       },
-      formType: PostForm(locale),
-      regFormType: RegForm(locale),
-      options: PostFormOptions(locale),
-      regOptions: RegFormOptions(locale),
+      formType: props.formType,
+      regFormType: props.regFormType,
+      options: props.options,
+      regOptions: props.regOptions,
       submited: false,
       updated: false,
-      locale: locale,
       placeError: false,
       latlngError: false,
       disableSubmit: props.disableSubmit
@@ -118,10 +120,6 @@ export default class Post extends Component {
     }
   }
 
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
-  }
-
   componentWillReceiveProps (nextProps) {
     if (!this.state.formInited) {
       const { id } = this.props.params
@@ -139,28 +137,32 @@ export default class Post extends Component {
     if (this.refs.lng) {
       ReactDOM.findDOMNode(this.refs.lng).value = nextProps.map.lng
     }
+
+    this.setState({
+      options: nextProps.options,
+      regOptions: nextProps.regOptions,
+      formType: nextProps.formType,
+      regFormType: nextProps.regFormType
+    })
   }
 
   componentDidUpdate () {
-    if (process.env.BROWSER) {
-      if (!isEmpty(this.props.post.content)) {
-        this.releaseTimeout = setTimeout(() => {
-          this.context.history.replaceState({}, '/w')
-        }, 1000)
-      }
+    if (!isEmpty(this.props.post.content)) {
+      this.releaseTimeout = setTimeout(() => {
+        this.context.history.replaceState({}, '/w')
+      }, 1000)
     }
   }
 
   componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
+    typeof unlisten === 'function' && unlisten()
     if (this.op) {
-      typeof unlisten === 'function' && unlisten()
       clearTimeout(this.releaseTimeout)
       clearTimeout(this.releaseTimeout1)
     }
   }
 
-  setHistory (index) {
+  setHistory = (index) => {
     const pathname = window.location.pathname
     history.pushState({ the: 'state' }, pathname + '?tab=' + index)
     this.setState({ tabIndex: +index })
@@ -216,6 +218,7 @@ export default class Post extends Component {
 
   handleSelected = (index) => {
     this.setHistory(index)
+
     if (index === 2 && !this.state.uploadInited) {
       const { detail } = this.props.post
       const { user } = this.props.auth
@@ -242,15 +245,6 @@ export default class Post extends Component {
     }
   }
 
-  handleLocaleChange = (newLocale) => {
-    this.setState({
-      options: PostFormOptions(newLocale),
-      regOptions: RegFormOptions(newLocale),
-      formType: PostForm(newLocale),
-      regFormType: RegForm(newLocale)
-    })
-  }
-
   handleMapChange = (event) => {
     const { center } = event
     if (this.refs.lat) {
@@ -263,8 +257,9 @@ export default class Post extends Component {
 
   handleSearch = (event) => {
     event.preventDefault()
+    const { _T } = this.props
     const address = ReactDOM.findDOMNode(this.refs.place).value.trim()
-    if (!address || address === counterpart('post.map.my')) {
+    if (!address || address === _T('post.map.my')) {
       runGeoLoc().then(this.showPosition.bind(this))
     } else {
       this.props.search(address)
@@ -583,7 +578,7 @@ export default class Post extends Component {
                 <div className={PlaceInput}>
                   <input
                     type="text"
-                    placeholder={counterpart('post.map.my')}
+                    placeholder={this.props._T('post.map.my')}
                     ref="place"
                     defaultValue={
                       this.props.map.place

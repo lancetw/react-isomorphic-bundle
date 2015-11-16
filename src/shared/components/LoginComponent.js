@@ -1,15 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
-import { BaseComponent } from 'shared/components'
-import {
-  Form,
-  LoginForm,
-  LoginFormOptions
-} from 'shared/utils/forms'
+import { Form, LoginForm } from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
-import counterpart from 'counterpart'
 
 export default class Login extends Component {
 
@@ -18,7 +12,7 @@ export default class Login extends Component {
     save: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    options: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -34,12 +28,8 @@ export default class Login extends Component {
     this.state = {
       submited: false,
       ok: false,
-      options: LoginFormOptions(props.defaultLocale)
+      options: props.options
     }
-  }
-
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -54,41 +44,32 @@ export default class Login extends Component {
         this.setState({ pleaseLogin: true })
       }
     }
+
+    this.setState({ options: nextProps.options })
   }
 
   componentDidUpdate () {
-    if (process.env.BROWSER) {
-      if (this.props.auth.isAuthenticated) {
-        let path
-        const { location } = this.context.history
-        if (typeof location !== 'undefined') {
-          const { nextPathname } = location.state
-          if (nextPathname) {
-            path = nextPathname
-          } else {
-            path = '/home'
-          }
+    if (this.props.auth.isAuthenticated) {
+      let path
+      const { location } = this.context.history
+      if (typeof location !== 'undefined') {
+        const { nextPathname } = location.state
+        if (nextPathname) {
+          path = nextPathname
+        } else {
+          path = '/home'
         }
-        this.releaseTimeout =
-          setTimeout(() => this.context.history.replaceState({}, path), 1000)
       }
+      this.releaseTimeout =
+        setTimeout(() => this.context.history.replaceState({}, path), 1000)
     }
   }
 
   componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
       clearTimeout(this.shakeTimeout)
       clearTimeout(this.submitTimeout)
-    }
-  }
-
-  handleLocaleChange = (newLocale) => {
-    if (process.env.BROWSER) {
-      this.setState({
-        options: LoginFormOptions(newLocale)
-      })
     }
   }
 

@@ -30,8 +30,7 @@ export default class PostCards extends Component {
     hasMore: PropTypes.bool.isRequired,
     diff: PropTypes.number.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    threshold: PropTypes.number,
-    defaultLocale: PropTypes.string.isRequired
+    threshold: PropTypes.number
   }
 
   static defaultProps = {
@@ -129,7 +128,6 @@ export default class PostCards extends Component {
       <Card
         key={key}
         data={card}
-        defaultLocale={this.props.defaultLocale}
       />
     )
   }
@@ -167,11 +165,10 @@ export default class PostCards extends Component {
         </div>
       )
     } else {
-      const { defaultLocale } = this.props
       return (
         <div className="ui cards" ref="scrollable">
           {!isEmpty(cards) && cards.map(function (card) {
-            return <Card key={card.id} data={card} defaultLocale={defaultLocale} />
+            return <Card key={card.id} data={card} />
           })}
         </div>
       )

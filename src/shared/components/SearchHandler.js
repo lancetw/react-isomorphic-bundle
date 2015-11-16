@@ -1,16 +1,17 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Search from './SearchComponent'
 import { connect } from 'react-redux'
 import * as SearchActions from '../actions/SearchActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class SearchHandler extends BaseComponent {
+class SearchHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    search: PropTypes.object.isRequired
+    search: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -35,15 +36,15 @@ class SearchHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.search')
-    const defaultTitle = this._T('title.site')
+    const { _T } = this.props
+    const title = _T('title.search')
+    const defaultTitle = _T('title.site')
 
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Search
           {...this.props}
-          defaultLocale={this.getLocale()}
           loadFunc={this.loadFunc} />
       </div>
     )
@@ -52,4 +53,4 @@ class SearchHandler extends BaseComponent {
 
 export default connect(state => ({
   search: state.search
-}))(SearchHandler)
+}))(connectI18n()(SearchHandler))

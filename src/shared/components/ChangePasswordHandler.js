@@ -1,21 +1,23 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ChangePassword from './ChangePasswordComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from '../actions/UserActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
+import { ChangePasswordFormOptions } from 'shared/utils/forms'
 
-class ChangePasswordHandler extends BaseComponent {
+class ChangePasswordHandler extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -33,16 +35,16 @@ class ChangePasswordHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.password')
-    const defaultTitle = this._T('title.site')
-    const { dispatch } = this.props
+    const { dispatch, _T } = this.props
+    const title = _T('title.password')
+    const defaultTitle = _T('title.site')
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <ChangePassword
           {...bindActionCreators(UserActions, dispatch)}
           {...this.props}
-          defaultLocale={this.getLocale()} />
+          options={ChangePasswordFormOptions(this.props.defaultLocale)} />
       </div>
     )
   }
@@ -50,4 +52,7 @@ class ChangePasswordHandler extends BaseComponent {
 
 export default connect(state => ({
   user: state.user
-}))(ChangePasswordHandler)
+}))(connectI18n(locale => ({
+  options: ChangePasswordFormOptions(locale)
+}))(ChangePasswordHandler))
+

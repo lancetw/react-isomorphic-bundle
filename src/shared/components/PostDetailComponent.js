@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { BaseComponent } from 'shared/components'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
 import moment from 'moment'
@@ -7,9 +6,8 @@ import { getFileName, getFileExt } from 'shared/utils/file-utils'
 import classNames from 'classnames'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
-import counterpart from 'counterpart'
 import { Link } from 'react-router'
-import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
+import { originLocaleName } from 'shared/utils/locale-utils'
 import AutoLinkText from 'react-autolink-text'
 import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
@@ -46,15 +44,9 @@ export default class Post extends Component {
     super(props)
 
     this.releaseTimeout = undefined
-    this.state = { locale: props.defaultLocale }
-  }
-
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
     if (this.op) {
       clearTimeout(this.releaseTimeout)
     }
@@ -69,10 +61,10 @@ export default class Post extends Component {
     const ent = require('ent')
     if (content) {
       return (
-        content.replace(/^\"|\"$/g, '').split('\n').map((t) => {
+        content.replace(/^\"|\"$/g, '').split('\n').map((t, i) => {
           return t === ''
-            ? <br />
-            : <p><AutoLinkText text={ent.decode(this.removeTags(t))}/></p>
+            ? <br key={i} />
+            : <p key={i}><AutoLinkText text={ent.decode(this.removeTags(t))}/></p>
         })
       )
     }
@@ -121,14 +113,10 @@ export default class Post extends Component {
     )
   }
 
-  handleLocaleChange = (newLocale) => {
-    this.setState({ locale: newLocale })
-  }
-
   renderDetailProp (detail) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.state.locale)), detail.prop)}
+        {at(PostPropArray(originLocaleName(this.props.defaultLocale)), detail.prop)}
       </span>
     )
   }

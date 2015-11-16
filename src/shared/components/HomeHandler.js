@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Home from './HomeComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -6,17 +6,18 @@ import * as AuthActions from '../actions/AuthActions'
 import * as PostActions from '../actions/PostActions'
 import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
-import { BaseComponent } from 'shared/components'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class HomeHandler extends BaseComponent {
+class HomeHandler extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func
+    dispatch: PropTypes.func,
+    auth: PropTypes.object.isRequired,
+    _T: PropTypes.func.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -37,8 +38,9 @@ class HomeHandler extends BaseComponent {
   }
 
   render () {
-    const title = this._T('title.home')
-    const defaultTitle = this._T('title.site')
+    const { _T } = this.props
+    const title = _T('title.home')
+    const defaultTitle = _T('title.site')
 
     const meta = []
     meta.push({ 'property': 'og:type', 'content': 'article' })
@@ -46,10 +48,7 @@ class HomeHandler extends BaseComponent {
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} meta={meta} />
-        <Home
-          {...this.props}
-          defaultLocale={this.getLocale()}
-        />
+        <Home {...this.props} />
       </div>
     )
   }
@@ -58,4 +57,4 @@ class HomeHandler extends BaseComponent {
 export default connect(state => ({
   auth: state.auth,
   post: state.news
-}))(HomeHandler)
+}))(connectI18n()(HomeHandler))

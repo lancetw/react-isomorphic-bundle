@@ -4,10 +4,7 @@ import { connect } from 'react-redux'
 import * as UploadActions from 'shared/actions/UploadActions'
 import { isEmpty } from 'lodash'
 
-@connect(state => ({
-  upload: state.upload
-}))
-export default class ImageUpload extends Component {
+class ImageUpload extends Component {
 
   static propTypes = {
     index: PropTypes.number.isRequired,
@@ -97,3 +94,7 @@ export default class ImageUpload extends Component {
     )
   }
 }
+
+export default connect(state => ({
+  upload: state.upload
+}))(ImageUpload)

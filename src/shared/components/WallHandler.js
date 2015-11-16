@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Wall from './WallComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -8,28 +8,26 @@ import { updateTitle } from '../actions/LocaleActions'
 import Helmet from 'react-helmet'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
-import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
-import { BaseComponent } from 'shared/components'
+import { originLocaleName } from 'shared/utils/locale-utils'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
-class WallHandler extends BaseComponent {
+class WallHandler extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
+    defaultLocale: PropTypes.string.isRequired,
     params: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
-    translator: PropTypes.object
+    store: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
-
-    this.state = {
-      locale: fixLocaleName(this.getLocale())
-    }
   }
 
   componentWillMount () {
@@ -46,7 +44,7 @@ class WallHandler extends BaseComponent {
   }
 
   getCardProp = (index) => {
-    const _lang = originLocaleName(this.getLocale())
+    const _lang = originLocaleName(this.props.defaultLocale)
     return at(PostPropArray(_lang), index)
   }
 
@@ -57,19 +55,18 @@ class WallHandler extends BaseComponent {
   }
 
   render () {
-    const { params } = this.props
+    const { params, _T } = this.props
     const { cprop } = params
-    const defaultTitle = this._T('title.site')
+    const defaultTitle = _T('title.site')
     const title = cprop > 0
       ? this.getCardProp(cprop) + this._T('title.wall_cprop')
-      : this._T('title.wall')
+      : _T('title.wall')
 
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Wall
           {...this.props}
-          defaultLocale={this.getLocale()}
           loadFunc={this.loadFunc} />
       </div>
     )
@@ -79,4 +76,4 @@ class WallHandler extends BaseComponent {
 export default connect(state => ({
   auth: state.auth,
   post: state.overview
-}))(WallHandler)
+}))(connectI18n()(WallHandler))

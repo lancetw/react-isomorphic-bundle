@@ -3,15 +3,14 @@ import { Link } from 'react-router'
 import { toShortDate, toYear } from 'shared/utils/date-utils'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
-import moment from 'moment'
-import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
-import counterpart from 'counterpart'
+import { originLocaleName } from 'shared/utils/locale-utils'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
 import shouldPureComponentUpdate from 'react-pure-render/function'
+import connectI18n from 'shared/components/addon/connect-i18n'
 
 const Translate = require('react-translate-component')
 
-export default class PostCard extends Component {
+class PostCard extends Component {
 
   static propTypes = {
     data: PropTypes.object,
@@ -20,29 +19,14 @@ export default class PostCard extends Component {
 
   constructor (props) {
     super(props)
-
-    this.state = { locale: props.defaultLocale }
-  }
-
-  componentDidMount () {
-    counterpart.onLocaleChange(this.handleLocaleChange)
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
-  componentWillUnmount () {
-    counterpart.offLocaleChange(this.handleLocaleChange)
-  }
-
-  handleLocaleChange = (newLocale) => {
-    moment.locale(fixLocaleName(newLocale))
-    this.setState({ locale: newLocale })
-  }
-
   renderCardProp (card) {
     return (
       <span>
-        {at(PostPropArray(originLocaleName(this.state.locale)), card.prop)}
+        {at(PostPropArray(originLocaleName(this.props.defaultLocale)), card.prop)}
       </span>
     )
   }
@@ -129,3 +113,5 @@ export default class PostCard extends Component {
     )
   }
 }
+
+export default connectI18n()(PostCard)
