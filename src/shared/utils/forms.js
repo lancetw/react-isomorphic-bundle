@@ -18,10 +18,14 @@ const Password = t.subtype(t.Str, s => s.length >= 6)
 // https://gist.github.com/dperini/729294
 const URL_RE = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/i;
 
+// http://www.regular-expressions.info/email.html
+const EMAIL_RE = /^[a-z0-9\!\#\$\%\&\'\*\+\/\=\?\^\_\`\{\|\}\~\-]+(?:\.[a-z0-9\!\#\$\%\&\'\*\+\/\=\?\^\_\`\{\|\}\~\-]+)*@(?:[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?$/;
+
 const Url = t.subtype(t.Str, s => ((new RegExp(URL_RE)).test(s)))
+const Email = t.subtype(t.Str, s => ((new RegExp(EMAIL_RE)).test(s)))
 
 exports.SignupForm = t.struct({
-  email: t.Str,
+  email: Email,
   password: Password,
   passwordCheck: t.Str,
   tos: t.Bool
@@ -64,7 +68,7 @@ exports.SignupFormOptions = function (locale) {
 }
 
 exports.LoginForm = t.struct({
-  email: t.Str,
+  email: Email,
   password: Password
 })
 
@@ -127,7 +131,7 @@ exports.ChangePasswordFormOptions = function (locale) {
 
 exports.ManageForm = t.struct({
   ocname: t.Str,
-  email: t.maybe(t.Str),
+  email: t.maybe(Email),
   contact: t.maybe(t.Str),
   url: t.maybe(t.Str),
   zipcode: t.maybe(t.Num),
