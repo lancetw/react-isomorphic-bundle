@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import WallButtons from 'shared/components/wall/WallButtons'
 import { PostPropArray } from 'shared/utils/forms'
 import { keys, map, range, at } from 'lodash'
-import { fixLocaleName, originLocaleName } from 'shared/utils/locale-utils'
+import { originLocaleName } from 'shared/utils/locale-utils'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 export default class Cprop extends Component {
