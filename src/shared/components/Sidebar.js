@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-const Menu = require('react-burger-menu').push
+const Menu = require('react-burger-menu').stack
 
 export default class Sidebar extends Component {
 
