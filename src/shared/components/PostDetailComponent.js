@@ -33,6 +33,7 @@ export default class Post extends Component {
     moreList: PropTypes.object.isRequired,
     map: PropTypes.object.isRequired,
     remove: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
     defaultLocale: PropTypes.string.isRequired
   }
 
@@ -71,10 +72,9 @@ export default class Post extends Component {
   }
 
   deletePost = () => {
-    const { detail } = this.props.post
-    const { remove } = this.props
+    const { post, remove, _T } = this.props
+    const { detail } = post
     const { transitionTo, createLocation } = this.context.history
-    const _T = require('counterpart')
     swal({
       title: _T('post.detail.delete.title'),
       text: _T('post.detail.delete.text'),

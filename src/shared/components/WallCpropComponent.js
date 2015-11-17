@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
 import WallButtons from 'shared/components/wall/WallButtons'
-import counterpart from 'counterpart'
 
 export default class WallCprop extends Component {
 

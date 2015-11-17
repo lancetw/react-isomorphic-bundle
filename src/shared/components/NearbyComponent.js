@@ -133,7 +133,7 @@ export default class Nearby extends Component {
           lat={m.lat}
           lng={m.lng}
           data={m}
-          key={m.index}
+          key={index}
           hover={this.props.hoverKey === m.id}
           pulse={!this.props.hoverKey}
           isOpen={m.id === this.props.clickKey}
