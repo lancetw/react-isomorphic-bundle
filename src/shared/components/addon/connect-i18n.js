@@ -15,14 +15,19 @@ export default function connectI18n(handler) {
         translator: PropTypes.object
       }
 
-      constructor (props) {
+      constructor (props, context) {
         super(props)
 
-        this.state = { defaultLocale: this.getLocale() }
+        if (typeof context !== 'undefined'
+          && typeof context.translator !== 'undefined') {
+          this.state = { defaultLocale: context.translator.getLocale() }
+        } else {
+          this.state = { defaultLocale: counterpart.getLocale() }
+        }
       }
 
       componentWillMount () {
-        moment.locale(fixLocaleName(this.getLocale()))
+        moment.locale(fixLocaleName(this.state.defaultLocale))
       }
 
       componentDidMount () {
@@ -31,15 +36,6 @@ export default function connectI18n(handler) {
 
       componentWillUnmount () {
         counterpart.offLocaleChange(this.handleLocaleChange)
-      }
-
-      getLocale = () => {
-        if (typeof this.context !== 'undefined'
-          && typeof this.context.translator !== 'undefined') {
-          return this.context.translator.getLocale()
-        } else {
-          return counterpart.getLocale()
-        }
       }
 
       translate = (key) => {
