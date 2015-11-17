@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import classNames from 'classnames'
 import { toShortDate } from 'shared/utils/date-utils'
-import { Link } from 'react-router'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
-import history from 'history'
 
 export default class Marker extends Component {
 
@@ -13,6 +11,7 @@ export default class Marker extends Component {
     pulse: PropTypes.bool.isRequired,
     isOpen: PropTypes.bool.isRequired,
     data: PropTypes.object.isRequired,
+    handleGoClick: PropTypes.func,
     handleCloseClick: PropTypes.func,
     handleTouchStart: PropTypes.func,
     defaultLocale: PropTypes.string.isRequired
@@ -102,14 +101,10 @@ export default class Marker extends Component {
             </div>
             <div className={actionClasses}>
               <div className="ui two buttons">
-                <a
-                  target="_blank"
-                  href={`/w/${data.id}`}
-                  className="ui basic green button">
+                <a onClick={this.props.handleGoClick} className="ui basic green button">
                   <Translate content="geoloc.button.go" />
                 </a>
-                <a onClick={this.props.handleCloseClick}
-                  className="ui basic red button">
+                <a onClick={this.props.handleCloseClick} className="ui basic red button">
                   <Translate content="geoloc.button.close" />
                 </a>
               </div>

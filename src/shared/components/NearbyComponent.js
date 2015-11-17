@@ -19,6 +19,7 @@ export default class Nearby extends Component {
     center: PropTypes.object,
     defaultZoom: PropTypes.number.isRequired,
     defaultLocale: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired,
     zoom: PropTypes.number, // @controllable
     hoverKey: PropTypes.any, // @controllable
     clickKey: PropTypes.any, // @controllable
@@ -70,6 +71,10 @@ export default class Nearby extends Component {
 
   handleChildMouseLeave = () => {
     this.props.onHoverKeyChange(null)
+  }
+
+  handleChildGoClick = (mid) => {
+    this.props.history.replaceState({}, `/w/${mid}`)
   }
 
   handleChildCloseClick = () => {
@@ -128,15 +133,16 @@ export default class Nearby extends Component {
 
     let Markers
     if (data) {
-      Markers = data.map((m, index) => (
+      Markers = data.map((m) => (
         <Marker
           lat={m.lat}
           lng={m.lng}
           data={m}
-          key={index}
+          key={m.id}
           hover={this.props.hoverKey === m.id}
           pulse={!this.props.hoverKey}
-          isOpen={m.id === this.props.clickKey}
+          isOpen={this.props.clickKey === m.id}
+          handleGoClick={this.handleChildGoClick.bind(null, m.id)}
           handleCloseClick={this.handleChildCloseClick}
           handleTouchStart={this.handleTouchStart}
           defaultLocale={this.props.defaultLocale}
@@ -163,6 +169,7 @@ export default class Nearby extends Component {
             onChildMouseEnter={this.handleChildMouseEnter}
             onChildMouseLeave={this.handleChildMouseLeave}
             options={this.createMapOptions}
+            hoverDistance={42}
             defaultZoom={this.props.defaultZoom}
             zoom={this.props.zoom}>
             {Markers}
