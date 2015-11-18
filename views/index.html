@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="author" content="中華基督教網路發展協會 Chinese Christian Network Development Association" />
     <meta property="og:title" content="{{ title | safe }}" />
-    <meta property="og:url" content="{{ siteUrl }}" />
+    <meta property="og:url" content="{{ pageUrl }}" />
     {{ head.meta | safe }}
-    <meta property="og:image" content="{{ ogImage }}" />
-    <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ siteUrl }}rss" />
+    <meta property="og:image" content="{{ siteUrl }}/images/icon.png" />
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ siteUrl }}/rss" />
     {% if env.NODE_ENV != 'development' %}
     {% for style in assets.style %}
     <link rel="stylesheet" href="{{ style }}" media="screen, projection" />

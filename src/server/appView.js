@@ -73,7 +73,7 @@ export default function (app) {
       let assets
       let head
       let siteUrl
-      let ogImage
+      let pageUrl
       const { error, redirectLocation, renderProps }
       = yield new Promise((resolve) => {
         match({routes: routes(store), location},
@@ -132,13 +132,14 @@ export default function (app) {
             }} />
       )
 
-      siteUrl = this.href
-      ogImage = this.protocol + '://' + this.host + '/images/icon.png'
+      siteUrl = this.protocol + '://' + this.host
+      pageUrl = (location.pathname === '/sync/token') ? siteUrl : this.href
+
       this.body = nunjucks.render('index.html', {
         appString,
         assets,
         siteUrl,
-        ogImage,
+        pageUrl,
         head,
         env: process.env,
         stateFromServer: serverState
