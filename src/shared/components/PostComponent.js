@@ -615,7 +615,7 @@ export default class Post extends Component {
                     defaultValue={this.props.map.lat} />
                 </div>
                 <div className="ui hidden divider" />
-                <div className="ui list">
+                <div className="ui relaxed list">
                   <div className="item">
                     <div className="left floated content">
                       <button
