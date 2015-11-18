@@ -59,9 +59,11 @@ export default function (app) {
       store.resolver = resolver
       store.protocol = this.protocol
       store.host = this.host
+      store.query = this.query
 
       const history = createMemoryHistory()
       const location = history.createLocation(this.url)
+
       // save session token to store
       if (this.session.token && this.session.token !== null) {
         store.dispatch(AuthActions.sync(this.session.token))
