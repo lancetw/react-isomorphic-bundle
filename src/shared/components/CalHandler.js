@@ -27,13 +27,12 @@ class CalHandler extends Component {
   }
 
   componentWillMount () {
-    const { dispatch } = this.props
-    const { store: { resolver } } = this.context
+    const { dispatch, location } = this.props
+    const { store: { resolver, query } } = this.context
 
     dispatch(updateTitle('title.cal'))
     this.postActions = bindActionCreators(PostActions, dispatch)
 
-    const { query } = this.props.location
     let date
     if (query && query.day) {
       const { day } = query
