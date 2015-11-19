@@ -58,14 +58,8 @@ export default class Cal extends Component {
         : moment(new Date()).startOf('day').valueOf(),
       selectedDay: day ? new Date(day) : new Date()
     })
-  }
 
-  componentDidMount () {
-    const day = this.state.date
-    if (day) {
-      const date = moment(day).startOf('day').valueOf()
-      this.refs.daypicker.showMonth(new Date(day))
-    }
+    this.refs.daypicker.showMonth(day)
   }
 
   componentWillUnmount () {
