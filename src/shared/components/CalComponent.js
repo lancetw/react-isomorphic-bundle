@@ -58,8 +58,6 @@ export default class Cal extends Component {
         : moment(new Date()).startOf('day').valueOf(),
       selectedDay: day ? new Date(day) : new Date()
     })
-
-    this.refs.daypicker.showMonth(day)
   }
 
   componentWillUnmount () {
@@ -158,6 +156,7 @@ export default class Cal extends Component {
           <WallButtons />
           <DayPicker
             ref="daypicker"
+            initialMonth={selectedDay}
             renderDay={this.renderDay}
             modifiers={modifiers}
             onDayClick={this.handleDayClick}
