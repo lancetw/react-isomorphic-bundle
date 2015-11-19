@@ -25,7 +25,7 @@ export default class Cal extends Component {
     countPostsWithCal: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     defaultLocale: PropTypes.string.isRequired,
-    day: PropTypes.string.isRequired
+    day: PropTypes.string
   }
 
   constructor (props) {

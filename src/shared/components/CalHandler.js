@@ -24,11 +24,17 @@ class CalHandler extends Component {
 
   constructor (props) {
     super(props)
+
+    this.state = { day: null }
   }
 
   componentWillMount () {
     const { dispatch, location } = this.props
     const { store: { resolver, query } } = this.context
+
+    if (query) {
+      this.setState({ day: query.day })
+    }
 
     dispatch(updateTitle('title.cal'))
     this.postActions = bindActionCreators(PostActions, dispatch)
@@ -57,8 +63,6 @@ class CalHandler extends Component {
 
   render () {
     const { dispatch, _T } = this.props
-    const { store: { query } } = this.context
-    const { day } = query
     const title = _T('title.cal')
     const defaultTitle = _T('title.site')
     return (
@@ -67,7 +71,7 @@ class CalHandler extends Component {
         <Cal
           {...bindActionCreators(PostActions, dispatch)}
           {...this.props}
-          day={day} />
+          day={this.state.day} />
       </div>
     )
   }
