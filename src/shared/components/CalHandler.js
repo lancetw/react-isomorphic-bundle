@@ -57,6 +57,8 @@ class CalHandler extends Component {
 
   render () {
     const { dispatch, _T } = this.props
+    const { store: { query } } = this.context
+    const { day } = query
     const title = _T('title.cal')
     const defaultTitle = _T('title.site')
     return (
@@ -64,7 +66,8 @@ class CalHandler extends Component {
         <Helmet title={`${title} | ${defaultTitle}`} />
         <Cal
           {...bindActionCreators(PostActions, dispatch)}
-          {...this.props} />
+          {...this.props}
+          day={day} />
       </div>
     )
   }

@@ -24,7 +24,8 @@ export default class Cal extends Component {
     fetchList: PropTypes.func.isRequired,
     countPostsWithCal: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    defaultLocale: PropTypes.string.isRequired,
+    day: PropTypes.string.isRequired
   }
 
   constructor (props) {
@@ -47,6 +48,8 @@ export default class Cal extends Component {
           selectedDay: day ? new Date(day) : new Date()
         })
       })
+    } else {
+      day = this.props.day
     }
 
     this.setState({
