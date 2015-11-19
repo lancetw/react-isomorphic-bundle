@@ -20,8 +20,7 @@ class ADContent extends Component {
   constructor (props) {
     super(props)
 
-    this.AdL = null
-    this.AdS = null
+    this.state = { loaded: false }
   }
 
   componentWillMount () {
@@ -30,6 +29,13 @@ class ADContent extends Component {
 
     this.adActions = bindActionCreators(AdActions, dispatch)
     resolver.resolve(this.adActions.fetchSet)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { collect } = nextProps
+    if (collect && !isEmpty(collect.ads)) {
+      this.setState({ loaded: true })
+    }
   }
 
   componentWillUnmount () {
@@ -47,7 +53,7 @@ class ADContent extends Component {
 
   render () {
     const { collect } = this.props
-    if (collect && !isEmpty(collect.ads)) {
+    if (!!this.state.loaded && collect && !isEmpty(collect.ads)) {
       return (
         <div className="row">
           <div className="ui basic segment center aligned">

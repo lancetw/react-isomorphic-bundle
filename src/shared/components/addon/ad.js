@@ -12,7 +12,6 @@ export default class Ad extends Component {
   constructor (props) {
     super(props)
     this.releaseTimeout = undefined
-    this.state = { released: false }
   }
 
   componentDidMount () {
@@ -25,18 +24,17 @@ export default class Ad extends Component {
     }
   }
 
-  loadAd () {
+  loadAd = () => {
     if (process.env.BROWSER) {
       require('postscribe/htmlParser/htmlParser.js')
       const postscribe = require('exports?postscribe!postscribe')
-
-      new Promise((resolve) => {
+      return new Promise((resolve) => {
         setTimeout(() => {
           postscribe('#hotrank-container-' + this.props.size,
             `<script src='${this.props.link}'></script>`,
             { done: () => { resolve(true) } })
         }, 0)
-      }).then(() => this.setState({ released: true }))
+      })
     }
   }
 
