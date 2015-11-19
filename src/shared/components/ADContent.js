@@ -30,17 +30,13 @@ class ADContent extends Component {
 
     this.adActions = bindActionCreators(AdActions, dispatch)
     resolver.resolve(this.adActions.fetchSet)
-
-    this.AdL = this.renderADItem('1L', find(collect))
-    this.AdS = this.renderADItem('1S', find(collect))
   }
 
   componentWillUnmount () {
-    this.AdL = null
-    this.AdS = null
+    this.adActions = null
   }
 
-  renderADItem (size) {
+  renderADItem = (size) => {
     const { ads } = this.props.collect
     const ad = find(ads, {name: size})
     if (!ad) return (<div></div>)
@@ -51,15 +47,15 @@ class ADContent extends Component {
 
   render () {
     const { collect } = this.props
-    if (!isEmpty(collect)) {
+    if (collect && !isEmpty(collect.ads)) {
       return (
         <div className="row">
           <div className="ui basic segment center aligned">
             <MediaQuery maxDeviceWidth={374}>
-              { this.AdS }
+              { this.renderADItem('1S', find(collect)) }
             </MediaQuery>
             <MediaQuery minDeviceWidth={375}>
-              { this.AdL }
+              { this.renderADItem('1L', find(collect)) }
             </MediaQuery>
           </div>
         </div>
