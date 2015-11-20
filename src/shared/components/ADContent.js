@@ -19,8 +19,6 @@ class ADContent extends Component {
 
   constructor (props) {
     super(props)
-
-    this.state = { loaded: false }
   }
 
   componentWillMount () {
@@ -31,20 +29,13 @@ class ADContent extends Component {
     resolver.resolve(this.adActions.fetchSet)
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { collect } = nextProps
-    if (collect && !isEmpty(collect.ads)) {
-      this.setState({ loaded: true })
-    }
-  }
-
   componentWillUnmount () {
     this.adActions = null
   }
 
   renderADItem = (size) => {
     const { ads } = this.props.collect
-    const ad = find(ads, {name: size})
+    const ad = find(ads, { name: size })
     if (!ad) return (<div></div>)
 
     const link = ad.script
@@ -53,7 +44,7 @@ class ADContent extends Component {
 
   render () {
     const { collect } = this.props
-    if (!!this.state.loaded && collect && !isEmpty(collect.ads)) {
+    if (collect && !isEmpty(collect.ads)) {
       return (
         <div className="row">
           <div className="ui basic segment center aligned">

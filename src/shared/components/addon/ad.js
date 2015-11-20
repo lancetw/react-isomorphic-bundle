@@ -11,39 +11,41 @@ export default class Ad extends Component {
 
   constructor (props) {
     super(props)
-    this.releaseTimeout = undefined
+
+    this.loaded = false
   }
 
   componentDidMount () {
-    this.releaseTimeout = setTimeout(() => this.loadAd(), 500)
-  }
-
-  componentWillUnmount () {
-    if (this.op) {
-      clearTimeout(this.releaseTimeout)
-    }
+    this.loadAd()
+    this.loaded = true
   }
 
   loadAd = () => {
-    if (process.env.BROWSER) {
+    if (!this.loaded) {
       require('postscribe/htmlParser/htmlParser.js')
       const postscribe = require('exports?postscribe!postscribe')
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         setTimeout(() => {
-          postscribe('#hotrank-container-' + this.props.size,
-            `<script src='${this.props.link}'></script>`,
-            { done: () => { resolve(true) } })
+          try {
+            postscribe('#hotrank-container-' + this.props.size,
+              `<script src='${this.props.link}'></script>`,
+              { done: () => { resolve(true) } })
+          } catch (err) { reject(err) }
         }, 0)
       })
     }
   }
 
   render () {
-    return (
-      <div className="ad"
-        ref={`hotrank-container-${this.props.size}`}
-        id={`hotrank-container-${this.props.size}`}>
-      </div>
-    )
+    if (process.env.BROWSER) {
+      return (
+        <div className="ad"
+          ref={`hotrank-container-${this.props.size}`}
+          id={`hotrank-container-${this.props.size}`}>
+        </div>
+      )
+    } else {
+      return (<div />)
+    }
   }
 }
