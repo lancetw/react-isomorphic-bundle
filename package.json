@@ -131,7 +131,7 @@
     "react-a11y": "^0.2.6",
     "react-addons-css-transition-group": "^0.14.2",
     "react-autolink-text": "github:joshparolin/react-autolink-text#npm-temp-fix",
-    "react-burger-menu": "^1.4.1",
+    "react-burger-menu": "^1.4.2",
     "react-controllables": "^0.6.0",
     "react-day-picker": "^1.1.1",
     "react-dom": "^0.14.0",
