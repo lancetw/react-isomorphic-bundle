@@ -1,16 +1,18 @@
 exclude_paths:
-- styles/*
-- public/*
-- tests/*
-- coverage/*
-- lib/*
-- webpack/*
-- config/*
-- src/server/db/migrations/*
-- src/server/db/models/*
+- styles/**
+- public/**
+- tests/**
+- coverage/**
+- lib/**
+- webpack/**
+- config/**
+- src/server/db/migrations/**
+- src/server/db/models/**
 - src/shared/utils/semantic-custom.js
-- src/vendor/*
+- src/vendor/**
 engines:
   eslint:
     enabled: true
-    config:
+ratings:
+  paths:
+  - src/**
