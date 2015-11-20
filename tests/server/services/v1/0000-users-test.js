@@ -12,7 +12,7 @@ const User = db.users
 let token1, token2
 
 before(function *() {
-  yield models.sequelize.sync()
+  yield models.sequelize.sync({ force: true })
 })
 
 after(function *() {
