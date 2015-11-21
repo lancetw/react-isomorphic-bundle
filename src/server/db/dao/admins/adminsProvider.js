@@ -44,7 +44,7 @@ exports.update = function *(hid, user) {
   return yield u.update(user, { fields: fillable })
 }
 
-exports.delete = function *(hid) {
+exports.destroy = function *(hid) {
   const id = +hashids.decode(hid)
   if (!isFinite(id)) return false
   const user = yield models.admins.findOne({ where: { id: id } })

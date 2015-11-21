@@ -81,8 +81,8 @@ describe('admins provider', function () {
       expect(res).equal(1)
     })
 
-    it('delete', function *() {
-      const res = yield admins.delete(hid)
+    it('destroy', function *() {
+      const res = yield admins.destroy(hid)
       expect(res.id).equal(id)
     })
   })

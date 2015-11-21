@@ -167,7 +167,7 @@ export default new Resource('admins', {
         throw new Error('user check failed')
       }
 
-      const user = yield User.delete(this.params.admin)
+      const user = yield User.destroy(this.params.admin)
       this.type = 'json'
       this.status = 200
       this.body = hashids.encodeJson(user)
