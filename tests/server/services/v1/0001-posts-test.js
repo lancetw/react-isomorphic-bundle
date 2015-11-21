@@ -10,7 +10,6 @@ import hashids from 'src/shared/utils/hashids-plus'
 
 const User = db.users
 const Post = db.posts
-let token1, token2
 
 before(function *() {
   yield models.sequelize.sync()
@@ -20,7 +19,7 @@ after(function *() {
   models.sequelize.close()
 })
 
-describe('post', function () {
+describe('RESTful: post', function () {
   const user = {
     email: 'lancetw@gmail.com',
     password: '1234567890',

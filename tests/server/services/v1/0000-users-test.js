@@ -19,7 +19,7 @@ after(function *() {
   models.sequelize.close()
 })
 
-describe('user', function () {
+describe('RESTful: user', function () {
   const user = {
     email: 'lancetw@gmail.com',
     password: '1234567890',

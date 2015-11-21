@@ -1,15 +1,20 @@
 verbose: false
 instrumentation:
-  root: src
   default-excludes: true
-  excludes: []
+  excludes:
+    - styles/**
+    - public/**
+    - tests/**
+    - coverage/**
+    - lib/**
+    - webpack/**
+    - config/**
+    - src/server/db/migrations/**
+    - src/server/db/models/**
+    - src/shared/utils/semantic-custom.js
+    - src/vendor/**
 reporting:
-    print: summary
-    reports:
-        - lcov
-    dir: ./coverage
-    watermarks:
-        statements: [50, 80]
-        lines: [50, 80]
-        functions: [50, 80]
-        branches: [50, 80]
+  print: summary
+  reports:
+    - lcov
+  dir: ./coverage
