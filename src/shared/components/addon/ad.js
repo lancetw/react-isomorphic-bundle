@@ -22,17 +22,12 @@ export default class Ad extends Component {
 
   loadAd = () => {
     if (!this.loaded) {
-      require('postscribe/htmlParser/htmlParser.js')
-      const postscribe = require('exports?postscribe!postscribe')
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          try {
-            postscribe('#hotrank-container-' + this.props.size,
-              `<script src='${this.props.link}'></script>`,
-              { done: () => { resolve(true) } })
-          } catch (err) { reject(err) }
-        }, 0)
-      })
+      try {
+        require('postscribe/htmlParser/htmlParser.js')
+        const postscribe = require('exports?postscribe!postscribe')
+        postscribe('#hotrank-container-' + this.props.size,
+          `<script src='${this.props.link}'></script>`)
+      } catch (err) {/* DON'T CARE */}
     }
   }
 
