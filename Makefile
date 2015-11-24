@@ -90,3 +90,6 @@ webpack-test:
 
 public/assets: $(SRC_JS)
 	@NODE_ENV=production webpack --production --progress --profile --colors --stats --config webpack/server.js
+
+analyze:
+	@NODE_ENV=production webpack --production --progress --profile --colors --stats  --json --config webpack/server.js | analyze-bundle-size
