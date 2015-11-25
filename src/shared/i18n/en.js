@@ -44,6 +44,7 @@ export default {
     email: 'Email',
     password: 'Password',
     facebook: 'Sign In with Facebook',
+    google: 'Sign In with Google',
     signup: 'Sign Up',
     or: 'or',
     need: {

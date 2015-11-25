@@ -24,7 +24,7 @@ export default passport.use(new FacebookStrategy(
         if (isEmpty(profile.emails) || isEmpty(profile.emails[0].value)) {
           throw new Error('no emails')
         }
-        debug('dev')('profile.emails', profile.emails[0].value)
+        debug('dev')('Facebook profile.emails', profile.emails[0].value)
         const email = profile.emails[0].value
 
         if (!isEmpty(profile.displayName)) {

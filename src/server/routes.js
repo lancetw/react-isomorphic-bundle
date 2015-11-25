@@ -169,7 +169,7 @@ router
     const ctx = this
     yield passport.authenticate('facebook', {
       failureRedirect: '/login'
-    }, function*(err, profile, info) {
+    }, function*(err, profile, failed) {
       if (!err && profile) {
         const token = jwtHelper(profile)
 
@@ -180,12 +180,67 @@ router
         // [TODO]: get param to set nextPage
         ctx.redirect('/sync/token?token=' + token)
       } else {
-        if (err.message === 'Error: user blocked') {
+        if (failed) {
           ctx.redirect('/login')
-        } else if (err.message === 'Error: no emails') {
-          ctx.redirect('/auth/facebook/request/email')
         } else {
-          ctx.redirect('/')
+          if (err.message === 'Error: user blocked') {
+            ctx.redirect('/login')
+          } else if (err.message === 'Error: no emails') {
+            ctx.redirect('/auth/facebook/request/email')
+          } else {
+            ctx.redirect('/')
+          }
+        }
+      }
+    })
+  })
+
+router
+  .get('/auth/google', function *(next) {
+    // [TODO]: get param to set nextPage
+
+    yield passport.authenticate('google', {
+      scope: ['email']
+    })
+  })
+
+router
+  .get('/auth/google/request/email', function *(next) {
+    yield passport.authenticate(
+      'google',
+      {
+        prompt: 'consent',
+        scope: ['email']
+      }
+    )
+  })
+
+router
+  .get('/auth/google/callback', function *(next) {
+    const ctx = this
+    yield passport.authenticate('google', {
+      failureRedirect: '/login'
+    }, function*(err, profile, failed) {
+      if (!err && profile) {
+        const token = jwtHelper(profile)
+
+        // set session token
+        const sess = ctx.session
+        sess.token = token
+
+        // [TODO]: get param to set nextPage
+        ctx.redirect('/sync/token?token=' + token)
+      } else {
+        if (failed) {
+          ctx.redirect('/login')
+        } else {
+          if (err.message === 'Error: user blocked') {
+            ctx.redirect('/login')
+          } else if (err.message === 'Error: no emails') {
+            ctx.redirect('/auth/google/request/email')
+          } else {
+            ctx.redirect('/')
+          }
         }
       }
     })

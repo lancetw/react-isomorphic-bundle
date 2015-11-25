@@ -194,6 +194,12 @@ export default class Login extends Component {
                 <Translate content="login.facebook" />
               </a>
               <div className="ui hidden divider"></div>
+              <a className="large google plus ui labeled icon button"
+                href="/auth/google">
+                <i className="google plus icon"></i>
+                <Translate content="login.google" />
+              </a>
+              <div className="ui hidden divider"></div>
               <Link className="ui huge green labeled icon button"
                 to="/signup">
                 <i className="signup icon"></i>

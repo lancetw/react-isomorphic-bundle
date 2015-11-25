@@ -11,6 +11,7 @@ import cors from 'koa-cors'
 import basicAuth from './passport/basic'
 import jwtAuth from './passport/local-jwt'
 import facebookAuth from './passport/facebook'
+import googleAuth from './passport/google'
 import localAuth from './passport/local'
 import router from './routes'
 import path from 'path'
@@ -119,6 +120,7 @@ app.use(mount('/api/v1', jwtAuth.initialize()))
 app.use(bodyParser())
 app.use(localAuth.initialize())
 app.use(facebookAuth.initialize())
+app.use(googleAuth.initialize())
 app.use(router.routes())
 
 app.use(mount('/api/admin/v1', adminServices.v1))

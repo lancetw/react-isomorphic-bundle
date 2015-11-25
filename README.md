@@ -66,6 +66,7 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [x] register (with recaptcha)
 - [x] log in
 - [x] Facebook sign in
+- [x] Google OAuth sign in
 - [x] restful API with JSON Web Tokens
 - [x] change password
 - [x] create posts
@@ -80,10 +81,11 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [x] post list with infinite scroll (use requestAnimationFrame)
 - [x] post list with calendar
 - [x] serverside async data-fetching (great thanks to [universal-redux-boilerplate](https://github.com/savemysmartphone/universal-redux-boilerplate))
-- [x] full text Search
+- [x] simple full text Search
 - [x] image slider
 - [x] admin pages (manage posts and users)
 - [x] nearby map (PostGIS)
+- [x] RSS Feed (Atom)
 - [ ] sitemap
 - [ ] static archive pages
 - [ ] testing suite
@@ -107,6 +109,7 @@ or `make clean && make fast-build` (clean up and rebuild all)
 * [koa-level](https://github.com/purposeindustries/koa-level)
 * [passport](https://github.com/jaredhanson/passport)
 * [passport-facebook](https://github.com/jaredhanson/passport-facebook)
+* [passport-google-oauth](https://github.com/jaredhanson/passport-google-oauth)
 * [passport-jwt](https://github.com/themikenicholson/passport-jwt)
 * [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
 * [sequelize](https://github.com/sequelize/sequelize)

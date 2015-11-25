@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-bundle",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
@@ -48,8 +48,10 @@
     "leveldb",
     "tcomb-form",
     "facebook",
+    "google",
     "passport",
     "passport-facebook",
+    "passport-google-oauth",
     "postscribe",
     "google-map-react",
     "geolocation",
@@ -119,6 +121,7 @@
     "nunjucks": "^2.0.0",
     "parameter": "^1.0.2",
     "passport-facebook": "^2.0.0",
+    "passport-google-oauth": "^0.2.0",
     "passport-http": "^0.3.0",
     "passport-jwt": "^1.1.0",
     "passport-local": "^1.0.0",

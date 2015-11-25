@@ -44,6 +44,7 @@ export default {
     email: '电子邮件地址',
     password: '密码',
     facebook: '透过 Facebook 登入',
+    google: '透过 Google 登入',
     signup: '注册新帐号',
     or: '或',
     need: {
