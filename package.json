@@ -175,6 +175,7 @@
     "clean-css": "^3.3.1",
     "co-mocha": "^1.1.0",
     "co-supertest": "0.0.10",
+    "codeclimate-test-reporter": "^0.1.1",
     "coveralls": "^2.11.2",
     "css-loader": "^0.17.0",
     "cssnext": "^1.6.0",

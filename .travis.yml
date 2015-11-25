@@ -17,6 +17,6 @@ addons:
     - g++-4.8
 script: npm run test:ci
 after_success:
-  - codeclimate < coverage/lcov.info
-  - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - ./node_modules/.bin/codeclimate-test-reporter < coverage/lcov.info
+  - cat coverage/lcov.info | ./node_modules/.bin/coveralls
   - rm -rf coverage
