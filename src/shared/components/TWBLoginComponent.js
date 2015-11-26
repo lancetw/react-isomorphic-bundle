@@ -168,6 +168,9 @@ export default class TWBLogin extends Component {
               action=""
               method="post"
               onSubmit={this.handleSubmit}>
+              <a target="_blank" href="http://www.taiwanbible.com">
+                <img alt="" src="/images/twbible.png" />
+              </a>
               <Form
                 ref="form"
                 type={TWBLoginForm}
