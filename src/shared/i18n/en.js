@@ -17,7 +17,8 @@ export default {
     cprop: 'Property View',
     search: 'Search',
     nearby: 'Nearby',
-    ogpage: 'Organization Pages'
+    ogpage: 'Organization Pages',
+    twblogin: 'Sign with TaiwanBible'
   },
   header: {
     home: 'Home',
@@ -31,7 +32,8 @@ export default {
     logout: 'Log Out',
     password: 'Password',
     search: 'Search...',
-    nearby: 'Nearby'
+    nearby: 'Nearby',
+    twblogin: 'Sign in with TaiwanBible'
   },
   search_input: {
     placeholder: 'Search...',
@@ -44,7 +46,8 @@ export default {
     email: 'Email',
     password: 'Password',
     facebook: 'Sign In with Facebook',
-    google: 'Sign In with Google',
+    google: 'Sign In with Google+',
+    twbible: 'Sign In with TaiwanBible',
     signup: 'Sign Up',
     or: 'or',
     need: {
@@ -285,6 +288,14 @@ export default {
     login: {
       email: {
         placeholder: 'Email'
+      },
+      password: {
+        placeholder: 'Password'
+      }
+    },
+    twblogin: {
+      id: {
+        placeholder: 'TaiwanBible ID or Email'
       },
       password: {
         placeholder: 'Password'

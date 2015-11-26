@@ -18,7 +18,8 @@ import {
   SyncToken,
   Search,
   Nearby,
-  Og
+  Og,
+  TWBLogin
 } from './components'
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
@@ -51,6 +52,7 @@ export default function (store) {
       <Route path="/c">
         <Route path=":cid" component={Og} />
       </Route>
+      <Route path="/twb/login" component={TWBLogin} />
       <Route path="/sync/token" component={SyncToken} />
       <Route path="*" component={NotFound} />
       <Redirect from="/" to="/home" />

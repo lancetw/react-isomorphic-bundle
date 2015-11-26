@@ -17,7 +17,8 @@ export default {
     cprop: '类别浏览',
     search: '搜寻',
     nearby: '附近',
-    ogpage: '机构专页'
+    ogpage: '机构专页',
+    twblogin: '透过 TaiwanBible 登入'
   },
   header: {
     home: '首页',
@@ -31,7 +32,8 @@ export default {
     logout: '登出',
     password: '密码',
     search: '搜寻⋯',
-    nearby: '附近'
+    nearby: '附近',
+    twblogin: '透过 TaiwanBible 登入'
   },
   search_input: {
     placeholder: '搜寻...',
@@ -44,7 +46,8 @@ export default {
     email: '电子邮件地址',
     password: '密码',
     facebook: '透过 Facebook 登入',
-    google: '透过 Google 登入',
+    google: '透过 Google+ 登入',
+    twbible: '透过 TaiwanBible 登入',
     signup: '注册新帐号',
     or: '或',
     need: {
@@ -285,6 +288,14 @@ export default {
     login: {
       email: {
         placeholder: '电子邮件帐号'
+      },
+      password: {
+        placeholder: '密码'
+      }
+    },
+    twblogin: {
+      id: {
+        placeholder: '台湾圣经网帐号 / 电子邮件信箱'
       },
       password: {
         placeholder: '密码'

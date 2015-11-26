@@ -108,6 +108,22 @@ export async function auth (form) {
   })
 }
 
+export async function twbAuth (form) {
+  return new Promise((resolve, reject) => {
+    request
+      .post('/api/v1/twblogin')
+      .accept('application/json')
+      .send(form)
+      .end(function (err, res) {
+        if (!err && res.body) {
+          resolve(res.body)
+        } else {
+          reject(err)
+        }
+      })
+  })
+}
+
 export async function verify () {
   return new Promise((resolve, reject) => {
     request
@@ -180,6 +196,27 @@ export function login (form) {
     dispatch({ type: AUTH_USER_STARTED })
     try {
       const res = await auth(form)
+      if (res && res.token) {
+        setToken(res.token)
+        return dispatch({
+          type: AUTH_USER_COMPLETED,
+          token: res.token
+        })
+      } else throw new Error('no token')
+    } catch (err) {
+      return dispatch({
+        type: AUTH_USER_FAILED,
+        errors: err.message
+      })
+    }
+  }
+}
+
+export function twbLogin (form) {
+  return async dispatch => {
+    dispatch({ type: AUTH_USER_STARTED })
+    try {
+      const res = await twbAuth(form)
       if (res && res.token) {
         setToken(res.token)
         return dispatch({

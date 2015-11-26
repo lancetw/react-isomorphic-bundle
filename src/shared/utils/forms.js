@@ -357,5 +357,34 @@ exports.RegFormOptions = function (locale) {
   return RegFormOptionsI18n(locale)
 }
 
+exports.TWBLoginForm = t.struct({
+  id: t.Str,
+  password: Password
+})
+
+const TWBLoginFormOptionsI18n = function (locale) {
+  return {
+    auto: 'none',
+    fields: {
+      id: {
+        hasError: false,
+        attrs: {
+          placeholder: _T('form.twblogin.id.placeholder', {locale})
+        }
+      },
+      password: {
+        type: 'password',
+        hasError: false,
+        attrs: {
+          placeholder: _T('form.twblogin.password.placeholder', {locale})
+        }
+      }
+    }
+  }
+}
+exports.TWBLoginFormOptions = function (locale) {
+  return TWBLoginFormOptionsI18n(locale)
+}
+
 exports.Tcomb = t
 exports.Form = t.form.Form

@@ -1,5 +1,4 @@
 import Resource from 'koa-resource-router'
-import parse from 'co-body'
 import db from 'src/server/db'
 
 const Post = db.posts

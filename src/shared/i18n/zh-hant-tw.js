@@ -17,7 +17,8 @@ export default {
     cprop: '類別瀏覽',
     search: '搜尋',
     nearby: '附近',
-    ogpage: '機構專頁'
+    ogpage: '機構專頁',
+    twblogin: '透過台灣聖經網登入'
   },
   header: {
     home: '首頁',
@@ -31,7 +32,8 @@ export default {
     logout: '登出',
     password: '密碼',
     search: '搜尋⋯',
-    nearby: '附近'
+    nearby: '附近',
+    twblogin: '透過台灣聖經網登入'
   },
   search_input: {
     placeholder: '搜尋...',
@@ -44,7 +46,8 @@ export default {
     email: '電子郵件地址',
     password: '密碼',
     facebook: '透過 Facebook 登入',
-    google: '透過 Google 登入',
+    google: '透過 Google+ 登入',
+    twbible: '透過台灣聖經網登入',
     signup: '註冊新帳號',
     or: '或',
     need: {
@@ -285,6 +288,14 @@ export default {
     login: {
       email: {
         placeholder: '電子郵件帳號'
+      },
+      password: {
+        placeholder: '密碼'
+      }
+    },
+    twblogin: {
+      id: {
+        placeholder: '台灣聖經網帳號 / 電子郵件信箱'
       },
       password: {
         placeholder: '密碼'

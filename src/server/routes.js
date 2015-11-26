@@ -1,6 +1,5 @@
 import jwtHelper, { verifyJwt } from './jwt-helper'
 import passport from 'koa-passport'
-import parse from 'co-body'
 import validate from 'parameter'
 import db from 'src/server/db'
 import * as AuthActions from 'shared/actions/AuthActions'
@@ -10,14 +9,14 @@ import { nl2br } from 'src/shared/utils/common-utils'
 import { TranslatorInit } from './translator-helper'
 import { isArray } from 'lodash'
 import moment from 'moment'
+import { twbAuth, twbBindUser } from './twbAuth'
 
 const router = require('koa-router')()
 const User = db.users
 
 router
   .post('/auth/login', function *(next) {
-    const user = yield parse(this)
-
+    const user = this.request.body
     const rule = {
       password: 'password',
       email: 'email'
@@ -56,7 +55,7 @@ router
 
 router
   .post('/auth/register', function *(next) {
-    const user = yield parse(this)
+    const user = this.request.body
 
     const rule = {
       email: 'email',
@@ -140,8 +139,39 @@ router
   })
 
 router
+  .post('/api/v1/twblogin', function *(next) {
+    const ctx = this
+    const body = this.request.body
+
+    let profile
+    const errors = { message: '' }
+    try {
+      const res = yield twbAuth(body)
+      if (res.email) {
+        profile = yield twbBindUser(res)
+      }
+    } catch (err) {
+      errors.message = err
+    }
+
+    if (!errors && profile.email) {
+      // response JSON web token
+      const token = jwtHelper(profile)
+
+      // set session token
+      const sess = ctx.session
+      sess.token = token
+
+      ctx.body = { token: token }
+    } else {
+      ctx.status = 200
+      ctx.body = { errors: errors.message }
+    }
+  })
+
+router
   .post('/auth/locale', function *(next) {
-    const body = yield parse(this)
+    const body = this.request.body
     this.session.locale = body.locale
     this.body = { locale: body.locale }
   })
@@ -183,9 +213,9 @@ router
         if (failed) {
           ctx.redirect('/login')
         } else {
-          if (err.message === 'Error: user blocked') {
+          if (err.message === 'user blocked') {
             ctx.redirect('/login')
-          } else if (err.message === 'Error: no emails') {
+          } else if (err.message === 'no emails') {
             ctx.redirect('/auth/facebook/request/email')
           } else {
             ctx.redirect('/')
@@ -234,9 +264,9 @@ router
         if (failed) {
           ctx.redirect('/login')
         } else {
-          if (err.message === 'Error: user blocked') {
+          if (err.message === 'user blocked') {
             ctx.redirect('/login')
-          } else if (err.message === 'Error: no emails') {
+          } else if (err.message === 'no emails') {
             ctx.redirect('/auth/google/request/email')
           } else {
             ctx.redirect('/')
@@ -248,7 +278,7 @@ router
 
 router
   .post('/auth/token/verify', function *(next) {
-    const body = yield parse(this)
+    const body = this.request.body
     const rule = {
       token: 'string'
     }

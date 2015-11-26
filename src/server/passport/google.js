@@ -47,7 +47,7 @@ export default passport.use(new GoogleStrategy(
               if (err.name === 'SequelizeUniqueConstraintError') {
                 return yield User.recreate(profile)
               } else {
-                throw new Error(err)
+                throw err
               }
             }
           }
@@ -59,7 +59,7 @@ export default passport.use(new GoogleStrategy(
           return user
         }
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
     .then(function (user) {

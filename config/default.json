@@ -36,5 +36,8 @@
   "admin": {
     "defaultEmail": "admin@example.com",
     "defaultPassword": "admin"
+  },
+  "twb": {
+    "ACCESS_ID": ""
   }
 }

@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
-import { Form, LoginForm } from 'shared/utils/forms'
+import { Form, TWBLoginForm } from 'shared/utils/forms'
 import { isEmpty, clone, omit } from 'lodash'
 import classNames from 'classnames'
 
-export default class Login extends Component {
+export default class TWBLogin extends Component {
 
   static propTypes = {
-    login: PropTypes.func.isRequired,
+    twbLogin: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -83,7 +83,7 @@ export default class Login extends Component {
       this.setState({ submited: true })
       this.clearFormErrors()
 
-      this.submitTimeout = setTimeout(() => this.props.login(value), 100)
+      this.submitTimeout = setTimeout(() => this.props.twbLogin(value), 100)
     }
   }
 
@@ -155,63 +155,33 @@ export default class Login extends Component {
     /* eslint-disable max-len */
     return (
       <main className="ui stackable column centered page grid">
-        <div className="column">
-          <div className="ui two column middle aligned relaxed fitted stackable grid">
-            <div className="column">
-              <ReactCSSTransitionGroup
-                transitionName="MessageTransition"
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}>
-                {Message}
-              </ReactCSSTransitionGroup>
-              <form
-                className={LoginClasses}
-                action=""
-                method="post"
-                onSubmit={this.handleSubmit}>
-                <Form
-                  ref="form"
-                  type={LoginForm}
-                  options={this.state.options}
-                  value={this.state.value}
-                />
-                <div className="ui hidden divider" />
-                <button
-                  type="submit"
-                  className="ui fluid orange large button"
-                  disabled={this.state.ok}>
-                  <Translate content="header.login" />
-                </button>
-              </form>
-            </div>
-            <div className="ui vertical divider">
-              <Translate content="login.or" />
-            </div>
-            <div className="center aligned column">
-              <a className="large facebook ui labeled icon button"
-                href="/auth/facebook">
-                <i className="facebook icon"></i>
-                <Translate content="login.facebook" />
-              </a>
-              <div className="ui hidden divider"></div>
-              <a className="large google plus ui labeled icon button"
-                href="/auth/google">
-                <i className="google plus icon"></i>
-                <Translate content="login.google" />
-              </a>
-              <div className="ui hidden divider"></div>
-              <Link className="large blue ui labeled icon button"
-                to="/twb/login">
-                <i className="chevron circle down icon"></i>
-                <Translate content="login.twbible" />
-              </Link>
-              <div className="ui hidden divider"></div>
-              <Link className="ui huge green labeled icon button"
-                to="/signup">
-                <i className="signup icon"></i>
-                <Translate content="login.signup" />
-              </Link>
-            </div>
+        <div className="ui two column middle aligned relaxed fitted stackable grid">
+          <div className="column">
+            <ReactCSSTransitionGroup
+              transitionName="MessageTransition"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}>
+              {Message}
+            </ReactCSSTransitionGroup>
+            <form
+              className={LoginClasses}
+              action=""
+              method="post"
+              onSubmit={this.handleSubmit}>
+              <Form
+                ref="form"
+                type={TWBLoginForm}
+                options={this.state.options}
+                value={this.state.value}
+              />
+              <div className="ui hidden divider" />
+              <button
+                type="submit"
+                className="ui fluid blue large button"
+                disabled={this.state.ok}>
+                <Translate content="header.twblogin" />
+              </button>
+            </form>
           </div>
         </div>
       </main>
