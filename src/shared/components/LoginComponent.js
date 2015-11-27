@@ -202,7 +202,7 @@ export default class Login extends Component {
               <div className="ui hidden divider"></div>
               <Link className="large blue ui labeled icon button"
                 to="/twb/login">
-                <i className="chevron circle down icon"></i>
+                <i className="chevron down icon"></i>
                 <Translate content="login.twbible" />
               </Link>
               <div className="ui hidden divider"></div>
