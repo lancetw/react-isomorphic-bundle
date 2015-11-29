@@ -7,19 +7,14 @@ import shouldPureComponentUpdate from 'react-pure-render/function'
 
 let $
 let ReactList
-let requestAnimationFrame
+let af
 if (process.env.BROWSER) {
   ReactList = require('react-list')
   $ = require('jquery')
   require('css/ui/spinkit')
 
-  requestAnimationFrame =
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    function (callback) { window.setTimeout(callback, 1000/60) }
+  const AnimationFrame = require('animation-frame')
+  af = new AnimationFrame()
 }
 
 export default class PostCards extends Component {
@@ -108,7 +103,7 @@ export default class PostCards extends Component {
       const scrollTop = nodeScroll.scrollTop
 
       if (this.lastPosition === scrollTop) {
-        requestAnimationFrame(this.fastScrollLoop)
+        af.request(this.fastScrollLoop)
         return false
       } else {
         this.lastPosition = scrollTop
@@ -119,7 +114,7 @@ export default class PostCards extends Component {
       }
     }
 
-    requestAnimationFrame(this.fastScrollLoop)
+    af.request(this.fastScrollLoop)
   }
 
   renderItem = (index, key) => {

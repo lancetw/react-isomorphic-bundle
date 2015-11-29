@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-bundle",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
@@ -62,9 +62,11 @@
     "date-picker",
     "carousel",
     "lightbox",
-    "tabs"
+    "tabs",
+    "animation-frame"
   ],
   "dependencies": {
+    "animation-frame": "^0.2.5",
     "app-module-path": "^1.0.3",
     "babel-core": "^5.8.33",
     "better-console": "^0.2.4",
