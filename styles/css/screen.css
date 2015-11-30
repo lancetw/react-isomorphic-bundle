@@ -682,7 +682,7 @@ and (orientation : portrait) {
 }
 
 .bm-morph-shape {
-  fill: rgba(0, 0, 0, .77);
+  fill: rgba(0, 0, 0, 1);
 }
 
 .bm-menu {

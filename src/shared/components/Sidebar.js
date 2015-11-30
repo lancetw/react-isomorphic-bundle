@@ -2,8 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { detectIE } from 'shared/utils/browser-utils'
 
 let Menu
-if (!detectIE()) {
-  Menu = require('react-burger-menu').bubble
+if (process.env.BROWSER) {
+  if (!detectIE()) {
+    Menu = require('react-burger-menu').bubble
+  } else {
+    Menu = require('react-burger-menu').stack
+  }
 } else {
   Menu = require('react-burger-menu').stack
 }
