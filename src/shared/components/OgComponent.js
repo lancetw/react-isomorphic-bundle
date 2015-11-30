@@ -31,7 +31,7 @@ export default class OgComponent extends Component {
         </div>
         }
         <div className="ui divided selection animated list content">
-          { !isEmpty(posts) && posts.map(function (item, i) {
+          { !isFetching && !isEmpty(posts) && posts.map(function (item, i) {
             return (
               <Link className="item" to={`/w/${item.id}`}>
                 <div className="more">
