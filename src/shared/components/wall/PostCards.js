@@ -71,10 +71,7 @@ export default class PostCards extends Component {
 
   componentDidMount () {
     window.addEventListener('resize', this.handleResize)
-    const isIE = detectIE()
-    if (!isIE || isIE > 11) {
-      this.fastScrollLoop()
-    }
+    this.fastScrollLoop()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -161,7 +158,7 @@ export default class PostCards extends Component {
     )
   }
 
-  renderScrollList = (useTranslate3d) => {
+  renderScrollList = (type, useTranslate3d) => {
     return (
       <ReactList
         ref="scrollList"
@@ -170,9 +167,8 @@ export default class PostCards extends Component {
         initialIndex={0}
         itemRenderer={this.renderItem}
         length={this.props.posts.length}
-        type="uniform"
-        useTranslate3d={useTranslate3d}
-        />
+        type={type}
+        useTranslate3d={useTranslate3d} />
     )
   }
 
@@ -196,7 +192,7 @@ export default class PostCards extends Component {
             style={{
               maxHeight: containerHeight
             }}>
-            {this.renderScrollList(useTranslate3d)}
+            {this.renderScrollList('uniform', useTranslate3d)}
           </div>
         )
       } else {
@@ -205,11 +201,10 @@ export default class PostCards extends Component {
           <div
             className={scrollClass}
             ref="scroll"
-            onScroll={debounce(this.handleScroll, 500)}
             style={{
               maxHeight: containerHeight
             }}>
-            {this.renderScrollList(useTranslate3d)}
+            {this.renderScrollList('variable', useTranslate3d)}
           </div>
         )
       }
