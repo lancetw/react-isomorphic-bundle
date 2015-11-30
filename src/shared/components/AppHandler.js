@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Header from './HeaderHandler'
 
 if (process.env.BROWSER) {
