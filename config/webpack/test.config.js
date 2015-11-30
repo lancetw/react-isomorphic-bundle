@@ -43,7 +43,7 @@ export default {
     }
   },
   webpack: {
-    devtool: 'source-map',
+    devtool: 'cheap-source-map',
     entry: {
       app: [
         './src/client/index',
