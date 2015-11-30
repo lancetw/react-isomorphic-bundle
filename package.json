@@ -90,7 +90,7 @@
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.4.1",
     "jws": "^3.1.0",
-    "jwt-decode": "^1.1.1",
+    "jwt-decode": "^1.4.0",
     "koa": "^1.0.0",
     "koa-bodyparser": "^2.0.1",
     "koa-cash": "^1.0.1",

@@ -1,6 +1,6 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
-import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode'
 import {
   CHANGE_PASS_USER_STARTED,
   CHANGE_PASS_USER_COMPLETED,
@@ -18,7 +18,7 @@ import { isEmpty, isNumber, isNull, mapValues, omit } from 'lodash'
 
 async function update (form, token) {
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     const userId = user.id
     request
@@ -38,7 +38,7 @@ async function update (form, token) {
 
 async function get (token) {
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     const userId = user.id
     request
@@ -57,7 +57,7 @@ async function get (token) {
 
 async function updateInfo (form, token) {
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     const userId = user.id
     request

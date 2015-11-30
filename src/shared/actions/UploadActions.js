@@ -1,5 +1,5 @@
 import request from 'superagent'
-import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode'
 import {
   UPLOAD_FILE_COMPLETED,
   UPLOAD_FILE_FAILED,
@@ -79,7 +79,7 @@ export function send (filename, file, index) {
   return async (dispatch, getState) => {
     dispatch(setImagePreview(null, index))
     const token = getToken()
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) {
       return dispatch({
         type: UPLOAD_FILE_FAILED,

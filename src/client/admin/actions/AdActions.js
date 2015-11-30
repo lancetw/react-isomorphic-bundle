@@ -1,6 +1,6 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
-import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode'
 import { isArray, isEmpty } from 'lodash'
 import moment from 'moment'
 import {
@@ -20,7 +20,7 @@ import { getToken } from 'client/admin/actions/AuthActions'
 async function fetchAll (offset, limit, start, end, keyword, status) {
   return new Promise((resolve, reject) => {
     const token = getToken()
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user || !user.isAdmin) reject('invalid token')
 
     request
@@ -46,7 +46,7 @@ async function fetchAll (offset, limit, start, end, keyword, status) {
 
 async function send (form, token) {
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user || !user.isAdmin) reject('invalid token')
     request
       .post('/api/admin/v1/promotions')
@@ -65,7 +65,7 @@ async function send (form, token) {
 
 async function remove (id, token) {
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user || !user.isAdmin) reject('invalid token')
     request
       .del('/api/admin/v1/promotions/' + id)

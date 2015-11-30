@@ -1,6 +1,5 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
-import jwt from 'jsonwebtoken'
 import { isArray, isEmpty } from 'lodash'
 import moment from 'moment'
 import {

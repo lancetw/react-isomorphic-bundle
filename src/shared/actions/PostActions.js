@@ -1,6 +1,6 @@
 import LOCAL_PATH from 'shared/utils/localpath'
 import request from 'superagent'
-import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode'
 import { isArray, clone, compact, isEmpty, each, isFinite } from 'lodash'
 import moment from 'moment'
 import {
@@ -52,7 +52,7 @@ import { EQUAL } from 'shared/utils/common-utils'
 async function create ({ token, value, regValue, upload, map }) {
   const _upload = compact(upload)
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     const _form = clone(value)
     _form.uid = user.id
@@ -85,7 +85,7 @@ async function create ({ token, value, regValue, upload, map }) {
 async function update ({ token, id, value, regValue, upload, map }) {
   const _upload = compact(upload)
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     const _form = clone(value)
     _form.uid = user.id
@@ -117,7 +117,7 @@ async function update ({ token, id, value, regValue, upload, map }) {
 
 async function destroy ({ token, id }) {
   return new Promise((resolve, reject) => {
-    const user = jwt.decode(token)
+    const user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     request
       .del('/api/v1/posts/' + id)
