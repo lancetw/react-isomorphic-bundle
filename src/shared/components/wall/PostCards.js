@@ -161,9 +161,7 @@ export default class PostCards extends Component {
     )
   }
 
-  renderScrollList = () => {
-    const useTranslate3d = true
-
+  renderScrollList = (useTranslate3d) => {
     return (
       <ReactList
         ref="scrollList"
@@ -190,6 +188,7 @@ export default class PostCards extends Component {
       const containerHeight = this.state.windowHeight - this.props.diff
       const isIE = detectIE()
       if (!isIE || isIE > 11) {
+        const useTranslate3d = true
         return (
           <div
             className={scrollClass}
@@ -197,10 +196,11 @@ export default class PostCards extends Component {
             style={{
               maxHeight: containerHeight
             }}>
-            {this.renderScrollList()}
+            {this.renderScrollList(useTranslate3d)}
           </div>
         )
       } else {
+        const useTranslate3d = false
         return (
           <div
             className={scrollClass}
@@ -209,7 +209,7 @@ export default class PostCards extends Component {
             style={{
               maxHeight: containerHeight
             }}>
-            {this.renderScrollList()}
+            {this.renderScrollList(useTranslate3d)}
           </div>
         )
       }
