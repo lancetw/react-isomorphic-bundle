@@ -194,32 +194,37 @@ export default class Post extends Component {
   }
 
   renderMoreList () {
-    const { titleList } = this.props.moreList
-    return (
-      <div className="ui fluid detail card">
-        {this.props.moreList.isFetching &&
-        <div className="ui segment basic has-header">
-          <div className="ui active inverted dimmer">
-            <div className="ui large loader"></div>
+    const { titleList, isFetching } = this.props.moreList
+    if (isFetching) {
+      return (
+        <div className="ui fluid detail card">
+          <div className="ui segment basic has-header">
+            <div className="ui active inverted dimmer">
+              <div className="ui large loader"></div>
+            </div>
           </div>
         </div>
-        }
-        <div className="ui divided selection animated list content">
-          { !isEmpty(titleList) && titleList.map(function (item, i) {
-            return (
-              <div className="item" key={item.id}>
-                <Link to={`/w/${item.id}`}>
-                  <div className="ui orange horizontal label">
-                    { toShortDate(item.startDate) }
-                  </div>
-                  { item.title }
-                </Link>
-              </div>
-            )})
-          }
+      )
+    } else {
+      return (
+        <div className="ui fluid detail card">
+          <div className="ui divided selection animated list content">
+            { !isEmpty(titleList) && titleList.map(function (item, i) {
+              return (
+                <div className="item" key={item.id}>
+                  <Link to={`/w/${item.id}`}>
+                    <div className="ui orange horizontal label">
+                      { toShortDate(item.startDate) }
+                    </div>
+                    { item.title }
+                  </Link>
+                </div>
+              )})
+            }
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
   render () {
