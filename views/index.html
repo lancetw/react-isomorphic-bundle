@@ -17,9 +17,15 @@
     <link rel="stylesheet" href="{{ style }}" media="screen, projection" />
     {% endfor %}
     {% endif %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.2/outdatedbrowser.min.css" media="screen, projection" />
     {{ stateFromServer | safe }}
   </head>
   <body>
+    <div id="outdated">
+      <h6>您的瀏覽器已過時</h6>
+      <p>要正常瀏覽本網站請升級您的瀏覽器。 <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/tw">現在升級​​</a></p>
+      <p class="last"> <a href="#" id="btnCloseUpdateBrowser" title="關閉"> &times; </a> </p>
+    </div>
     <div id="app">{{ appString | safe }}</div>
     <script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
     {% if env.NODE_ENV == 'production' %}
@@ -39,5 +45,31 @@
     <script src="{{ script }}"></script>
     {% endfor %}
     {% endif %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.2/outdatedbrowser.min.js"></script>
+    <script>
+      //event listener form DOM ready
+      function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload !== 'function') {
+          window.onload = func;
+        } else {
+          window.onload = function() {
+            if (oldonload) {
+              oldonload();
+            }
+            func();
+          }
+        }
+      }
+      //call function after DOM ready
+      addLoadEvent(function(){
+        outdatedBrowser({
+          bgColor: '#f25648',
+          color: '#ffffff',
+          lowerThan: 'transform',
+          languagePath: ''
+        })
+      });
+    </script>
   </body>
 </html>
