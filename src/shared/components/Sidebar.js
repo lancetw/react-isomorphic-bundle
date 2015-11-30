@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react'
+import { detectIE } from 'shared/utils/browser-utils'
 
-const Menu = require('react-burger-menu').stack
+let Menu
+if (!detectIE()) {
+  Menu = require('react-burger-menu').bubble
+} else {
+  Menu = require('react-burger-menu').stack
+}
 
 export default class Sidebar extends Component {
 
