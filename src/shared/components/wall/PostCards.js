@@ -1,20 +1,42 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import { isEmpty } from 'lodash'
+import { isEmpty, debounce } from 'lodash'
 import Card from 'shared/components/wall/PostCard'
 import classNames from 'classnames'
 import shouldPureComponentUpdate from 'react-pure-render/function'
+import { detectIE } from 'shared/utils/browser-utils'
 
 let $
 let ReactList
-let af
+
 if (process.env.BROWSER) {
   ReactList = require('react-list')
   $ = require('jquery')
   require('css/ui/spinkit')
 
-  const AnimationFrame = require('animation-frame')
-  af = new AnimationFrame()
+  // requestAnimationFrame: http://www.inazumatv.com/contents/archives/9226
+  let lastTime = 0
+  const vendors = ['ms', 'moz', 'webkit', 'o']
+  for (let x = 0, limit = vendors.length; x < limit && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame']
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+      const currTime = new Date().getTime()
+      const timeToCall = Math.max(0, 16 - (currTime - lastTime))
+      const id = window.setTimeout(function () { callback( currTime + timeToCall ); }, timeToCall)
+      lastTime = currTime + timeToCall
+      return id
+    }
+  }
+
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+      clearTimeout(id)
+    }
+  }
 }
 
 export default class PostCards extends Component {
@@ -44,11 +66,15 @@ export default class PostCards extends Component {
 
     this.scrollTimeout = null
     this.lastPosition = -1
+    this.rafId = null
   }
 
   componentDidMount () {
     window.addEventListener('resize', this.handleResize)
-    this.fastScrollLoop()
+    const isIE = detectIE()
+    if (!isIE || isIE > 11) {
+      this.fastScrollLoop()
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -69,12 +95,20 @@ export default class PostCards extends Component {
       clearTimeout(this.scrollTimeout)
     }
     this.lastPosition = -1
+    window.cancelAnimationFrame(this.rafId)
   }
 
   handleResize = () => {
     this.setState({
       windowWidth: window.innerWidth, windowHeight: window.innerHeight
     })
+  }
+
+  handleScroll = (event) => {
+    if (!!this.props.hasMore) {
+      const nodeScroll = ReactDOM.findDOMNode(this.refs.scroll)
+      this.handleInfiniteLoad(nodeScroll.scrollTop)
+    }
   }
 
   handleInfiniteLoad = (scrollTop) => {
@@ -103,7 +137,7 @@ export default class PostCards extends Component {
       const scrollTop = nodeScroll.scrollTop
 
       if (this.lastPosition === scrollTop) {
-        af.request(this.fastScrollLoop)
+        this.rafId = window.requestAnimationFrame(this.fastScrollLoop)
         return false
       } else {
         this.lastPosition = scrollTop
@@ -114,7 +148,7 @@ export default class PostCards extends Component {
       }
     }
 
-    af.request(this.fastScrollLoop)
+    this.rafId = window.requestAnimationFrame(this.fastScrollLoop)
   }
 
   renderItem = (index, key) => {
@@ -127,38 +161,58 @@ export default class PostCards extends Component {
     )
   }
 
+  renderScrollList = () => {
+    const useTranslate3d = true
+
+    return (
+      <ReactList
+        ref="scrollList"
+        threshold={100}
+        pageSize={20}
+        initialIndex={0}
+        itemRenderer={this.renderItem}
+        length={this.props.posts.length}
+        type="uniform"
+        useTranslate3d={useTranslate3d}
+        />
+    )
+  }
+
   render () {
     const cards = this.props.posts
 
-    const scrollClass
-      = classNames(
-        'ui',
-        'scrollable'
-      )
+    const scrollClass = classNames(
+      'ui',
+      'scrollable'
+    )
 
     if (process.env.BROWSER && cards.length > 0) {
       const containerHeight = this.state.windowHeight - this.props.diff
-      const useTranslate3d = true
-      return (
-        <div
-          className={scrollClass}
-          ref="scroll"
-          style={{
-            maxHeight: containerHeight
-          }}>
-          <ReactList
-            ref="scrollList"
-            threshold={100}
-            pageSize={20}
-            initialIndex={0}
-            itemRenderer={this.renderItem}
-            length={cards.length}
-            type="uniform"
-            useTranslate3d={useTranslate3d}
-            />
-          {this.elementInfiniteLoad}
-        </div>
-      )
+      const isIE = detectIE()
+      if (!isIE || isIE > 11) {
+        return (
+          <div
+            className={scrollClass}
+            ref="scroll"
+            style={{
+              maxHeight: containerHeight
+            }}>
+            {this.renderScrollList()}
+          </div>
+        )
+      } else {
+        return (
+          <div
+            className={scrollClass}
+            ref="scroll"
+            onScroll={debounce(this.handleScroll, 500)}
+            style={{
+              maxHeight: containerHeight
+            }}>
+            {this.renderScrollList()}
+          </div>
+        )
+      }
     } else {
       return (
         <div className="ui cards" ref="scrollable">
