@@ -40,7 +40,7 @@ export default {
     }
   },
   webpack: {
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval-source-map',
     entry: {
       app: [
         `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=60000`,
