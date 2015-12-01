@@ -17,15 +17,19 @@
     <link rel="stylesheet" href="{{ style }}" media="screen, projection" />
     {% endfor %}
     {% endif %}
+    {% if env.NODE_ENV == 'production' %}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.2/outdatedbrowser.min.css" media="screen, projection" />
+    {% endif %}
     {{ stateFromServer | safe }}
   </head>
   <body>
+    {% if env.NODE_ENV == 'production' %}
     <div id="outdated">
       <h6>您的瀏覽器已過時</h6>
       <p>要正常瀏覽本網站請升級您的瀏覽器。 <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/tw">現在升級​​</a></p>
       <p class="last"> <a href="#" id="btnCloseUpdateBrowser" title="關閉"> &times; </a> </p>
     </div>
+    {% endif %}
     <div id="app">{{ appString | safe }}</div>
     <script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
     {% if env.NODE_ENV == 'production' %}
@@ -39,12 +43,6 @@
       cssNode.media = 'screen, projection';
       headID.appendChild(cssNode);
     </script>
-    {% endif %}
-    {% if env.NODE_ENV != 'debug' %}
-    {% for script in assets.script %}
-    <script src="{{ script }}"></script>
-    {% endfor %}
-    {% endif %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.2/outdatedbrowser.min.js"></script>
     <script>
       //event listener form DOM ready
@@ -71,5 +69,11 @@
         })
       });
     </script>
+    {% endif %}
+    {% if env.NODE_ENV != 'debug' %}
+    {% for script in assets.script %}
+    <script src="{{ script }}"></script>
+    {% endfor %}
+    {% endif %}
   </body>
 </html>
