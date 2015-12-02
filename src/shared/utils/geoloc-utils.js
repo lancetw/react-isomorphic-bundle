@@ -45,4 +45,3 @@ export function runGeoLoc (highAccuracy=true, timeout=10000, maximumAge=0) {
     }
   })
 }
-

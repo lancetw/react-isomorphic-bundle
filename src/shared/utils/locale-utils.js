@@ -44,4 +44,3 @@ export function originLocaleName (locale) {
 
   return fallBackLocale(locale)
 }
-

@@ -51,4 +51,3 @@ export function tongwenAutoStr(obj, lang) {
 
   return obj
 }
-

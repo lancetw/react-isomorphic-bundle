@@ -111,4 +111,3 @@ export default createConstants(
   'LIST_OG_POST_NEARBY_COMPLETED',
   'LIST_OG_POST_NEARBY_FAILED'
 )
-

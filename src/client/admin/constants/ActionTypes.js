@@ -62,4 +62,3 @@ export default createConstants(
   'DELETE_AD_COMPLETED',
   'DELETE_AD_FAILED'
 )
-

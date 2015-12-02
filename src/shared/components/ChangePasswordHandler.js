@@ -55,4 +55,3 @@ export default connect(state => ({
 }))(connectI18n(locale => ({
   options: ChangePasswordFormOptions(locale)
 }))(ChangePasswordHandler))
-

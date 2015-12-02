@@ -81,4 +81,3 @@ export default connect(state => ({
   formType: PostForm(locale),
   regFormType: RegForm(locale)
 }))(PostHandler))
-

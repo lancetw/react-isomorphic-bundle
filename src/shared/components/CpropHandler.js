@@ -36,4 +36,3 @@ class CpropHandler extends Component {
 }
 
 export default connect()(connectI18n()(CpropHandler))
-

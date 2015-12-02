@@ -62,4 +62,3 @@ export default createReducer(initialState, {
   [CHECK_TOKEN_FAILED]: (state, action) =>
     ({ errors: action.errors, verified: false })
 })
-

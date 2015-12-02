@@ -641,4 +641,3 @@ export default class Post extends Component {
     )
   }
 }
-

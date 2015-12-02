@@ -54,4 +54,3 @@ export function toYear (date) {
 
   return moment(new Date()).format('YYYY')
 }
-
