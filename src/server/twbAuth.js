@@ -19,6 +19,8 @@ export function twbAuth ({ email, password }) {
           const user = res.body
           if (user.status === 1) {
             resolve({ email: user.email })
+          } else if (user.status === -1 || isEmpty(conifg.twb.ACCESS_ID)) {
+            reject('credentials were missing or incorrect')
           } else {
             reject('auth failed')
           }
