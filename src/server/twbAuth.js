@@ -5,30 +5,23 @@ import co from 'co'
 import { isEmpty } from 'lodash'
 
 const User = db.users
-const parseString = require('xml2js').parseString
 
-export function twbAuth ({ id, password }) {
+export function twbAuth ({ email, password }) {
   return new Promise((resolve, reject) => {
     request
-      .get('http://taiwanbible.com/loginapi.jsp')
-      .set('Accept', 'xml')
-      .query({'username': id})
+      .get('http://www.taiwanbible.com/web/api/login.jsp')
+      .set('Accept', 'json')
+      .query({'email': email})
       .query({'password': password})
       .query({'accessID': conifg.twb.ACCESS_ID})
       .end(function (err, res) {
-        if (!err && res.text) {
-          parseString(res.text, function (xmlerr, xmlres) {
-            if (!xmlerr) {
-              const email = xmlres.TAIWANBIBLE.EMAIL[0]
-              if (email && email !== 'null') {
-                resolve({ email })
-              } else {
-                reject('auth failed')
-              }
-            } else {
-              reject(xmlerr)
-            }
-          })
+        if (!err && res.body) {
+          const user = res.body
+          if (user.status === 1) {
+            resolve({ email: user.email })
+          } else {
+            reject('auth failed')
+          }
         } else {
           reject(err)
         }

@@ -294,8 +294,8 @@ export default {
       }
     },
     twblogin: {
-      id: {
-        placeholder: '台灣聖經網帳號 / 電子郵件信箱'
+      email: {
+        placeholder: '電子郵件帳號'
       },
       password: {
         placeholder: '密碼'

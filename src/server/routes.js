@@ -140,32 +140,42 @@ router
 
 router
   .post('/api/v1/twblogin', function *(next) {
-    const ctx = this
     const body = this.request.body
 
-    let profile
-    const errors = { message: '' }
-    try {
-      const res = yield twbAuth(body)
-      if (res.email) {
-        profile = yield twbBindUser(res)
-      }
-    } catch (err) {
-      errors.message = err
+    const rule = {
+      password: 'password',
+      email: 'email'
     }
-
-    if (!errors && profile.email) {
-      // response JSON web token
-      const token = jwtHelper(profile)
-
-      // set session token
-      const sess = ctx.session
-      sess.token = token
-
-      ctx.body = { token: token }
+    const errors = validate(rule, body)
+    if (errors) {
+      this.status = 200
+      this.body = errors
     } else {
-      ctx.status = 200
-      ctx.body = { errors: errors.message }
+      let profile
+      let err
+
+      try {
+        const res = yield twbAuth(body)
+        if (res.email) {
+          profile = yield twbBindUser(res)
+        }
+      } catch (error) {
+        err = error
+      }
+
+      if (!err && profile.email) {
+        // response JSON web token
+        const token = jwtHelper(profile)
+
+        // set session token
+        const sess = this.session
+        sess.token = token
+
+        this.body = { token: token }
+      } else {
+        this.status = 200
+        this.body = { errors: err }
+      }
     }
   })
 

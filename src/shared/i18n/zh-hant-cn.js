@@ -294,8 +294,8 @@ export default {
       }
     },
     twblogin: {
-      id: {
-        placeholder: '台湾圣经网帐号 / 电子邮件信箱'
+      email: {
+        placeholder: '电子邮件帐号'
       },
       password: {
         placeholder: '密码'

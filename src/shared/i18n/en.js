@@ -294,8 +294,8 @@ export default {
       }
     },
     twblogin: {
-      id: {
-        placeholder: 'TaiwanBible ID or Email'
+      email: {
+        placeholder: 'Email'
       },
       password: {
         placeholder: 'Password'

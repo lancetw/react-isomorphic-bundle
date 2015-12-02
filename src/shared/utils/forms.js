@@ -358,7 +358,7 @@ exports.RegFormOptions = function (locale) {
 }
 
 exports.TWBLoginForm = t.struct({
-  id: t.Str,
+  email: Email,
   password: Password
 })
 
@@ -366,10 +366,10 @@ const TWBLoginFormOptionsI18n = function (locale) {
   return {
     auto: 'none',
     fields: {
-      id: {
+      email: {
         hasError: false,
         attrs: {
-          placeholder: _T('form.twblogin.id.placeholder', {locale})
+          placeholder: _T('form.twblogin.email.placeholder', {locale})
         }
       },
       password: {
