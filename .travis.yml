@@ -1,9 +1,7 @@
 language: node_js
 node_js:
-  - "iojs-v2.5.0"
-  - "iojs-v3.3.0"
-  - "0.12.7"
-  - "4"
+  - "0.12.9"
+  - "4.2.3"
   - "5"
 sudo: false
 env:

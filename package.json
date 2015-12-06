@@ -226,7 +226,6 @@
     "webpack-hot-middleware": "^2.4.1"
   },
   "engines": {
-    "iojs": "^2.3.4",
-    "nodejs": "^0.12.7"
+    "nodejs": "^0.12.9"
   }
 }
