@@ -67,10 +67,6 @@ select {
   appearance: none;
 }
 
-.disable-pointer {
-  pointer-events: none !important;
-}
-
 input.hide-submit {
   position: absolute;
   left: -9999px;

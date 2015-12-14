@@ -79,7 +79,6 @@ export default class PostCards extends Component {
       this.scrollTimeout = setTimeout(() => {
         this.setState({ triggered: false })
         $('#overlay').remove()
-        $('body').unbind('touchmove')
       }, 0)
     }
   }
@@ -119,7 +118,6 @@ export default class PostCards extends Component {
 
     /* eslint-disable max-len */
     if (!this.state.triggered && scrollTop > checkPoint) {
-      $('body').bind('touchmove', function(e) { e.preventDefault() })
       $('<div id="overlay"><div id="loading"><div class="scroll-spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>').appendTo('.ui.scrollable')
       this.setState({ triggered: true })
 
@@ -162,8 +160,8 @@ export default class PostCards extends Component {
     return (
       <ReactList
         ref="scrollList"
-        threshold={100}
-        pageSize={20}
+        threshold={60}
+        pageSize={240}
         initialIndex={0}
         itemRenderer={this.renderItem}
         length={this.props.posts.length}
@@ -192,7 +190,7 @@ export default class PostCards extends Component {
             style={{
               maxHeight: containerHeight
             }}>
-            {this.renderScrollList('uniform', useTranslate3d)}
+            {this.renderScrollList('variable', useTranslate3d)}
           </div>
         )
       } else {
