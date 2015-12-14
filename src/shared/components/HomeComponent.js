@@ -5,6 +5,7 @@ import { toShortDate } from 'shared/utils/date-utils'
 import { PostPropArray } from 'shared/utils/forms'
 import { originLocaleName } from 'shared/utils/locale-utils'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
+import CpropList from './CpropList'
 
 export default class HomeComponent extends Component {
 
@@ -62,8 +63,8 @@ export default class HomeComponent extends Component {
     const loading = this.props.post.isFetching
 
     return (
-      <main className="ui has-header grid centered container">
-        <div className="sixteen wide tablet ten wide computer column">
+      <main className="ui has-header two column grid centered container">
+        <div className="sixteen wide tablet twelve wide computer column">
           <div className="ui grid">
             <div className="tablet computer only row">
               <Link to="/w/cal" className="ui orange fluid huge button">
@@ -101,6 +102,11 @@ export default class HomeComponent extends Component {
               </a>
             </h3>
           </div>
+        </div>
+        <div className="four wide computer sixteen wide tablet column">
+          <CpropList
+            className="ui relaxed list"
+            defaultLocale={this.props.defaultLocale} />
         </div>
       </main>
     )
