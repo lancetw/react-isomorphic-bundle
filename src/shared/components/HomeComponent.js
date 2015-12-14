@@ -103,8 +103,9 @@ export default class HomeComponent extends Component {
         </div>
         <div className="four wide computer sixteen wide tablet column">
           <div className="ui basic segment center">
-            <div className="image logo-oursevents"></div>
-
+            <Link to="/post">
+              <div className="image logo-oursevents"></div>
+            </Link>
             <CpropList
               className="ui relaxed list"
               defaultLocale={this.props.defaultLocale} />
