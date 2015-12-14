@@ -20,14 +20,14 @@
 .image.logo-oursevents {
   margin: 0 auto;
   display: inline-block;
-  width: 114px;
-  height: 122px;
+  width: 192px;
+  height: 192px;
   background-image: url('../../images/oursevents.png');
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   .image.logo-oursevents {
     background-image: url('../../images/oursevents@2x.png');
-    background-size: 114px 122px;
+    background-size: 192px 192px;
   }
 }
