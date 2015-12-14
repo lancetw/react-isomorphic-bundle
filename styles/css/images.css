@@ -17,17 +17,17 @@
   margin-top: 10px;
 }
 
-.image.logo-mini {
+.image.logo-oursevents {
   margin: 0 auto;
   display: inline-block;
-  width: 64px;
-  height: 64px;
-  background-image: url('../../images/ccnda_icon_mini.png');
+  width: 114px;
+  height: 122px;
+  background-image: url('../../images/oursevents.png');
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
-  .image.logo-mini {
-    background-image: url('../../images/ccnda_icon_mini@2x.png');
-    background-size: 64px 64px;
+  .image.logo-oursevents {
+    background-image: url('../../images/oursevents@2x.png');
+    background-size: 114px 122px;
   }
 }

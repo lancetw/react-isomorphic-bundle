@@ -65,14 +65,14 @@ export default class HomeComponent extends Component {
     return (
       <main className="ui has-header two column grid centered container">
         <div className="sixteen wide tablet twelve wide computer column">
-          <div className="ui grid">
+          <div className="ui column grid page">
             <div className="tablet computer only row">
-              <Link to="/w/cal" className="ui orange fluid huge button">
+              <Link to="/w/cal" className="ui orange fluid large button">
                 <Translate content="home.browse" />
               </Link>
             </div>
             <div className="mobile only row">
-              <Link to="/w/today" className="ui orange fluid huge button">
+              <Link to="/w/today" className="ui orange fluid large button">
                 <Translate content="home.browse" />
               </Link>
             </div>
@@ -96,17 +96,19 @@ export default class HomeComponent extends Component {
             </div>
           )}
           <div className="ui basic segment center">
-            <h3>
-              <a href="http://www.ccnda.org" target="_blank">
-                <div className="image logo"></div>
-              </a>
-            </h3>
+            <a href="http://www.ccnda.org" target="_blank">
+              <div className="image logo"></div>
+            </a>
           </div>
         </div>
         <div className="four wide computer sixteen wide tablet column">
-          <CpropList
-            className="ui relaxed list"
-            defaultLocale={this.props.defaultLocale} />
+          <div className="ui basic segment center">
+            <div className="image logo-oursevents"></div>
+
+            <CpropList
+              className="ui relaxed list"
+              defaultLocale={this.props.defaultLocale} />
+          </div>
         </div>
       </main>
     )

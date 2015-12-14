@@ -694,3 +694,8 @@ and (orientation : portrait) {
     background: transparent;
   }
 }
+
+.image.logo {
+  border-radius: 7px 7px 7px 7px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}

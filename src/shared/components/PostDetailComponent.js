@@ -417,6 +417,11 @@ export default class Post extends Component {
               </div>
               <div className="row">
                 <ADContent />
+                <div className="ui basic segment center">
+                  <a href="http://www.ccnda.org" target="_blank">
+                    <div className="image logo"></div>
+                  </a>
+                </div>
               </div>
             </div>
           </main>
