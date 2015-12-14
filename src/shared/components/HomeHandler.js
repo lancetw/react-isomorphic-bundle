@@ -39,7 +39,6 @@ class HomeHandler extends Component {
 
   render () {
     const { _T } = this.props
-    const title = _T('title.home')
     const defaultTitle = _T('title.site')
 
     const meta = []
@@ -47,7 +46,7 @@ class HomeHandler extends Component {
 
     return (
       <div>
-        <Helmet title={`${title} | ${defaultTitle}`} meta={meta} />
+        <Helmet title={`${defaultTitle}`} meta={meta} />
         <Home {...this.props} />
       </div>
     )
