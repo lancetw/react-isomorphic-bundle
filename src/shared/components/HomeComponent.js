@@ -18,7 +18,7 @@ export default class HomeComponent extends Component {
     super(props)
   }
 
-  renderNews (posts) {
+  renderNews = (posts) => {
     if (!isEmpty(posts)) {
       return posts.map(function (post) {
         return this.renderItem(post)
@@ -63,23 +63,28 @@ export default class HomeComponent extends Component {
     const loading = this.props.post.isFetching
 
     return (
-      <main className="ui has-header two column grid centered container">
+      <main className="ui has-header two column grid container">
         <div className="sixteen wide tablet twelve wide computer column">
-          <div className="ui column grid page">
+          <div className="ui grid center aligned container">
             <div className="tablet computer only row">
-              <Link to="/w/cal" className="ui orange fluid large button">
+              <Link to="/w/cal" className="ui orange huge button">
                 <Translate content="home.browse" />
               </Link>
             </div>
             <div className="mobile only row">
-              <Link to="/w/today" className="ui orange fluid large button">
+              <Link to="/w/today">
+                <div className="image logo-oursevents"></div>
+              </Link>
+            </div>
+            <div className="mobile only row">
+              <Link to="/w/today" className="ui orange huge button">
                 <Translate content="home.browse" />
               </Link>
             </div>
           </div>
-          { ::this.renderNews(posts) }
+          { this.renderNews(posts) }
           {loading && isEmpty(posts) && (
-            <div className="ui segment basic has-header">
+            <div className="ui segment basic">
               <div className="ui active inverted dimmer">
                 <div className="ui indeterminate text loader">
                   <Translate content="wall.loading" />
@@ -90,7 +95,7 @@ export default class HomeComponent extends Component {
           {!loading && isEmpty(posts) && (
             <div>
               <div className="ui hidden divider"></div>
-              <div className="ui segment basic has-header center aligned">
+              <div className="ui segment basic center aligned">
                 <Translate content="post.nodata" />
               </div>
             </div>
@@ -102,13 +107,17 @@ export default class HomeComponent extends Component {
           </div>
         </div>
         <div className="four wide computer sixteen wide tablet column">
-          <div className="ui center">
-            <Link to="/post">
-              <div className="image logo-oursevents"></div>
-            </Link>
-            <CpropList
-              className="ui relaxed list"
-              defaultLocale={this.props.defaultLocale} />
+          <div className="ui grid center aligned">
+            <div className="tablet computer only row">
+              <div className="ui center">
+                <Link to="/post">
+                  <div className="image logo-oursevents"></div>
+                </Link>
+                <CpropList
+                  className="ui relaxed list"
+                  defaultLocale={this.props.defaultLocale} />
+              </div>
+            </div>
           </div>
         </div>
       </main>
