@@ -56,3 +56,5 @@ uploads/*
 *.logs
 
 iisnode/*
+
+.vscode/

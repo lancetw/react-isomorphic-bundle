@@ -102,7 +102,7 @@ export default class HomeComponent extends Component {
           </div>
         </div>
         <div className="four wide computer sixteen wide tablet column">
-          <div className="ui basic segment center">
+          <div className="ui center">
             <Link to="/post">
               <div className="image logo-oursevents"></div>
             </Link>
