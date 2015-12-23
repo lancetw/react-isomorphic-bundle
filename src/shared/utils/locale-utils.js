@@ -2,6 +2,19 @@ import { includes } from 'lodash'
 export const supportedList = ['zh-hant-tw', 'zh-hant-cn', 'en']
 import counterpart from 'counterpart'
 
+const msgList = {
+  'email must be unique': 'message.email.unique'
+}
+
+export function messageI18n (text) {
+  console.log(text, counterpart(msgList[text]))
+  if (text in msgList) {
+    return counterpart(msgList[text])
+  }
+
+  return text
+}
+
 export function fallBackLocale (locale) {
   if (!locale) return locale
 

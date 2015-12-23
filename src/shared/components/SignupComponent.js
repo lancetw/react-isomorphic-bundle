@@ -3,6 +3,7 @@ import { Form, SignupForm } from 'shared/utils/forms'
 import { isEmpty, clone, omit, assign } from 'lodash'
 import classNames from 'classnames'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { messageI18n } from 'shared/utils/locale-utils'
 
 export default class Signup extends Component {
 
@@ -30,8 +31,8 @@ export default class Signup extends Component {
   }
 
   componentWillReceiveProps (nextProps, nextStates) {
-    this.validation(nextProps.signup.errors)
     this.setState({ options: nextProps.options })
+    this.validation(nextProps.signup.errors)
   }
 
   componentDidUpdate () {
@@ -124,6 +125,7 @@ export default class Signup extends Component {
             options.fields[err.field] = clone(options.fields[err.field])
             options.fields[err.field] = { hasError: true, error: err.message }
           } else {
+            err.message = messageI18n(err.message)
             options.fields[err.path] = clone(options.fields[err.path])
             options.fields[err.path] = { hasError: true, error: err.message }
           }

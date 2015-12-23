@@ -319,5 +319,10 @@ export default {
         label: 'I agree to the Terms and Conditions.'
       }
     }
+  },
+  message: {
+    email: {
+      unique: 'email must be unique'
+    }
   }
 }

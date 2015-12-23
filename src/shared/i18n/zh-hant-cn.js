@@ -319,5 +319,10 @@ export default {
         label: '我同意服务条款'
       }
     }
+  },
+  message: {
+    email: {
+      unique: '此电子邮件信箱已经注册了'
+    }
   }
 }

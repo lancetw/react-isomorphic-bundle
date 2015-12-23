@@ -319,5 +319,10 @@ export default {
         label: '我同意服務條款'
       }
     }
+  },
+  message: {
+    email: {
+      unique: '此電子郵件信箱已經註冊了'
+    }
   }
 }
