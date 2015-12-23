@@ -1,4 +1,4 @@
-const bcrypt = require('co-bcrypt')
+const bcrypt = require('co-bcryptjs')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
 import { isFinite } from 'lodash'
@@ -165,4 +165,3 @@ exports.searchWithCount = function *(offset=0, limit=20, pattern, status) {
     raw: true
   })
 }
-

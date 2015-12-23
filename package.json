@@ -71,7 +71,7 @@
     "blocked": "^1.1.0",
     "classnames": "^2.2.1",
     "co": "^4.5.4",
-    "co-bcrypt": "^1.0.0",
+    "co-bcryptjs": "^0.2.0",
     "co-body": "^4.0.0",
     "config": "^1.14.0",
     "counterpart": "^0.17.0",
