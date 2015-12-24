@@ -213,20 +213,20 @@ export default new Resource('posts', {
         throw new Error('user check failed')
       }
 
-      body.startDate = moment(body.startDate).format('YYYY-MM-DD HH:mm:ss')
-      body.endDate = moment(body.endDate).format('YYYY-MM-DD HH:mm:ss')
+      body.startDate = moment(body.startDate).format()
+      body.endDate = moment(body.endDate).format()
 
       if (typeof body.openDate === 'undefined') {
         body.openDate = body.startDate
       } else {
-        body.openDate = moment(body.openDate).format('YYYY-MM-DD HH:mm:ss')
+        body.openDate = moment(body.openDate).format()
       }
 
       if (typeof body.closeDate === 'undefined') {
         body.closeDate = body.endDate
       } else {
         body.closeDate = moment(body.closeDate)
-          .endOf('day').format('YYYY-MM-DD HH:mm:ss')
+          .endOf('day').format()
       }
 
       body.file = JSON.stringify(body.file)
