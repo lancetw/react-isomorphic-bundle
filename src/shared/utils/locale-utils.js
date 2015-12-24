@@ -7,7 +7,6 @@ const msgList = {
 }
 
 export function messageI18n (text) {
-  console.log(text, counterpart(msgList[text]))
   if (text in msgList) {
     return counterpart(msgList[text])
   }
