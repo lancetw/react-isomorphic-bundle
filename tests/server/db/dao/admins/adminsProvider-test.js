@@ -8,7 +8,7 @@ import db from 'src/server/db'
 import { expect } from 'chai'
 import hashids from 'src/shared/utils/hashids-plus'
 
-const bcrypt = require('co-bcrypt')
+const bcrypt = require('co-bcryptjs')
 import { admins } from 'src/server/db'
 
 let id
