@@ -131,9 +131,11 @@ export default new Resource('posts', {
       const post = yield Post.create(body)
 
       if (post.id && body.lat && body.lng) {
-        yield Location.create(post.id, {
-          geometry: [body.lng , body.lat]
-        })
+        try {
+          yield Location.create(post.id, {
+            geometry: [body.lng , body.lat]
+          })
+        } catch (err) {console.warn('Database ERROR: create geometry, postgres ONLY')}
       }
 
       this.type = 'json'
@@ -242,9 +244,11 @@ export default new Resource('posts', {
       const post = yield Post.update(this.params.post, body)
 
       if (post.id && body.lat && body.lng) {
-        yield Location.createOrUpdate(post.id, {
-          geometry: [body.lng , body.lat]
-        })
+        try {
+          yield Location.createOrUpdate(post.id, {
+            geometry: [body.lng , body.lat]
+          })
+        } catch (err) {console.warn('Database ERROR: update geometry, postgres ONLY')}
       }
 
       this.type = 'json'
@@ -269,7 +273,7 @@ export default new Resource('posts', {
       if (post.id) {
         try {
           yield Location.destroy(post.id)
-        } catch (err) {/* DON'T CARE */}
+        } catch (err) {console.warn('Database ERROR: destroy geometry, postgres ONLY')}
       }
 
       this.type = 'json'
