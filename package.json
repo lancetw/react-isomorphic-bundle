@@ -4,7 +4,7 @@
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
-    "prestart": "npm run clean && make fast-build",
+    "prestart": "make clean && make fast-build",
     "start": "NODE_ENV=production node --harmony ./lib/server",
     "win-start": "node --harmony ./lib/server",
     "dev": "make watch",
