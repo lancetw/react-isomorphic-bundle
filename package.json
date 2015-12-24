@@ -66,7 +66,6 @@
   ],
   "dependencies": {
     "app-module-path": "^1.0.3",
-    "babel-core": "^5.8.33",
     "better-console": "^0.2.4",
     "blocked": "^1.1.0",
     "classnames": "^2.2.1",
