@@ -23,8 +23,8 @@ exports.decode = function (str) {
 }
 
 exports.encodeJson = function (obj) {
-  if (obj.hasOwnProperty('dataValues')) {
-    obj = obj.dataValues
+  if (typeof obj.toJSON === 'function') {
+    obj = obj.toJSON()
   }
 
   return traverse(obj).map(function () {
@@ -39,8 +39,8 @@ exports.encodeJson = function (obj) {
 }
 
 exports.decodeJson = function (obj) {
-  if (obj.hasOwnProperty('dataValues')) {
-    obj = obj.dataValues
+  if (typeof obj.toJSON === 'function') {
+    obj = obj.toJSON()
   }
 
   return traverse(obj).map(function () {
