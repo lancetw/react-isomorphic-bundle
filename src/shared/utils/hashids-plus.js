@@ -1,7 +1,13 @@
 // ref: http://www.ajostrow.me/articles/recursive-hashids
+import {
+  isNumber,
+  isString,
+  isNaN,
+  includes,
+  endsWith
+} from 'lodash'
 
 const traverse = require('traverse')
-const _ = require('lodash')
 const config = require('config')
 const hashids = require('hashids')(require('config').app.SALT)
 const BASEID = config.app.BASEID
@@ -13,14 +19,18 @@ exports.encode = function (id) {
 }
 
 exports.decode = function (str) {
-  return !_.isString(str) ? str : +hashids.decode(str)[0] / BASEID
+  return !isString(str) ? str : +hashids.decode(str)[0] / BASEID
 }
 
-exports.encodeJson = function (object) {
-  return traverse(object).map(function () {
-    if (!_.includes(IGNORELIST, this.key)
-        && _.endsWith(this.key, 'id')
-        && _.isNumber(this.node)) {
+exports.encodeJson = function (obj) {
+  if (obj.hasOwnProperty('dataValues')) {
+    obj = obj.dataValues
+  }
+
+  return traverse(obj).map(function () {
+    if (!includes(IGNORELIST, this.key)
+        && endsWith(this.key, 'id')
+        && isNumber(this.node)) {
       return hashids.encode(this.node * BASEID, SEED)
     } else {
       return this.node
@@ -28,11 +38,15 @@ exports.encodeJson = function (object) {
   })
 }
 
-exports.decodeJson = function (object) {
-  return traverse(object).map(function () {
-    if (!_.includes(IGNORELIST, this.key)
-        && _.endsWith(this.key, 'id')
-        && _.isString(this.node) &&
+exports.decodeJson = function (obj) {
+  if (obj.hasOwnProperty('dataValues')) {
+    obj = obj.dataValues
+  }
+
+  return traverse(obj).map(function () {
+    if (!includes(IGNORELIST, this.key)
+        && endsWith(this.key, 'id')
+        && isString(this.node) &&
         this.node.length === 8) {
       return hashids.decode(this.node)[0] / BASEID
     } else {
