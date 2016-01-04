@@ -28,4 +28,3 @@ export default function (app) {
   app.use(route.get('/ring', reactRoute))
   app.use(route.get('/ring/(.*)', reactRoute))
 }
-
