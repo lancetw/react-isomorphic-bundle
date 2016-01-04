@@ -208,7 +208,7 @@ export default class Post extends Component {
     } else {
       return (
         <div className="ui fluid detail card">
-          <div className="ui divided selection animated list content">
+          <div className="ui relaxed divided animated list content">
             { !isEmpty(titleList) && titleList.map(function (item, i) {
               return (
                 <div className="item" key={item.id}>
