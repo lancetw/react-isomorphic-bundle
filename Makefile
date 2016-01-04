@@ -1,7 +1,7 @@
 BIN = $(shell npm bin)
 MOCHA_CMD = $(BIN)/mocha
 ISTANBUL_CMD = node --harmony node_modules/istanbul/lib/cli.js cover
-ESLINT_CMD = $(BIN)/eslint
+ESLINT_CMD = $(BIN)/eslint --quiet
 
 SRC_JS = $(shell find src -name "*.js")
 LIB_JS = $(patsubst src/%.js,lib/%.js,$(SRC_JS))
