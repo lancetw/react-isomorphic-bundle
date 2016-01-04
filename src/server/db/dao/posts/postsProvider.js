@@ -491,12 +491,13 @@ exports.countPerDayInMonth = function *(year, month) {
       .diff(moment(new Date(item.endDate)).startOf('month'), 'days')
 
     if (_diff >= 0) {
-      for (const i of range(start, start + _diff + 1))
+      for (const i of range(start, start + _diff + 1)) {
         if (typeof out[i] === 'undefined') {
           out[i] = 1
         } else {
           out[i] = out[i] + 1
         }
+      }
     }
   })
 
@@ -515,12 +516,13 @@ exports.countPerDayInMonth = function *(year, month) {
     , 'days')
 
     if (_diff >= 0) {
-      for (const i of range(start, start + _diff + 1))
+      for (const i of range(start, start + _diff + 1)) {
         if (typeof out[i] === 'undefined') {
           out[i] = 1
         } else {
           out[i] = out[i] + 1
         }
+      }
     }
   })
 

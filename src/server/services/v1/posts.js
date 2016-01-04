@@ -9,6 +9,7 @@ import moment from 'moment'
 import { isEmpty, isFinite } from 'lodash'
 import queryType from 'query-types'
 
+const debug = require('debug')
 const Post = db.posts
 const UsersInfo = db.usersInfo
 const Location = db.locations
@@ -135,7 +136,7 @@ export default new Resource('posts', {
           yield Location.create(post.id, {
             geometry: [body.lng , body.lat]
           })
-        } catch (err) {console.warn('Database ERROR: create geometry, postgres ONLY')}
+        } catch (err) {debug('dev')('Database ERROR: create geometry, postgres ONLY')}
       }
 
       this.type = 'json'
@@ -248,7 +249,7 @@ export default new Resource('posts', {
           yield Location.createOrUpdate(post.id, {
             geometry: [body.lng , body.lat]
           })
-        } catch (err) {console.warn('Database ERROR: update geometry, postgres ONLY')}
+        } catch (err) {debug('dev')('Database ERROR: update geometry, postgres ONLY')}
       }
 
       this.type = 'json'
@@ -273,7 +274,7 @@ export default new Resource('posts', {
       if (post.id) {
         try {
           yield Location.destroy(post.id)
-        } catch (err) {console.warn('Database ERROR: destroy geometry, postgres ONLY')}
+        } catch (err) {debug('dev')('Database ERROR: destroy geometry, postgres ONLY')}
       }
 
       this.type = 'json'
