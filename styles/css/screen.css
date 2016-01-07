@@ -280,6 +280,15 @@ and (max-device-width : 667px) {
   margin-top: 10px;
 }
 
+.ui.button.flatted {
+  text-shadow: 0 0 3px gold !important;
+  box-shadow: none !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
 .fluid.ui.orange.button, .fluid.ui.orange.attached.button {
   color: rgba(255, 255, 255, 0.9) !important;
   text-shadow: 0 0 3px gold !important;

@@ -34,7 +34,7 @@ export default class CpropList extends Component {
       'purple',
       'pink',
       'brown',
-      'white'
+      'grey'
     ]
     return map(_range, (index) => {
       const cardPropClasses = classNames(
@@ -42,6 +42,7 @@ export default class CpropList extends Component {
         'fluid',
         'large',
         'button',
+        'flatted',
         { [`${colors[index]}`]: true }
       )
 
