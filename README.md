@@ -12,7 +12,7 @@ Learning from [isomorphic-flux-boilerplate](https://github.com/iam4x/isomorphic-
 
 ## DEMO
 
-Demo site: [react.deliverwork.co](http://react.deliverwork.co)
+Demo site (iisnode): [eventtest.oursweb.net](http://eventtest.oursweb.net)
 
 ### Installation
 
