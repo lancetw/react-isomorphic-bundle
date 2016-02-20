@@ -1,10 +1,14 @@
-$blue: #4A90E2;
-$red: #D0021B;
-$grey: #DCE0E0;
-$dark-grey: #565A5C;
-$white: #FFF;
-$yellow: #FFFCE9;
-$green: #59A644;
+
+
+:root {
+--blue: #4A90E2;
+--red: #D0021B;
+--grey: #DCE0E0;
+--dark-grey: #565A5C;
+--white: #FFF;
+--yellow: #FFFCE9;
+--green: #59A644;
+}
 
 .DayPicker {
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
@@ -162,33 +166,33 @@ $green: #59A644;
 }
 
 .DayPicker-Day--has-events-lv0:not(.DayPicker-Day--outside) {
-  background-color: $white;
+  background-color: var(--white);
 }
 
 .DayPicker-Day--has-events-lv1:not(.DayPicker-Day--outside) {
-  background-color: $yellow;
+  background-color: var(--yellow);
 }
 
 .DayPicker-Day--has-events-lv2:not(.DayPicker-Day--outside) {
-  background-color: color($yellow lightness(98%));
+  background-color: color(var(--yellow) lightness(98%));
 }
 
 .DayPicker-Day--has-events-lv3:not(.DayPicker-Day--outside) {
-  background-color: color($yellow lightness(92%));
+  background-color: color(var(--yellow) lightness(92%));
 }
 
 .DayPicker-Day--has-events-lv4:not(.DayPicker-Day--outside) {
-  background-color: color($yellow lightness(86%));
+  background-color: color(var(--yellow) lightness(86%));
 }
 
 .DayPicker-Day--outside {
   cursor: default;
-  color: $white;
+  color: var(--white);
   background-color: rgba(255, 255, 255, 0);
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-  color: $white;
+  color: var(--white);
   background-color: orange;
   .event-started {
     color: white;
@@ -197,7 +201,7 @@ $green: #59A644;
 }
 
 .DayPicker-Day--today {
-  color: $blue;
+  color: var(--blue);
   font-weight: 500;
 }
 
@@ -208,15 +212,15 @@ $green: #59A644;
 }
 
 .DayPicker-Day--disabled {
-  color: $grey;
+  color: var(--grey);
   cursor: default;
-  background-color: color($grey lightness(20%));
+  background-color: color(var(--grey) lightness(20%));
 }
 
 .DayPicker-Day--sunday {
-  color: $red;
+  color: var(--red);
 }
 
 .DayPicker-Day--saturday {
-  color: $green;
+  color: var(--green);
 }
