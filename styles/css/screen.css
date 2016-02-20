@@ -90,14 +90,11 @@ input.hide-submit {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  vertical-align: middle;
 
   .label {
     vertical-align: top !important;
     font-size: 80%;
-  }
-
-  a {
-    vertical-align: middle !important;
   }
 
   a:hover {
