@@ -33,7 +33,7 @@ function stat (file) {
 
 export default function (app) {
   app.use(route.get('/uploads/*', function *(ctx, next) {
-    const location = path.join(__dirname, '../../', decodeURI(this.path))
+    let location = path.join(__dirname, '../../', decodeURI(this.path))
     try {
       const fstat = yield stat(location)
       if (fstat.isFile()) {
@@ -47,7 +47,7 @@ export default function (app) {
   }))
 
   app.use(function *() {
-    const isCashed = this.cashed ? yield *this.cashed() : false
+    let isCashed = this.cashed ? yield *this.cashed() : false
     if (!isCashed) {
       const reducer = combineReducers(reducers)
       const finalCreateStore = applyMiddleware(

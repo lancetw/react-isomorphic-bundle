@@ -19,7 +19,7 @@ const PUBLIC_PATH = `/assets/`;
 
 require('webpack/utils/clean-dist')();
 
-export default {
+module.exports = {
   webpack: {
     devtool: 'cheap-module-source-map',
     entry: {

@@ -23,7 +23,7 @@ const PUBLIC_PATH = `${PROTOCOL}://${HOST}:${PORT}/assets/`;
 
 require('webpack/utils/clean-dist')();
 
-export default {
+module.exports = {
   server: {
     port: PORT,
     options: {

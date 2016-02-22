@@ -11,6 +11,7 @@ function isPromise (val) {
 export default (store) => {
   return function (next) {
     return function (action) {
+      action.type = 'promised'
       return isPromise(action)
         ? action.then(next, onError)
         : next(action)

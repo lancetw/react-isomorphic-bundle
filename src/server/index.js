@@ -15,9 +15,8 @@ if (env !== 'production') {
 
 modulePath.addPath(path.join(__dirname, '../../styles'))
 
-require('babel/register')({
-  'stage': 1
-})
+require('babel-core/register');
+require('babel-polyfill');
 
 const app = require('./koa.js')
 module.exports = app

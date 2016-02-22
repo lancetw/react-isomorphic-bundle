@@ -20,7 +20,7 @@ const HOST = isArray(LOCAL_IP) && LOCAL_IP[0] || LOCAL_IP || 'localhost';
 const PORT = process.env.PORT || 3000;
 const PUBLIC_PATH = `${PROTOCOL}://${HOST}:${PORT}/assets/`;
 
-export default {
+module.exports = {
   server: {
     port: PORT,
     options: {
@@ -100,11 +100,13 @@ export default {
           test: /\.jsx?$/,
           loader: 'babel',
           query: {
-            stage: 0,
-            optional: ['runtime'],
+            cacheDirectory: true,
             plugins: [
-              'react-transform'
+              'react-transform',
+              'transform-runtime',
+              'transform-decorators-legacy'
             ],
+            presets: ['react', 'es2015', 'stage-0'],
             extra: {
               'react-transform': {
                 'transforms': [{
