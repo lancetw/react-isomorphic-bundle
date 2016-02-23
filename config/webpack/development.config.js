@@ -102,20 +102,24 @@ module.exports = {
           query: {
             cacheDirectory: true,
             plugins: [
-              'react-transform',
+              ['react-transform', {
+                'transforms': [
+                  {
+                    'transform': 'react-transform-hmr',
+                    'imports': ['react'],
+                    'locals': ['module']
+                  },
+                  {
+                    'transform': 'react-transform-catch-errors',
+                    'imports': ['react', 'redbox-react']
+                  }
+                ]
+              }],
               'transform-runtime',
-              'transform-decorators-legacy'
+              'transform-decorators-legacy',
+              'add-module-exports'
             ],
-            presets: ['react', 'es2015', 'stage-0'],
-            extra: {
-              'react-transform': {
-                'transforms': [{
-                  'transform': 'react-transform-hmr',
-                  'imports': ['react'],
-                  'locals': ['module']
-                }]
-              }
-            }
+            presets: ['react', 'es2015', 'stage-0']
           },
           exclude: (/node_modules|styles/)
         },

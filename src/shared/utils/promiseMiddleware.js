@@ -8,10 +8,10 @@ function isPromise (val) {
   return val && typeof val.then === 'function'
 }
 
-export default (store) => {
+module.exports = (store) => {
   return function (next) {
     return function (action) {
-      action.type = 'promised'
+      if (typeof action.type === 'undefined') action.type = null;
       return isPromise(action)
         ? action.then(next, onError)
         : next(action)

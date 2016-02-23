@@ -87,7 +87,7 @@ export function changePassword (form) {
   return async dispatch => {
     dispatch({ type: CHANGE_PASS_USER_STARTED })
     try {
-      const token = getToken()
+      let token = getToken()
       const info = await update(form, token)
       if (info.email) {
         return dispatch({
@@ -113,7 +113,7 @@ export function changeInfo (form) {
   return async dispatch => {
     dispatch({ type: CHANGE_INFO_USER_STARTED })
     try {
-      const token = getToken()
+      let token = getToken()
       let _form = mapValues(form, (v) => isNull(v) ? '' : v)
       if (isNumber(_form.zipcode)) {
         _form.zipcode = '' + _form.zipcode

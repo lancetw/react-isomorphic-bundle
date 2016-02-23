@@ -1,4 +1,4 @@
-export default (imagePath) => {
+module.exports = (imagePath) => {
   if (process.env.BROWSER) {
     throw new Error('image-resolver called on browser')
   } else {

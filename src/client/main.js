@@ -21,8 +21,8 @@ import { supportedList } from 'shared/utils/locale-utils'
   })
   counterpart.setFallbackLocale(supportedList[0])
 
-  const initialState = window.STATE_FROM_SERVER
-  const reducer = combineReducers(reducers)
+  let initialState = window.STATE_FROM_SERVER
+  let reducer = combineReducers(reducers)
 
   let finalCreateStore
   if (process.env.NODE_ENV !== 'production') {

@@ -19,4 +19,4 @@ const router = compose([
   ogs.middleware()
 ])
 
-export default router
+module.exports = router

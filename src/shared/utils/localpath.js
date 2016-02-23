@@ -5,4 +5,4 @@ const LOCAL_PATH = typeof document === 'undefined'
   ? `${PROTOCOL}://${HOST}:${PORT}`
   : ''
 
-export default LOCAL_PATH
+module.exports = LOCAL_PATH

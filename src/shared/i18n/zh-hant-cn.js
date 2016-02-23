@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default {
+module.exports = {
   title: {
     site: '活动讯息布告 OursEvents',
     home: '首页',

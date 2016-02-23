@@ -35,7 +35,7 @@ async function search (scope, pattern, offset, limit) {
 export function searchPost (pattern, offset=0, limit=10, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
-    const _pattern = getState().search.pattern
+    let _pattern = getState().search.pattern
     if (!reload && offset <= 0 && _pattern === pattern) {
       return null
     }
@@ -73,7 +73,7 @@ export function searchPost (pattern, offset=0, limit=10, reload=false) {
 export function nearby (pattern, limit=30, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
-    const _pattern = getState().search.pattern
+    let _pattern = getState().search.pattern
     if (!reload
         && _pattern.lat === pattern.lat
         && _pattern.lng === pattern.lng

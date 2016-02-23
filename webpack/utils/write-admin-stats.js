@@ -7,7 +7,7 @@ import debug from 'debug'
 
 const filepath = path.resolve(__dirname, '../../storage/webpack-admin-stats.json')
 
-export default function (stats) {
+module.exports = function (stats) {
   const hash = stats.hash
   const publicPath = this.options.output.publicPath
   const json = stats.toJson();

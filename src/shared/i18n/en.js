@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default {
+module.exports = {
   title: {
     site: 'OursEvents',
     home: 'Home',

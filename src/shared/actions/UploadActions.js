@@ -78,7 +78,7 @@ export function setPercent (percent, index) {
 export function send (filename, file, index) {
   return async (dispatch, getState) => {
     dispatch(setImagePreview(null, index))
-    const token = getToken()
+    let token = getToken()
     const user = jwtDecode(token)
     if (!user.id) {
       return dispatch({

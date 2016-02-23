@@ -10,6 +10,7 @@ export default class ReduxResolver {
 
   resolve (action) {
     const [, ...args] = arguments
+    console.log(action, args)
     if (process.env.BROWSER && !this.firstRendering) {
       return action(...args)
     } else {

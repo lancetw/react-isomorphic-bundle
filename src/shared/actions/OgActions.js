@@ -34,7 +34,7 @@ async function fetch ({ offset, limit, cid, type, dist }) {
 export function fetchList (offset=0, limit=5, cid, reload) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().og.data
+    let cached = getState().og.data
     if (!reload
       && offset <= 0
       && !isEmpty(cached)
@@ -79,7 +79,7 @@ export function fetchList (offset=0, limit=5, cid, reload) {
 export function fetchNearby (dist=1000, limit=5, cid, reload) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().ognearby.data
+    let cached = getState().ognearby.data
     if (!reload
       && !isEmpty(cached)
       && cid === getState().ognearby.cid) {
