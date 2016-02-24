@@ -17,6 +17,7 @@ Demo site (iisnode): [eventtest.oursweb.net](http://eventtest.oursweb.net)
 ### Installation
 
 ```bash
+$ npm uninstall -g babel #completely remove babel@5
 $ npm install -g nodemon webpack babel-cli node-inspector
 $ npm install
 ```
