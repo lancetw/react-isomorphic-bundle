@@ -124,7 +124,7 @@ module.exports = {
         },
         {
           test: /\.jsx?$/,
-          loader: 'babel?optional[]=runtime&stage=0',
+          loader: 'babel',
           exclude: (/node_modules|styles/)
         },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap&importLoaders=1!postcss') },
