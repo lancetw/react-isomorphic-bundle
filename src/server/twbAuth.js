@@ -17,6 +17,7 @@ export function twbAuth ({ email, password }) {
       .end(function (err, res) {
         if (!err && res.body) {
           const user = res.body
+          if (!user.status) user.status = 0
           if (user.status === 1) {
             resolve({ email: user.email })
           } else if (user.status === -1 || isEmpty(conifg.twb.ACCESS_ID)) {

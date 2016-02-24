@@ -36,7 +36,7 @@ export default passport.use(new GoogleStrategy(
 
         if (profile.email) {
           user = yield User.loadByEmail(email)
-          if (user.status > 0) {
+          if (user && user.status > 0) {
             throw new Error('user blocked')
           }
 
