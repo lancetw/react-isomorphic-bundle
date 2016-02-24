@@ -32,7 +32,7 @@ storage:
 	mkdir -p uploads
 
 # Test
-test: lint storage webpack-test
+test: lint storage
 	@NODE_ENV=test $(MOCHA_CMD) $(MOCHA_ARGS)
 
 test-spec:
@@ -44,7 +44,7 @@ test-debug:
 test-cov:
 	@NODE_ENV=test $(ISTANBUL_CMD) $(ISTANBUL_ARGS)
 
-test-ci: storage webpack-test
+test-ci: storage
 	@NODE_ENV=test $(ISTANBUL_CMD) $(TRAVIS_ARGS)
 
 lint:
@@ -84,9 +84,6 @@ dev-debug:
 	node --harmony --debug ./src/server
 
 webpack: public/assets
-
-webpack-test:
-	@NODE_ENV=test webpack --progress --profile --colors --stats --config webpack/server.js
 
 public/assets: $(SRC_JS)
 	@NODE_ENV=production webpack --production --progress --profile --colors --stats --config webpack/server.js
