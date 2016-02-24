@@ -50,11 +50,11 @@ import { getFileExt } from 'shared/utils/file-utils'
 import { EQUAL } from 'shared/utils/common-utils'
 
 async function create ({ token, value, regValue, upload, map }) {
-  const _upload = compact(upload)
+  let _upload = compact(upload)
   return new Promise((resolve, reject) => {
-    const user = jwtDecode(token)
+    let user = jwtDecode(token)
     if (!user.id) reject('invalid token')
-    const _form = clone(value)
+    let _form = clone(value)
     _form.uid = user.id
     _form.startDate = moment(_form.startDate).valueOf()
     _form.endDate = moment(_form.endDate).valueOf()
@@ -83,11 +83,11 @@ async function create ({ token, value, regValue, upload, map }) {
 }
 
 async function update ({ token, id, value, regValue, upload, map }) {
-  const _upload = compact(upload)
+  let _upload = compact(upload)
   return new Promise((resolve, reject) => {
-    const user = jwtDecode(token)
+    let user = jwtDecode(token)
     if (!user.id) reject('invalid token')
-    const _form = clone(value)
+    let _form = clone(value)
     _form.uid = user.id
     _form.startDate = moment(_form.startDate).valueOf()
     _form.endDate = moment(_form.endDate).valueOf()
@@ -117,7 +117,7 @@ async function update ({ token, id, value, regValue, upload, map }) {
 
 async function destroy ({ token, id }) {
   return new Promise((resolve, reject) => {
-    const user = jwtDecode(token)
+    let user = jwtDecode(token)
     if (!user.id) reject('invalid token')
     request
       .del('/api/v1/posts/' + id)
@@ -241,8 +241,8 @@ export function prepare () {
 export function submit ({ value, regValue, upload, map }) {
   return async dispatch => {
     try {
-      const token = getToken()
-      const content = await create({ token, value, regValue, upload, map })
+      let token = getToken()
+      let content = await create({ token, value, regValue, upload, map })
 
       if (content.uid) {
         dispatch(clearCache())
@@ -268,8 +268,8 @@ export function submit ({ value, regValue, upload, map }) {
 export function modify ({ id, value, regValue, upload, map }) {
   return async dispatch => {
     try {
-      const token = getToken()
-      const content = await update({ token, id, value, regValue, upload, map })
+      let token = getToken()
+      let content = await update({ token, id, value, regValue, upload, map })
 
       if (content.uid) {
         dispatch(clearCache())
@@ -295,8 +295,8 @@ export function modify ({ id, value, regValue, upload, map }) {
 export function remove (id) {
   return async dispatch => {
     try {
-      const token = getToken()
-      const content = await destroy({ token, id })
+      let token = getToken()
+      let content = await destroy({ token, id })
 
       if (content.uid) {
         dispatch(clearCache())
@@ -322,7 +322,7 @@ export function show (id) {
   return async dispatch => {
     dispatch({ type: SHOW_POST_STARTED })
     try {
-      const post = await get(id)
+      let post = await get(id)
       if (typeof post !== 'undefined') {
         return dispatch({
           type: SHOW_POST_COMPLETED,
@@ -346,7 +346,7 @@ export function show (id) {
 export function overviewList (offset=0, limit=5, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().overview.posts
+    let cached = getState().overview.posts
     if (!reload && offset <= 0 && !isEmpty(cached)) {
       return null
     }
@@ -360,7 +360,7 @@ export function overviewList (offset=0, limit=5, reload=false) {
     dispatch({ type: LIST_OVERVIEW_POST_STARTED })
 
     try {
-      const posts = await list({ offset, limit })
+      let posts = await list({ offset, limit })
       if (isArray(posts)) {
         return dispatch({
           type: LIST_OVERVIEW_POST_COMPLETED,
@@ -386,7 +386,7 @@ export function overviewList (offset=0, limit=5, reload=false) {
 export function newsList (offset=0, limit=5, user, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().news.posts
+    let cached = getState().news.posts
     if (!reload && offset <= 0 && !isEmpty(cached)) {
       return null
     }
@@ -398,8 +398,8 @@ export function newsList (offset=0, limit=5, user, reload=false) {
     dispatch({ type: LIST_NEWS_POST_STARTED })
 
     try {
-      const type = 1
-      const posts = await list({ offset, limit, type })
+      let type = 1
+      let posts = await list({ offset, limit, type })
       if (isArray(posts)) {
         return dispatch({
           type: LIST_NEWS_POST_COMPLETED,
@@ -425,7 +425,7 @@ export function newsList (offset=0, limit=5, user, reload=false) {
 export function manageList (offset=0, limit=5, user, reload=false) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().manage.posts
+    let cached = getState().manage.posts
     if (!reload && offset <= 0 && !isEmpty(cached)) {
       return null
     }
@@ -437,7 +437,7 @@ export function manageList (offset=0, limit=5, user, reload=false) {
     dispatch({ type: LIST_MANAGE_POST_STARTED })
 
     try {
-      const posts = await list({ offset, limit, user })
+      let posts = await list({ offset, limit, user })
       if (isArray(posts)) {
         return dispatch({
           type: LIST_MANAGE_POST_COMPLETED,
@@ -492,7 +492,7 @@ export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=fal
     dispatch({ type: LIST_CPROP_POST_STARTED })
 
     try {
-      const posts = await listWithCprop(cprop, offset, limit, nocontent)
+      let posts = await listWithCprop(cprop, offset, limit, nocontent)
       if (isArray(posts)) {
         return dispatch({
           type: LIST_CPROP_POST_COMPLETED,
@@ -524,9 +524,9 @@ export function cpropList (cprop, offset=0, limit=5, reload=false, nocontent=fal
 export function fetchList (offset=0, limit=5, start, end, reload) {
   return async (dispatch, getState) => {
     /* cache service */
-    const cached = getState().post.posts
-    const _start = getState().post.start
-    const _end = getState().post.end
+    let cached = getState().post.posts
+    let _start = getState().post.start
+    let _end = getState().post.end
 
     if (!reload && offset <= 0 && !isEmpty(cached)) {
       if (EQUAL(start, _start) && EQUAL(end, _end)) {
@@ -541,7 +541,7 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
     dispatch({ type: LIST_POST_STARTED })
 
     try {
-      const posts = await fetch(offset, limit, start, end)
+      let posts = await fetch(offset, limit, start, end)
       if (isArray(posts)) {
         return dispatch({
           type: LIST_POST_COMPLETED,
@@ -569,8 +569,8 @@ export function fetchList (offset=0, limit=5, start, end, reload) {
 export function countPostsWithCal (year, month) {
   return async (dispatch, getState) => {
     /* cache service */
-    const _year = getState().post.year
-    const _month = getState().post.month
+    let _year = getState().post.year
+    let _month = getState().post.month
     if (year === _year && month === _month) {
       return null
     }
@@ -578,7 +578,7 @@ export function countPostsWithCal (year, month) {
     dispatch({ type: COUNT_POST_IN_MONTH_STARTED })
 
     try {
-      const cals = await countPostInMonth(year, month)
+      let cals = await countPostInMonth(year, month)
       if (cals && isArray(cals.count)) {
         return dispatch({
           type: COUNT_POST_IN_MONTH_COMPLETED,
@@ -604,9 +604,9 @@ export function countPostsWithCal (year, month) {
 export function loadOrgInfoToMap () {
   return async (dispatch, getState) => {
     await dispatch(getInfo(getState().auth.token))
-    const { orginfo } = getState().user
+    let { orginfo } = getState().user
     if (orginfo.cid) {
-      const map = {
+      let map = {
         place: orginfo.ocname,
         lat: orginfo.lat,
         lng: orginfo.lng
@@ -619,7 +619,7 @@ export function loadOrgInfoToMap () {
 export function loadPostDetail (id) {
   return async (dispatch, getState) => {
     await dispatch(show(id))
-    const { detail } = getState().post
+    let { detail } = getState().post
     if (detail.title) {
       dispatch(updateTitle(detail.title))
     }
@@ -629,7 +629,7 @@ export function loadPostDetail (id) {
     } else {
       await dispatch(cpropList(detail.prop, 0, 10, false, true))
     }
-    const map = {
+    let map = {
       place: detail.place,
       lat: detail.lat,
       lng: detail.lng
@@ -641,17 +641,17 @@ export function loadPostDetail (id) {
 export function loadPostEdit (id) {
   return async (dispatch, getState) => {
     await dispatch(show(id))
-    const { detail } = getState().post
+    let { detail } = getState().post
     if (detail.title) {
       await dispatch(updateTitle(detail.title))
-      const map = {
+      let map = {
         place: detail.place,
         lat: detail.lat,
         lng: detail.lng
       }
       await dispatch(setPin(map))
 
-      const files = typeof detail.file !== 'undefined'
+      let files = typeof detail.file !== 'undefined'
       ? JSON.parse(detail.file)
       : []
 

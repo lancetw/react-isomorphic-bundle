@@ -6,7 +6,7 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import multer from 'koa-multer'
 import fs from 'fs'
-import { include, isEmpty } from 'lodash'
+import { includes, isEmpty } from 'lodash'
 import moment from 'moment'
 
 const mimeTypes = [
@@ -33,7 +33,7 @@ const MulterMiddleware = multer({
     fs.unlink('./' + today + '/' + file.path)
   },
   onFileUploadStart: (file, req, res) => {
-    return include(mimeTypes, file.mimetype)
+    return includes(mimeTypes, file.mimetype)
   }
 })
 

@@ -77,6 +77,11 @@ input.hide-submit {
   background: rgba(255, 255, 255, 0.7);
 }
 
+.ui.success.message {
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.7);
+}
+
 .ui.inverted.menu.top {
   a {
     font-weight: bold;

@@ -233,8 +233,8 @@ export default class Post extends Component {
     if (!isEmpty(this.props.post.errors)) {
       return (
         <main className="
-          ui two column post detail stackable has-header grid container">
-          <div className="column">
+          ui centered two column post detail stackable has-header grid container">
+          <div className="center aligned column">
             <div className="ui huge orange label">
               <Translate content="post.detail.noexist" />
             </div>

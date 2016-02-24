@@ -6,6 +6,5 @@
       "transform-runtime",
       "add-module-exports"
     ]
-  ],
-  "passPerPreset": false
+  ]
 }

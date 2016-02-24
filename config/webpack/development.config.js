@@ -60,7 +60,6 @@ module.exports = {
       publicPath: PUBLIC_PATH
     },
     plugins: [
-      new webpack.PrefetchPlugin('react/addons'),
       new webpack.PrefetchPlugin('react'),
       new webpack.ProvidePlugin({
         $: "jquery",

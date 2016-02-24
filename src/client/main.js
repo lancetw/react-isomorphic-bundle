@@ -13,6 +13,8 @@ import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 import { supportedList } from 'shared/utils/locale-utils'
+import { persistState } from 'redux-devtools'
+import DevTools from 'client/DevTools'
 
 (async () => {
   /* eslint-disable react/no-multi-comp */
@@ -23,30 +25,21 @@ import { supportedList } from 'shared/utils/locale-utils'
 
   let initialState = window.STATE_FROM_SERVER
   let reducer = combineReducers(reducers)
-
-  let finalCreateStore
+  let enhancer
   if (process.env.NODE_ENV !== 'production') {
     const debug = require('debug')
     debug.enable('dev,koa')
 
-    const {
-      DevTools,
-      DebugPanel,
-      LogMonitor
-    } = require('redux-devtools/lib/react')
-
-    const { devTools, persistState } = require('redux-devtools')
-
-    finalCreateStore = compose(
+    enhancer = compose(
       applyMiddleware(
         thunk,
         reduxPromise
       ),
-      devTools(),
+      DevTools.instrument(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
     )(createStore)
 
-    const store = finalCreateStore(reducer, initialState)
+    const store = enhancer(reducer, initialState)
     const resolver = new ReduxUniversalResolver()
     store.resolver = resolver
 
@@ -56,31 +49,29 @@ import { supportedList } from 'shared/utils/locale-utils'
     const history = createBrowserHistory()
     const appRoot = document.getElementById('app')
     const elements = (
-      <div>
-        <Provider store={store}>
+      <Provider store={store}>
+        <div>
           <Router
             children={routes(store)}
             history={history}
             onUpdate={() => window.scrollTo(0, 0)}
           />
-        </Provider>
-        <DebugPanel top right bottom>
-          <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
-        </DebugPanel>
-      </div>
+          <DevTools />
+        </div>
+      </Provider>
     )
 
     render(elements, appRoot)
     resolver.clear()
   } else {
-    finalCreateStore = compose(
+    enhancer = compose(
       applyMiddleware(
         thunk,
         reduxPromise
       )
     )(createStore)
 
-    const store = finalCreateStore(reducer, initialState)
+    const store = enhancer(reducer, initialState)
     const resolver = new ReduxUniversalResolver()
     store.resolver = resolver
 

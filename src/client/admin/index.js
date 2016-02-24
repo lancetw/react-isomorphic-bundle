@@ -1,53 +1,47 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import { Router } from 'react-router'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import reduxPromise from 'shared/utils/promiseMiddleware'
 import * as reducers from 'client/admin/reducers'
 import { Provider } from 'react-redux'
 import routes from 'client/admin/routes'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
+import { persistState } from 'redux-devtools'
+import DevTools from 'client/DevTools'
 
 (async () => {
   /* eslint-disable react/no-multi-comp */
-  const initialState = window.STATE_FROM_SERVER
+  let initialState = window.STATE_FROM_SERVER
 
-  const reducer = combineReducers(reducers)
-  const {
-    DevTools,
-    DebugPanel,
-    LogMonitor
-  } = require('redux-devtools/lib/react')
-
-  const { devTools, persistState } = require('redux-devtools')
-
-  const finalCreateStore = compose(
+  let reducer = combineReducers(reducers)
+  let enhancer = compose(
     applyMiddleware(
-      thunk
+      thunk,
+      reduxPromise
     ),
-    devTools(),
+    DevTools.instrument(),
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
   )(createStore)
 
-  const store = finalCreateStore(reducer, initialState)
-  const history = createBrowserHistory()
+  let store = enhancer(reducer, initialState)
+  let history = createBrowserHistory()
 
   if (process.env.NODE_ENV !== 'production') {
-    ReactDOM.render((
-      <div>
-        <Provider store={store}>
+    render((
+      <Provider store={store}>
+        <div>
           <Router
             children={routes(store)}
             history={history}
           />
-        </Provider>
-        <DebugPanel top right bottom>
-          <DevTools visibleOnLoad={false} store={store} monitor={LogMonitor} />
-        </DebugPanel>
-      </div>
+          <DevTools />
+        </div>
+      </Provider>
     ), document.getElementById('admin'))
   } else {
-    ReactDOM.render((
+    render((
       <Provider store={store}>
         <Router
           children={routes(store)}

@@ -11,4 +11,4 @@ const router = compose([
   promotions.middleware()
 ])
 
-export default router
+module.exports = router

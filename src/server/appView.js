@@ -50,11 +50,11 @@ export default function (app) {
     let isCashed = this.cashed ? yield *this.cashed() : false
     if (!isCashed) {
       const reducer = combineReducers(reducers)
-      const finalCreateStore = applyMiddleware(
+      const enhancer = applyMiddleware(
         thunk,
         reduxPromise
       )(createStore)
-      const store = finalCreateStore(reducer)
+      const store = enhancer(reducer)
       const resolver = new ReduxUniversalResolver()
       store.resolver = resolver
       store.protocol = this.protocol
@@ -71,6 +71,7 @@ export default function (app) {
 
       const { translator, lang } = TranslatorInit(this.getLocaleFromHeader())
       store.dispatch(LocaleActions.sync(lang || 'zh-hant-tw'))
+
       let appString
       let assets
       let head
@@ -110,9 +111,8 @@ export default function (app) {
       )
 
       renderToString(elements)  // need this line to collect data
-      yield resolver.dispatch()
+      yield resolver.dispatch(store)
       appString = renderToString(elements)
-
       head = Helmet.rewind()
 
       const env = process.env.NODE_ENV

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { isEmpty, contains, without } from 'lodash'
+import { isEmpty, includes, without } from 'lodash'
 import classNames from 'classnames'
 import { toDate } from 'shared/utils/date-utils'
 import {
@@ -31,12 +31,12 @@ export default class TableWidget extends Component {
   handleChange (id, e) {
     let checked = this.state.checked
     if (e.target.checked) {
-      if (!contains(checked, id)) {
+      if (!includes(checked, id)) {
         checked.push(id)
         this.setState({ checked: checked })
       }
     } else {
-      if (contains(checked, id)) {
+      if (includes(checked, id)) {
         checked = without(checked, id)
       }
       this.setState({ checked: checked })
@@ -52,7 +52,7 @@ export default class TableWidget extends Component {
   }
 
   isChecked (id) {
-    return contains(this.state.checked, id)
+    return includes(this.state.checked, id)
   }
 
   renderActionBtn () {

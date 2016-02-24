@@ -10,7 +10,6 @@ export default class ReduxResolver {
 
   resolve (action) {
     const [, ...args] = arguments
-    console.log(action, args)
     if (process.env.BROWSER && !this.firstRendering) {
       return action(...args)
     } else {
@@ -23,7 +22,10 @@ export default class ReduxResolver {
 
   async dispatch () {
     await Promise.all(
-      this.pending.map(({ action, args }) => action(...args)))
+      this.pending.map(({ action, args }) => {
+        return action(...args)
+      }
+    ))
   }
 
   clear () {

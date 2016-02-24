@@ -22,7 +22,7 @@ export default class Header extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { userInput: '', hideSearchBox: true }
+    this.state = { userInput: '', hideSearchBox: true, isOpen: false }
 
     this.releaseTimeout = undefined
     this.searchboxTimeout = undefined
@@ -33,6 +33,10 @@ export default class Header extends Component {
       clearTimeout(this.releaseTimeout)
       clearTimeout(this.searchboxTimeout)
     }
+  }
+
+  closeMenu = () => {
+    this.setState({ isOpen: false })
   }
 
   handleChange = (event) => {
@@ -79,6 +83,10 @@ export default class Header extends Component {
     }, 500)
   }
 
+  isMenuOpen = (state) => {
+    this.setState({ isOpen: state.isOpen })
+  }
+
   render () {
     const { dispatch, auth } = this.props
 
@@ -87,13 +95,13 @@ export default class Header extends Component {
     let AuthLink
     if (!auth.token) {
       AuthLink = (
-        <Link to="/login" className="item">
+        <Link to="/login" className="item" onClick={this.closeMenu}>
           <Translate content="header.login" />
         </Link>
       )
     } else {
       AuthLink = (
-        <Link to="/logout" className="item">
+        <Link to="/logout" className="item" onClick={this.closeMenu}>
           <Translate content="header.logout" />
         </Link>
       )
@@ -102,7 +110,7 @@ export default class Header extends Component {
     let ChangePasswordLink
     if (auth.token) {
       ChangePasswordLink = (
-        <Link to="/password" className="item">
+        <Link to="/password" className="item" onClick={this.closeMenu}>
           <Translate content="header.password" />
         </Link>
       )
@@ -111,7 +119,7 @@ export default class Header extends Component {
     let ManageLink
     if (auth.token) {
       ManageLink = (
-        <Link to="/manage" className="item">
+        <Link to="/manage" className="item" onClick={this.closeMenu}>
           <Translate content="header.manage" />
         </Link>
       )
@@ -166,16 +174,16 @@ export default class Header extends Component {
         <div className="computer tablet only row">
           <div className="left menu">
             <Link to="/home" className="item">
-              <Translate content="header.home" />
+              <Translate content="header.home" onClick={this.closeMenu} />
             </Link>
             <Link to="/nearby" className="item">
-              <Translate content="header.nearby" />
+              <Translate content="header.nearby" onClick={this.closeMenu} />
             </Link>
             <Link to="/w/cal" className="item">
-              <Translate content="header.wall" />
+              <Translate content="header.wall" onClick={this.closeMenu} />
             </Link>
             <Link to="/post" className="item">
-              <Translate content="header.post" />
+              <Translate content="header.post" onClick={this.closeMenu} />
             </Link>
             {ChangePasswordLink}
             {ManageLink}
@@ -189,17 +197,17 @@ export default class Header extends Component {
         </div>
         <div className="mobile only row">
           <div className="left menu">
-            <Sidebar>
+            <Sidebar isOpen={this.state.isOpen} isMenuOpen={this.isMenuOpen}>
               <Link to="/home" className="link item">
-                <Translate content="header.home" />
+                <Translate content="header.home" onClick={this.closeMenu} />
               </Link>
               <Link to="/nearby" className="link item">
-                <Translate content="header.nearby" />
+                <Translate content="header.nearby" onClick={this.closeMenu} />
               </Link>
               <Link to="/w/today" className="link item">
-                <Translate content="header.wall" />
+                <Translate content="header.wall" onClick={this.closeMenu} />
               </Link>
-              <Link to="/post" className="link item">
+              <Link to="/post" className="link item" onClick={this.closeMenu}>
                 <Translate content="header.post" />
               </Link>
               {ChangePasswordLink}

@@ -1,6 +1,6 @@
 import { createConstants } from 'shared/utils/redux-utils'
 
-export default createConstants(
+module.exports = createConstants(
   'AUTH_USER_STARTED',
   'AUTH_USER_COMPLETED',
   'AUTH_USER_FAILED',

@@ -79,7 +79,7 @@ export function send (filename, file, index) {
   return async (dispatch, getState) => {
     dispatch(setImagePreview(null, index))
     let token = getToken()
-    const user = jwtDecode(token)
+    let user = jwtDecode(token)
     if (!user.id) {
       return dispatch({
         type: UPLOAD_FILE_FAILED,

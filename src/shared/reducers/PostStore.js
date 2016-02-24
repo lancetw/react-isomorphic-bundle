@@ -64,11 +64,13 @@ export default createReducer(initialState, {
     isFetching: true,
     detail: {}
   }),
-  [SHOW_POST_COMPLETED]: (state, action) => ({
-    errors: {},
-    detail: action.detail,
-    isFetching: false
-  }),
+  [SHOW_POST_COMPLETED]: (state, action) => {
+    return ({
+      errors: {},
+      detail: action.detail,
+      isFetching: false
+    })
+  },
   [SHOW_POST_FAILED]: (state, action) => ({
     errors: action.errors,
     isFetching: false

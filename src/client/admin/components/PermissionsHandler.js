@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdminActions from 'client/admin/actions/AdminActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
-import { contains } from 'lodash'
+import { includes } from 'lodash'
 
 let swal
 if (process.env.BROWSER) {
@@ -53,7 +53,7 @@ class PermissionsHandler extends Component {
     const token = AuthActions.getToken()
     return dispatch(AuthActions.showUser(token)).then(() => {
       const { user } = this.props.auth
-      if (contains(checked, user.id)) {
+      if (includes(checked, user.id)) {
         swal('Oops...', '不應該停用自己。', 'error')
         return Promise.reject('Oops')
       } else {

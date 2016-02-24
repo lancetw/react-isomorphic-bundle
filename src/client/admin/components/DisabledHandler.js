@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdminActions from 'client/admin/actions/AdminActions'
 import * as AuthActions from 'client/admin/actions/AuthActions'
-import { isEmpty, contains } from 'lodash'
+import { isEmpty, includes } from 'lodash'
 
 let swal
 if (process.env.BROWSER) {
@@ -58,7 +58,7 @@ class DisabledHandler extends Component {
     const token = AuthActions.getToken()
     return dispatch(AuthActions.showUser(token)).then(() => {
       const { user } = this.props.auth
-      if (contains(checked, user.id)) {
+      if (includes(checked, user.id)) {
         swal('Oops...', '不應該封鎖自己。', 'error')
         return Promise.reject('Oops')
       } else {
