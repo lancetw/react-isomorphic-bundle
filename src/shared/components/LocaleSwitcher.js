@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import counterpart from 'counterpart'
 import * as LocaleActions from 'shared/actions/LocaleActions'
 import { connect } from 'react-redux'
-import { trans2Simp, trans2Trad, toSimpChinese, toTradChinese } from 'shared/utils/tongwen'
+import { trans2Simp, trans2Trad } from 'shared/utils/tongwen'
 
 class LocaleSwitcher extends Component {
 

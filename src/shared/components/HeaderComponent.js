@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import LocaleSwitcher from './LocaleSwitcher'
 import Sidebar from './Sidebar'
 import classNames from 'classnames'
+import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 export default class Header extends Component {
 
@@ -52,8 +53,10 @@ export default class Header extends Component {
   }
 
   doSubmit = (event) => {
-    const pattern = this.state.userInput
+    let pattern = this.state.userInput
     if (!pattern) return
+
+    pattern = tongwenAutoStr(pattern, 'zh-hant-tw')
 
     if (process.env.BROWSER) {
       event.target.blur()
