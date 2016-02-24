@@ -17,7 +17,7 @@ Demo site (iisnode): [eventtest.oursweb.net](http://eventtest.oursweb.net)
 ### Installation
 
 ```bash
-$ npm install -g nodemon webpack babel@5 node-inspector
+$ npm install -g nodemon webpack babel-cli node-inspector
 $ npm install
 ```
 
