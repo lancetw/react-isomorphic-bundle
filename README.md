@@ -26,6 +26,10 @@ edit `./config/sequelize/config.json`
 
 change `dialect` from "postgres" to "sqlite" if you want a simple start.
 
+```bash
+$ npm install sqlite3
+```
+
 ##### DEVELOPMENT
 
 `npm run dev` (*wait until the terminal shows: "webpack: bundle is now VALID".*)
