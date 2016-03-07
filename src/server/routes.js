@@ -337,7 +337,7 @@ router
         title: post.title,
         link: `${this.protocol}://${this.host}/w/${hashids.encode(post.id)}`,
         description: post.content.substr(0, descriptionLength),
-        date: post.created_at,
+        date: moment(post.created_at).toDate(),
         author: [{
           name: post.ocname,
           link: post.url
