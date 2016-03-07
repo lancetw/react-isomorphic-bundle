@@ -6,7 +6,7 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import request from 'superagent'
-import { isFinite } from 'lodash'
+import { isFinite, isEmpty } from 'lodash'
 
 export function fetchOrgDataByCid (cid) {
   return new Promise((resolve, reject) => {
@@ -82,7 +82,11 @@ export default new Resource('ogs', {
           cid: cid
         }
         data = yield Location.nearBy(limit, pattern)
-        this.body = { oginfo: oginfo, data: hashids.encodeJson(data) }
+        if (isEmpty(data)) {
+          this.body = { oginfo: oginfo, data: [] }
+        } else {
+          this.body = { oginfo: oginfo, data: hashids.encodeJson(data) }
+        }
       } catch (err) {
         this.type = 'json'
         this.status = 404
