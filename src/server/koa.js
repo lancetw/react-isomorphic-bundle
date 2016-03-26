@@ -22,6 +22,7 @@ import adminServices from 'src/server/services/admin'
 import models from 'src/server/db/models'
 import locale from 'koa-locale'
 import bodyParser from 'koa-bodyparser'
+import noCache from 'koa-no-cache'
 
 const debug = require('debug')
 const leveldb = level('./storage/leveldb')
@@ -111,6 +112,11 @@ app.use(
     { store: store({ db: leveldb }) }
   )
 )
+
+app.use(noCache({
+  paths: ['/api/v1/(.*)'],
+  types: ['application/json']
+}))
 
 app.use(mount('/api/v1', cors()))
 app.use(mount('/api/v1', services.v1))
