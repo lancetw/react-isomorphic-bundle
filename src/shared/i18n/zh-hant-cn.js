@@ -108,7 +108,7 @@ module.exports = {
     },
     map: {
       'search': '搜寻',
-      'update': '更新位置',
+      'update': '更新',
       'lat': '纬度',
       'lng': '经度',
       'my': '我的位置',
@@ -212,19 +212,17 @@ module.exports = {
         event: '活动'
       },
       prop: {
-        others: '其他',
-        general: '一般',
-        music: '音乐',
-        communication: '交流',
-        groupCommunity: '社群',
-        specialGroups: '特殊群体',
-        missions: '宣教',
-        evangelism: '福音',
-        sermon: '布道',
-        training: '培训',
-        welfare: '社福',
-        healthCare: '医疗',
-        counseling: '谘商'
+        announcement: '公布事项',
+        ceremony: '礼仪圣事',
+        mission: '宣教差传',
+        gospel: '福音布道',
+        arts: '艺文展演',
+        ministry: '教牧同工',
+        fellowship: '信徒聚会',
+        society: '社会关注',
+        community: '社区活动',
+        family: '家庭生活',
+        bibleStudy: '研经学习'
       }
     },
     reg: {

@@ -235,19 +235,17 @@ exports.PostType = function (locale) {
 
 const PostPropArrayI18n = function (locale) {
   return {
-    0: _T('form.post.prop.others', {locale}),
-    1: _T('form.post.prop.general', {locale}),
-    2: _T('form.post.prop.music', {locale}),
-    3: _T('form.post.prop.communication', {locale}),
-    4: _T('form.post.prop.groupCommunity', {locale}),
-    5: _T('form.post.prop.specialGroups', {locale}),
-    6: _T('form.post.prop.missions', {locale}),
-    7: _T('form.post.prop.evangelism', {locale}),
-    8: _T('form.post.prop.sermon', {locale}),
-    9: _T('form.post.prop.training', {locale}),
-    10: _T('form.post.prop.welfare', {locale}),
-    11: _T('form.post.prop.healthCare', {locale}),
-    12: _T('form.post.prop.counseling', {locale})
+    0: _T('form.post.prop.announcement', {locale}),
+    1: _T('form.post.prop.ceremony', {locale}),
+    2: _T('form.post.prop.mission', {locale}),
+    3: _T('form.post.prop.gospel', {locale}),
+    4: _T('form.post.prop.arts', {locale}),
+    5: _T('form.post.prop.ministry', {locale}),
+    6: _T('form.post.prop.fellowship', {locale}),
+    7: _T('form.post.prop.society', {locale}),
+    8: _T('form.post.prop.community', {locale}),
+    9: _T('form.post.prop.family', {locale}),
+    10: _T('form.post.prop.bibleStudy', {locale})
   }
 }
 exports.PostPropArray = function (locale) {

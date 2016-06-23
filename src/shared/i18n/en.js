@@ -212,19 +212,17 @@ module.exports = {
         event: 'Event'
       },
       prop: {
-        others: 'Others',
-        general: 'General',
-        music: 'Music',
-        communication: 'Communication',
-        groupCommunity: 'Group Community',
-        specialGroups: 'Special Groups',
-        missions: 'Missions',
-        evangelism: 'Evangelism',
-        sermon: 'Sermon',
-        training: 'Training',
-        welfare: 'Welfare',
-        healthCare: 'Health Care',
-        counseling: 'Counseling'
+        announcement: 'Announcement',
+        ceremony: 'Ceremony',
+        mission: 'Mission',
+        gospel: 'Gospel',
+        arts: 'Arts',
+        ministry: 'Ministry',
+        fellowship: 'Fellowship',
+        society: 'Society',
+        community: 'Community',
+        family: 'Family',
+        bibleStudy: 'Bible Study'
       }
     },
     reg: {
