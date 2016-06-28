@@ -43,7 +43,7 @@ export default class CpropList extends Component {
         'large',
         'button',
         'flatted',
-        { [`${colors[index]}`]: true }
+        { 'green': true }
       )
 
       return (
