@@ -8,7 +8,7 @@ import {
   RegForm,
   RegFormOptions
 } from 'shared/utils/forms'
-import { isEmpty, clone } from 'lodash'
+import { each, isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
 import moment from 'moment'
 import ImageUpload from 'shared/components/addon/image-upload'
@@ -22,7 +22,6 @@ import {
 import { toDate } from 'shared/utils/date-utils'
 import { getFileExt } from 'shared/utils/file-utils'
 import { runGeoLoc } from 'shared/utils/geoloc-utils'
-import { each } from 'lodash'
 import $ from 'jquery'
 import { createHistory } from 'history'
 import queryString from 'query-string'
@@ -201,13 +200,29 @@ export default class Post extends Component {
     this.setState({ placeError: false })
   }
 
-  handleChange = (value) => {
-    this.setState({ value })
+  handleChange = (value, path) => {
+    if (path[0] === 'startDate') {
+      const newValue = clone(value)
+      const startDate = this.refs.form.getComponent(path).getValue()
+      const endDate = this.refs.form.getComponent(['endDate']).getValue()
+      newValue.endDate = newValue.startDate
+      this.setState({ value: newValue })
+    } else {
+      this.setState({ value })
+    }
   }
 
-  handleRegChange = (regValue) => {
-    this.refs.regForm.validate()
-    this.setState({ regValue })
+  handleRegChange = (regValue, path) => {
+    if (path[0] === 'openDate') {
+      const newValue = clone(regValue)
+      const openDate = this.refs.regForm.getComponent(path).getValue()
+      const closeDate = this.refs.regForm.getComponent(['closeDate']).getValue()
+      newValue.closeDate = newValue.openDate
+      this.setState({ regValue: newValue })
+    } else {
+      this.refs.regForm.validate()
+      this.setState({ regValue })
+    }
   }
 
   dateToArray (date) {
