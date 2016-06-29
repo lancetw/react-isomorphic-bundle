@@ -12,7 +12,7 @@ import {
 }from 'shared/constants/ActionTypes'
 
 export function clearCache () {
-  return async dispatch => {
+  return dispatch => {
     dispatch({ type: CLEAR_UPLOAD_COMPLETED })
     dispatch({ type: LIST_POST_RELOADED })
     dispatch({ type: LIST_CPROP_POST_RELOADED })

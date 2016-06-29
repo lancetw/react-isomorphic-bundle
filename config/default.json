@@ -31,6 +31,9 @@
       "EXP": "3h",
       "ISS": "http://localhost:3000/api/v1/login",
       "AUD": "http://localhost:3000"
+    },
+    "PERMIT": {
+      "advanced": [""]
     }
   },
   "admin": {

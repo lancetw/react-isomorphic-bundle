@@ -97,8 +97,9 @@ module.exports = {
       title: {
         basic: 'Basic',
         upload: 'Upload',
-        advanced: 'Advanced',
-        map: 'Location'
+        enroll: 'Enroll',
+        map: 'Location',
+        advanced: 'Advanced'
       },
       msg: {
         upload: 'Dropping images or pdf files here, or click to select:',
@@ -114,6 +115,11 @@ module.exports = {
       'my': 'My Place',
       'geo': 'find my place',
       'tips': 'Named  your place please'
+    },
+    advanced: {
+      'ocname': {
+        'text': 'Organization Name（Optional）'
+      }
     },
     detail: {
       'open': 'Enroll Now',

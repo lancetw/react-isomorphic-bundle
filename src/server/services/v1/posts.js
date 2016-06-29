@@ -6,8 +6,10 @@ import RestAuth from 'src/server/passport/auth/rest-auth'
 import db from 'src/server/db'
 import nunjucks from 'nunjucks'
 import moment from 'moment'
-import { isEmpty, isFinite } from 'lodash'
+import { isEmpty, isFinite, isNumber } from 'lodash'
 import queryType from 'query-types'
+import { fetchOrgDataByCid } from './ogs'
+import { fetchOrgData } from './usersInfo'
 
 const debug = require('debug')
 const Post = db.posts
@@ -86,7 +88,8 @@ export default new Resource('posts', {
       url: {
         required: false,
         type: 'url'
-      }
+      },
+      ocname: { type: 'string', required: false, allowEmpty: true }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -118,16 +121,35 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
-      try {
-        const userinfo = yield UsersInfo.load(+this.user.id)
-        body.cid = userinfo.cid
-        body.ocname = userinfo.ocname
-        body.zipcode = userinfo.zipcode
-        body.contact = userinfo.contact
-        body.country = userinfo.country
-        body.city = userinfo.city
-        body.address = userinfo.address
-      } catch (err) {/* no userinfo */}
+      if (body.ocname) {
+        try {
+          let org = {}
+          if (isNumber(body.ocname)) {
+            org = yield fetchOrgDataByCid(body.ocname)
+          } else {
+            org = yield fetchOrgData(body.ocname)
+          }
+          body.cid = org.oid
+          body.ocname = org.ocname
+          body.zipcode = org.zipcode
+          body.contact = org.cname
+          body.country = org.country
+          body.city = org.city
+          body.address = org.address
+
+        } catch (err) {/* no org data */}
+      } else {
+        try {
+          const userinfo = yield UsersInfo.load(+this.user.id)
+          body.cid = userinfo.cid
+          body.ocname = userinfo.ocname
+          body.zipcode = userinfo.zipcode
+          body.contact = userinfo.contact
+          body.country = userinfo.country
+          body.city = userinfo.city
+          body.address = userinfo.address
+        } catch (err) {/* no userinfo */}
+      }
 
       const post = yield Post.create(body)
 
@@ -197,7 +219,8 @@ export default new Resource('posts', {
       url: {
         required: false,
         type: 'url'
-      }
+      },
+      ocname: { type: 'string', required: false, allowEmpty: true }
     }
     const errors = validate(rule, body)
     if (errors) {
@@ -232,16 +255,36 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
-      try {
-        const userinfo = yield UsersInfo.load(+this.user.id)
-        body.cid = userinfo.cid
-        body.ocname = userinfo.ocname
-        body.zipcode = userinfo.zipcode
-        body.contact = userinfo.contact
-        body.country = userinfo.country
-        body.city = userinfo.city
-        body.address = userinfo.address
-      } catch (err) {/* no userinfo */}
+      if (body.ocname) {
+        try {
+          let org = {}
+          if (isNumber(body.ocname)) {
+            org = yield fetchOrgDataByCid(body.ocname)
+          } else {
+            org = yield fetchOrgData(body.ocname)
+          }
+          body.cid = org.oid
+          body.ocname = org.ocname
+          body.zipcode = org.zipcode
+          body.contact = org.cname
+          body.country = org.country
+          body.city = org.city
+          body.address = org.address
+
+        } catch (err) {/* no org data */}
+      } else {
+        try {
+          const userinfo = yield UsersInfo.load(+this.user.id)
+          body.cid = userinfo.cid
+          body.ocname = userinfo.ocname
+          body.zipcode = userinfo.zipcode
+          body.contact = userinfo.contact
+          body.country = userinfo.country
+          body.city = userinfo.city
+          body.address = userinfo.address
+        } catch (err) {/* no userinfo */}
+      }
+
       const post = yield Post.update(this.params.post, body)
 
       if (post.id && body.lat && body.lng) {

@@ -36,7 +36,11 @@ exports.create = function *(post) {
     'url',
     'status',
     'ocname',
-    'cid'
+    'cid',
+    'country',
+    'city',
+    'zipcode',
+    'address'
   ]
 
   return yield Post.create(post, { fields: fillable })
@@ -554,7 +558,11 @@ exports.update = function *(hid, post) {
     'url',
     'status',
     'ocname',
-    'cid'
+    'cid',
+    'country',
+    'city',
+    'zipcode',
+    'address'
   ]
   const id = +hashids.decode(hid)
   if (!isFinite(id)) return false

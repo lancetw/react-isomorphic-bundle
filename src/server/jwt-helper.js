@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
 import hashids from 'src/shared/utils/hashids-plus'
+import { includes } from 'lodash'
 
 const opts = {}
 opts.algorithm = config.jwt.OPTIONS.ALG
@@ -15,6 +16,11 @@ export default function (profile, isAdmin=false) {
   data.password = profile.password
   if (isAdmin) {
     data.isAdmin = true
+  }
+
+  // Advanced user permission
+  if (includes(config.jwt.PERMIT.advanced, profile.email)) {
+    data.advanced = true
   }
 
   return jwt.sign(data, config.jwt.SECRET_OR_KEY, opts)

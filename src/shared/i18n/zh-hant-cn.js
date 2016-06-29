@@ -97,8 +97,9 @@ module.exports = {
       title: {
         basic: '基本',
         upload: '上传',
-        advanced: '报名',
-        map: '位置'
+        enroll: '报名',
+        map: '位置',
+        advanced: '进阶'
       },
       msg: {
         upload: '您可以上传图片或是 PDF（请拖拉至此或是点击选择档案）：',
@@ -114,6 +115,11 @@ module.exports = {
       'my': '我的位置',
       'geo': '寻找我的位置',
       'tips': '为您的地点取个名称'
+    },
+    advanced: {
+      'ocname': {
+        'text': '代为发文请填入原始单位组织编号或名称（非必填）'
+      }
     },
     detail: {
       'open': '开放报名中',

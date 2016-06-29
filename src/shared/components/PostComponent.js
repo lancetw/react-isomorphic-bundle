@@ -307,12 +307,14 @@ export default class Post extends Component {
 
       const regValue = this.state.regValue
 
+      const ocname = ReactDOM.findDOMNode(this.refs.ocname).value
+
       this.releaseTimeout1 = setTimeout(() => {
         const { id } = this.props.params
         if (id) {
-          this.props.modify({ id, value, regValue, upload, map })
+          this.props.modify({ id, value, regValue, upload, map, ocname })
         } else {
-          this.props.submit({ value, regValue, upload, map })
+          this.props.submit({ value, regValue, upload, map, ocname })
         }
       }, 1000)
     }
@@ -454,6 +456,13 @@ export default class Post extends Component {
       { 'disabled': this.props.disableSubmit }
     )
 
+    const advancedClass = classNames(
+      'ui',
+      'orange',
+      'message',
+      { 'hidden': !this.props.auth.user.advanced }
+    )
+
     const Loading = classNames(
       'ui',
       'form',
@@ -521,7 +530,7 @@ export default class Post extends Component {
                 <Translate content="post.tabs.title.basic" />
               </Tab>
               <Tab>
-                <Translate content="post.tabs.title.advanced" />
+                <Translate content="post.tabs.title.enroll" />
               </Tab>
               <Tab>
                 <Translate content="post.tabs.title.upload" />
@@ -542,6 +551,13 @@ export default class Post extends Component {
                   options={this.state.options}
                   value={this.state.value}
                   onChange={this.handleChange}/>
+                <div className={advancedClass}>
+                  <input
+                    type="text"
+                    placeholder={this.props._T('post.advanced.ocname.text')}
+                    ref="ocname"
+                    />
+                </div>
                 <div className="ui hidden divider" />
                 <button
                   type="submit"

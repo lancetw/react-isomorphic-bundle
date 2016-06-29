@@ -49,7 +49,7 @@ import { setImageFileName } from 'shared/actions/UploadActions'
 import { getFileExt } from 'shared/utils/file-utils'
 import { EQUAL } from 'shared/utils/common-utils'
 
-async function create ({ token, value, regValue, upload, map }) {
+async function create ({ token, value, regValue, upload, map, ocname }) {
   let _upload = compact(upload)
   return new Promise((resolve, reject) => {
     let user = jwtDecode(token)
@@ -67,6 +67,7 @@ async function create ({ token, value, regValue, upload, map }) {
       _form.place = map.place
     }
     _form.file = _upload
+    _form.ocname = ocname
     request
       .post('/api/v1/posts')
       .set('Accept', 'application/json')
@@ -82,7 +83,7 @@ async function create ({ token, value, regValue, upload, map }) {
   })
 }
 
-async function update ({ token, id, value, regValue, upload, map }) {
+async function update ({ token, id, value, regValue, upload, map, ocname }) {
   let _upload = compact(upload)
   return new Promise((resolve, reject) => {
     let user = jwtDecode(token)
@@ -100,6 +101,7 @@ async function update ({ token, id, value, regValue, upload, map }) {
       _form.place = map.place
     }
     _form.file = _upload
+    _form.ocname = ocname
     request
       .put('/api/v1/posts/' + id)
       .set('Accept', 'application/json')
@@ -238,11 +240,11 @@ export function prepare () {
   }
 }
 
-export function submit ({ value, regValue, upload, map }) {
+export function submit ({ value, regValue, upload, map, ocname }) {
   return async dispatch => {
     try {
       let token = getToken()
-      let content = await create({ token, value, regValue, upload, map })
+      let content = await create({ token, value, regValue, upload, map, ocname })
 
       if (content.uid) {
         dispatch(clearCache())
@@ -265,11 +267,11 @@ export function submit ({ value, regValue, upload, map }) {
   }
 }
 
-export function modify ({ id, value, regValue, upload, map }) {
+export function modify ({ id, value, regValue, upload, map, ocname }) {
   return async dispatch => {
     try {
       let token = getToken()
-      let content = await update({ token, id, value, regValue, upload, map })
+      let content = await update({ token, id, value, regValue, upload, map, ocname })
 
       if (content.uid) {
         dispatch(clearCache())
