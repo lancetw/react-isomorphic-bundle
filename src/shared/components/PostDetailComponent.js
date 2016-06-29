@@ -395,7 +395,7 @@ export default class Post extends Component {
               </div>
             </div>
             <div className="map column">
-              {detail.cid && (
+              {(detail.cid > 0) && (
               <div className="og row">
                 <Link
                   className="ui orange fluid large top attached button"
