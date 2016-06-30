@@ -2,7 +2,7 @@ const bcrypt = require('co-bcryptjs')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
 import moment from 'moment'
-import { isFinite } from 'lodash'
+import { isFinite, map, mapKeys, camelCase } from 'lodash'
 
 exports.create = function *(postId, info) {
   const fillable = [
@@ -76,5 +76,6 @@ exports.nearBy = function *(limit=20, pattern) {
                ORDER BY ST_Distance(geometry, poi)
                LIMIT ${limit};`
 
-  return yield sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
+  const result = yield sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
+  return map(result, (item) => mapKeys(item, (value, key) => camelCase(key)))
 }
