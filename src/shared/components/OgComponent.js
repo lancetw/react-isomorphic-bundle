@@ -65,7 +65,7 @@ export default class OgComponent extends Component {
     const Translate = require('react-translate-component')
     const { og, ognearby } = this.props
     return (
-      <main className="ui one column centered stackable page grid">
+      <main className="ui one column stackable page grid">
         <div className="column">
           <div className="ui basic center aligned segment">
             <h1 className="ui large header">{ognearby.oginfo.ocname}</h1>
@@ -74,7 +74,7 @@ export default class OgComponent extends Component {
               className="ui blue large button">開啟華人教會機構名錄</a>
           </div>
         </div>
-        <div className="two column centered row">
+        <div className="two column row">
           <div className="column">
             <h2 className="ui small header">最新張貼的佈告</h2>
             {this.renderList(og.data, og.isFetching)}

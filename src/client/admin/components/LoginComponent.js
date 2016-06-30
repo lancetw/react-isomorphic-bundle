@@ -67,7 +67,7 @@ export default class Login extends Component {
 
     /* eslint-disable max-len */
     return (
-      <main className="ui stackable column centered page grid">
+      <main className="ui stackable column page grid">
         <div className="column">
           <form
             className={LoginClasses}

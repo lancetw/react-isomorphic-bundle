@@ -148,7 +148,7 @@ export default class Signup extends Component {
     const Translate = require('react-translate-component')
 
     return (
-      <main className="ui two column centered stackable page grid">
+      <main className="ui two column stackable page grid">
         <div className="column">
           <div className="ui segment">
             <div className="ui center">
