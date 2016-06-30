@@ -226,6 +226,10 @@ and (max-device-width : 667px) {
   background: rgba(31, 181, 173, .64);
 }
 
+.ui.fluid.large.button.flatted.green {
+  background: rgba(0, 186, 24, .64);
+}
+
 .ui.detail {
   margin-left: 0;
   opacity: 0.95;
@@ -705,3 +709,4 @@ and (orientation : portrait) {
     background: transparent;
   }
 }
+

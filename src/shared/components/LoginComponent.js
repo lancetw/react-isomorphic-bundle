@@ -188,7 +188,7 @@ export default class Login extends Component {
             <div className="center aligned column">
               <a className="large facebook ui labeled icon button"
                 href="/auth/facebook">
-                <i className="facebook icon"></i>
+                <i className="facebook square icon"></i>
                 <Translate content="login.facebook" />
               </a>
               <div className="ui hidden divider"></div>

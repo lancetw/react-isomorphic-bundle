@@ -658,9 +658,9 @@ export default class Post extends Component {
                   <div className="item">
                     <div className="left floated content">
                       <button
-                        className="ui circular yellow large icon button"
+                        className="ui circular yellow icon button"
                         onClick={this.handleGeo}>
-                        <i className="icon large map"></i>
+                        <i className="large location arrow icon"></i>
                       </button>
                     </div>
                     <div className="right floated content">
