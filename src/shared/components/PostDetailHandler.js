@@ -9,6 +9,7 @@ import Helmet from 'react-helmet'
 import { tongwenAuto } from 'shared/utils/tongwen'
 import { getFileExt } from 'shared/utils/file-utils'
 import connectI18n from 'shared/components/addon/connect-i18n'
+import counterpart from 'counterpart'
 
 class PostDetailHandler extends Component {
 
@@ -60,7 +61,9 @@ class PostDetailHandler extends Component {
   }
 
   componentDidUpdate () {
-    tongwenAuto(document, this.props.defaultLocale)
+    if (counterpart.getLocale() !== 'zh-hant-tw') {
+      tongwenAuto(document, this.props.defaultLocale)
+    }
   }
 
   componentWillUnmount () {
