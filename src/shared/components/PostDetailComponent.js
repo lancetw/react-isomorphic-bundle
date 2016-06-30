@@ -8,7 +8,7 @@ import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import { Link } from 'react-router'
 import { originLocaleName } from 'shared/utils/locale-utils'
-import AutoLinkText from 'react-autolink-text'
+import Linkify from 'react-linkify'
 import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
 import { Lightbox } from 'shared/components/addon/lightbox'
@@ -60,12 +60,15 @@ export default class Post extends Component {
 
   parseContent (content) {
     const ent = require('ent')
+    const linkProps = {
+      'target': '_blank'
+    }
     if (content) {
       return (
         content.replace(/^\"|\"$/g, '').split('\n').map((t, i) => {
           return t === ''
             ? <br key={i} />
-            : <p key={i}><AutoLinkText text={ent.decode(this.removeTags(t))}/></p>
+            : <p key={i}><Linkify properties={linkProps}>{ent.decode(this.removeTags(t))}</Linkify></p>
         })
       )
     }
