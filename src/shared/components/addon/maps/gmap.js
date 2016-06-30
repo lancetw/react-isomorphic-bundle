@@ -51,7 +51,6 @@ export default class Gmap extends Component {
 
     this.directionsService = null
     this.directionsDisplay = null
-    this.map = null
     this.state = { showDirections: false }
   }
 
@@ -60,7 +59,6 @@ export default class Gmap extends Component {
   componentWillUnmount () {
     this.directionsService = null
     this.directionsDisplay = null
-    this.map = null
   }
 
   _onChange = (event) => {
@@ -103,7 +101,17 @@ export default class Gmap extends Component {
     }
   }
 
-  mapInit = ({map, maps}) => {
+  mapInit = ({ map, maps }) => {
+    setTimeout(function () {
+      google.maps.event.trigger(map, 'resize')
+    }, 100)
+
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+      google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+        google.maps.event.trigger(map, 'resize')
+      })
+    })
+
     if (this.directionsDisplay === null) {
       this.directionsDisplay = new google.maps.DirectionsRenderer
       this.directionsDisplay.setMap(map)
@@ -112,9 +120,14 @@ export default class Gmap extends Component {
     if (this.directionsService === null) {
       this.directionsService = new google.maps.DirectionsService
     }
+  }
 
-    if (this.map === null) {
-      this.map = map
+  createMapOptions (maps) {
+    return {
+      draggable: !('ontouchend' in document),
+      mapTypeControlOptions: {
+        position: maps.ControlPosition.LEFT_BOTTOM
+      }
     }
   }
 
@@ -147,6 +160,7 @@ export default class Gmap extends Component {
               onGoogleApiLoaded={this.mapInit}
               yesIWantToUseGoogleMapApiInternals
               ref="gmap"
+              options={this.createMapOptions}
               onChange={this._onChange}
               defaultCenter={this.props.defaultCenter}
               center={this.props.center}

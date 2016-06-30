@@ -24,13 +24,27 @@ import {
 import NotFound from './pages/NotFound'
 import auth from './components/addon/require-auth'
 
+function preventDefault(e) { e.preventDefault() }
+
+function disableTouchmove () {
+  if (typeof document !== 'undefined') {
+    document.addEventListener('touchmove', preventDefault, false)
+  }
+}
+
+function enableTouchmove () {
+  if (typeof document !== 'undefined') {
+    document.removeEventListener('touchmove', preventDefault, false)
+  }
+}
+
 export default function (store) {
   return (
     <Route component={App}>
       <Route path="/" component={Home} />
       <Route path="/home" component={Home} />
       <Route path="/search" component={Search} />
-      <Route path="/nearby" component={Nearby} />
+      <Route path="/nearby" component={Nearby} onEnter={disableTouchmove} onLeave={enableTouchmove} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
       <Route path="/signup" component={Signup} />

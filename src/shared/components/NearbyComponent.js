@@ -37,9 +37,6 @@ export default class Nearby extends Component {
 
   constructor (props) {
     super(props)
-
-    this.map = null
-    this.maps = null
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
@@ -117,7 +114,8 @@ export default class Nearby extends Component {
       mapTypeControlOptions: {
         position: maps.ControlPosition.LEFT_BOTTOM
       },
-      mapTypeControl: true
+      mapTypeControl: true,
+      draggable: true
     };
   }
 
@@ -155,9 +153,15 @@ export default class Nearby extends Component {
         <div id="loading-container" />
         <div id="nearby">
           <GoogleMap
-            onGoogleApiLoaded={({map, maps}) => {
-              google.maps.event.addDomListener(window, 'resize', function () {
-                google.maps.event.trigger(maps, 'resize')
+            onGoogleApiLoaded={({ map, maps }) => {
+              setTimeout(function () {
+                google.maps.event.trigger(map, 'resize')
+              }, 100)
+
+              google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+                google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+                  google.maps.event.trigger(map, 'resize')
+                })
               })
             }}
             yesIWantToUseGoogleMapApiInternals
