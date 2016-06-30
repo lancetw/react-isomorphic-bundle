@@ -57,7 +57,8 @@ module.exports = {
   register: {
     hello: '欢迎注册',
     msg: '请详阅注册说明',
-    submit: '注册'
+    submit: '注册',
+    link: '阅读服务条款'
   },
   redirect: {
     msg: '重新导向中请稍等⋯',

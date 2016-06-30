@@ -55,9 +55,10 @@ module.exports = {
     }
   },
   register: {
-    hello: 'Hello folks!',
-    msg: 'Welcome to The Zone',
-    submit: 'Register'
+    hello: 'Welcome folks!',
+    msg: 'Please read the instructions',
+    submit: 'Register',
+    link: 'Terms of Service'
   },
   redirect: {
     msg: 'Redirecting...',

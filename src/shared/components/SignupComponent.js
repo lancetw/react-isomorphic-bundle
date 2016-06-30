@@ -152,15 +152,22 @@ export default class Signup extends Component {
         <div className="column">
           <div className="ui segment">
             <div className="ui center">
-              <div className="image logo"></div>
               <h2 className="ui header">
                 <div className="content">
+                  <div className="ui divider" />
                   <Translate content="register.hello" />
                   <div className="sub header">
                     <Translate content="register.msg" />
                   </div>
+                  <div className="ui divider" />
                 </div>
               </h2>
+              <p>
+                <a className="ui button huge red" target="_blank" href="http://www.ccnda.org/rules">
+                  <Translate content="register.link" />
+                </a>
+              </p>
+              <div className="image logo"></div>
             </div>
           </div>
         </div>
