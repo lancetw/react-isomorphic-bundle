@@ -169,7 +169,7 @@ export default class Post extends Component {
     if (!isEmpty(imgs)) {
       return (
         <div className="ui basic segment">
-          <Carousel cellAlign="center" slideWidth="300px">
+          <Carousel cellAlign="center" slideWidth="100%">
           {
             imgs.map(function (link) {
               if (getFileExt(link) !== 'pdf') {
