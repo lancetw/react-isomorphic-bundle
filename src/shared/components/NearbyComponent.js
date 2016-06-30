@@ -153,12 +153,7 @@ export default class Nearby extends Component {
         <div id="loading-container" />
         <div id="nearby">
           <GoogleMap
-            onGoogleApiLoaded={({ map, maps }) => {
-              google.maps.event.addDomListener(map, 'drag', function(e) {
-                google.maps.event.trigger(map,'resize')
-                map.setZoom(map.getZoom())
-              })
-            }}
+            onGoogleApiLoaded={({ map, maps }) => {}}
             yesIWantToUseGoogleMapApiInternals
             ref="nearby"
             defaultCenter={this.props.defaultCenter}

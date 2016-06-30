@@ -102,11 +102,6 @@ export default class Gmap extends Component {
   }
 
   mapInit = ({ map, maps }) => {
-    google.maps.event.addDomListener(map, 'drag', function(e) {
-      google.maps.event.trigger(map,'resize')
-      map.setZoom(map.getZoom())
-    })
-
     if (this.directionsDisplay === null) {
       this.directionsDisplay = new google.maps.DirectionsRenderer
       this.directionsDisplay.setMap(map)
