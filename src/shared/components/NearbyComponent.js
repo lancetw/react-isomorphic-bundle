@@ -30,9 +30,9 @@ export default class Nearby extends Component {
 
   static defaultProps = {
     defaultCenter: { lat: 25.018536, lng: 121.529146 },
-    defaultZoom: 15,
+    defaultZoom: 14,
     center: { lat: 25.018536, lng: 121.529146 },
-    zoom: 15
+    zoom: 14
   }
 
   constructor (props) {
@@ -103,13 +103,13 @@ export default class Nearby extends Component {
       this.props.updateNearbyCenter({
         center: { lat: location.lat(), lng: location.lng() }
       })
-      this.props.onZoomChange(15)
+      this.props.onZoomChange(14)
     })
   }
 
   createMapOptions (maps) {
     return {
-      minZoom: 12,
+      minZoom: 11,
       zoomControlOptions: {
         position: maps.ControlPosition.RIGHT_CENTER,
         style: maps.ZoomControlStyle.SMALL
