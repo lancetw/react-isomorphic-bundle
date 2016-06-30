@@ -93,7 +93,8 @@ export default class Post extends Component {
       updated: false,
       placeError: false,
       latlngError: false,
-      disableSubmit: props.disableSubmit
+      disableSubmit: props.disableSubmit,
+      ocname: null
     }
   }
 
@@ -210,6 +211,10 @@ export default class Post extends Component {
     } else {
       this.setState({ value })
     }
+  }
+
+  handleOcnameChange = (event) => {
+    this.setState({ ocname: event.target.value })
   }
 
   handleRegChange = (regValue, path) => {
@@ -411,7 +416,8 @@ export default class Post extends Component {
           openDate: openDate,
           closeDate: closeDate,
           url: isEmpty(detail.url) ? undefined : detail.url
-        }
+        },
+        ocname: detail.cid
       })
 
       const map = {
@@ -556,6 +562,8 @@ export default class Post extends Component {
                     type="text"
                     placeholder={this.props._T('post.advanced.ocname.text')}
                     ref="ocname"
+                    onChange={this.handleOcnameChange}
+                    value={this.state.ocname}
                     />
                 </div>
                 <div className="ui hidden divider" />
