@@ -102,14 +102,9 @@ export default class Gmap extends Component {
   }
 
   mapInit = ({ map, maps }) => {
-    setTimeout(function () {
-      google.maps.event.trigger(map, 'resize')
-    }, 100)
-
-    google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-      google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-        google.maps.event.trigger(map, 'resize')
-      })
+    google.maps.event.addDomListener(map, 'drag', function(e) {
+      google.maps.event.trigger(map,'resize')
+      map.setZoom(map.getZoom())
     })
 
     if (this.directionsDisplay === null) {

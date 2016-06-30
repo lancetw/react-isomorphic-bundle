@@ -154,14 +154,9 @@ export default class Nearby extends Component {
         <div id="nearby">
           <GoogleMap
             onGoogleApiLoaded={({ map, maps }) => {
-              setTimeout(function () {
-                google.maps.event.trigger(map, 'resize')
-              }, 100)
-
-              google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-                google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-                  google.maps.event.trigger(map, 'resize')
-                })
+              google.maps.event.addDomListener(map, 'drag', function(e) {
+                google.maps.event.trigger(map,'resize')
+                map.setZoom(map.getZoom())
               })
             }}
             yesIWantToUseGoogleMapApiInternals
