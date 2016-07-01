@@ -103,7 +103,7 @@ module.exports = {
         advanced: '进阶'
       },
       msg: {
-        upload: '您可以上传图片或是 PDF（请拖拉至此或是点击选择档案）：',
+        upload: '您可以上传图片Word、Word 档或是 PDF（请拖拉至此或是点击选择档案）：',
         limit: '每个档案大小上限 3 MB',
         urltips: '网址必须以 http:// 开头'
       }
@@ -248,7 +248,7 @@ module.exports = {
     manage: {
       ocname: {
         error: '请修正后再送出',
-        placeholder: '组织名称'
+        placeholder: '教会名录的建档 ID 或是组织名称'
       },
       email: {
         error: '电子邮件信箱不合规定',

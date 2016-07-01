@@ -103,7 +103,7 @@ module.exports = {
         advanced: 'Advanced'
       },
       msg: {
-        upload: 'Dropping images or pdf files here, or click to select:',
+        upload: 'Dropping images, word or pdf files here, or click to select:',
         limit: 'Per file size limit：3 MB',
         urltips: 'URL should be start with http://'
       }
@@ -248,7 +248,7 @@ module.exports = {
     manage: {
       ocname: {
         error: 'Please correct and submit again.',
-        placeholder: 'Organization Name'
+        placeholder: 'ID or Organization Name'
       },
       email: {
         error: 'email should be an email',
