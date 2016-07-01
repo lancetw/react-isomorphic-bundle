@@ -13,7 +13,10 @@ const mimeTypes = [
   'image/jpeg',
   'image/png',
   'image/gif',
-  'application/pdf'
+  'application/pdf',
+  'application/vnd.ms-word',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 ]
 
 const today = moment().format('YYYYMMDD')

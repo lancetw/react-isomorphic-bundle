@@ -253,6 +253,12 @@ export default class Post extends Component {
         if (getFileExt(filename.toLowerCase()) === 'pdf') {
           name = 'pdf.png'
           src = user.aud + '/images/' + name
+        else if (getFileExt(filename.toLowerCase()) === 'doc') {
+          name = 'msword.png'
+          src = user.aud + '/images/' + name
+        else if (getFileExt(filename.toLowerCase()) === 'docx') {
+          name = 'msword.png'
+          src = user.aud + '/images/' + name
         } else {
           name = filename
           src = user.aud + '/uploads/' + name

@@ -105,6 +105,10 @@ export function send (filename, file, index) {
 
           if (res.body.response.ext.toLowerCase() === 'pdf') {
             dispatch(setImagePreview('/images/pdf.png', index))
+          } else if (res.body.response.ext.toLowerCase() === 'doc') {
+            dispatch(setImagePreview('/images/msword.png', index))
+          } else if (res.body.response.ext.toLowerCase() === 'docx') {
+            dispatch(setImagePreview('/images/msword.png', index))
           } else {
             dispatch(setImagePreview(file.preview, index))
           }
