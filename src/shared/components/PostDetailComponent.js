@@ -116,6 +116,16 @@ export default class Post extends Component {
     )
   }
 
+  checkImageFile (file) {
+    if (getFileExt(file) === 'pdf' ||
+        getFileExt(file) === 'doc' ||
+        getFileExt(file) === 'docx') {
+      return false
+    }
+
+    return true
+  }
+
   renderDetailProp (detail) {
     return (
       <span>
@@ -161,8 +171,9 @@ export default class Post extends Component {
       : []
 
     const imgs = []
+    const checkImageFile = this.checkImageFile
     files && files.map(function (file) {
-      if (getFileExt(file) !== 'pdf') {
+      if (checkImageFile(file)) {
         imgs.push(file)
       }
     })
@@ -172,7 +183,7 @@ export default class Post extends Component {
           <Carousel cellAlign="center" slideWidth="100%">
           {
             imgs.map(function (link) {
-              if (getFileExt(link) !== 'pdf') {
+              if (checkImageFile(link)) {
                 const src = '/uploads/' + link
                 return (
                   <a
