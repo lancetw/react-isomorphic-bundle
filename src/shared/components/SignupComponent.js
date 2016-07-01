@@ -39,7 +39,7 @@ export default class Signup extends Component {
     if (process.env.BROWSER) {
       if (this.props.signup.response && this.props.signup.response.token) {
         this.releaseTimeout1 =
-          setTimeout(() => this.context.history.replaceState({}, '/home'), 1000)
+          setTimeout(() => this.context.history.replaceState({}, '/manage'), 1000)
       }
     }
   }
