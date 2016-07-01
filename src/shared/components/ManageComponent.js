@@ -19,6 +19,7 @@ export default class Manage extends Component {
     user: PropTypes.object.isRequired,
     loadFunc: PropTypes.func.isRequired,
     options: PropTypes.object.isRequired,
+    loadOgInfo: PropTypes.func.isRequired,
     changeInfo: PropTypes.func.isRequired,
     defaultLocale: PropTypes.string.isRequired
   }
@@ -60,7 +61,7 @@ export default class Manage extends Component {
       }
     }
     this.validation(nextProps.user.errors)
-    this.checkSubmited(nextProps.user._orginfo)
+    this.checkSubmited(nextProps.user)
 
     this.setState({ options: nextProps.options })
   }
@@ -68,6 +69,7 @@ export default class Manage extends Component {
   componentWillUnmount () {
     if (this.op) {
       clearTimeout(this.releaseTimeout)
+      clearTimeout(this.messageTimeout)
     }
   }
 
@@ -117,11 +119,15 @@ export default class Manage extends Component {
     }
   }
 
-  checkSubmited (info) {
-    if (!isEmpty(info)) {
+  checkSubmited (user) {
+    if (!isEmpty(user._orginfo)) {
+      const info = user._orginfo
       this.setState({ submited: false })
       if (info.ocname) {
-        this.setState({ updated: true })
+        if (!user.loadMode) {
+          this.setState({ updated: true })
+        }
+        this.setState({ value: info })
       }
     }
   }
@@ -132,6 +138,15 @@ export default class Manage extends Component {
       return true
     }
     return false
+  }
+
+  loadOcData = (evt) => {
+    const { user } = this.props
+    let cid
+    if (user.orginfo.cid) cid = user.orginfo.cid
+    if (user._orginfo.cid) cid = user._orginfo.cid
+
+    this.props.loadOgInfo(cid)
   }
 
   render () {
@@ -167,15 +182,18 @@ export default class Manage extends Component {
     const BindedMessage
       = !!cid
       ? (
-        <div className="ui orange small icon message">
-          <div className="content">
-            <div className="header">
-              <Link to={`/c/${cid}`}>
-                已綁定華人教會機構名錄 ^_^
-              </Link>
-            </div>
+      <div>
+        <div className="ui buttons">
+          <Link className="ui teal icon button" to={`/c/${cid}`}>
+            已綁定華人教會機構名錄 <i className="check square icon"></i>
+          </Link>
+          <div className="ui orange icon button" onClick={this.loadOcData}>
+            取得名錄資料 <i className="download icon"></i>
           </div>
-        </div> )
+        </div>
+        <div className="ui divider" />
+        <div className="ui basic yellow pointing below label">建檔 ID：{cid}</div>
+      </div>)
       : null
 
     const { post, auth, loadFunc } = this.props

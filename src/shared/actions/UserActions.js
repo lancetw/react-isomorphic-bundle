@@ -55,6 +55,21 @@ async function get (token) {
   })
 }
 
+async function fetchOgInfo (cid) {
+  return new Promise((resolve, reject) => {
+    request
+      .get('/api/v1/ogs?cid=' + cid)
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body) {
+          resolve(res.body)
+        } else {
+          reject(err)
+        }
+      })
+  })
+}
+
 async function updateInfo (form, token) {
   return new Promise((resolve, reject) => {
     const user = jwtDecode(token)
@@ -104,6 +119,35 @@ export function changePassword (form) {
       return dispatch({
         type: CHANGE_PASS_USER_FAILED,
         errors: err.message
+      })
+    }
+  }
+}
+
+export function loadOgInfo (cid) {
+  return async dispatch => {
+    dispatch({ type: CHANGE_INFO_USER_STARTED })
+    const data = await fetchOgInfo(cid)
+    if (data.oid) {
+      const info = {
+        cid: data.oid,
+        ocname: data.ocname,
+        email: data.email1,
+        contact: data.cname,
+        url: data.url,
+        zipcode: data.zipcode,
+        country: data.country,
+        city: data.city,
+        address: data.town + data.address,
+        lat: data.lat,
+        lng: data.lng,
+        tel: data.tel,
+        fax: data.fax
+      }
+      return dispatch({
+        type: CHANGE_INFO_USER_COMPLETED,
+        info: info,
+        loadMode: true
       })
     }
   }

@@ -34,7 +34,9 @@ const Location = db.locations
 export default new Resource('ogs', {
   // GET /userinfo
   index: function *(next) {
-    this.body = 'ogs index'
+    const { cid } = this.request.query
+    this.body = hashids.encodeJson(
+      yield fetchOrgDataByCid(cid))
   },
   // GET /userinfo/:user
   show: function *(next) {

@@ -16,7 +16,8 @@ const initialState = {
   errors: {},
   _info: {},
   orginfo: {},
-  _orginfo: {}
+  _orginfo: {},
+  loadMode: false
 }
 
 export default createReducer(initialState, {
@@ -30,7 +31,7 @@ export default createReducer(initialState, {
     ({ errors: action.errors }),
   [CHANGE_INFO_USER_STARTED]: () => (initialState),
   [CHANGE_INFO_USER_COMPLETED]: (state, action) =>
-    ({ _orginfo: action.info }),
+    ({ _orginfo: action.info, loadMode: action.loadMode }),
   [CHANGE_INFO_USER_FAILED]: (state, action) =>
     ({ errors: action.errors }),
   [GET_INFO_USER_STARTED]: () => (initialState),
