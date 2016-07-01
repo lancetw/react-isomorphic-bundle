@@ -30,7 +30,7 @@ class SyncTokenHandler extends Component {
     const token = location.query.token
 
     dispatch(save(token)).then(() => {
-      this.releaseTimout = setTimeout(() => history.replaceState({}, '/home'), 1500)
+      this.releaseTimout = setTimeout(() => history.replaceState({}, '/manage'), 1500)
     })
   }
 
