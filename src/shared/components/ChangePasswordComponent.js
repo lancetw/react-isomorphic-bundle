@@ -126,6 +126,7 @@ export default class ChangePassword extends Component {
     const LoadingClass = classNames(
       'ui',
       'form',
+      'left aligned',
       'segment',
       {'loading': !!this.state.submited }
     )
