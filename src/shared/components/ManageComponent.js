@@ -5,6 +5,7 @@ import Cards from 'shared/components/wall/PostCards'
 import { Form, ManageForm } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
+import { checkUnauthorized } from 'shared/utils/httpcheck'
 
 let $
 if (process.env.BROWSER) {
@@ -22,6 +23,10 @@ export default class Manage extends Component {
     loadOgInfo: PropTypes.func.isRequired,
     changeInfo: PropTypes.func.isRequired,
     defaultLocale: PropTypes.string.isRequired
+  }
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -55,6 +60,8 @@ export default class Manage extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    checkUnauthorized(nextProps.user.errors, this.context.history.replaceState)
+
     if (!this.state.formInited) {
       if (this.initForm(nextProps.user.orginfo)) {
         this.setState({ formInited: true })

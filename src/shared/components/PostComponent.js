@@ -25,6 +25,7 @@ import { runGeoLoc } from 'shared/utils/geoloc-utils'
 import $ from 'jquery'
 import { createHistory } from 'history'
 import queryString from 'query-string'
+import { checkUnauthorized } from 'shared/utils/httpcheck'
 
 let unlisten
 let history
@@ -121,6 +122,8 @@ export default class Post extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    checkUnauthorized(nextProps.post.errors, this.context.history.replaceState)
+
     if (!this.state.formInited) {
       const { id } = this.props.params
       if (id && this.initForm(nextProps.post.detail)) {

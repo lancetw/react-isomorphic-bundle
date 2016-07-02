@@ -1,5 +1,13 @@
 /* eslint-disable max-len */
 module.exports = {
+  http: {
+    'error': {
+      '401': {
+        'title': '身份验证已逾期',
+        'text': '請重新登入一次，謝謝'
+      }
+    }
+  },
   title: {
     site: '活动讯息布告 OursEvents',
     home: '首页',

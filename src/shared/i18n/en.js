@@ -1,5 +1,13 @@
 /* eslint-disable max-len */
 module.exports = {
+  http: {
+    'error': {
+      '401': {
+        'title': 'Expired',
+        'text': 'Log in again please.'
+      }
+    }
+  },
   title: {
     site: 'OursEvents',
     home: 'Home',

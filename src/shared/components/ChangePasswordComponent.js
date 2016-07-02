@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Form, ChangePasswordForm } from 'shared/utils/forms'
 import { isEmpty, clone } from 'lodash'
 import classNames from 'classnames'
+import { checkUnauthorized } from 'shared/utils/httpcheck'
 
 export default class ChangePassword extends Component {
 
@@ -11,6 +12,10 @@ export default class ChangePassword extends Component {
     changePasswordInit: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     options: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -27,6 +32,8 @@ export default class ChangePassword extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    checkUnauthorized(nextProps.user.errors, this.context.history.replaceState)
+
     this.validation(nextProps.user.errors)
     this.checkSubmited(nextProps.user._info)
 
