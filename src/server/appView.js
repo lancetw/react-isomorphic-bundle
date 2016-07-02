@@ -135,7 +135,8 @@ export default function (app) {
       )
 
       siteUrl = 'https://' + this.host
-      pageUrl = (location.pathname === '/sync/token') ? siteUrl : this.href.replace(/\/?$/, '/')
+      pageUrl = this.href.replace(/^http/, 'https')
+      pageUrl = (location.pathname === '/sync/token') ? siteUrl : pageUrl
 
       this.body = nunjucks.render('index.html', {
         appString,

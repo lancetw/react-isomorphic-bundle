@@ -76,9 +76,7 @@ class PostDetailHandler extends Component {
     const { dispatch, _T } = this.props
     const { getState } = this.context.store
     const { detail } = getState().post
-    const protocol = process.env.BROWSER
-      ? window.location.protocol
-      : this.context.store.protocol
+    const protocol = 'https'
     const host = process.env.BROWSER
       ? window.location.host
       : this.context.store.host
