@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import GMap from 'shared/components/addon/maps/gmap'
 import { isEmpty } from 'lodash'
 import moment from 'moment'
-import { getFileName, getFileExt } from 'shared/utils/file-utils'
+import { getFileName, getFileExt, checkImageFile } from 'shared/utils/file-utils'
 import classNames from 'classnames'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
@@ -116,16 +116,6 @@ export default class Post extends Component {
     )
   }
 
-  checkImageFile (file) {
-    if (getFileExt(file) === 'pdf' ||
-        getFileExt(file) === 'doc' ||
-        getFileExt(file) === 'docx') {
-      return false
-    }
-
-    return true
-  }
-
   renderDetailProp (detail) {
     return (
       <span>
@@ -171,7 +161,6 @@ export default class Post extends Component {
       : []
 
     const imgs = []
-    const checkImageFile = this.checkImageFile
     files && files.map(function (file) {
       if (checkImageFile(file)) {
         imgs.push(file)

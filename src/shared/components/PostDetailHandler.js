@@ -7,7 +7,7 @@ import * as PostActions from '../actions/PostActions'
 import * as MapActions from '../actions/MapActions'
 import Helmet from 'react-helmet'
 import { tongwenAuto } from 'shared/utils/tongwen'
-import { getFileExt } from 'shared/utils/file-utils'
+import { getFileExt, checkImageFile } from 'shared/utils/file-utils'
 import connectI18n from 'shared/components/addon/connect-i18n'
 import counterpart from 'counterpart'
 
@@ -90,7 +90,7 @@ class PostDetailHandler extends Component {
 
     const meta = []
     files && files.map(function (file) {
-      if (getFileExt(file) !== 'pdf') {
+      if (checkImageFile(file)) {
         meta.push({
           'property': 'og:image',
           'content': `${protocol}://${host}/uploads/${file}`
