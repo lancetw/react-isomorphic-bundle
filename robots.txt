@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /ring
+
+Sitemap: https://event.oursweb.net/sitemap.xml
