@@ -693,7 +693,8 @@ exports.loadAllCid = function *() {
     where: {
       status: 0,
       cid: {
-        $ne: null
+        $ne: null,
+        $gt: 0
       }
     }
   })
