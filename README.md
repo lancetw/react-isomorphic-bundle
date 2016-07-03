@@ -89,10 +89,9 @@ or `make clean && make fast-build` (clean up and rebuild all)
 - [x] admin pages (manage posts and users)
 - [x] nearby map (PostGIS)
 - [x] RSS Feed (Atom)
-- [ ] sitemap
-- [ ] static archive pages
-- [ ] testing suite
-- [ ] more ...
+- [x] sitemap
+- [x] Google Analytics
+- [x] social network share buttons
 
 ## You might be interested in...
 
@@ -136,3 +135,6 @@ or `make clean && make fast-build` (clean up and rebuild all)
 * [react-helmet](https://github.com/nfl/react-helmet)
 * [react-burger-menu](http://negomi.github.io/react-burger-menu/)
 * [animation-frame](https://github.com/kof/animation-frame)
+* [react-ga](https://github.com/react-ga/react-ga)
+* [react-share](https://github.com/kuflash/react-router-sitemap)
+* [react-router-sitemap](https://github.com/kuflash/react-router-sitemap)

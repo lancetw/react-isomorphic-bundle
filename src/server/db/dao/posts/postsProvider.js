@@ -673,3 +673,28 @@ exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
     raw: true
   })
 }
+
+/* eslint-disable camelcase */
+exports.loadAllPostId = function *() {
+  return yield Post.findAll({
+    attributes: ['id'],
+    order: [[ 'created_at', 'DESC' ]],
+    where: {
+      status: 0
+    },
+    raw: true
+  })
+}
+
+/* eslint-disable camelcase */
+exports.loadAllCid = function *() {
+  return yield Post.aggregate('cid', 'DISTINCT', {
+    plain: false,
+    where: {
+      status: 0,
+      cid: {
+        $ne: null
+      }
+    }
+  })
+}

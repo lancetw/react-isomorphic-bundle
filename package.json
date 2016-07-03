@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-bundle",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "react isomorphic bundle",
   "main": "lib/index.js",
   "scripts": {
@@ -139,6 +139,7 @@
     "react-day-picker": "^1.1.1",
     "react-dom": "^0.14.3",
     "react-dropzone": "^3.0.0",
+    "react-ga": "^2.1.0",
     "react-google-recaptcha": "^0.5.1",
     "react-helmet": "^1.1.5",
     "react-interpolate-component": "^0.8.0",
@@ -150,6 +151,8 @@
     "react-redux": "^4.4.0",
     "react-responsive": "0.0.8",
     "react-router": "^1.0.3",
+    "react-router-sitemap": "^1.0.7",
+    "react-share": "^1.8.1",
     "react-side-effect": "^1.0.1",
     "react-spinkit": "^1.1.4",
     "react-suitcss": "^1.1.1",

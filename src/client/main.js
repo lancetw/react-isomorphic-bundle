@@ -15,8 +15,19 @@ import ReduxUniversalResolver from 'shared/utils/redux-universal-resolver'
 import { supportedList } from 'shared/utils/locale-utils'
 import { persistState } from 'redux-devtools'
 import DevTools from 'client/DevTools'
+import ReactGA from 'react-ga'
+
+function logPageView () {
+  ReactGA.set({
+    page: window.location.pathname
+  })
+  ReactGA.pageview(window.location.pathname)
+}
 
 (async () => {
+  if (process.env.NODE_ENV === 'production') {
+    ReactGA.initialize('UA-311386-19')
+  }
   /* eslint-disable react/no-multi-comp */
   supportedList.forEach((locale) => {
     counterpart.registerTranslations(locale, require('shared/i18n/' + locale))
@@ -54,7 +65,9 @@ import DevTools from 'client/DevTools'
           <Router
             children={routes(store)}
             history={history}
-            onUpdate={() => window.scrollTo(0, 0)}
+            onUpdate={() => {
+              window.scrollTo(0, 0)
+            }}
           />
           <DevTools />
         </div>
@@ -85,7 +98,10 @@ import DevTools from 'client/DevTools'
         <Router
           children={routes(store)}
           history={history}
-          onUpdate={() => window.scrollTo(0, 0)}
+          onUpdate={() => {
+            window.scrollTo(0, 0)
+            logPageView()
+          }}
         />
       </Provider>
     )

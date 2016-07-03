@@ -19,6 +19,10 @@ import {
   toShortDate,
   toYear
 } from 'shared/utils/date-utils'
+import {
+  ShareButtons,
+  generateShareIcon
+} from 'react-share'
 
 let swal
 if (process.env.BROWSER) {
@@ -34,7 +38,8 @@ export default class Post extends Component {
     map: PropTypes.object.isRequired,
     remove: PropTypes.func.isRequired,
     _T: PropTypes.func.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    defaultLocale: PropTypes.string.isRequired,
+    shareInfo: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -245,6 +250,22 @@ export default class Post extends Component {
         </main>
       )
     } else {
+      const directionMode = true
+      const {
+        FacebookShareButton,
+        GooglePlusShareButton,
+        LinkedinShareButton,
+        TwitterShareButton,
+        PinterestShareButton,
+        VKShareButton
+      } = ShareButtons
+      const FacebookIcon = generateShareIcon('facebook')
+      const TwitterIcon = generateShareIcon('twitter')
+      const GooglePlusIcon = generateShareIcon('google')
+      const LinkedinIcon = generateShareIcon('linkedin')
+      const { shareInfo } = this.props
+      const shareIconSize = 32
+
       const { detail } = this.props.post
       const { content } = detail
       const files = typeof detail.file !== 'undefined'
@@ -284,8 +305,6 @@ export default class Post extends Component {
         'grid',
         'container'
       )
-
-      const directionMode = true
 
       return (
         <div>
@@ -363,6 +382,20 @@ export default class Post extends Component {
                         })
                       }
                       </ul>
+                    </div>
+                    <div className="ui buttons left floated">
+                      <FacebookShareButton {...shareInfo}>
+                        <FacebookIcon size={shareIconSize} round />
+                      </FacebookShareButton>
+                      <GooglePlusShareButton {...shareInfo}>
+                        <GooglePlusIcon size={shareIconSize} round />
+                      </GooglePlusShareButton>
+                      <LinkedinShareButton {...shareInfo}>
+                        <LinkedinIcon size={shareIconSize} round />
+                      </LinkedinShareButton> |
+                      <TwitterShareButton {...shareInfo}>
+                        <TwitterIcon size={shareIconSize} round />
+                      </TwitterShareButton>
                     </div>
                     <div className="taglist right aligned">
                       <span

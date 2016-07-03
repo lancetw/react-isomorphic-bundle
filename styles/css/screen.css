@@ -710,3 +710,7 @@ and (orientation : portrait) {
   }
 }
 
+.SocialMediaShareButton {
+  cursor: pointer;
+  margin-right: 12px;
+}

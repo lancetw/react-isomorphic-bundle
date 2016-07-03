@@ -63,9 +63,8 @@ export default function (store) {
       <Route path="/manage" component={Manage} store={store} onEnter={auth} />
       <Route path="/password" component={ChangePassword}
         store={store} onEnter={auth} />
-      <Route path="/c">
-        <Route path=":cid" component={Og} />
-      </Route>
+      <Route path="/c/:cid" component={Og} />
+      <Redirect from="/c" to="/c/821667" />
       <Route path="/twb/login" component={TWBLogin} />
       <Route path="/sync/token" component={SyncToken} />
       <Route path="*" component={NotFound} />

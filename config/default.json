@@ -42,5 +42,8 @@
   },
   "twb": {
     "ACCESS_ID": ""
+  },
+  "sitemap": {
+    "ACCESS_KEY": "testonly"
   }
 }

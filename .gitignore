@@ -58,3 +58,5 @@ uploads/*
 iisnode/*
 
 .vscode/
+
+sitemap.xml

@@ -19,6 +19,7 @@ class PostDetailHandler extends Component {
     params: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     defaultLocale: PropTypes.string.isRequired
   }
 
@@ -98,12 +99,18 @@ class PostDetailHandler extends Component {
 
     meta.push({ 'property': 'og:type', 'content': 'article' })
 
+    const shareInfo = {
+      title: `${title} | ${defaultTitle}`,
+      url: `${protocol}://${host}${this.props.location.pathname}`
+    }
+
     return (
       <div>
         <Helmet
           title={`${title} | ${defaultTitle}`} meta={meta} />
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
+          shareInfo={shareInfo}
           {...this.props} />
       </div>
     )

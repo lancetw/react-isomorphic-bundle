@@ -7,12 +7,16 @@ import Feed from 'feed'
 import hashids from 'src/shared/utils/hashids-plus'
 import { nl2br } from 'src/shared/utils/common-utils'
 import { TranslatorInit } from './translator-helper'
-import { isArray } from 'lodash'
+import { isArray, map, mapKeys } from 'lodash'
 import moment from 'moment'
 import { twbAuth, twbBindUser } from './twbAuth'
+import Sitemap from 'react-router-sitemap';
+
+import config from 'config'
 
 const router = require('koa-router')()
 const User = db.users
+const Post = db.posts
 
 router
   .post('/auth/login', function *(next) {
@@ -348,6 +352,48 @@ router
 
     this.type = 'application/atom+xml; charset=utf-8'
     this.body = feed.render('atom-1.0')
+  })
+
+router
+  .get('/sitemap/:key', function *(next) {
+    if (this.params.key !== config.sitemap.ACCESS_KEY) {
+      this.status = 401
+    } else {
+      const filterConfig = {
+        isValid: false,
+        rules: [
+          /\/home/,
+          /\/manage/,
+          /\/password/,
+          /\/post/,
+          /\/sync/,
+          /\/post\/\:id\/edit/,
+          /\/twb\/login/,
+          /\/search/,
+          /\/logout/,
+          /\/login/,
+          /\*/,
+        ],
+      }
+      const paramsConfig = {
+        '/w/cprop/:cprop': [
+          { cprop: Array.from(Array(10)).map((e, i) => i+1) }
+        ],
+        '/w/:id': hashids.encodeJson(yield Post.loadAllPostId()),
+        '/c/:cid': map(yield Post.loadAllCid(), (i) => mapKeys(i, (v, k) => 'cid'))
+      }
+      const routeInfo = require('shared/routes').default()
+      const sitemap = (
+        new Sitemap(routeInfo)
+          .filterPaths(filterConfig)
+          .applyParams(paramsConfig)
+          .build('https://event.oursweb.net')
+          .save('./sitemap.xml')
+      )
+
+      this.status = 201
+      this.body = { generated: true }
+    }
   })
 
 module.exports = router
