@@ -83,7 +83,7 @@ exports.list = function *(offset=0, limit=20, mode='default') {
     return yield Post.findAll({
       offset: offset,
       limit: limit,
-      order: [[ 'start_date', 'DESC' ]],
+      order: [[ 'created_at', 'DESC' ]],
       where: {
         end_date: {
           $gte: new Date(_start)
@@ -100,7 +100,7 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
   return yield Post.findAndCountAll({
     offset: offset,
     limit: limit,
-    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    order: [[ 'created_at', 'DESC' ]],
     where: {
       status: +status
     },
