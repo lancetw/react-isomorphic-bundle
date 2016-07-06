@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdActions from 'shared/actions/AdActions'
 import { isEmpty, find, endsWith } from 'lodash'
+import MediaQuery from 'react-responsive'
 
 class ADContent extends Component {
 
@@ -32,33 +33,28 @@ class ADContent extends Component {
     this.adActions = null
   }
 
-  renderADItem = (size) => {
-    const { ads } = this.props.collect
-    const ad = find(ads, { name: 'googlead' })
-    if (!ad) return (<div></div>)
-
-    const auto = false
-    const lower = false
-    const path = ad.script
-
-    return (<AD path={path} responsive={auto} canBeLower={lower} dimensions={[[335, 150], [200, 200]]} />)
-  }
 
   render () {
-    const { collect } = this.props
-    if (collect && !isEmpty(collect.ads)) {
-      return (
-        <div className="row">
-          <div className="ui basic segment center aligned">
-            { this.renderADItem('googlead', find(collect)) }
-          </div>
+    const path1 = '/1002710/AD200x200'
+    const path2 = '/1002710/AD335x150'
+    const responsive = false
+    const canBeLower = false
+    const dimensions1 = [200, 200]
+    const dimensions2 = [335, 150]
+    return (
+      <div className="row">
+        <div className="ui basic segment center aligned">
+        <MediaQuery maxDeviceWidth={374}>
+           <AD path={path1} responsive={responsive} canBeLower={canBeLower}
+            dimensions={dimensions1} />
+        </MediaQuery>
+        <MediaQuery minDeviceWidth={375}>
+          <AD path={path2} responsive={responsive} canBeLower={canBeLower}
+            dimensions={dimensions2} />
+        </MediaQuery>
         </div>
-      )
-    } else {
-      return (
-        <div></div>
-      )
-    }
+      </div>
+    )
   }
 }
 

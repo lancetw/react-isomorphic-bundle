@@ -51,11 +51,7 @@ export default class MenuWidget extends Component {
           <i className="users icon"></i>
           使用者維護
         </Link>
-        <Link to="/ring/ads" className={::this.LinkClasses(2)}>
-          <i className="browser icon"></i>
-          廣告設定
-        </Link>
-        <Link to="/ring/permissions" className={::this.LinkClasses(3)}>
+        <Link to="/ring/permissions" className={::this.LinkClasses(2)}>
           <i className="spy icon"></i>
           權限
         </Link>
