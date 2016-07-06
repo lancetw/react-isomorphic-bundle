@@ -45,7 +45,7 @@ class OgHandler extends Component {
     const { cid } = this.props.params
     OgActions.fetchOgImage({ cid }).then((url) => {
       if (url) {
-        document.body.style.backgroundImage = 'url("' + url + '")'
+        document.body.style.background = 'url("' + url + '"), rgba(252, 173, 49, 1) 64%'
         document.body.style.backgroundRepeat = 'no-repeat'
         document.body.style.backgroundSize = '100%'
         document.body.style.backgroundPosition = 'center'
