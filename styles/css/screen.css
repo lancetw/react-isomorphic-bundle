@@ -714,3 +714,14 @@ and (orientation : portrait) {
   cursor: pointer;
   margin-right: 12px;
 }
+
+#dot-matrix {
+  background: url(../../images/dotmatrix.png);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+

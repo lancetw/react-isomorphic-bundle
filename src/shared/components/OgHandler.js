@@ -40,6 +40,26 @@ class OgHandler extends Component {
     }
   }
 
+  componentDidMount () {
+    const { dispatch } = this.props
+    const { cid } = this.props.params
+    OgActions.fetchOgImage({cid}).then((url) => {
+      if (url) {
+        document.body.style.backgroundImage = 'url("' + url + '")'
+        document.body.style.backgroundRepeat = 'no-repeat'
+        document.body.style.backgroundSize = '100% 100%'
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    if (typeof document !== 'undefined') {
+      document.body.style.backgroundImage = null
+      document.body.style.backgroundRepeat = null
+      document.body.style.backgroundSize = null
+    }
+  }
+
   render () {
     const { dispatch, _T } = this.props
     const { getState } = this.context.store
@@ -51,6 +71,7 @@ class OgHandler extends Component {
     return (
       <div>
         <Helmet title={`${title} | ${defaultTitle}`} meta={meta} />
+        <div id="dot-matrix"></div>
         <Og
           {...this.props}
           {...bindActionCreators(SearchActions, dispatch)}

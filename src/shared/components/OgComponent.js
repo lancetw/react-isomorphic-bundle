@@ -33,7 +33,7 @@ export default class OgComponent extends Component {
         <div className="ui divided selection animated list content">
           { !isFetching && !isEmpty(posts) && posts.map(function (item, i) {
             return (
-              <Link className="item" to={`/w/${item.id}`}>
+              <Link key={item.id} className="item" to={`/w/${item.id}`}>
                 <div className="more">
                   <div className="ui orange horizontal label">
                     { toShortDate(item.startDate) }

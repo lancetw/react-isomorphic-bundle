@@ -12,6 +12,21 @@ import {
   LIST_OG_POST_NEARBY_FAILED
 }from 'shared/constants/ActionTypes'
 
+export async function fetchOgImage({ cid }) {
+  return new Promise((resolve, reject) => {
+    request
+      .get('http://church.oursweb.net:51919/img/' + cid)
+      .end(function (err, res) {
+        if (!err && res.text) {
+          if (res.text === '/images/churchphoto.gif') resolve(null)
+          resolve('http://church.oursweb.net' + res.text)
+        } else {
+          reject(err)
+        }
+      })
+  })
+}
+
 async function fetch ({ offset, limit, cid, type, dist }) {
   return new Promise((resolve, reject) => {
     request
