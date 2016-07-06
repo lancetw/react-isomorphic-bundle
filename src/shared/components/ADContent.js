@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import MediaQuery from 'react-responsive'
-import Ad from 'shared/components/addon/ad'
+// import Ad from 'shared/components/addon/ad'
+import AD from 'react-google-publisher-tag'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AdActions from 'shared/actions/AdActions'
@@ -38,8 +39,8 @@ class ADContent extends Component {
     const ad = find(ads, { name: size })
     if (!ad) return (<div></div>)
 
-    const link = ad.script
-    return (<Ad size={size} link={link} />)
+    const path = ad.script
+    return (<AD path={path} />)
   }
 
   render () {
@@ -48,12 +49,7 @@ class ADContent extends Component {
       return (
         <div className="row">
           <div className="ui basic segment center aligned">
-            <MediaQuery maxDeviceWidth={374}>
-              { this.renderADItem('1S', find(collect)) }
-            </MediaQuery>
-            <MediaQuery minDeviceWidth={375}>
-              { this.renderADItem('1L', find(collect)) }
-            </MediaQuery>
+            { this.renderADItem('1S', find(collect)) }
           </div>
         </div>
       )

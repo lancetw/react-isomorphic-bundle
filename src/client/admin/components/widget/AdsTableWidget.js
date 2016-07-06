@@ -46,8 +46,8 @@ export default class AdsTableWidget extends Component {
 
   handleClick () {
     swal({
-      title: '新增廣告網址',
-      text: '請輸入廣告網址',
+      title: '新增 Google 廣告路徑',
+      text: '請輸入 Google 廣告路徑',
       type: 'input',
       showCancelButton: true,
       closeOnConfirm: false,

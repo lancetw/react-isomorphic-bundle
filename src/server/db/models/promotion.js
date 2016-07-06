@@ -7,9 +7,6 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.BIGINT
     },
     script: {
-      validate: {
-        isUrl: true
-      },
       unique: false,
       type: Sequelize.STRING
     },
