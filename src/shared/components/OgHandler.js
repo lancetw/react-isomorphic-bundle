@@ -55,6 +55,7 @@ class OgHandler extends Component {
 
   componentWillUnmount () {
     if (typeof document !== 'undefined') {
+      document.body.style.backgroundColor = null
       document.body.style.backgroundImage = null
       document.body.style.backgroundRepeat = null
       document.body.style.backgroundSize = null
