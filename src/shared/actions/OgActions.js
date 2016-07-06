@@ -17,9 +17,9 @@ export async function fetchOgImage({ cid }) {
     request
       .get('http://church.oursweb.net:51919/img/' + cid)
       .end(function (err, res) {
-        if (!err && res.text) {
-          if (res.text === '/images/churchphoto.gif') resolve(null)
-          resolve('http://church.oursweb.net' + res.text)
+        if (!err && res.body) {
+          if (res.img === '/images/churchphoto.gif') resolve(null)
+          resolve('http://church.oursweb.net' + res.body.img)
         } else {
           reject(err)
         }
