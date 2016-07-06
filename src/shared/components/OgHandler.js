@@ -43,11 +43,12 @@ class OgHandler extends Component {
   componentDidMount () {
     const { dispatch } = this.props
     const { cid } = this.props.params
-    OgActions.fetchOgImage({cid}).then((url) => {
+    OgActions.fetchOgImage({ cid }).then((url) => {
       if (url) {
         document.body.style.backgroundImage = 'url("' + url + '")'
         document.body.style.backgroundRepeat = 'no-repeat'
-        document.body.style.backgroundSize = '100% 100%'
+        document.body.style.backgroundSize = '100%'
+        document.body.style.backgroundPosition = 'center'
       }
     })
   }
