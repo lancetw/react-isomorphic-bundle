@@ -66,13 +66,13 @@ export default class AdsTableWidget extends Component {
       }
 
       swal({
-        title: '設定尺寸',
-        text: '請輸入 1L 或 1S（數字可增加）',
+        title: '確認設定',
+        text: '請輸入 googlead',
         type: 'input',
         showCancelButton: true,
         closeOnConfirm: false,
         animation: 'slide-from-top',
-        inputPlaceholder: '尺寸',
+        inputPlaceholder: '',
         confirmButtonText: '確認',
         cancelButtonText: '取消',
         confirmButtonColor: '#ff8800',
@@ -81,7 +81,7 @@ export default class AdsTableWidget extends Component {
         if (size === false) {
           return false
         }
-        if (!(endsWith(size, 'L') || endsWith(size ,'S'))) {
+        if (size !== 'googlead') {
           swal.showInputError('輸入有誤')
           return false
         }
