@@ -15,7 +15,7 @@ import {
 export async function fetchOgImage({ cid }) {
   return new Promise((resolve, reject) => {
     request
-      .get('http://church.oursweb.net:51919/img/' + cid)
+      .get('https://church.oursweb.net/imgapi/img.json')
       .end(function (err, res) {
         if (!err && res.body) {
           if (res.img === '/images/churchphoto.gif') resolve(null)
