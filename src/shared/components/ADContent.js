@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import MediaQuery from 'react-responsive'
-// import Ad from 'shared/components/addon/ad'
 import AD from 'react-google-publisher-tag'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -36,11 +34,14 @@ class ADContent extends Component {
 
   renderADItem = (size) => {
     const { ads } = this.props.collect
-    const ad = find(ads, { name: size })
+    const ad = find(ads, { name: 'googlead' })
     if (!ad) return (<div></div>)
 
+    const auto = false
+    const lower = false
     const path = ad.script
-    return (<AD path={path} />)
+
+    return (<AD path={path} responsive={auto} canBeLower={lower} dimensions={[[335, 150], [200, 200]]} />)
   }
 
   render () {
@@ -49,7 +50,7 @@ class ADContent extends Component {
       return (
         <div className="row">
           <div className="ui basic segment center aligned">
-            { this.renderADItem('1S', find(collect)) }
+            { this.renderADItem('googlead', find(collect)) }
           </div>
         </div>
       )
