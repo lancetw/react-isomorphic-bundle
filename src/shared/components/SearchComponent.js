@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { isEmpty } from 'lodash'
 import Cards from 'shared/components/wall/PostCards'
-import counterpart from 'counterpart'
 import { tongwenAutoStr } from 'shared/utils/tongwen'
 
 export default class Search extends Component {
