@@ -82,7 +82,7 @@
     "fastclick": "^1.0.6",
     "feed": "^0.2.6",
     "google-map-react": "^0.10.2",
-    "hashids": "^1.0.1",
+    "hashids": "1.0.2",
     "history": "1.17.0",
     "jquery": "^2.2.4",
     "jsonwebtoken": "^5.4.1",
