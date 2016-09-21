@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import Spinner from 'react-spinkit'
-
+let Spinner
 if (process.env.BROWSER) {
+  Spinner = require('react-spinkit')
   require('css/addon/loading')
 }
 // thanks: https://gist.github.com/epeli/9887246

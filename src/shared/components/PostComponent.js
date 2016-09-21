@@ -276,11 +276,13 @@ export default class Post extends Component {
 
   handleMapChange = (event) => {
     const { center } = event
+    // workaround
+    const centerFixed = new google.maps.LatLng(center.lat, center.lng)
     if (this.refs.lat) {
-      ReactDOM.findDOMNode(this.refs.lat).value = center.lat
+      ReactDOM.findDOMNode(this.refs.lat).value = centerFixed.lat()
     }
     if (this.refs.lng) {
-      ReactDOM.findDOMNode(this.refs.lng).value = center.lng
+      ReactDOM.findDOMNode(this.refs.lng).value = centerFixed.lng()
     }
   }
 
