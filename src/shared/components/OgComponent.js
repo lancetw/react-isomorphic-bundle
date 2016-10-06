@@ -32,18 +32,21 @@ export default class OgComponent extends Component {
         }
         <div className="ui divided selection animated list content">
           { !isFetching && !isEmpty(posts) && posts.map(function (item, i) {
+            const eventDate = (item.startDate === item.endDate)
+            ? toShortDate(item.endDate)
+            : toShortDate(item.startDate) + ' - ' + toShortDate(item.endDate)
             return (
               <Link key={item.id} className="item" to={`/w/${item.id}`}>
                 <div className="more">
                   <div className="ui orange horizontal label">
-                    { toShortDate(item.startDate) }
+                    { eventDate }
                   </div>
                   { item.distance && (
                     <div className="ui teal horizontal label">
                       { item.distance >= 1
-                        && <Translate content="geoloc.distance.basic.km" dist={item.distance.toFixed(3)}/> }
+                        && <Translate content="geoloc.distance.basic.km" dist={item.distance.toFixed(1)}/> }
                       { item.distance < 1 && item.distance >= 0.01
-                        && <Translate content="geoloc.distance.basic.m" dist={(item.distance * 1000).toFixed(2)}/> }
+                        && <Translate content="geoloc.distance.basic.m" dist={(item.distance * 1000).toFixed(1)}/> }
                       { item.distance < 0.01
                         && <Translate content="geoloc.distance.basic.here" /> }
                     </div>
