@@ -192,10 +192,10 @@ export default class Manage extends Component {
       <div>
         <div className="ui buttons">
           <Link className="ui teal icon button" to={`/c/${cid}`}>
-            已綁定華人教會機構名錄 <i className="check square icon"></i>
+            已綁定 <i className="check square icon"></i>
           </Link>
           <div className="ui orange icon button" onClick={this.loadOcData}>
-            取得名錄資料 <i className="download icon"></i>
+            取得教會機構名錄 <i className="download icon"></i>
           </div>
         </div>
         <div className="ui divider" />
