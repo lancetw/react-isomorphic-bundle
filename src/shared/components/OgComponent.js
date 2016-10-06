@@ -34,7 +34,7 @@ export default class OgComponent extends Component {
           { !isFetching && !isEmpty(posts) && posts.map(function (item, i) {
             const eventDate = (item.startDate === item.endDate)
             ? toShortDate(item.endDate)
-            : toShortDate(item.startDate) + ' ~' 
+            : toShortDate(item.startDate) + ' ~'
             return (
               <Link key={item.id} className="item" to={`/w/${item.id}`}>
                 <div className="more">

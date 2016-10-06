@@ -327,7 +327,7 @@ and (max-device-width : 667px) {
 }
 
 .switch-btns {
-  margin-top: -16px;
+  margin-top: -20px;
   margin-bottom: 10px;
   text-align: center;
   a.button {
@@ -724,4 +724,3 @@ and (orientation : portrait) {
   z-index: 0;
   pointer-events: none;
 }
-
