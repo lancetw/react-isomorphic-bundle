@@ -62,10 +62,9 @@ export default class Marker extends Component {
     )
 
     const { data } = this.props
-
-    const eventDate = (data.start_date === data.end_date)
-    ? toShortDate(data.end_date)
-    : toShortDate(data.start_date) + ' - ' + toShortDate(data.end_date)
+    const eventDate = (data.startDate === data.endDate)
+    ? toShortDate(data.endDate)
+    : toShortDate(data.startDate) + ' - ' + toShortDate(data.endDate)
 
     return (
       <div
