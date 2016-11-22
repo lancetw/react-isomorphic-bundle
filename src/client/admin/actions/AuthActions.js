@@ -20,7 +20,7 @@ export function setToken (token) {
     if (!token) {
       throw Error('localStorage data is falsy')
     } else {
-      localStorage.setItem('token', token)
+      localStorage.setItem('ring', token)
     }
   }
 }
@@ -30,7 +30,7 @@ export function getToken () {
   if (typeof localStorage === 'undefined') {
     throw Error('no localStorage')
   } else {
-    token = localStorage.getItem('token')
+    token = localStorage.getItem('ring')
   }
   return token
 }
@@ -62,7 +62,7 @@ export function clearToken () {
   if (typeof localStorage === 'undefined') {
     throw Error('no localStorage')
   } else {
-    localStorage.setItem('token', '')
+    localStorage.setItem('ring', '')
   }
 }
 
