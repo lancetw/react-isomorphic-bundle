@@ -78,6 +78,7 @@ export default class TableWidget extends Component {
     const { items, isFetching } = this.props.collect
     const handleChange = ::this.handleChange
     const isChecked = ::this.isChecked
+    const selected = !!this.props.selected
 
     const TableClasses = classNames(
       'ui',
@@ -129,15 +130,25 @@ export default class TableWidget extends Component {
                 </div>
               </td>
               <td className="table title">
-                { (checked)
+                { (!selected && checked)
                   && (<a className="delete" target="_blank" href={`../post/${item.id}/ring`}>
                     { item.title }
                   </a>)
                 }
-                { (!checked)
+                { (!selected && !checked)
                   && (<a target="_blank" href={`../post/${item.id}/ring`}>
                     { item.title }
                   </a>)
+                }
+                { (selected && checked)
+                  && (<span className="delete">
+                    { item.title }
+                  </span>)
+                }
+                { (selected && !checked)
+                  && (<span>
+                    { item.title }
+                  </span>)
                 }
               </td>
               <td className="table date">{ toDate(item.created_at, true) }</td>
