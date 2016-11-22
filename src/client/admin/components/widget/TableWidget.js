@@ -130,12 +130,12 @@ export default class TableWidget extends Component {
               </td>
               <td className="table title">
                 { (checked)
-                  && (<a className="delete" target="_blank" href={`../w/${item.id}`}>
+                  && (<a className="delete" target="_blank" href={`../post/${item.id}/ring`}>
                     { item.title }
                   </a>)
                 }
                 { (!checked)
-                  && (<a target="_blank" href={`../w/${item.id}`}>
+                  && (<a target="_blank" href={`../post/${item.id}/ring`}>
                     { item.title }
                   </a>)
                 }

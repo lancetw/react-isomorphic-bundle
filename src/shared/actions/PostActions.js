@@ -40,7 +40,7 @@ import {
   CLEAR_UPLOAD_COMPLETED,
   CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
-import { getToken } from 'shared/actions/AuthActions'
+import { getToken, getRingToken } from 'shared/actions/AuthActions'
 import { clearCache } from 'shared/actions/CacheActions'
 import { getInfo } from 'shared/actions/UserActions'
 import { setPin } from 'shared/actions/MapActions'
@@ -271,6 +271,7 @@ export function modify ({ id, value, regValue, upload, map, ocname }) {
   return async dispatch => {
     try {
       let token = getToken()
+      if (token === null || token === '') token = getRingToken()
       let content = await update({ token, id, value, regValue, upload, map, ocname })
 
       if (content.uid) {

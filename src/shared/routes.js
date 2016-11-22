@@ -60,6 +60,10 @@ export default function (store) {
         component={PostEdit}
         store={store}
         onEnter={auth} />
+      <Route
+        path="/post/:id/ring"
+        component={PostEdit}
+        store={store} />
       <Route path="/manage" component={Manage} store={store} onEnter={auth} />
       <Route path="/password" component={ChangePassword}
         store={store} onEnter={auth} />

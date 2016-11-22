@@ -231,11 +231,13 @@ export default new Resource('posts', {
     }
 
     try {
-      body.uid = hashids.decode(body.uid)
-
-      if (body.uid !== +this.user.id) {
-        throw new Error('user check failed')
+      const saved = yield Post.load(this.params.post)
+      if (!this.info.isAdmin) {
+        if (saved.uid !== +this.user.id) {
+          throw new Error('user check failed')
+        }
       }
+      body.uid = saved.uid
 
       body.startDate = moment(body.startDate).format()
       body.endDate = moment(body.endDate).format()
@@ -274,7 +276,7 @@ export default new Resource('posts', {
         } catch (err) {/* no org data */}
       } else {
         try {
-          const userinfo = yield UsersInfo.load(+this.user.id)
+          const userinfo = yield UsersInfo.load(body.uid)
           body.cid = userinfo.cid
           body.ocname = userinfo.ocname
           body.zipcode = userinfo.zipcode

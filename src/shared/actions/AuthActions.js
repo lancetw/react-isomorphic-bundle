@@ -37,6 +37,17 @@ export function getToken () {
   return token
 }
 
+export function getRingToken () {
+  let token = ''
+  if (typeof localStorage === 'undefined') {
+    throw Error('no localStorage')
+  } else {
+    token = localStorage.getItem('ring')
+  }
+
+  return token
+}
+
 export function checkToken () {   // just check token expire field
   return async dispatch => {
     try {

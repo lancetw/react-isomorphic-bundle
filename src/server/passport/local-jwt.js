@@ -35,9 +35,9 @@ export default passport.use(new JwtStrategy(opts, function (payload, done) {
     }
   })
   .then(function (user) {
-    return done(null, user)
+    return done(null, user, payload)
   })
   .catch(function (err) {
-    return done(err)
+    return done(err, null, payload)
   })
 }))

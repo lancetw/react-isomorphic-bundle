@@ -115,11 +115,13 @@ export default new Resource('posts', {
     }
 
     try {
-      body.uid = hashids.decode(body.uid)
-
-      if (body.uid !== +this.user.id) {
-        throw new Error('user check failed')
+      const saved = yield Post.load(this.params.post)
+      if (!this.info.isAdmin) {
+        if (saved.uid !== +this.user.id) {
+          throw new Error('user check failed')
+        }
       }
+      body.uid = saved.uid
 
       body.startDate = moment(body.startDate).format('YYYY-MM-DD HH:mm:ss')
       body.endDate = moment(body.endDate).format('YYYY-MM-DD HH:mm:ss')
@@ -140,7 +142,7 @@ export default new Resource('posts', {
       body.file = JSON.stringify(body.file)
 
       try {
-        const userinfo = yield UsersInfo.load(+this.user.id)
+        const userinfo = yield UsersInfo.load(body.uid)
         body.ocname = userinfo.ocname
         body.zipcode = userinfo.zipcode
         body.contact = userinfo.contact
