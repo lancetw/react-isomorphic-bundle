@@ -48,7 +48,7 @@ class HomeHandler extends Component {
     meta.push({ 'property': 'og:type', 'content': 'website' })
     meta.push({
       'property': 'og:image',
-      'content': `${protocol}://${host}/images/app/v2.3/ms-icon-144x144.png`
+      'content': `${protocol}://${host}/images/app/v2.3/apple-icon-144x144.png`
     })
 
     return (
