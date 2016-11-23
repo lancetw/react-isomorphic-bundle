@@ -40,9 +40,16 @@ class HomeHandler extends Component {
   render () {
     const { _T } = this.props
     const defaultTitle = _T('title.site')
-
+    const protocol = 'https'
+    const host = process.env.BROWSER
+      ? window.location.host
+      : this.context.store.host
     const meta = []
-    meta.push({ 'property': 'og:type', 'content': 'article' })
+    meta.push({ 'property': 'og:type', 'content': 'website' })
+    meta.push({
+      'property': 'og:image',
+      'content': `${protocol}://${host}/images/app/v2.3/ms-icon-144x144.png`
+    })
 
     return (
       <div>
