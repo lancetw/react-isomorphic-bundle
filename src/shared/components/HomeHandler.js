@@ -45,9 +45,7 @@ class HomeHandler extends Component {
       ? window.location.host
       : this.context.store.host
     const meta = []
-    meta.push({ 'name': 'description', 'content': '提供活動訊息張貼轉傳' })
     meta.push({ 'property': 'og:type', 'content': 'website' })
-    meta.push({ 'property': 'author', 'content': '中華基督教網路發展協會 Chinese Christian Network Development Association' })
     meta.push({
       'property': 'og:image',
       'content': `${protocol}://${host}/images/oursevents@2x.png`

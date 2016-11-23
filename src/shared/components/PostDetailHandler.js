@@ -96,7 +96,10 @@ class PostDetailHandler extends Component {
         })
       }
     })
-
+    meta.push({
+      'property': 'og:image',
+      'content': `${protocol}://${host}/images/oursevents@2x.png`
+    })
     meta.push({ 'property': 'og:type', 'content': 'article' })
     meta.push({ 'property': 'article:publisher', 'content': 'https://www.facebook.com/CCNDA/' })
 
