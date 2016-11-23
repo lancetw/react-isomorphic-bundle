@@ -98,6 +98,7 @@ class PostDetailHandler extends Component {
     })
 
     meta.push({ 'property': 'og:type', 'content': 'article' })
+    meta.push({ 'property': 'article:publisher', 'content': 'https://www.facebook.com/CCNDA/' })
 
     const shareInfo = {
       title: `${title} | ${defaultTitle}`,
