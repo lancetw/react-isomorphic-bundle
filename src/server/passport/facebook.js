@@ -31,6 +31,9 @@ export default passport.use(new FacebookStrategy(
           profile.email = email
         }
 
+        profile.name = profile.displayName
+        debug('dev')('Facebook profile.displayName', profile.displayName)
+
         if (profile.email) {
           user = yield User.loadByEmail(email)
 
