@@ -88,6 +88,10 @@ class PostDetailHandler extends Component {
       : []
 
     const meta = []
+    meta.push({
+      'property': 'og:image',
+      'content': `${protocol}://${host}/images/oursevents@2x.png`
+    })
     files && files.map(function (file) {
       if (checkImageFile(file)) {
         meta.push({
@@ -95,10 +99,6 @@ class PostDetailHandler extends Component {
           'content': `${protocol}://${host}/uploads/${file}`
         })
       }
-    })
-    meta.push({
-      'property': 'og:image',
-      'content': `${protocol}://${host}/images/oursevents@2x.png`
     })
     meta.push({ 'property': 'og:type', 'content': 'article' })
     meta.push({ 'property': 'article:publisher', 'content': 'https://www.facebook.com/CCNDA/' })
