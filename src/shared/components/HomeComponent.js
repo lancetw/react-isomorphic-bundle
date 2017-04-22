@@ -77,8 +77,11 @@ export default class HomeComponent extends Component {
               </Link>
             </div>
             <div className="mobile only row">
-              <Link to="/w/today" className="ui orange huge button">
-                <Translate content="home.browse" />
+              <Link className="ui orange large button  left floated" to="/w/today">
+                <Translate content="header.overview" />
+              </Link>
+              <Link className="ui orange large button  right floated" to="/nearby">
+                <Translate content="header.nearby" />
               </Link>
             </div>
           </div>
