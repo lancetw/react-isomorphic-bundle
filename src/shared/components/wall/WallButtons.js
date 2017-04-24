@@ -13,14 +13,17 @@ export default class WallButtons extends Component {
     const Translate = require('react-translate-component')
     return (
       <div className="switch-btns">
-        <div className="ui red small buttons">
-          <Link activeClassName="active" className="ui button" to="/w/today">
+        <div className="ui buttons">
+          <Link className="ui red small icon button" to="/nearby">
+            <i className="location arrow icon"></i>
+          </Link>
+          <Link activeClassName="active" className="ui red small button" to="/w/today">
             <Translate content="header.overview" />
           </Link>
-          <Link activeClassName="active" className="ui button" to="/w/cal">
+          <Link activeClassName="active" className="ui red small button" to="/w/cal">
             <Translate content="header.cal" />
           </Link>
-          <Link activeClassName="active" className="ui button" to="/w/cprop">
+          <Link activeClassName="active" className="ui red small button" to="/w/cprop">
             <Translate content="header.cprop" />
           </Link>
         </div>
