@@ -204,9 +204,6 @@ export default class Header extends Component {
               <Link to="/home" className="link item">
                 <Translate content="header.home" onClick={this.closeMenu} />
               </Link>
-              <Link to="/w/today" className="link item">
-                <Translate content="header.wall" onClick={this.closeMenu} />
-              </Link>
               <Link to="/post" className="link item" onClick={this.closeMenu}>
                 <Translate content="header.post" />
               </Link>
