@@ -11,12 +11,12 @@ import {
 import { createReducer } from 'shared/utils/redux-utils'
 
 const initialState = {
-  lat: 25.018536,
-  lng: 121.529146,
-  lat_: 25.018536,
-  lng_: 121.529146,
+  lat: 25.0318808,
+  lng: 121.5193721,
+  lat_: 25.0318808,
+  lng_: 121.5193721,
   place: null,
-  center: [ 25.018536, 121.529146 ],
+  center: [ 25.0318808, 121.5193721 ],
   errors: null,
   loading: false
 }
