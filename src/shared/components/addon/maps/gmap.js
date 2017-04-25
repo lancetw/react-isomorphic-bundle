@@ -35,12 +35,12 @@ export default class Gmap extends Component {
   }
 
   static defaultProps = {
-    defaultCenter: [ 25.018536, 121.529146 ],
-    center: [ 25.018536, 121.529146 ],
+    defaultCenter: [ 25.0318808, 121.5193721 ],
+    center: [ 25.0318808, 121.5193721 ],
     defaultZoom: 16,
     zoom: 16,
-    lat: 25.018536,
-    lng: 121.529146,
+    lat: 25.0318808,
+    lng: 121.5193721,
     className: 'ui segment',
     loading: true,
     directionMode: false
