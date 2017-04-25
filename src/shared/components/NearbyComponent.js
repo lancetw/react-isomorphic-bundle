@@ -29,9 +29,9 @@ export default class Nearby extends Component {
   }
 
   static defaultProps = {
-    defaultCenter: { lat: 25.018536, lng: 121.529146 },
+    defaultCenter: { lat: 25.0318808, lng: 121.5193721 },
     defaultZoom: 14,
-    center: { lat: 25.018536, lng: 121.529146 },
+    center: { lat: 25.0318808, lng: 121.5193721 },
     zoom: 14
   }
 
