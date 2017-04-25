@@ -41,7 +41,7 @@ class NearbyHandler extends Component {
     dispatch(updateTitle('title.nearby'))
 
     const defaultDistance = 3000
-    const center = { lat: 25.018536, lng: 121.529146 }
+    const center = { lat: 25.0318808, lng: 121.5193721 }
     dispatch(SearchActions.updateNearbyCenter({ center }))
 
     if (process.env.BROWSER) {
