@@ -25,7 +25,7 @@ exports.listByYearMonth = function *(year, month) {
   const count = yield Post.count({
     where: {
       status: 0,
-      start_date: {
+      created_at: {
         $between: [
           new Date(moment({
             year: _year,
@@ -54,7 +54,7 @@ exports.listByYearMonth = function *(year, month) {
     order: [['count', 'DESC']],
     where: {
       status: 0,
-      start_date: {
+      created_at: {
         $between: [
           new Date(moment({
             year: _year,
@@ -74,14 +74,14 @@ exports.listByYearMonth = function *(year, month) {
 
   const data = yield Post.findAll({
     attributes: [
-      [Sequelize.fn('DATE_TRUNC', 'day', Sequelize.col('start_date')), 'day'],
+      [Sequelize.fn('DATE_TRUNC', 'day', Sequelize.col('created_at')), 'day'],
       [Sequelize.fn('COUNT', '*'), 'count']
     ],
     group: ['day'],
     order: [['count', 'DESC']],
     where: {
       status: 0,
-      start_date: {
+      created_at: {
         $between: [
           new Date(moment({
             year: _year,
