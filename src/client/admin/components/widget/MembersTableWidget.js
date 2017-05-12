@@ -83,7 +83,7 @@ export default class MembersTableWidget extends Component {
       'ui',
       'definition',
       'compact',
-      'stackable',
+      'unstackable',
       'striped',
       'table'
     )

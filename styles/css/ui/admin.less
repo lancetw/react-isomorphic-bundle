@@ -1,2 +1,13 @@
 & { @import '../../semantic/src/definitions/collections/table'; }
 & { @import '../../semantic/src/definitions/views/statistic.less'; }
+
+
+@media only screen and (max-width: 1079px) {
+  main {
+    min-width: 660px;
+  }
+
+  .ui.grid > [class*="four wide"].column {
+    width: 100% !important;
+  }
+}

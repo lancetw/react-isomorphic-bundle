@@ -147,7 +147,7 @@ export default class AdsTableWidget extends Component {
       'ui',
       'definition',
       'compact',
-      'stackable',
+      'unstackable',
       'striped',
       'table'
     )

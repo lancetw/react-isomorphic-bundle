@@ -71,7 +71,7 @@ class PermissionsHandler extends Component {
         {...bindActionCreators(AdminActions, dispatch)}
         handlePageClick={::this.handlePageClick}
         action={::this.blockAdmins}
-        menuIndex={2}
+        menuIndex={3}
         {...this.props}
       />
     )

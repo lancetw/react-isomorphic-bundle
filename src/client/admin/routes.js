@@ -10,6 +10,7 @@ import {
   Blocked,
   Ads,
   Permissions,
+  Statistics,
   Disabled
 } from 'client/admin/components'
 import NotFound from 'client/admin/pages/NotFound'
@@ -26,6 +27,7 @@ export default function (store) {
       <Route path="blocked" store={store} component={Blocked} onEnter={auth} />
       <Route path="ads" store={store} component={Ads} onEnter={auth} />
       <Route path="permissions" store={store} component={Permissions} onEnter={auth} />
+      <Route path="statistics" store={store} component={Statistics} onEnter={auth} />
       <Route path="disabled" store={store} component={Disabled} onEnter={auth} />
       <Route path="*" store={store} component={NotFound} />
     </Route>

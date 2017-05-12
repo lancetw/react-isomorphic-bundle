@@ -42,7 +42,7 @@ export default class MenuWidget extends Component {
 
   render () {
     return (
-      <div className="ui labeled icon menu">
+      <div className="ui labeled icon menu freeze">
         <Link to="/ring/dash" className={::this.LinkClasses(0)}>
           <i className="inbox icon"></i>
           佈告管理
@@ -51,7 +51,11 @@ export default class MenuWidget extends Component {
           <i className="users icon"></i>
           使用者維護
         </Link>
-        <Link to="/ring/permissions" className={::this.LinkClasses(2)}>
+        <Link to="/ring/statistics" className={::this.LinkClasses(2)}>
+          <i className="bar chart icon"></i>
+          統計
+        </Link>
+        <Link to="/ring/permissions" className={::this.LinkClasses(3)}>
           <i className="spy icon"></i>
           權限
         </Link>

@@ -245,7 +245,7 @@ export default class PermissionsTableWidget extends Component {
       'ui',
       'definition',
       'compact',
-      'stackable',
+      'unstackable',
       'striped',
       'table'
     )

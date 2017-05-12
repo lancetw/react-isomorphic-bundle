@@ -12,7 +12,6 @@ import {
   isFinite
 } from 'lodash'
 
-const Sequelize = models.Sequelize
 const Post = models.posts
 const User = models.users
 const UserInfo = models.usersInfo

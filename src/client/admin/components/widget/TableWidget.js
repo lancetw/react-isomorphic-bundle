@@ -84,7 +84,7 @@ export default class TableWidget extends Component {
       'ui',
       'definition',
       'compact',
-      'stackable',
+      'unstackable',
       'striped',
       'table'
     )
