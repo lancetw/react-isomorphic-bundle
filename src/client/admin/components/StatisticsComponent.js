@@ -93,20 +93,22 @@ export default class Statistics extends Component {
                     </button>
                   </div>
                 </div>
-                <div className="ui horizontal statistic">
-                  <div className="value">
-                    {countPosts}
+                <div className="ui statistics">
+                  <div className="ui horizontal statistic">
+                    <div className="value">
+                      {countPosts}
+                    </div>
+                    <div className="label">
+                      則活動訊息佈告
+                    </div>
                   </div>
-                  <div className="label">
-                    則活動訊息佈告
-                  </div>
-                </div>
-                <div className="ui horizontal statistic">
-                  <div className="value">
-                    {countUsers}
-                  </div>
-                  <div className="label">
-                    人張貼佈告
+                  <div className="ui horizontal statistic">
+                    <div className="value">
+                      {countUsers}
+                    </div>
+                    <div className="label">
+                      人張貼佈告
+                    </div>
                   </div>
                 </div>
                 <div id="plot"></div>
