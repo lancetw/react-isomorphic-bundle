@@ -11,7 +11,8 @@ const initialState = {
   year: moment().year(),
   month: moment().month() + 1,
   items: [],
-  count: null,
+  countUsers: null,
+  countPosts: null,
   data: [],
   errors: null
 }
@@ -20,7 +21,7 @@ export default createReducer(initialState, {
   [LOAD_STATISTICS_STARTED]: () =>
     ({ done: false }),
   [LOAD_STATISTICS_COMPLETED]: (state, action) =>
-    ({ done: true, year: action.year, month: action.month, count: action.count, items: action.items, data: action.data, errors: null }),
+    ({ done: true, year: action.year, month: action.month, countPosts: action.countPosts, countUsers: action.countUsers, items: action.items, data: action.data, errors: null }),
   [LOAD_STATISTICS_FAILED]: (state, action) =>
     ({ done: false, errors: action.errors })
 })

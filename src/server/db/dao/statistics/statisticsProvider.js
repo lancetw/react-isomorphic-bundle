@@ -22,7 +22,7 @@ exports.listByYearMonth = function *(year, month) {
     }).endOf('month').date()
   }
 
-  const count = yield Post.count({
+  const countPosts = yield Post.count({
     where: {
       status: 0,
       created_at: {
@@ -41,6 +41,7 @@ exports.listByYearMonth = function *(year, month) {
       }
     }
   })
+
   const items = yield Post.findAll({
     attributes: [
       [Sequelize.fn('COUNT', Sequelize.col('user.id')), 'count']
@@ -99,5 +100,5 @@ exports.listByYearMonth = function *(year, month) {
     raw: true
   })
 
-  return { count: count, rows: items, data: data }
+  return { countUsers: items.length, countPosts: countPosts, rows: items, data: data }
 }

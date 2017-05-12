@@ -45,7 +45,8 @@ export function fetchData ({year, month}) {
           year: year,
           month: month,
           items: items.rows,
-          count: items.count,
+          countUsers: items.countUsers,
+          countPosts: items.countPosts,
           data: items.data
         })
       } else {

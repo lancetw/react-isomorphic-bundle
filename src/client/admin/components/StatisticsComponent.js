@@ -20,7 +20,7 @@ export default class Statistics extends Component {
 
   componentDidMount () {
     Plotly.newPlot('plot', [{
-      x: this.props.collect.data.map((d,_)=>d.day),
+      x: this.props.collect.data.map((d,_)=>moment(d.day).format()),
       y: this.props.collect.data.map((d,_)=>d.count),
       type: 'bar',
       marker: {
@@ -68,7 +68,7 @@ export default class Statistics extends Component {
   }
 
   render () {
-    const { items, count, year, month } = this.props.collect
+    const { items, countPosts, countUsers, year, month } = this.props.collect
 
     return (
       <main className="ui column page grid container">
@@ -95,10 +95,18 @@ export default class Statistics extends Component {
                 </div>
                 <div className="ui horizontal statistic">
                   <div className="value">
-                    {count}
+                    {countPosts}
                   </div>
                   <div className="label">
                     則活動訊息佈告
+                  </div>
+                </div>
+                <div className="ui horizontal statistic">
+                  <div className="value">
+                    {countUsers}
+                  </div>
+                  <div className="label">
+                    人張貼佈告
                   </div>
                 </div>
                 <div id="plot"></div>
