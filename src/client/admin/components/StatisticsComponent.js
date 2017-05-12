@@ -98,14 +98,14 @@ export default class Statistics extends Component {
                     {count}
                   </div>
                   <div className="label">
-                    則文章
+                    則活動訊息佈告
                   </div>
                 </div>
                 <div id="plot"></div>
                 <table className="ui very basic  table">
                   <thead>
-                    <tr><th>帳號</th>
-                    <th>發文數</th>
+                    <tr><th>帳號（Email）</th>
+                    <th>發文數量</th>
                   </tr></thead>
                   <tbody>
                   {!isEmpty(items) && items.map((item, i) => {
