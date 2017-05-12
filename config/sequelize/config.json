@@ -26,7 +26,6 @@
     "logging": false
   },
   "test": {
-    "timezone": "Asia/Taipei",
     "storage": "storage/db.test.sqlite",
     "dialect": "sqlite",
     "omitNull": true,
@@ -47,7 +46,6 @@
     "logging": false
   },
   "debug": {
-    "timezone": "Asia/Taipei",
     "storage": "storage/db.debug.sqlite",
     "dialect": "sqlite",
     "omitNull": true,
