@@ -21,7 +21,7 @@ class StatisticsHandler extends Component {
   componentWillMount () {
     const { dispatch } = this.props
     const { year, month } = this.props.collect
-    dispatch(StatisticActions.fetchData({ year, month }))
+    dispatch(StatisticActions.fetchData(year, month))
   }
 
   render () {

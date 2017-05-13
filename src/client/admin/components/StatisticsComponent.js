@@ -18,27 +18,6 @@ export default class Statistics extends Component {
     super(props)
   }
 
-  componentDidMount () {
-    Plotly.newPlot('plot', [{
-      x: this.props.collect.data.map((d,_)=>moment(d.day).format()),
-      y: this.props.collect.data.map((d,_)=>d.count),
-      type: 'bar',
-      marker: {
-        color: 'orange'
-      }
-    }], {
-      height: 250,
-      margin: {
-        t: 0, r: 30, l: 30
-      },
-      xaxis: {
-        gridcolor: 'transparent'
-      }
-    }, {
-      displayModeBar: false
-    });
-  }
-
   componentDidUpdate() {
     Plotly.newPlot('plot', [{
       x: this.props.collect.data.map((d,_)=>moment(d.day).format()),
@@ -49,6 +28,7 @@ export default class Statistics extends Component {
       }
     }], {
       height: 250,
+      width: '100%',
       margin: {
         t: 0, r: 30, l: 30
       },
@@ -57,14 +37,14 @@ export default class Statistics extends Component {
       }
     }, {
       displayModeBar: false
-    });
+    })
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
     const year = +ReactDOM.findDOMNode(this.refs.year).value
     const month = +ReactDOM.findDOMNode(this.refs.month).value
-    this.props.fetchData({year, month})
+    this.props.fetchData(year, month)
   }
 
   render () {
@@ -111,6 +91,7 @@ export default class Statistics extends Component {
                     </div>
                   </div>
                 </div>
+                <div className="ui hidden divider"></div>
                 <div id="plot"></div>
                 <table className="ui very basic  table">
                   <thead>

@@ -33,7 +33,7 @@ async function fetch (year, month) {
   })
 }
 
-export function fetchData ({year, month}) {
+export function fetchData (year, month) {
   return async (dispatch, getState) => {
     dispatch({ type: LOAD_STATISTICS_STARTED })
 
