@@ -666,6 +666,11 @@ exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
           content: {
             $like: '%' + pattern + '%'
           }
+        },
+        {
+          '$user.email$': {
+            $like: '%' + pattern + '%'
+          }
         }
       ]
     },
