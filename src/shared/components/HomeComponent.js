@@ -45,8 +45,8 @@ export default class HomeComponent extends Component {
                 [{at(PostPropArray(originLocaleName(defaultLocale)), post.prop)}]
               </span>
               <span> </span>
-              {tongwenAutoStr(post.ocname, defaultLocale)
-                || <Translate content="news.unnamed" />}
+              {post.ocname && post.ocname !== '0' ? tongwenAutoStr(post.ocname, defaultLocale)
+                : <Translate content="news.unnamed" />}
             </Link>
           </h3>
           <div className="header">
