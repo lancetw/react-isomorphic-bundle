@@ -735,3 +735,10 @@ ul.fileList li>div:hover {
   z-index: 0;
   pointer-events: none;
 }
+
+.ui.list.inverted .more .text {
+  width: 200px;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}

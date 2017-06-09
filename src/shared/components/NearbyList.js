@@ -88,7 +88,7 @@ class NearbyList extends Component {
           return (
             <Link key={item.id} className="item" to={`/w/${item.id}`} onClick={closeMenu}>
               <div className="more">
-                <h4>{ item.title }</h4>
+                <h4 className="text">{ item.title }</h4>
                 <div className="ui orange horizontal label">
                   { eventDate }
                 </div>

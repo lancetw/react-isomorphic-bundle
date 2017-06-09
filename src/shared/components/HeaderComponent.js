@@ -229,15 +229,13 @@ export default class Header extends Component {
             </Sidebar>
           </div>
           <div className="right menu has-right-sidebar">
-            <div>
-              <a
-                onClick={this.handleSearchBox}
-                className={siteTitleClasses}>
-                <Translate content="title.site" />
-              </a>
-              <div className={searchBoxClasses}>
-                {SearchBox}
-              </div>
+            <a
+              onClick={this.handleSearchBox}
+              className={siteTitleClasses}>
+              <Translate content="title.site" />
+            </a>
+            <div className={searchBoxClasses}>
+              {SearchBox}
             </div>
           </div>
         </div>
