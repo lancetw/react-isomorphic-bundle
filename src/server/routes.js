@@ -332,7 +332,6 @@ router
       image: `${this.protocol}://${this.host}/images/icon.png`
     })
 
-    const Post = db.posts
     const limit = 12
     const descriptionLength = 20
     const items = yield Post.list(0, limit, 'rss')
@@ -372,8 +371,8 @@ router
           /\/search/,
           /\/logout/,
           /\/login/,
-          /\*/,
-        ],
+          /\*/
+        ]
       }
       const paramsConfig = {
         '/w/cprop/:cprop': [

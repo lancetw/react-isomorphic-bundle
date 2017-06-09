@@ -121,6 +121,7 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
+      let error
       if (body.ocname) {
         try {
           let org = {}
@@ -136,8 +137,9 @@ export default new Resource('posts', {
           body.country = org.country
           body.city = org.city
           body.address = org.address
-
-        } catch (err) {/* no org data */}
+        } catch (err) {
+          error = err
+        }
       } else {
         try {
           const userinfo = yield UsersInfo.load(+this.user.id)
@@ -148,7 +150,9 @@ export default new Resource('posts', {
           body.country = userinfo.country
           body.city = userinfo.city
           body.address = userinfo.address
-        } catch (err) {/* no userinfo */}
+        } catch (err) {
+          error = err
+        }
       }
 
       const post = yield Post.create(body)
@@ -257,6 +261,8 @@ export default new Resource('posts', {
 
       body.file = JSON.stringify(body.file)
 
+      let error
+
       if (body.ocname) {
         try {
           let org = {}
@@ -272,8 +278,9 @@ export default new Resource('posts', {
           body.country = org.country
           body.city = org.city
           body.address = org.address
-
-        } catch (err) {/* no org data */}
+        } catch (err) {
+          error = err
+        }
       } else {
         try {
           const userinfo = yield UsersInfo.load(body.uid)
@@ -284,7 +291,9 @@ export default new Resource('posts', {
           body.country = userinfo.country
           body.city = userinfo.city
           body.address = userinfo.address
-        } catch (err) {/* no userinfo */}
+        } catch (err) {
+          error = err
+        }
       }
 
       const post = yield Post.update(this.params.post, body)
