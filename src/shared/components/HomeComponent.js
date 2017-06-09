@@ -76,6 +76,16 @@ export default class HomeComponent extends Component {
                 <div className="image logo-oursevents"></div>
               </Link>
             </div>
+            <div className="mobile only row">
+              <Link className="ui orange large button left floated" to="/w/today">
+                <i className="heart icon"></i>
+                <Translate content="header.overview" />
+              </Link>
+              <Link className="ui orange large button right floated" to="/nearby">
+                <i className="location arrow icon"></i>
+                <Translate content="header.nearby" />
+              </Link>
+            </div>
           </div>
           { this.renderNews(posts) }
           {loading && isEmpty(posts) && (
