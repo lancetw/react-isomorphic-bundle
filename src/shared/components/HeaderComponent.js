@@ -184,6 +184,11 @@ export default class Header extends Component {
     return (
       <header
         className="ui orange top inverted pointing menu grid fixed top">
+        <div className="right menu">
+          <RightSidebar isOpen={this.state.isRightOpen} isMenuOpen={this.isRightMenuOpen}>
+            <NearbyList closeMenu={this.closeRightMenu} />
+          </RightSidebar>
+        </div>
         <div className="computer only row">
           <div className="left menu">
             <Link to="/home" className="item">
@@ -201,17 +206,16 @@ export default class Header extends Component {
             {ChangePasswordLink}
             {ManageLink}
           </div>
-          <div className="right menu">
+          <div className="right menu has-right-sidebar">
             {AuthLink}
             <LocaleSwitcher dispatch={dispatch} />
-            {SearchBox}
+            <div className="searchbox-desktop">
+              {SearchBox}
+            </div>
           </div>
         </div>
         <div className="tablet mobile only row">
           <div className="left menu">
-            <RightSidebar isOpen={this.state.isRightOpen} isMenuOpen={this.isRightMenuOpen}>
-              <NearbyList closeMenu={this.closeRightMenu} />
-            </RightSidebar>
             <Sidebar isOpen={this.state.isOpen} isMenuOpen={this.isMenuOpen}>
               <Link to="/home" className="link item">
                 <Translate content="header.home" onClick={this.closeMenu} />

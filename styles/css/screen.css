@@ -683,6 +683,7 @@ ul.fileList li>div:hover {
 }
 
 .menu .has-right-sidebar {
+  .searchbox-desktop,
   .searchbox-switch {
     padding-right: 40px;
     form {
