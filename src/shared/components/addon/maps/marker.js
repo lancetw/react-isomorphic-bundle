@@ -24,6 +24,7 @@ export default class Marker extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate
 
   onTouchStart = (key, childProps, event) => {
+    event.preventDefault()
     if (this.props.handleTouchStart) {
       return this.props.handleTouchStart(key, childProps)
     }

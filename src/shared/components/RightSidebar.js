@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 
-const Menu = require('react-burger-menu').stack
+const Menu = require('react-burger-menu').slide
 
-export default class Sidebar extends Component {
+export default class RightSidebar extends Component {
 
   static propTypes = {
     children: PropTypes.any,
@@ -20,11 +20,12 @@ export default class Sidebar extends Component {
 
   render () {
     return (
-      <div className="left-sidebar">
+      <div className="right-sidebar">
         <Menu
+          right
           onStateChange={ this.props.isMenuOpen }
           isOpen={ this.props.isOpen }
-          width={ 230 }
+          width={ 270 }
           pageWrapId={'page-wrap'}
           outerContainerId={'outer-container'}>
           <div>

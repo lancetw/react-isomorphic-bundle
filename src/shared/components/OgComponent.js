@@ -56,7 +56,7 @@ export default class OgComponent extends Component {
               </Link>
             )})
           }
-          { isEmpty(posts) && (
+          { !isFetching && isEmpty(posts) && (
             <span>目前沒有相關資訊</span>
           )}
         </div>

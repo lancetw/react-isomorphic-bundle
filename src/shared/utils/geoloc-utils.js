@@ -21,7 +21,7 @@ function showError (error) {
   }
 }
 
-export function runGeoLoc (highAccuracy=true, timeout=10000, maximumAge=0) {
+export function runGeoLoc (popupError=true, highAccuracy=true, timeout=10000, maximumAge=0) {
   const sweetAlert = require('sweetalert')
 
   return new Promise((resolve, reject) => {
@@ -36,7 +36,9 @@ export function runGeoLoc (highAccuracy=true, timeout=10000, maximumAge=0) {
       navigator.geolocation.getCurrentPosition(
         (position) => resolve(position),
         (error) => {
-          showError(error)
+          if (popupError) {
+            showError(error)
+          }
           reject(error)
         }, optn)
     } else {

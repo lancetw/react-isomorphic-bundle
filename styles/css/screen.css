@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 html {
   font-size: 1rem;
   -webkit-overflow-scrolling: touch;
@@ -20,41 +19,41 @@ body {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.6);
   background: rgba(255, 255, 255, 1);
-
   font-smoothing: antialiased;
   hyphens: auto;
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
-
   a {
     text-decoration: none;
     font-smoothing: antialiased;
     hyphens: auto;
     font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif!important;
-
     &:hover {
       text-decoration: underline;
     }
   }
-
   background: rgba(255, 255, 255, 1);
 }
 
 #app {
-  background-image:
-    linear-gradient(
-      rgba(252, 173, 49, 1) 36%,
-      rgba(255, 255, 255, 0.0) 100%
-    );
+  background-image: linear-gradient( rgba(252, 173, 49, 1) 36%, rgba(255, 255, 255, 0.0) 100%);
 }
 
-h1, h2, h3, h4, h5, h6, .ui.header.divider, .ui.pointing.label, .ui.message > .header, .ui.button > span {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.ui.header.divider,
+.ui.pointing.label,
+.ui.message>.header,
+.ui.button>span {
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif!important;
 }
 
 .header {
   font-family: 'Helvetica Neue', Arial, Verdana, 'PingFang TC', 'PingFang SC', 'Lantinghei TC', 'Lantinghei SC', 'Heiti TC', 'Heiti SC', 'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Hiragino Kaku Gothic ProN', 'PMingLiU-ExtB', 'PMingLiU', sans-serif !important;
 }
-
 
 @media only screen and (min-width: 1280px) {
   main {
@@ -89,26 +88,24 @@ input.hide-submit {
   background: rgba(1, 1, 1, 0.72);
 }
 
-.ui.list > .item {
+.ui.list>.item {
   width: 100%;
   display: inline-block;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   vertical-align: middle;
-
   .label {
     vertical-align: top !important;
     font-size: 80%;
   }
-
   a:hover {
     color: gold;
     text-decoration: none;
   }
 }
 
-.ui.cards > div {
+.ui.cards>div {
   width: 100%;
 }
 
@@ -131,33 +128,31 @@ input.hide-submit {
   padding: 10px 40px;
 }
 
+
 /* iPhone 2G-4S in portrait & landscape */
-@media only screen
-and (min-width : 320px)
-and (max-width : 480px) {
-  .row.padding {
-    padding: 0;
-  }
-}
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
   .row.padding {
     padding: 0;
   }
 }
 
-/* iPhone 6 in portrait & landscape  */
-@media only screen
-and (min-width : 375px)
-and (max-width : 667px) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .row.padding {
     padding: 0;
   }
 }
-@media only screen
-and (min-device-width : 375px)
-and (max-device-width : 667px) {
+
+
+/* iPhone 6 in portrait & landscape  */
+
+@media only screen and (min-width: 375px) and (max-width: 667px) {
+  .row.padding {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
   .row.padding {
     padding: 0;
   }
@@ -171,7 +166,6 @@ and (max-device-width : 667px) {
   .icon {
     padding-left: 1px;
   }
-
   a {
     width: 100%;
     display: block;
@@ -198,7 +192,7 @@ and (max-device-width : 667px) {
     text-align: left;
     max-height: 133px;
     min-height: 133px;
-    .title > a {
+    .title>a {
       letter-spacing: 0.08rem;
       font-size: 1.44rem;
       line-height: 2.1rem;
@@ -215,7 +209,7 @@ and (max-device-width : 667px) {
   }
 }
 
-.ui.location > .floated {
+.ui.location>.floated {
   text-shadow: 0 0 0;
   color: #999;
   font-size: 1.1rem;
@@ -230,43 +224,41 @@ and (max-device-width : 667px) {
   background: rgba(0, 186, 24, .64);
 }
 
+h1.title {
+  letter-spacing: 0.08rem;
+  font-size: 1.6rem;
+  color: rgba(219, 80, 50, 0.92);
+}
+
 .ui.detail {
-  margin-left: 0;
-  opacity: 0.95;
-  filter: alpha(opacity=95);
-  box-shadow: none;
   .content {
     background: rgba(255, 255, 255, 0.97);
-
-    h1 {
-      letter-spacing: 0.08rem;
-      font-size: 1.6rem;
-      color: rgba(219, 80, 50, 0.92);
-    }
   }
-
   .description {
     padding: 1rem;
-
-    > div, span {
+    >div,
+    span {
       color: #555;
       line-height: 2rem;
     }
-
     p {
       text-shadow: 0 0 0;
       text-align: justify;
       word-wrap: break-word;
     }
   }
+  margin-left: 0;
+  opacity: 0.95;
+  filter: alpha(opacity=95);
+  box-shadow: none;
 }
 
 @media only screen and (min-width: 1080px) {
   .ui.detail {
     .description {
       padding: 1em 2.2em;
-
-      > div, span {
+      >div,
+      span {
         line-height: 2.1rem;
       }
     }
@@ -276,7 +268,8 @@ and (max-device-width : 667px) {
 @media only screen and (max-width: 1079px) {
   .ui.detail {
     .description {
-      > div, span {
+      >div,
+      span {
         line-height: 2rem;
       }
     }
@@ -296,19 +289,22 @@ and (max-device-width : 667px) {
   border-bottom-right-radius: 0 !important;
 }
 
-.fluid.ui.orange.button, .fluid.ui.orange.attached.button {
+.fluid.ui.orange.button,
+.fluid.ui.orange.attached.button {
   color: rgba(255, 255, 255, 0.9) !important;
   text-shadow: 0 0 3px gold !important;
   box-shadow: none !important;
 }
 
-.ui.stackable.container.menu, .ui.stackable.container.menu > .item {
+.ui.stackable.container.menu,
+.ui.stackable.container.menu>.item {
   box-shadow: none;
   border: none;
   background: rgba(255, 255, 255, 0.8);
 }
 
-.ui.form.segment, .ui.tab.segment {
+.ui.form.segment,
+.ui.tab.segment {
   border: none;
   background: rgba(255, 255, 255, 0.88);
 }
@@ -320,7 +316,6 @@ and (max-device-width : 667px) {
   overflow-x: hidden;
   user-select: none;
   -webkit-overflow-scrolling: touch;
-
   div {
     transform: translate3d(0, 0, 0);
   }
@@ -334,10 +329,11 @@ and (max-device-width : 667px) {
     display: block;
   }
 }
+
+
 /* iPhone 2G-4S in portrait & landscape */
-@media only screen
-and (min-width : 320px)
-and (max-width : 480px) {
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
   .switch-btns {
     a.button {
       font-size: 0.8rem !important;
@@ -346,9 +342,8 @@ and (max-width : 480px) {
     }
   }
 }
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .switch-btns {
     a.button {
       font-size: 0.8rem !important;
@@ -383,17 +378,19 @@ main.ui.stackable.page {
 .ui.grid.container {
   margin: 0;
 }
+
+
 /* small screen */
-@media only screen
-and (max-width : 736px) {
-  .ui.grid.container > .column:not(.row) {
+
+@media only screen and (max-width: 736px) {
+  .ui.grid.container>.column:not(.row) {
     padding-left: 1% !important;
     padding-right: 1% !important;
   }
 }
-@media only screen
-and (max-device-width : 736px) {
-   .ui.grid.container > .column:not(.row) {
+
+@media only screen and (max-device-width: 736px) {
+  .ui.grid.container>.column:not(.row) {
     padding-left: 1% !important;
     padding-right: 1% !important;
   }
@@ -409,18 +406,18 @@ ul.fileList {
   list-style-type: none;
 }
 
-ul.fileList > li {
+ul.fileList>li {
   width: 100%;
 }
 
-ul.fileList > li > div {
+ul.fileList>li>div {
   color: #ee9900;
   position: relative;
   width: 225px;
   margin-bottom: 12px !important;
 }
 
-ul.fileList > li > div > a {
+ul.fileList>li>div>a {
   color: #fff;
   display: block;
   width: 100%;
@@ -431,7 +428,7 @@ ul.fileList > li > div > a {
   padding-bottom: 3px !important;
 }
 
-ul.fileList li > div:after {
+ul.fileList li>div:after {
   font-size: 120%;
   white-space: nowrap;
   content: "[ " attr(data-filetype) " ]";
@@ -441,7 +438,7 @@ ul.fileList li > div:after {
   color: #fff;
 }
 
-ul.fileList li > div:hover {
+ul.fileList li>div:hover {
   width: auto;
   margin-left: 0;
 }
@@ -455,26 +452,23 @@ ul.fileList li > div:hover {
   user-select: none;
 }
 
+
 /* iPhone 2G-4S in portrait & landscape */
-@media only screen
-and (min-width : 320px)
-and (max-width : 480px) {
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
   #map {
     height: 180px;
   }
-
   .ui.detail {
     margin-left: 0;
-
     .description {
       font-size: 1.1rem !important;
       line-height: 2rem !important;
     }
   }
-
   .ui.post.card {
     .content {
-      .title > a {
+      .title>a {
         font-size: 1.2rem;
         line-height: 1.8rem;
         width: 100%;
@@ -482,66 +476,16 @@ and (max-width : 480px) {
       }
     }
   }
-
   .ui.scrollable {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
   }
-
-  .content > .ui.orange.ribbon.label {
+  .content>.ui.orange.ribbon.label {
     top: 5px !important;
     font-size: 1.1rem !important;
   }
-
-  .ui.location > .floated {
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-align: right;
-    width: 100%;
-  }
-}
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-  #map {
-    height: 180px;
-  }
-
-  .ui.detail {
-    margin-left: 0;
-
-    .description {
-      font-size: 1.1rem !important;
-      line-height: 2rem !important;
-    }
-  }
-
-  .ui.post.card {
-    .content {
-      .title > a {
-        font-size: 1.2rem;
-        line-height: 1.8rem;
-        width: 100%;
-        margin-top: 1.6rem !important;
-      }
-    }
-  }
-
-  .ui.scrollable {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-
-  .content > .ui.orange.ribbon.label {
-    top: 5px !important;
-    font-size: 1.1rem !important;
-  }
-
-  .ui.location > .floated {
+  .ui.location>.floated {
     display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -551,43 +495,81 @@ and (max-device-width : 480px) {
   }
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #map {
+    height: 180px;
+  }
+  .ui.detail {
+    margin-left: 0;
+    .description {
+      font-size: 1.1rem !important;
+      line-height: 2rem !important;
+    }
+  }
+  .ui.post.card {
+    .content {
+      .title>a {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+        width: 100%;
+        margin-top: 1.6rem !important;
+      }
+    }
+  }
+  .ui.scrollable {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  .content>.ui.orange.ribbon.label {
+    top: 5px !important;
+    font-size: 1.1rem !important;
+  }
+  .ui.location>.floated {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: right;
+    width: 100%;
+  }
+}
+
+
 /* iPhone 2G-4S in portrait & landscape */
-@media only screen
-and (min-width : 320px)
-and (max-width : 480px) {
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
   #map {
     height: 180px;
   }
 }
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   #map {
     height: 180px;
   }
 }
+
 
 /* iPhone 6 in portrait & landscape  */
-@media only screen
-and (min-width : 375px)
-and (max-width : 667px) {
+
+@media only screen and (min-width: 375px) and (max-width: 667px) {
   #map {
     height: 300px;
   }
 }
-@media only screen
-and (min-device-width : 375px)
-and (max-device-width : 667px) {
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
   #map {
     height: 300px;
   }
 }
+
 
 /* iPad in portrait & landscape */
-@media only screen
-and (min-width : 768px)
-and (max-width : 1280px)  {
-  .ui.location > .floated {
+
+@media only screen and (min-width: 768px) and (max-width: 1280px) {
+  .ui.location>.floated {
     display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -596,10 +578,9 @@ and (max-width : 1280px)  {
     width: 100%;
   }
 }
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)  {
-  .ui.location > .floated {
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .ui.location>.floated {
     display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -608,28 +589,23 @@ and (max-device-width : 1024px)  {
     width: 100%;
   }
 }
+
 
 /* iPad in portrait */
-@media only screen
-and (min-width : 768px)
-and (max-width : 1024px)
-and (orientation : portrait) {
-  .post.detail > .column {
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .post.detail>.column {
     width: 100% !important;
   }
-
   .ui.top.menu {
     font-size: 90.6% !important;
   }
 }
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)
-and (orientation : portrait) {
-  .post.detail > .column {
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .post.detail>.column {
     width: 100% !important;
   }
-
   .ui.top.menu {
     font-size: 90.6% !important;
   }
@@ -640,12 +616,12 @@ and (orientation : portrait) {
   box-shadow: none !important;
 }
 
-.carousel > img {
+.carousel>img {
   display: block;
   max-height: 230px !important;
 }
 
-.ad > a > img {
+.ad>a>img {
   border-radius: 6px 6px 6px 6px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -674,22 +650,55 @@ and (orientation : portrait) {
   display: none !important;
 }
 
-.bm-burger-button {
+.left-sidebar .bm-burger-button {
   position: fixed;
-  width: 30px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   left: 10px;
   top: 10px;
 }
 
-.bm-burger-bars {
-  background: #f5f5f5;
+.left-sidebar .bm-burger-button:before {
+  color: white;
+  font-family: Icons;
+  font-size: 34px;
+  font-weight: 400;
+  content: "\f0c9";
+}
+
+.right-sidebar .bm-burger-button:before {
+  color: gold;
+  font-family: Icons;
+  font-size: 30px;
+  font-weight: 400;
+  content: "\f041";
+}
+
+.right-sidebar .bm-burger-button {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  right: -13px;
+  top: 10px;
+}
+
+.menu .has-right-sidebar {
+  .searchbox-switch {
+    padding-right: 40px;
+    form {
+      margin-top: 5px;
+      margin-right: -10px;
+    }
+  }
 }
 
 .bm-cross {
-  width: 50px;
-  height: 50px;
   background: gold;
+}
+
+.bm-cross-button {
+  width: 64px !important;
+  height: 64px !important;
 }
 
 .bm-morph-shape {
@@ -700,11 +709,12 @@ and (orientation : portrait) {
   padding: 1em 1.5em 0;
   font-size: 1.1em;
   background: rgba(0, 0, 0, 1);
+  webkit-overflow-scrolling: touch;
+  scroll-y: auto;
 }
 
 .bm-item-list a {
   padding: 1em;
-
   &:hover {
     background: transparent;
   }
