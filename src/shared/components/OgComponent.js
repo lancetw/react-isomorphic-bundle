@@ -41,7 +41,7 @@ export default class OgComponent extends Component {
                   <div className="ui orange horizontal label">
                     { eventDate }
                   </div>
-                  { item.distance && (
+                  { item.distance >= 0 && (
                     <div className="ui teal horizontal label">
                       { item.distance >= 1
                         && <Translate content="geoloc.distance.basic.km" dist={item.distance.toFixed(1)}/> }

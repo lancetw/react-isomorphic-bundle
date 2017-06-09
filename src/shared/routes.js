@@ -44,7 +44,7 @@ export default function (store) {
       <Route path="/" component={Home} />
       <Route path="/home" component={Home} />
       <Route path="/search" component={Search} />
-      <Route path="/nearby" component={Nearby} onEnter={disableTouchmove} onLeave={enableTouchmove} />
+      <Route path="/nearby" component={Nearby} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
       <Route path="/signup" component={Signup} />

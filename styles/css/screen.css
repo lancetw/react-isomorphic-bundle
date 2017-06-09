@@ -715,6 +715,9 @@ ul.fileList li>div:hover {
   padding: 1em 1.5em 0;
   font-size: 1.1em;
   background: rgba(0, 0, 0, 1);
+}
+
+.bm-item-list {
   webkit-overflow-scrolling: touch;
   scroll-y: auto;
 }
