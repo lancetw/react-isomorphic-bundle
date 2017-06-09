@@ -682,14 +682,19 @@ ul.fileList li>div:hover {
   top: 10px;
 }
 
-.menu .has-right-sidebar {
-  .searchbox-desktop,
-  .searchbox-switch {
-    padding-right: 40px;
-    form {
-      margin-top: 5px;
-      margin-right: -10px;
-    }
+.menu .has-right-sidebar .searchbox-switch {
+  padding-right: 40px;
+  form {
+    margin-top: -10px;
+    margin-right: -10px;
+  }
+}
+
+.menu .has-right-sidebar .searchbox-desktop {
+  padding-right: 40px;
+  form {
+    margin-top: 5px;
+    margin-right: -10px;
   }
 }
 

@@ -97,7 +97,7 @@ export default class Header extends Component {
   }
 
   isRightMenuOpen = (state) => {
-    return state.isRightOpen
+    return state.isOpen
   }
 
   render () {
@@ -186,7 +186,7 @@ export default class Header extends Component {
         className="ui orange top inverted pointing menu grid fixed top">
         <div className="right menu">
           <RightSidebar isOpen={this.state.isRightOpen} isMenuOpen={this.isRightMenuOpen}>
-            <NearbyList closeMenu={this.closeRightMenu} />
+            <NearbyList ref="nearby" closeMenu={this.closeRightMenu} />
           </RightSidebar>
         </div>
         <div className="computer only row">

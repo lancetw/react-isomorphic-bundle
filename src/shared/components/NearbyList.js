@@ -26,9 +26,20 @@ class NearbyList extends Component {
   }
 
   componentWillMount () {
-    const { dispatch } = this.props
+    this.nearby()
+  }
 
-    const defaultDistance = 3000
+  componentWillUnmount () {
+    if (this.op) {
+      clearTimeout(this.releaseTimeout)
+      clearTimeout(this.releaseTimeout1)
+      clearTimeout(this.releaseTimeout2)
+    }
+  }
+
+  nearby = () => {
+    const { dispatch } = this.props
+    const defaultDistance = 10000
     const center = { lat: 25.0318808, lng: 121.5193721 }
     dispatch(SearchActions.updateNearbyCenter({ center }))
 
@@ -58,14 +69,6 @@ class NearbyList extends Component {
           }, 500)
         })
       })
-    }
-  }
-
-  componentWillUnmount () {
-    if (this.op) {
-      clearTimeout(this.releaseTimeout)
-      clearTimeout(this.releaseTimeout1)
-      clearTimeout(this.releaseTimeout2)
     }
   }
 
@@ -107,7 +110,7 @@ class NearbyList extends Component {
           )})
         }
         { !isFetching && isEmpty(posts) && (
-          <span>目前沒有相關資訊</span>
+          <span>目前附近沒有活動</span>
         )}
       </div>
     )

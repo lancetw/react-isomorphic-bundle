@@ -21,7 +21,6 @@ export function clearCache () {
     dispatch({ type: LIST_NEWS_POST_RELOADED })
     dispatch({ type: LIST_OG_POST_RELOADED })
     dispatch({ type: LIST_OG_POST_NEARBY_RELOADED })
-    dispatch({ type: SEARCH_NEARBY_RELOADED })
 
     return dispatch({ type: CLEAR_CACHE_COMPLETED })
   }
