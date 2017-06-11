@@ -73,7 +73,7 @@ export default class HomeComponent extends Component {
             </div>
             <div className="mobile only row">
               <Link to="/w/today">
-                <div className="image logo-oursevents"></div>
+                <div className="image logo-oursevents-mobile"></div>
               </Link>
             </div>
             <div className="mobile only row">

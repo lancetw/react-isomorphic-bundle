@@ -667,11 +667,23 @@ ul.fileList li>div:hover {
 }
 
 .right-sidebar .bm-burger-button:before {
-  color: gold;
   font-family: Icons;
   font-size: 30px;
   font-weight: 400;
   content: "\f041";
+  animation: fontcolorchange 3s infinite;
+}
+
+@keyframes fontcolorchange {
+  0% {
+    color: rgba(72, 49, 21, 1.00);
+  }
+  50% {
+    color: gold;
+  }
+  100% {
+    color: rgba(72, 49, 21, 1.00);
+  }
 }
 
 .right-sidebar .bm-burger-button {

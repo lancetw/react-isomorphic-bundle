@@ -4,7 +4,6 @@
   width: 250px;
   height: 57px;
   background-image: url('../../images/ccnda.png');
-
   &.border {
     border-radius: 7px 7px 7px 7px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
@@ -34,5 +33,20 @@
   .image.logo-oursevents {
     background-image: url('../../images/oursevents@2x.png');
     background-size: 152px 152px;
+  }
+}
+
+.image.logo-oursevents-mobile {
+  margin: 0 auto;
+  display: inline-block;
+  width: 114px;
+  height: 114px;
+  background-image: url('../../images/oursevents-m.png');
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .image.logo-oursevents-mobile {
+    background-image: url('../../images/oursevents-m@2x.png');
+    background-size: 114px 114px;
   }
 }
