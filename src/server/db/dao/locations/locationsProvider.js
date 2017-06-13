@@ -2,22 +2,31 @@ const bcrypt = require('co-bcryptjs')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
 import moment from 'moment'
-import { isFinite, map, mapKeys, camelCase } from 'lodash'
+import {
+  isFinite,
+  map,
+  mapKeys,
+  camelCase
+} from 'lodash'
 
-exports.create = function *(postId, info) {
+exports.create = function* (postId, info) {
   const fillable = [
     'postId',
     'geometry'
   ]
   if (!isFinite(+postId)) return false
   info.postId = postId
-  return yield models.locations.create(info, { fields: fillable })
+  return yield models.locations.create(info, {
+    fields: fillable
+  })
 }
 
-exports.createOrUpdate = function *(postId, info) {
+exports.createOrUpdate = function* (postId, info) {
   if (!isFinite(+postId)) return false
   const location = yield models.locations.findOne({
-    where: { postId: postId }
+    where: {
+      postId: postId
+    }
   })
 
   if (!location) {
@@ -26,27 +35,41 @@ exports.createOrUpdate = function *(postId, info) {
       'geometry'
     ]
     info.postId = postId
-    return yield models.locations.create(info, { fields: fillable })
+    return yield models.locations.create(info, {
+      fields: fillable
+    })
   } else {
     const fillable = [
       'geometry'
     ]
-    return yield location.update(info, { fields: fillable })
+    return yield location.update(info, {
+      fields: fillable
+    })
   }
 }
 
-exports.destroy = function *(postId) {
+exports.destroy = function* (postId) {
   if (!isFinite(+postId)) return false
-  const location = yield models.locations.findOne({ where: { postId: postId } })
-  return yield location.destroy({ force: true })
+  const location = yield models.locations.findOne({
+    where: {
+      postId: postId
+    }
+  })
+  return yield location.destroy({
+    force: true
+  })
 }
 
 /* eslint-disable max-len, camelcase */
-exports.nearBy = function *(limit=20, pattern) {
-  const { sequelize } = models
-  const { dialect } = sequelize.options
+exports.nearBy = function* (limit = 20, pattern) {
+  const {
+    sequelize
+  } = models
+  const {
+    dialect
+  } = sequelize.options
   /* PostGIS only */
-  if ( dialect !== 'postgres') return {}
+  if (dialect !== 'postgres') return {}
 
   if (typeof pattern === 'undefined' || pattern === null) return {}
   if (!isFinite(parseFloat(pattern.lat))) return {}
@@ -54,7 +77,6 @@ exports.nearBy = function *(limit=20, pattern) {
   if (!isFinite(parseFloat(pattern.dist))) return {}
 
   const status = 0
-  const cid = pattern.cid ? pattern.cid : -1
   const todayStart = moment().startOf('day').utc().format('YYYY-MM-DD HH:mm:ss.SSS Z')
 
   /* Thanks to http://gis.stackexchange.com/questions/41242/how-to-find-the-nearest-point-from-poi-in-postgis */
@@ -75,6 +97,8 @@ exports.nearBy = function *(limit=20, pattern) {
                ORDER BY ST_Distance(geometry, poi)
                LIMIT ${limit};`
 
-  const result = yield sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
+  const result = yield sequelize.query(sql, {
+    type: sequelize.QueryTypes.SELECT
+  })
   return map(result, (item) => mapKeys(item, (value, key) => camelCase(key)))
 }
