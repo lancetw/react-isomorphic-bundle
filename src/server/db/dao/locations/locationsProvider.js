@@ -72,7 +72,6 @@ exports.nearBy = function *(limit=20, pattern) {
                WHERE ST_DWithin(geometry, poi, ${pattern.dist})
                      AND posts.end_date >= '${todayStart}'
                      AND posts.status = ${status}
-                     AND posts.cid != ${cid}
                ORDER BY ST_Distance(geometry, poi)
                LIMIT ${limit};`
 
