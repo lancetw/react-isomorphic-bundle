@@ -54,7 +54,7 @@ exports.nearBy = function *(limit=20, pattern) {
   if (!isFinite(parseFloat(pattern.dist))) return {}
 
   const status = 0
-  const cid = pattern.cid ? pattern.cid : 0
+  const cid = pattern.cid ? pattern.cid : -1
   const todayStart = moment().startOf('day').utc().format('YYYY-MM-DD HH:mm:ss.SSS Z')
 
   /* Thanks to http://gis.stackexchange.com/questions/41242/how-to-find-the-nearest-point-from-poi-in-postgis */
