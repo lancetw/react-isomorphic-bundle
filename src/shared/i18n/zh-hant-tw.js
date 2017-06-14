@@ -113,7 +113,7 @@ module.exports = {
       msg: {
         upload: '您可以上傳圖片、Word 檔或是 PDF（請拖拉至此或是點擊選擇檔案）：',
         limit: '每個檔案大小上限 3 MB',
-        urltips: '網址必須以 http:// 開頭'
+        urltips: '網址必須以 http(s) 開頭'
       }
     },
     map: {

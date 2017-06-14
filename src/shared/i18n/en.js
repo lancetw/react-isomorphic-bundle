@@ -113,7 +113,7 @@ module.exports = {
       msg: {
         upload: 'Dropping images, word or pdf files here, or click to select:',
         limit: 'Per file size limit：3 MB',
-        urltips: 'URL should be start with http://'
+        urltips: 'URL should be start with http(s)'
       }
     },
     map: {
