@@ -29,6 +29,11 @@ if (process.env.BROWSER) {
   swal = require('sweetalert')
 }
 
+let line
+if (process.env.BROWSER) {
+  line = require('react-line-social')
+}
+
 export default class Post extends Component {
 
   static propTypes = {
@@ -199,6 +204,14 @@ export default class Post extends Component {
     return (
       <div />
     )
+  }
+
+  renderLineShare () {
+    if (line) {
+      return <line.Share />
+    } else {
+      return <div />
+    }
   }
 
   renderMoreList () {
@@ -396,6 +409,7 @@ export default class Post extends Component {
                       <TwitterShareButton {...shareInfo}>
                         <TwitterIcon size={shareIconSize} round />
                       </TwitterShareButton>
+                      { this.renderLineShare() }
                     </div>
                     <div className="taglist right aligned">
                       <span
