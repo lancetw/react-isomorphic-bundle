@@ -206,9 +206,9 @@ export default class Post extends Component {
     )
   }
 
-  renderLineShare (locale) {
+  renderLineShare () {
     if (line) {
-      return <div className={'image line'}><line.Share type={'c'} locale={locale} /></div>
+      return <div className={'image line'}><line.Share type={'c'} /></div>
     } else {
       return <div />
     }

@@ -13,7 +13,8 @@ class OgHandler extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
     params: PropTypes.object.isRequired,
-    _T: PropTypes.func.isRequired
+    _T: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -65,10 +66,19 @@ class OgHandler extends Component {
   render () {
     const { dispatch, _T } = this.props
     const { getState } = this.context.store
+    const protocol = 'https'
+    const host = process.env.BROWSER
+      ? window.location.host
+      : this.context.store.host
     const title = getState().ognearby.oginfo.ocname + ' | ' + _T('title.ogpage')
     const defaultTitle = _T('title.site')
     const meta = []
     meta.push({ 'property': 'og:type', 'content': 'article' })
+
+    const shareInfo = {
+      title: `${title} | ${defaultTitle}`,
+      url: `${protocol}://${host}${this.props.location.pathname}`
+    }
 
     return (
       <div>
@@ -76,6 +86,7 @@ class OgHandler extends Component {
         <div id="dot-matrix"></div>
         <Og
           {...this.props}
+          shareInfo={shareInfo}
           {...bindActionCreators(SearchActions, dispatch)}
         />
       </div>

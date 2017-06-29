@@ -6,17 +6,35 @@ import Nearby from './NearbyComponent'
 import {
   toShortDate
 } from 'shared/utils/date-utils'
+import {
+  ShareButtons,
+  generateShareIcon
+} from 'react-share'
+
+let line
+if (process.env.BROWSER) {
+  line = require('react-line-social')
+}
 
 export default class OgComponent extends Component {
 
   static propTypes = {
     og: PropTypes.object.isRequired,
     ognearby: PropTypes.object.isRequired,
-    defaultLocale: PropTypes.string.isRequired
+    defaultLocale: PropTypes.string.isRequired,
+    shareInfo: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
+  }
+
+  renderLineShare () {
+    if (line) {
+      return <div className={'image line'}><line.Share type={'c'} /></div>
+    } else {
+      return <div />
+    }
   }
 
   renderList = (posts, isFetching) => {
@@ -66,12 +84,43 @@ export default class OgComponent extends Component {
 
   render () {
     const Translate = require('react-translate-component')
+    const {
+        FacebookShareButton,
+        GooglePlusShareButton,
+        LinkedinShareButton,
+        TwitterShareButton,
+        PinterestShareButton,
+        VKShareButton
+      } = ShareButtons
+    const FacebookIcon = generateShareIcon('facebook')
+    const TwitterIcon = generateShareIcon('twitter')
+    const GooglePlusIcon = generateShareIcon('google')
+    const LinkedinIcon = generateShareIcon('linkedin')
+    const { shareInfo } = this.props
+    const shareIconSize = 32
     const { og, ognearby } = this.props
     return (
       <main className="ui one column stackable page grid">
         <div className="column">
           <div className="ui basic center aligned segment">
             <h1 className="ui large header">{ognearby.oginfo.ocname}</h1>
+            <div className="ui hidden divider" />
+            <div className="ui buttons">
+              <FacebookShareButton {...shareInfo}>
+                <FacebookIcon size={shareIconSize} round />
+              </FacebookShareButton>
+              <GooglePlusShareButton {...shareInfo}>
+                <GooglePlusIcon size={shareIconSize} round />
+              </GooglePlusShareButton>
+              <LinkedinShareButton {...shareInfo}>
+                <LinkedinIcon size={shareIconSize} round />
+              </LinkedinShareButton> |
+              <TwitterShareButton {...shareInfo}>
+                <TwitterIcon size={shareIconSize} round />
+              </TwitterShareButton>
+              { this.renderLineShare() }
+            </div>
+            <div className="ui hidden divider" />
             <a href={`http://church.oursweb.net/church.php?pkey=${og.cid}`}
               target="_blank"
               className="ui blue large button">開啟華人教會機構名錄</a>
