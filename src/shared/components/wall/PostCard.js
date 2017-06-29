@@ -36,7 +36,7 @@ class PostCard extends Component {
       return (
         <span>{tongwenAutoStr(card.place, this.props.defaultLocale)}</span>
       )
-    } else if (card.ocname) {
+    } else if (card.ocname && card.ocname !== '0') {
       return (
         <span>{tongwenAutoStr(card.ocname, this.props.defaultLocale)}</span>
       )
