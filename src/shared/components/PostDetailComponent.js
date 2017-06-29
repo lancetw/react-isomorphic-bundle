@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import { PostPropArray } from 'shared/utils/forms'
 import { at } from 'lodash'
 import { Link } from 'react-router'
-import { originLocaleName } from 'shared/utils/locale-utils'
+import { originLocaleName, fixLocaleName } from 'shared/utils/locale-utils'
 import Linkify from 'react-linkify'
 import ADContent from './ADContent'
 import Carousel from 'nuka-carousel'
@@ -206,9 +206,9 @@ export default class Post extends Component {
     )
   }
 
-  renderLineShare () {
+  renderLineShare (locale) {
     if (line) {
-      return <line.Share />
+      return <line.Share locale={locale} />
     } else {
       return <div />
     }
@@ -250,6 +250,7 @@ export default class Post extends Component {
 
   render () {
     const Translate = require('react-translate-component')
+    const { defaultLocale } = this.props
 
     if (!isEmpty(this.props.post.errors)) {
       return (
@@ -409,7 +410,7 @@ export default class Post extends Component {
                       <TwitterShareButton {...shareInfo}>
                         <TwitterIcon size={shareIconSize} round />
                       </TwitterShareButton>
-                      { this.renderLineShare() }
+                      { this.renderLineShare(fixLocaleName(defaultLocale)) }
                     </div>
                     <div className="taglist right aligned">
                       <span
