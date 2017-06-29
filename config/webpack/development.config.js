@@ -62,9 +62,9 @@ module.exports = {
     plugins: [
       new webpack.PrefetchPlugin('react'),
       new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery"
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
       }),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
@@ -127,8 +127,8 @@ module.exports = {
       ]
     },
     postcss: {
-        defaults: [postImport, postInclude, autoprefixer, csswring, bemLinter, postReporter, postPrecss, postColorFn],
-        cleaner:  [autoprefixer({ browsers: [] })]
+      defaults: [postImport, postInclude, autoprefixer, csswring, bemLinter, postReporter, postPrecss, postColorFn],
+      cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.json', '.css', '.less'],

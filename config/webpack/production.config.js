@@ -41,9 +41,9 @@ module.exports = {
     },
     plugins: [
       new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery"
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
       }),
       new ExtractTextPlugin('[name].css'),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -115,8 +115,8 @@ module.exports = {
       ]
     },
     postcss: {
-        defaults: [postImport, postInclude, autoprefixer, csswring, bemLinter, postReporter, postPrecss, postColorFn],
-        cleaner:  [autoprefixer({ browsers: [] })]
+      defaults: [postImport, postInclude, autoprefixer, csswring, bemLinter, postReporter, postPrecss, postColorFn],
+      cleaner:  [autoprefixer({ browsers: [] })]
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.json', '.css', '.less'],

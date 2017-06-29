@@ -50,3 +50,7 @@
     background-size: 114px 114px;
   }
 }
+
+.image.line {
+  margin-top: 1px;
+}

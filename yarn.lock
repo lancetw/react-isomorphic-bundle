@@ -7595,9 +7595,9 @@ react-json-tree@^0.10.8:
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-react-line-social@^0.1.0:
+react-line-social@lancetw/react-line-social#master:
   version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-line-social/-/react-line-social-0.1.0.tgz#0b998737be95ce266021d42bfe9ea74ef1f192a1"
+  resolved "https://codeload.github.com/lancetw/react-line-social/tar.gz/0901c14bfb84fb8863fbd85ad1c667d856412914"
   dependencies:
     prop-types "^15.5.8"
     react "^15.5.4"

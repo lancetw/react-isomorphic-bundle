@@ -144,7 +144,7 @@
     "react-google-recaptcha": "^0.5.1",
     "react-helmet": "^1.1.5",
     "react-interpolate-component": "^0.8.0",
-    "react-line-social": "^0.1.0",
+    "react-line-social": "lancetw/react-line-social#master",
     "react-linkify": "^0.1.1",
     "react-list": "0.7.14",
     "react-paginate": "^0.2.0",
