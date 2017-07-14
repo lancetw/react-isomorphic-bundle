@@ -13,6 +13,7 @@ opts.clientID = conifg.passport.FACEBOOK_APP_ID
 opts.clientSecret = conifg.passport.FACEBOOK_APP_SECRET
 opts.callbackURL = conifg.passport.FACEBOOK_CALLBACK
 opts.enableProof = false
+opts.profileFields = ['id', 'displayName', 'email']
 
 export default passport.use(new FacebookStrategy(
   opts,
