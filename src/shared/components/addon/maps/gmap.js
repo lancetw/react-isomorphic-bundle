@@ -115,6 +115,7 @@ export default class Gmap extends Component {
   createMapOptions (maps) {
     return {
       draggable: !('ontouchend' in document),
+      fullscreenControl: false,
       mapTypeControlOptions: {
         position: maps.ControlPosition.LEFT_BOTTOM
       }

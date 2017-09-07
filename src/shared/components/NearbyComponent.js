@@ -107,6 +107,7 @@ export default class Nearby extends Component {
   createMapOptions (maps) {
     return {
       minZoom: 11,
+      fullscreenControl: false,
       zoomControlOptions: {
         position: maps.ControlPosition.RIGHT_CENTER,
         style: maps.ZoomControlStyle.SMALL

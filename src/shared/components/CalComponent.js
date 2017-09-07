@@ -117,7 +117,7 @@ export default class Cal extends Component {
     return (
       <div className="daybox">
         { count > 0 &&
-          (<div className="day shake shake-slow">
+          (<div className="day event">
             <div className="event-started">
               { date }
             </div>
