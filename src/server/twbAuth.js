@@ -8,6 +8,7 @@ const User = db.users
 
 export function twbAuth ({ email, password }) {
   return new Promise((resolve, reject) => {
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
     request
       .get('https://www.taiwanbible.com/web/api/login.jsp')
       .set('Accept', 'json')
