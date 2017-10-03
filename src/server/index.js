@@ -1,4 +1,5 @@
 delete process.env.BROWSER
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
 
 const env = process.env.NODE_ENV || 'development'
 
