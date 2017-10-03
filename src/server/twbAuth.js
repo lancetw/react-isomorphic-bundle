@@ -1,15 +1,15 @@
-import request from 'superagent'
+import co from 'co'
 import conifg from 'config'
 import db from 'src/server/db'
-import co from 'co'
 import { isEmpty } from 'lodash'
+import request from 'superagent'
 
 const User = db.users
 
 export function twbAuth ({ email, password }) {
   return new Promise((resolve, reject) => {
     request
-      .get('http://www.taiwanbible.com/web/api/login.jsp')
+      .get('https://www.taiwanbible.com/web/api/login.jsp')
       .set('Accept', 'json')
       .query({'email': email})
       .query({'password': password})
