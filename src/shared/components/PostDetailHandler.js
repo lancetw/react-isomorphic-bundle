@@ -77,6 +77,7 @@ class PostDetailHandler extends Component {
     const { dispatch, _T } = this.props
     const { getState } = this.context.store
     const { detail } = getState().post
+    const { place } = getState().map
     const protocol = 'https'
     const host = process.env.BROWSER
       ? window.location.host
@@ -104,14 +105,14 @@ class PostDetailHandler extends Component {
     meta.push({ 'property': 'article:publisher', 'content': 'https://www.facebook.com/CCNDA/' })
 
     const shareInfo = {
-      title: `${title} | ${defaultTitle}`,
+      title: place ? `${title} | ${place}` : `${title} | ${defaultTitle}`,
       url: `${protocol}://${host}${this.props.location.pathname}`
     }
 
     return (
       <div>
         <Helmet
-          title={`${title} | ${defaultTitle}`} meta={meta} />
+          title={place ? `${title} | ${place}` : `${title} | ${defaultTitle}`} meta={meta} />
         <PostDetail
           {...bindActionCreators(PostActions, dispatch)}
           shareInfo={shareInfo}
