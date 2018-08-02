@@ -350,7 +350,7 @@ router
     })
 
     this.type = 'application/atom+xml; charset=utf-8'
-    this.body = feed.rss2()
+    this.body = feed.atom1()
   })
 
 router
