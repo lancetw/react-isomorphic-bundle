@@ -109,6 +109,7 @@ export default class Post extends Component {
       tab = queryString.parse(window.location.search).tab
 
       this.setState({ tabIndex: +tab || 0 })
+      this.handleSelected(+tab || 0)
 
       unlisten = history.listen((location) => {
         if (this.state.inited) {

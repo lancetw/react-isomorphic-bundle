@@ -10,7 +10,7 @@ import {
   SET_UPLOAD_ERROR_MESSAGE_COMPLETED,
   CLEAR_UPLOAD_ERROR_MESSAGE_COMPLETED
 } from 'shared/constants/ActionTypes'
-import { getToken } from 'shared/actions/AuthActions'
+import { getToken, getRingToken } from 'shared/actions/AuthActions'
 
 export function setImagePreview (src, index) {
   return async dispatch => {
@@ -79,6 +79,7 @@ export function send (filename, file, index) {
   return async (dispatch, getState) => {
     dispatch(setImagePreview(null, index))
     let token = getToken()
+    if (token === null || token === '') token = getRingToken()
     let user = jwtDecode(token)
     if (!user.id) {
       return dispatch({
