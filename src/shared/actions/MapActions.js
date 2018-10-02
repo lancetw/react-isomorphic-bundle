@@ -1,4 +1,5 @@
 import request from 'superagent'
+import LOCAL_PATH from 'shared/utils/localpath'
 import {
   MAP_INITED,
   SET_MAP_PIN_STARTED,
