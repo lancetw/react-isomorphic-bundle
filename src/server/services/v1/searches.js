@@ -35,8 +35,10 @@ export default new Resource('searches', {
     
       this.body = yield new Promise((resolve, reject) => {
         request
-        .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + googleApiKey + '&address=' + address)
+        .get('https://maps.googleapis.com/maps/api/geocode/json')
         .set('Accept', 'application/json')
+        .query({ key: googleApiKey })
+        .query({ address: address })
         .end(function (err, res) {
           if (!err && res.body) {
             resolve(res.body)
