@@ -15,7 +15,7 @@ async function searchForm (address) {
     request
       .get(LOCAL_PATH + '/api/v1/searches')
       .query({ scope: 'geocode' })
-      .query({ address: address })
+      .query({ address: JSON.stringify(address) })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body) {
