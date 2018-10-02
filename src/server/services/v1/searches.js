@@ -32,13 +32,10 @@ export default new Resource('searches', {
     if (scope === 'geocode') {
       const { address } = this.request.query
       const googleApiKey = 'AIzaSyAOL2_DNy1xwxo2t1Lxif4r2gnBpDjOkn4'
-      let q = {}
-      try {
-        q = JSON.parse(address)
-      } catch (err) {/* error */}
+    
       this.body = yield new Promise((resolve, reject) => {
         request
-        .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + googleApiKey + '&address=' + q)
+        .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + googleApiKey + '&address=' + address)
         .set('Accept', 'application/json')
         .end(function (err, res) {
           if (!err && res.body) {
