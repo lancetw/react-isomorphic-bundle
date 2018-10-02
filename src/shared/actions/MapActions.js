@@ -12,7 +12,9 @@ import {
 async function searchForm (address) {
   return new Promise((resolve, reject) => {
     request
-      .get('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAOL2_DNy1xwxo2t1Lxif4r2gnBpDjOkn4&address=' + address)
+      .get(LOCAL_PATH + '/api/v1/searches')
+      .query({ scope: 'geocode' })
+      .query({ address: address })
       .set('Accept', 'application/json')
       .end(function (err, res) {
         if (!err && res.body) {

@@ -1,7 +1,7 @@
 import Resource from 'koa-resource-router'
-import parse from 'co-body'
 import db from 'src/server/db'
 import hashids from 'src/shared/utils/hashids-plus'
+import request from 'superagent'
 
 const Post = db.posts
 const Location = db.locations
@@ -27,6 +27,21 @@ export default new Resource('searches', {
 
       this.body = hashids.encodeJson(
         yield Location.nearBy(limit, q))
+    }
+
+    if (scope === 'geocode') {
+      const { address } = this.request.query
+      const googleApiKey = 'AIzaSyAOL2_DNy1xwxo2t1Lxif4r2gnBpDjOkn4'
+      request
+      .get('https://maps.googleapis.com/maps/api/geocode/json?key=' + googleApiKey + '&address=' + address)
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (!err && res.body) {
+          this.body = res.body
+        } else {
+          this.body = {}
+        }
+      })
     }
   }
 })
