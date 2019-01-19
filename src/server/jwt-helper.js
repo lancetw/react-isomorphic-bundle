@@ -16,6 +16,7 @@ export default function (profile, isAdmin=false) {
   data.password = profile.password
   if (isAdmin) {
     data.isAdmin = true
+    data.advanced = true
   }
 
   // Advanced user permission
