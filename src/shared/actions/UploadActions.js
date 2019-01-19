@@ -4,6 +4,8 @@ import {
   UPLOAD_FILE_COMPLETED,
   UPLOAD_FILE_FAILED,
   UPLOAD_FILE_PROGRESS,
+  REMOVE_IMAGE_FILENAME_COMPLETED,
+  REMOVE_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_FILENAME_COMPLETED,
   CLEAR_UPLOAD_COMPLETED,
@@ -22,11 +24,29 @@ export function setImagePreview (src, index) {
   }
 }
 
+export function removeImagePreview (index) {
+  return async dispatch => {
+    return dispatch({
+      type: REMOVE_IMAGE_PREVIEW_COMPLETED,
+      index: index
+    })
+  }
+}
+
 export function setImageFileName (filename, index) {
   return async dispatch => {
     return dispatch({
       type: SET_IMAGE_FILENAME_COMPLETED,
       filename: filename,
+      index: index
+    })
+  }
+}
+
+export function removeImageFileName (index) {
+  return async dispatch => {
+    return dispatch({
+      type: REMOVE_IMAGE_FILENAME_COMPLETED,
       index: index
     })
   }
@@ -72,6 +92,24 @@ export function setPercent (percent, index) {
       percentage: percent.toFixed(0),
       index: index
     })
+  }
+}
+
+export function clearPercent (index) {
+  return async dispatch => {
+    return dispatch({
+      type: UPLOAD_FILE_PROGRESS,
+      percentage: undefined,
+      index: index
+    })
+  }
+}
+
+export function deleteImage (id, index) {
+  return async (dispatch) => {
+    dispatch(clearPercent(index))
+    dispatch(removeImageFileName(index))
+    dispatch(removeImagePreview(index))
   }
 }
 

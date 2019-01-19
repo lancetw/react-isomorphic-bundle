@@ -614,9 +614,9 @@ export default class Post extends Component {
                 <Translate content="post.tabs.msg.upload" />
               </p>
               <div className="ui three column grid center aligned">
-                <ImageUpload index={0} />
-                <ImageUpload index={1} />
-                <ImageUpload index={2} />
+                <ImageUpload index={0} {...this.props} />
+                <ImageUpload index={1} {...this.props} />
+                <ImageUpload index={2} {...this.props} />
               </div>
               <div className="ui orange center aligned segment">
                 <Translate content="post.tabs.msg.limit" />

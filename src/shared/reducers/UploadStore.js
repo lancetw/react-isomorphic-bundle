@@ -3,6 +3,8 @@ import {
   UPLOAD_FILE_COMPLETED,
   UPLOAD_FILE_FAILED,
   UPLOAD_FILE_PROGRESS,
+  REMOVE_IMAGE_PREVIEW_COMPLETED,
+  REMOVE_IMAGE_FILENAME_COMPLETED,
   SET_IMAGE_PREVIEW_COMPLETED,
   SET_IMAGE_FILENAME_COMPLETED,
   CLEAR_UPLOAD_COMPLETED,
@@ -50,9 +52,25 @@ export default createReducer(initialState, {
       index: action.index
     }
   },
+  [REMOVE_IMAGE_PREVIEW_COMPLETED]: (state, action) => {
+    const _images = initialState.images
+    _images.splice(action.index, 1)
+    return {
+      images: _images,
+      index: action.index
+    }
+  },
   [SET_IMAGE_FILENAME_COMPLETED]: (state, action) => {
     const _filenames = initialState.filenames
     _filenames[action.index] = action.filename
+    return {
+      filenames: _filenames,
+      index: action.index
+    }
+  },
+  [REMOVE_IMAGE_FILENAME_COMPLETED]: (state, action) => {
+    const _filenames = initialState.filenames
+    _filenames.splice(action.index, 1)
     return {
       filenames: _filenames,
       index: action.index

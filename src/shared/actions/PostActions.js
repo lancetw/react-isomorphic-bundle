@@ -37,7 +37,6 @@ import {
   COUNT_POST_IN_MONTH_STARTED,
   COUNT_POST_IN_MONTH_COMPLETED,
   COUNT_POST_IN_MONTH_FAILED,
-  CLEAR_UPLOAD_COMPLETED,
   CLEAR_POST_COMPLETED
 } from 'shared/constants/ActionTypes'
 import { getToken, getRingToken } from 'shared/actions/AuthActions'
@@ -46,7 +45,6 @@ import { getInfo } from 'shared/actions/UserActions'
 import { setPin } from 'shared/actions/MapActions'
 import { updateTitle } from 'shared/actions/LocaleActions'
 import { setImageFileName } from 'shared/actions/UploadActions'
-import { getFileExt } from 'shared/utils/file-utils'
 import { EQUAL } from 'shared/utils/common-utils'
 
 async function create ({ token, value, regValue, upload, map, ocname }) {

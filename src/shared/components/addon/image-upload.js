@@ -10,7 +10,9 @@ class ImageUpload extends Component {
     index: PropTypes.number.isRequired,
     upload: PropTypes.object.isRequired,
     src: PropTypes.string.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    _T: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -37,6 +39,19 @@ class ImageUpload extends Component {
 
       const percentage = +this.props.upload.percentages[this.props.index]
     }
+  }
+
+  handleDelete = (index) => {
+    const { dispatch, post } = this.props
+    dispatch(UploadActions.deleteImage(post.detail.id, index))
+    dispatch(UploadActions.clearErrorMessage())
+  }
+
+  renderDelete = (index) => {
+    const { _T } = this.props
+    return (
+      <button className="fluid ui red button percentage message" onClick={this.handleDelete.bind(this, index)}>{_T('post.detail.delete.confirm')}</button>
+    )
   }
 
   renderPrecentage = (index) => {
@@ -88,8 +103,8 @@ class ImageUpload extends Component {
             className="ui image centered placeholder"
             alt=""
             src={ imgsrc || this.props.src } />
-          {this.renderPrecentage(this.props.index)}
         </Dropzone>
+        {!imgsrc ? this.renderPrecentage(this.props.index) : this.renderDelete(this.props.index)}
       </div>
     )
   }
