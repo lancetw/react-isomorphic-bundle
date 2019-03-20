@@ -11,7 +11,7 @@ import { isFinite, isEmpty } from 'lodash'
 export function fetchOrgDataByCid (cid) {
   return new Promise((resolve, reject) => {
     request
-      .get('http://church.oursweb.net/lite/mapsearch')
+      .get('https://church.oursweb.net/lite/mapsearch')
       .set('Accept', 'application/json')
       .query({'keyword': cid})
       .end(function (err, res) {

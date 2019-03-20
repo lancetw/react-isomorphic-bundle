@@ -19,7 +19,7 @@ export async function fetchOgImage({ cid }) {
       .end(function (err, res) {
         if (!err && res.body) {
           if (res.body.img === '/images/churchphoto.gif') resolve(null)
-          resolve('http://church.oursweb.net' + res.body.img)
+          resolve('https://church.oursweb.net' + res.body.img)
         } else {
           reject(err)
         }

@@ -121,7 +121,7 @@ export default class OgComponent extends Component {
               { this.renderLineShare() }
             </div>
             <div className="ui hidden divider" />
-            <a href={`http://church.oursweb.net/church.php?pkey=${og.cid}`}
+            <a href={`https://church.oursweb.net/church.php?pkey=${og.cid}`}
               target="_blank"
               className="ui blue large button">開啟華人教會機構名錄</a>
           </div>

@@ -14,7 +14,7 @@ const UserInfo = db.usersInfo
 export function fetchOrgData (ocname) {
   return new Promise((resolve, reject) => {
     request
-      .get('http://church.oursweb.net/lite/mapsearch')
+      .get('https://church.oursweb.net/lite/mapsearch')
       .set('Accept', 'application/json')
       .query({'keyword': ocname})
       .end(function (err, res) {
