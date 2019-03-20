@@ -53,7 +53,8 @@ export default class Post extends Component {
     regOptions: PropTypes.object.isRequired,
     formType: PropTypes.func.isRequired,
     regFormType: PropTypes.func.isRequired,
-    _T: PropTypes.func.isRequired
+    _T: PropTypes.func.isRequired,
+    forceRing: PropTypes.bool
   }
 
   static contextTypes = {
@@ -153,7 +154,12 @@ export default class Post extends Component {
   componentDidUpdate () {
     if (!isEmpty(this.props.post.content)) {
       this.releaseTimeout = setTimeout(() => {
-        this.context.history.replaceState({}, '/w')
+        const { id } = this.props.params
+        if (id) {
+          this.context.history.replaceState({}, '/w/' + id)
+        } else {
+          this.context.history.replaceState({}, '/w')
+        }
       }, 1000)
     }
   }
@@ -325,11 +331,12 @@ export default class Post extends Component {
       const regValue = this.state.regValue
 
       const ocname = ReactDOM.findDOMNode(this.refs.ocname).value
+      const forceRing = this.props.forceRing
 
       this.releaseTimeout1 = setTimeout(() => {
         const { id } = this.props.params
         if (id) {
-          this.props.modify({ id, value, regValue, upload, map, ocname })
+          this.props.modify({ id, value, regValue, upload, map, ocname, forceRing })
         } else {
           this.props.submit({ value, regValue, upload, map, ocname })
         }
@@ -478,7 +485,6 @@ export default class Post extends Component {
       'ui',
       'orange',
       'message',
-      { 'hidden': !this.props.auth.user.advanced }
     )
 
     const Loading = classNames(

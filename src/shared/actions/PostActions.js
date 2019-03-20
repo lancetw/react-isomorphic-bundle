@@ -265,11 +265,15 @@ export function submit ({ value, regValue, upload, map, ocname }) {
   }
 }
 
-export function modify ({ id, value, regValue, upload, map, ocname }) {
+export function modify ({ id, value, regValue, upload, map, ocname, forceRing }) {
   return async dispatch => {
     try {
-      let token = getToken()
-      if (token === null || token === '') token = getRingToken()
+      let token
+      if (forceRing) {
+        token = getRingToken()
+      } else {
+        token = getToken()
+      }
       let content = await update({ token, id, value, regValue, upload, map, ocname })
 
       if (content.uid) {

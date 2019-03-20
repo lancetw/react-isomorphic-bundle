@@ -9,6 +9,7 @@ import {
   Post,
   PostDetail,
   PostEdit,
+  PostEditRing,
   Manage,
   Wall,
   WallCprop,
@@ -62,7 +63,7 @@ export default function (store) {
         onEnter={auth} />
       <Route
         path="/post/:id/ring"
-        component={PostEdit}
+        component={PostEditRing}
         store={store} />
       <Route path="/manage" component={Manage} store={store} onEnter={auth} />
       <Route path="/password" component={ChangePassword}
