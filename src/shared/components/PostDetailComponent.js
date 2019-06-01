@@ -275,7 +275,6 @@ export default class Post extends Component {
       } = ShareButtons
       const FacebookIcon = generateShareIcon('facebook')
       const TwitterIcon = generateShareIcon('twitter')
-      const GooglePlusIcon = generateShareIcon('google')
       const LinkedinIcon = generateShareIcon('linkedin')
       const { shareInfo } = this.props
       const shareIconSize = 32
@@ -401,9 +400,6 @@ export default class Post extends Component {
                       <FacebookShareButton {...shareInfo}>
                         <FacebookIcon size={shareIconSize} round />
                       </FacebookShareButton>
-                      <GooglePlusShareButton {...shareInfo}>
-                        <GooglePlusIcon size={shareIconSize} round />
-                      </GooglePlusShareButton>
                       <LinkedinShareButton {...shareInfo}>
                         <LinkedinIcon size={shareIconSize} round />
                       </LinkedinShareButton> |
