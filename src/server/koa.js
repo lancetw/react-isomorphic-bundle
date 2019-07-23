@@ -114,7 +114,8 @@ app.use(
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
       overwrite: true,
-      signed: truesecure: true,
+      signed: true,
+      secure: true,
       sameSite: 'strict'
     }, store: store({ db: leveldb }) }
   )
