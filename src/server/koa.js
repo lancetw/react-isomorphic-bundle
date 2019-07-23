@@ -49,6 +49,9 @@ app.use(logger())
 app.use(helmet())
 
 if (env === 'production') {
+  app.set('trust proxy', 1)
+  sess.cookie.secure = true 
+  
   app.use(require('koa-conditional-get')())
   app.use(require('koa-etag')())
   app.use(require('koa-compressor')())
