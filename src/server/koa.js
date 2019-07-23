@@ -112,7 +112,7 @@ app.use(
     { cookie: {
       path: '/',
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000 //one day in ms,
+      maxAge: 24 * 60 * 60 * 1000,
       overwrite: true,
       signed: truesecure: true,
       sameSite: 'strict'
