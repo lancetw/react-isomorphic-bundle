@@ -106,9 +106,9 @@ app.use(mount('/uploads',
 
 app.use(favicon(path.join(__dirname, '../../images/app/v2.3-t/favicon.ico')))
 
-app.use((ctx, next) => {
-  ctx.cookies.secure = true
-  return next()
+app.use(function*(next) {
+  this.cookies.secure = true;
+  yield* next
 })
 app.keys = require('config').app.SESSION_KEYS
 app.use(
