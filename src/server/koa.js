@@ -49,8 +49,6 @@ app.use(logger())
 app.use(helmet())
 
 if (env === 'production') {
-  sess.cookie.secure = true 
-  
   app.use(require('koa-conditional-get')())
   app.use(require('koa-etag')())
   app.use(require('koa-compressor')())
@@ -111,13 +109,15 @@ app.use(favicon(path.join(__dirname, '../../images/app/v2.3-t/favicon.ico')))
 app.keys = require('config').app.SESSION_KEYS
 app.use(
   session(
-    { cookie: {
+    { 
+	  proxy : true,
+	  cookie: {
       path: '/',
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
       overwrite: true,
       signed: true,
-      secure: true,
+	  secure: true,
       sameSite: 'strict'
     }, store: store({ db: leveldb }) }
   )
