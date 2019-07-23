@@ -118,7 +118,7 @@ app.use(
       overwrite: true,
       signed: true,
       secure: true,
-      sameSite: 'lax'
+      sameSite: 'strict'
     }, store: store({ db: leveldb }) }
   )
 )
