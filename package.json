@@ -247,5 +247,13 @@
   },
   "engines": {
     "nodejs": "^0.12.9"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "useTabs": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true
   }
 }
