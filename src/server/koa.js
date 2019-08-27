@@ -106,10 +106,24 @@ app.use(mount('/uploads',
 
 app.use(favicon(path.join(__dirname, '../../images/app/v2.3-t/favicon.ico')))
 
+app.use(function*(next) {
+  this.cookies.secure = true
+  yield* next
+})
 app.keys = require('config').app.SESSION_KEYS
 app.use(
   session(
-    { store: store({ db: leveldb }) }
+    { 
+	  proxy : true,
+	  cookie: {
+      path: '/',
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      overwrite: true,
+      signed: true,
+      secure: true,
+      sameSite: 'lax'
+    }, store: store({ db: leveldb }) }
   )
 )
 
