@@ -66,7 +66,7 @@ export default function(app) {
 
   app.use(
     route.get('/uploads/*', function*(ctx, next) {
-      let location = path.join(__dirname, '../../', decodeURI(this.path))
+      let location = path.join(__dirname, '../../', this.path)
       try {
         const fstat = yield stat(location)
         if (fstat.isFile()) {
