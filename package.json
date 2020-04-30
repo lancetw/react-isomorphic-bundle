@@ -84,7 +84,7 @@
     "google-map-react": "^0.10.2",
     "hashids": "1.0.2",
     "history": "1.17.0",
-    "jquery": "^2.2.4",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^5.4.1",
     "jws": "^3.1.0",
     "jwt-decode": "^1.4.0",
