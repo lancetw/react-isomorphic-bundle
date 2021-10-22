@@ -2965,11 +2965,11 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-feed@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/feed/-/feed-0.2.6.tgz#0c9df2457a71a4bd4943d4fb65fcdbe9c6bc576c"
+feed@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/feed/-/feed-1.1.1.tgz#914897517e94fa327cc6f73bb585a47c4a9ed321"
   dependencies:
-    xml ">= 0.0.5"
+    xml "^1.0.1"
 
 figures@^1.3.5:
   version "1.7.0"
@@ -4734,13 +4734,9 @@ jpegtran-bin@^3.0.0:
     bin-wrapper "^3.0.0"
     logalot "^2.0.0"
 
-jquery@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
-
-jquery@^3.1.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+jquery@^3.1.1, jquery@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.0.tgz#9980b97d9e4194611c36530e7dc46a58d7340fc9"
 
 js-base64@^2.1.9, js-base64@~2.1.8:
   version "2.1.9"
@@ -9612,7 +9608,7 @@ xml-escape@~1.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-2.0.1.tgz#4d8b8f1eccd3419aa362061becef515e1e559635"
 
-"xml@>= 0.0.5":
+xml@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
 
