@@ -212,7 +212,7 @@
     "imagemin": "^3.2.0",
     "imports-loader": "^0.6.4",
     "istanbul": "^0.3.14",
-    "jsdom": "^7.0.2",
+    "jsdom": "^16.5.0",
     "json-loader": "^0.5.2",
     "koa-webpack-dev-middleware": "^1.0.1",
     "koa-webpack-hot-middleware": "^1.0.3",
