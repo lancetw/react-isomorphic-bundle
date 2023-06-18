@@ -116,10 +116,7 @@ export default class SearchMenu extends Component {
 
     return (
       <div className="ui grid">
-        <div className="ui mini serachbox mobile only row">
-          { DegreeMenu }
-        </div>
-        <div className="ui serachbox computer tablet only row">
+        <div className="ui serachbox row">
           { DegreeMenu }
           <div className="ui search simple">
             <form

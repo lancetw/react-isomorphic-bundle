@@ -257,17 +257,7 @@ and (max-device-width : 736px) {
 .search.simple {
   display: block;
 }
-@media only screen and (min-width : 1224px) {
-  .search.simple {
-    display: none;
-  }
-}
 
 .search.autocomplete {
   display: none;
-}
-@media only screen and (min-width : 1224px) {
-  .search.autocomplete {
-    display: block;
-  }
 }
