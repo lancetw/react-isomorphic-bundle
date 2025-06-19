@@ -4,8 +4,6 @@ import helmet from 'koa-helmet'
 import logger from 'koa-logger'
 import responseTime from 'koa-response-time'
 import session from 'koa-generic-session'
-import level from 'levelup'
-import store from 'koa-level'
 import staticCache from 'koa-static-cache'
 import cors from 'koa-cors'
 import basicAuth from './passport/basic'
@@ -23,9 +21,9 @@ import models from 'src/server/db/models'
 import locale from 'koa-locale'
 import bodyParser from 'koa-bodyparser'
 import noCache from 'koa-no-cache'
+import SQLite3Store from 'koa-sqlite3-session'
 
 const debug = require('debug')
-const leveldb = level('./storage/leveldb')
 
 const app = koa()
 // ES7 async
@@ -113,7 +111,7 @@ app.use(function*(next) {
 app.keys = require('config').app.SESSION_KEYS
 app.use(
   session(
-    { 
+    {
 	  proxy : true,
 	  cookie: {
       path: '/',
@@ -123,7 +121,9 @@ app.use(
       signed: true,
       secure: true,
       sameSite: 'lax'
-    }, store: store({ db: leveldb }) }
+    },
+    store: new SQLite3Store('./storage/sessions.sqlite')
+    },
   )
 )
 
