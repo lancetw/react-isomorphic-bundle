@@ -1,4 +1,4 @@
-module.exports = function (sequelize, Sequelize) {
+module.exports = (sequelize, Sequelize) => {
   const Post = sequelize.define('posts', {
     id: {
       allowNull: false,
@@ -27,32 +27,32 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.INTEGER
     },
     startDate: {
+      type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.NOW,
-      type: Sequelize.DATE,
       field: 'start_date'
     },
     endDate: {
+      type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.NOW,
-      type: Sequelize.DATE,
       field: 'end_date'
     },
     openDate: {
+      type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.NOW,
-      type: Sequelize.DATE,
       field: 'open_date'
     },
     closeDate: {
+      type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.NOW,
-      type: Sequelize.DATE,
       field: 'close_date'
     },
     dateType: {
-      defaultValue: 0,
       type: Sequelize.INTEGER,
+      defaultValue: 0,
       field: 'date_type'
     },
     title: {
@@ -72,16 +72,16 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.BIGINT
     },
     lat: {
-      validate: { min: -90, max: 90 },
+      type: Sequelize.DOUBLE,
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE
+      validate: { min: -90, max: 90 }
     },
     lng: {
-      validate: { min: -180, max: 180 },
+      type: Sequelize.DOUBLE,
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE
+      validate: { min: -180, max: 180 }
     },
     country: {
       allowNull: true,
@@ -120,37 +120,33 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.INTEGER
     }
   }, {
-    classMethods: {
-      associate: function (models) {
-        Post.belongsTo(models.users, {
-          foreignKey: 'uid'
-        })
-        Post.hasOne(models.usersInfo, {
-          foreignKey: 'uid'
-        })
-        Post.hasOne(models.locations, {
-          foreignKey: 'postId'
-        })
-      }
-    },
     validate: {
-      bothCoordsOrNone: function () {
+      bothCoordsOrNone() {
         if ((this.lat === null) !== (this.lng === null)) {
-          throw new Error(
-            'Require either both latitude and longitude or neither'
-          )
+          throw new Error('Require either both latitude and longitude or neither');
         }
       }
-    },
-    instanceMethods: {
-      toJSON: function () {
-        const values = this.get()
-        delete values.updated_at
-        delete values.deleted_at
-        return values
-      }
     }
-  })
+  });
 
-  return Post
-}
+  Post.associate = (models) => {
+    Post.belongsTo(models.users, {
+      foreignKey: 'uid'
+    });
+    Post.hasOne(models.usersInfo, {
+      foreignKey: 'uid'
+    });
+    Post.hasOne(models.locations, {
+      foreignKey: 'postId'
+    });
+  };
+
+  Post.prototype.toJSON = function () {
+    const values = Object.assign({}, this.get());
+    delete values.updated_at;
+    delete values.deleted_at;
+    return values;
+  };
+
+  return Post;
+};

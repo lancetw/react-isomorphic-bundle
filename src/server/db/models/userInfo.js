@@ -1,4 +1,4 @@
-module.exports = function (sequelize, Sequelize) {
+module.exports = (sequelize, Sequelize) => {
   const UserInfo = sequelize.define('usersInfo', {
     id: {
       allowNull: false,
@@ -43,16 +43,16 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.STRING
     },
     lat: {
-      validate: { min: -90, max: 90 },
+      type: Sequelize.DOUBLE,
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE
+      validate: { min: -90, max: 90 }
     },
     lng: {
-      validate: { min: -180, max: 180 },
+      type: Sequelize.DOUBLE,
       allowNull: true,
       defaultValue: null,
-      type: Sequelize.DOUBLE
+      validate: { min: -180, max: 180 }
     },
     tel: {
       allowNull: true,
@@ -67,43 +67,39 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.STRING
     },
     email: {
+      type: Sequelize.STRING,
       allowNull: true,
       validate: {
         isEmail: true
-      },
-      type: Sequelize.STRING
+      }
     }
   }, {
-    classMethods: {
-      associate: function (models) {
-        UserInfo.belongsTo(models.users, {
-          foreignKey: 'uid'
-        })
-        UserInfo.belongsTo(models.posts, {
-          foreignKey: 'uid'
-        })
-      }
-    },
     validate: {
-      bothCoordsOrNone: function () {
+      bothCoordsOrNone() {
         if ((this.lat === null) !== (this.lng === null)) {
-          throw new Error(
-            'Require either both latitude and longitude or neither'
-          )
+          throw new Error('Require either both latitude and longitude or neither');
         }
-      }
-    },
-    instanceMethods: {
-      toJSON: function () {
-        const values = this.get()
-        delete values.id
-        delete values.created_at
-        delete values.updated_at
-        delete values.deleted_at
-        return values
       }
     }
   });
 
-  return UserInfo
-}
+  UserInfo.associate = (models) => {
+    UserInfo.belongsTo(models.users, {
+      foreignKey: 'uid'
+    });
+    UserInfo.belongsTo(models.posts, {
+      foreignKey: 'uid'
+    });
+  };
+
+  UserInfo.prototype.toJSON = function () {
+    const values = Object.assign({}, this.get());
+    delete values.id;
+    delete values.created_at;
+    delete values.updated_at;
+    delete values.deleted_at;
+    return values;
+  };
+
+  return UserInfo;
+};

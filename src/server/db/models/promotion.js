@@ -1,5 +1,5 @@
-module.exports = function (sequelize, Sequelize) {
-  return sequelize.define('promotions', {
+module.exports = (sequelize, Sequelize) => {
+  const Promotion = sequelize.define('promotions', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -7,7 +7,6 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.BIGINT
     },
     script: {
-      unique: false,
       type: Sequelize.STRING
     },
     name: {
@@ -15,27 +14,26 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.STRING
     },
     status: {
-      defaultValue: 0,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      defaultValue: 0
     },
     comment: {
       allowNull: true,
       type: Sequelize.STRING
     }
-  }, {
-    classMethods: {
-      associate: function (models) {
-        // associations can be defined here
-      }
-    },
-    instanceMethods: {
-      toJSON: function () {
-        const values = this.get()
-        delete values.created_at
-        delete values.updated_at
-        delete values.deleted_at
-        return values
-      }
-    }
   });
-}
+
+  Promotion.associate = (models) => {
+    // associations can be defined here
+  };
+
+  Promotion.prototype.toJSON = function () {
+    const values = Object.assign({}, this.get());
+    delete values.created_at;
+    delete values.updated_at;
+    delete values.deleted_at;
+    return values;
+  };
+
+  return Promotion;
+};
