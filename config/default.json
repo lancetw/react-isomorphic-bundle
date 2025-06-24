@@ -45,5 +45,6 @@
   },
   "sitemap": {
     "ACCESS_KEY": "testonly"
-  }
+  },
+  "googleApiKey": ""
 }
