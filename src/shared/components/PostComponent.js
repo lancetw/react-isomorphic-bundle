@@ -154,7 +154,7 @@ export default class Post extends Component {
   componentDidUpdate () {
     if (!isEmpty(this.props.post.content)) {
       this.releaseTimeout = setTimeout(() => {
-        const { id } = this.props.params
+        const { id } = this.props.post.content
         if (id) {
           this.context.history.replaceState({}, '/w/' + id)
         } else {
