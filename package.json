@@ -8,8 +8,8 @@
   },
   "scripts": {
     "rebuild": "make clean && make fast-build",
-    "start": "NODE_ENV=production node --harmony ./lib/server",
-    "win-start": "node --harmony ./lib/server",
+    "start": "NODE_ENV=production node ./lib/server",
+    "win-start": "node ./lib/server",
     "dev": "make watch",
     "lint": "make lint",
     "build": "make build",
