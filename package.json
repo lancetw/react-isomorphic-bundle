@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prestart": "make clean && make fast-build",
-    "start": "NODE_ENV=production node --harmony --max-old-space-size=1536 ./lib/server",
+    "start": "NODE_ENV=production node --harmony ./lib/server",
     "win-start": "node --harmony ./lib/server",
     "dev": "make watch",
     "lint": "make lint",
