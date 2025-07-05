@@ -70,9 +70,9 @@
     "storage": "storage/db.production.sqlite",
     "dialect": "postgres",
     "pool": {
-      "max": 20,
+      "max": 5,
       "min": 0,
-      "idle": 5000
+      "idle": 3000
     },
     "omitNull": true,
     "dialectOptions": {

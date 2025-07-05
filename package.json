@@ -7,7 +7,7 @@
     "graceful-fs": "4.2.2"
   },
   "scripts": {
-    "prestart": "make clean && make fast-build",
+    "rebuild": "make clean && make fast-build",
     "start": "NODE_ENV=production node --harmony ./lib/server",
     "win-start": "node --harmony ./lib/server",
     "dev": "make watch",

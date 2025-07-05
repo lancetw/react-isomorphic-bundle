@@ -7,6 +7,8 @@ module.exports = {
       interpreter: 'node',
       node_args: '--max-old-space-size=3072',
       max_memory_restart: '2560M',
+      instances: 2,
+      exec_mode : "cluster"
     },
   ],
 };
