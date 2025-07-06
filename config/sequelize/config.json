@@ -2,12 +2,7 @@
   "development": {
     "timezone": "Asia/Taipei",
     "storage": "storage/db.development.sqlite",
-    "dialect": "postgres",
-    "pool": {
-      "max": 20,
-      "min": 0,
-      "idle": 5000
-    },
+    "dialect": "sqlite",
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,
@@ -72,7 +67,9 @@
     "pool": {
       "max": 5,
       "min": 0,
-      "idle": 3000
+      "idle": 5000,
+      "acquire": 20000,
+      "maxUses": 500
     },
     "omitNull": true,
     "dialectOptions": {
