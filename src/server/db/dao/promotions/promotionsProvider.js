@@ -1,6 +1,7 @@
 const bcrypt = require('co-bcryptjs')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
+const { Op } = require('sequelize')
 import { isFinite } from 'lodash'
 
 exports.create = function *(promotion) {
@@ -36,15 +37,15 @@ exports.listAllWithCount = function *(offset=0, limit=20) {
   })
 }
 
-exports.fetchPair = function *(num=1) {
+exports.fetchPair = function* (num = 1) {
   return yield models.promotions.findAll({
     where: {
       name: {
-        $like: num + '%'
+        [Op.like]: `${num}%`
       }
     },
     attributes: ['name', 'script', 'status'],
     limit: 2,
     raw: true
-  })
+  });
 }

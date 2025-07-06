@@ -1,5 +1,6 @@
 import moment from 'moment'
 const models = require('src/server/db/models')
+const { Op } = require('sequelize')
 const Sequelize = models.Sequelize
 const User = models.users
 const Post = models.posts
@@ -26,7 +27,7 @@ exports.listByYearMonth = function *(year, month) {
     where: {
       status: 0,
       created_at: {
-        $between: [
+        [Op.between]: [
           new Date(moment({
             year: _year,
             month: _month - 1,
@@ -56,7 +57,7 @@ exports.listByYearMonth = function *(year, month) {
     where: {
       status: 0,
       created_at: {
-        $between: [
+        [Op.between]: [
           new Date(moment({
             year: _year,
             month: _month - 1,
@@ -83,7 +84,7 @@ exports.listByYearMonth = function *(year, month) {
     where: {
       status: 0,
       created_at: {
-        $between: [
+        [Op.between]: [
           new Date(moment({
             year: _year,
             month: _month - 1,

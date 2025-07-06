@@ -1,6 +1,7 @@
 const bcrypt = require('co-bcryptjs')
 const hashids = require('src/shared/utils/hashids-plus')
 const models = require('src/server/db/models')
+const { Op } = require('sequelize')
 import { isFinite } from 'lodash'
 
 exports.create = function *(user) {
@@ -89,27 +90,26 @@ exports.listAllWithCount = function *(offset=0, limit=20, status=0) {
   })
 }
 
-/* eslin
 /* eslint-disable camelcase */
-exports.searchWithCount = function *(offset=0, limit=20, pattern, status) {
+exports.searchWithCount = function* (offset = 0, limit = 20, pattern, status) {
   return yield models.admins.findAndCountAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    offset,
+    limit,
+    order: [['created_at', 'DESC'], ['id', 'DESC']],
     attributes: ['id', 'email', 'created_at', 'status', 'name', 'comment'],
     where: {
-      status: status,
-      $or: [
+      status,
+      [Op.or]: [
         {
           email: {
-            $like: '%' + pattern + '%'
+            [Op.like]: `%${pattern}%`
           }
         }
       ]
     },
     raw: true
-  })
-}
+  });
+};
 
 exports.count = function *() {
   return yield models.admins.count()

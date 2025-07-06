@@ -11,6 +11,7 @@ import {
   isEmpty,
   isFinite
 } from 'lodash'
+const { Op } = require('sequelize')
 
 const Post = models.posts
 const User = models.users
@@ -66,31 +67,31 @@ exports.load = function *(hid) {
 }
 
 /* eslint-disable camelcase */
-exports.list = function *(offset=0, limit=20, mode='default') {
+exports.list = function* (offset = 0, limit = 20, mode = 'default') {
   if (mode === 'rss') {
     return yield Post.findAll({
-      offset: offset,
-      limit: limit,
-      order: [[ 'id', 'DESC' ]],
+      offset,
+      limit,
+      order: [['id', 'DESC']],
       where: {
         status: 0
       },
       raw: true
-    })
+    });
   } else {
-    const _start = moment().startOf('day').valueOf()
+    const _start = moment().startOf('day').valueOf();
     return yield Post.findAll({
-      offset: offset,
-      limit: limit,
-      order: [[ 'created_at', 'DESC' ]],
+      offset,
+      limit,
+      order: [['created_at', 'DESC']],
       where: {
         end_date: {
-          $gte: new Date(_start)
+          [Op.gte]: new Date(_start)
         },
         status: 0
       },
       raw: true
-    })
+    });
   }
 }
 
@@ -193,34 +194,35 @@ exports.listWithOg = function *(offset=0, limit=20, cid) {
 }
 
 /* eslint-disable camelcase */
-exports.fetch = function *(offset=0, limit=20, start, end) {
-  let _start = start
-  let _end = end
+exports.fetch = function* (offset = 0, limit = 20, start, end) {
+  let _start = start;
+  let _end = end;
 
   if (!_start) {
-    _start = moment().startOf('day').valueOf()
+    _start = moment().startOf('day').valueOf();
   } else {
-    _start = +_start
-  }
-  if (!_end) {
-    _end = moment(+_start).endOf('day').valueOf()
-  } else {
-    _end = +_end
+    _start = +_start;
   }
 
-  if (!isFinite(_start)) return []
-  if (!isFinite(_end)) return []
+  if (!_end) {
+    _end = moment(+_start).endOf('day').valueOf();
+  } else {
+    _end = +_end;
+  }
+
+  if (!isFinite(_start)) return [];
+  if (!isFinite(_end)) return [];
 
   const items = yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
+    offset,
+    limit,
+    order: [['start_date', 'DESC']],
     where: {
       status: 0,
-      $or: [
+      [Op.or]: [
         {
           start_date: {
-            $between: [
+            [Op.between]: [
               new Date(moment(_start).startOf('day')),
               new Date(moment(_start).endOf('day'))
             ]
@@ -228,7 +230,7 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
         },
         {
           end_date: {
-            $between: [
+            [Op.between]: [
               new Date(moment(_end).startOf('day')),
               new Date(moment(_end).endOf('day'))
             ]
@@ -236,52 +238,91 @@ exports.fetch = function *(offset=0, limit=20, start, end) {
         },
         {
           start_date: {
-            $lt:
-              new Date(moment(_start).startOf('day'))
+            [Op.lt]: new Date(moment(_start).startOf('day'))
           },
           end_date: {
-            $gt:
-              new Date(moment(_end).startOf('day'))
+            [Op.gt]: new Date(moment(_end).startOf('day'))
           }
         }
       ]
     },
     raw: true
-  })
+  });
 
-  return items
+  return items;
+}
+
+exports.searchDateRange = function* (_start, _end, offset = 0, limit = 20) {
+  const items = yield Post.findAll({
+    offset,
+    limit,
+    order: [['start_date', 'DESC']],
+    where: {
+      status: 0,
+      [Op.or]: [
+        {
+          start_date: {
+            [Op.between]: [
+              new Date(moment(_start).startOf('day')),
+              new Date(moment(_start).endOf('day'))
+            ]
+          }
+        },
+        {
+          end_date: {
+            [Op.between]: [
+              new Date(moment(_end).startOf('day')),
+              new Date(moment(_end).endOf('day'))
+            ]
+          }
+        },
+        {
+          start_date: {
+            [Op.lt]: new Date(moment(_start).startOf('day'))
+          },
+          end_date: {
+            [Op.gt]: new Date(moment(_end).startOf('day'))
+          }
+        }
+      ]
+    },
+    raw: true
+  });
+
+  return items;
 }
 
 /* eslint-disable camelcase */
-exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
-  let _start = start
-  let _end = end
+exports.fetchWithCount = function* (offset = 0, limit = 20, start, end, status = 0) {
+  let _start = start;
+  let _end = end;
 
   if (!_start) {
-    _start = moment().startOf('day').valueOf()
+    _start = moment().startOf('day').valueOf();
   } else {
-    _start = +_start
-  }
-  if (!_end) {
-    _end = moment(+_start).endOf('day').valueOf()
-  } else {
-    _end = +_end
+    _start = +_start;
   }
 
-  if (!isFinite(_start)) return {}
-  if (!isFinite(_end)) return {}
-  if (!isFinite(+status)) return {}
+  if (!_end) {
+    _end = moment(_start).endOf('day').valueOf();
+  } else {
+    _end = +_end;
+  }
+
+  if (!isFinite(_start)) return {};
+  if (!isFinite(_end)) return {};
+  if (!isFinite(+status)) return {};
 
   const items = yield Post.findAndCountAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'created_at', 'DESC' ], [ 'id', 'DESC' ]],
+    offset,
+    limit,
+    order: [['created_at', 'DESC'], ['id', 'DESC']],
     where: {
       status: +status,
-      $or: [
+      [Op.or]: [
         {
           start_date: {
-            $between: [
+            [Op.between]: [
               new Date(moment(_start).startOf('day')),
               new Date(moment(_start).endOf('day'))
             ]
@@ -289,7 +330,7 @@ exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
         },
         {
           end_date: {
-            $between: [
+            [Op.between]: [
               new Date(moment(_end).startOf('day')),
               new Date(moment(_end).endOf('day'))
             ]
@@ -297,58 +338,57 @@ exports.fetchWithCount = function *(offset=0, limit=20, start, end, status=0) {
         },
         {
           start_date: {
-            $lt:
-              new Date(moment(_start).startOf('day'))
+            [Op.lt]: new Date(moment(_start).startOf('day'))
           },
           end_date: {
-            $gt:
-              new Date(moment(_end).startOf('day'))
+            [Op.gt]: new Date(moment(_end).startOf('day'))
           }
         }
       ]
     },
     raw: true
-  })
+  });
 
-  return items
+  return items;
 }
 
 /* eslint-disable camelcase */
-exports.fetchWithUser = function *(offset=0, limit=20, start, end, uid) {
-  if (!uid) return []
-  if (!isFinite(+uid)) return []
+exports.fetchWithUser = function* (offset = 0, limit = 20, start, end, uid) {
+  if (!uid) return [];
+  if (!isFinite(+uid)) return [];
 
-  let _start = start
-  let _end = end
+  let _start = start;
+  let _end = end;
 
   if (!_start) {
-    _start = moment().startOf('day').valueOf()
+    _start = moment().startOf('day').valueOf();
   } else {
-    _start = +_start
-  }
-  if (!_end) {
-    _end = moment(+_start).endOf('day').valueOf()
-  } else {
-    _end = +_end
+    _start = +_start;
   }
 
-  if (!isFinite(_start)) return []
-  if (!isFinite(_end)) return []
+  if (!_end) {
+    _end = moment(_start).endOf('day').valueOf();
+  } else {
+    _end = +_end;
+  }
+
+  if (!isFinite(_start)) return [];
+  if (!isFinite(_end)) return [];
 
   return yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'id', 'DESC' ]],
+    offset,
+    limit,
+    order: [['id', 'DESC']],
     where: {
       uid: +uid,
       status: 0,
       end_date: {
-        $gte: new Date(_start)
+        [Op.gte]: new Date(_start)
       }
     },
     raw: true
-  })
-}
+  });
+};
 
 /* eslint-disable camelcase */
 exports.countPerDayInMonth = function *(year, month) {
@@ -371,15 +411,12 @@ exports.countPerDayInMonth = function *(year, month) {
   }
 
   const startItems = yield Post.findAll({
-    attributes: [
-      'startDate',
-      'endDate'
-    ],
-    order: [[ 'start_date', 'ASC' ]],
+    attributes: ['startDate', 'endDate'],
+    order: [['start_date', 'ASC']],
     where: {
       status: 0,
       start_date: {
-        $between: [
+        [Op.between]: [
           new Date(moment({
             year: _year,
             month: _month - 1,
@@ -397,15 +434,12 @@ exports.countPerDayInMonth = function *(year, month) {
   })
 
   const endItems = yield Post.findAll({
-    attributes: [
-      'startDate',
-      'endDate'
-    ],
-    order: [[ 'start_date', 'ASC' ]],
+    attributes: ['startDate', 'endDate'],
+    order: [['start_date', 'ASC']],
     where: {
       status: 0,
       start_date: {
-        $notBetween: [
+        [Op.notBetween]: [
           new Date(moment({
             year: _year,
             month: _month - 1,
@@ -419,7 +453,7 @@ exports.countPerDayInMonth = function *(year, month) {
         ]
       },
       end_date: {
-        $between: [
+        [Op.between]: [
           new Date(moment({
             year: _year,
             month: _month - 1,
@@ -437,28 +471,23 @@ exports.countPerDayInMonth = function *(year, month) {
   })
 
   const duringItems = yield Post.findAll({
-    attributes: [
-      'startDate',
-      'endDate'
-    ],
-    order: [[ 'start_date', 'ASC' ]],
+    attributes: ['startDate', 'endDate'],
+    order: [['start_date', 'ASC']],
     where: {
       status: 0,
       start_date: {
-        $lt:
-          new Date(moment({
-            year: _year,
-            month: _month - 1,
-            day: 1
-          }).startOf('day'))
+        [Op.lt]: new Date(moment({
+          year: _year,
+          month: _month - 1,
+          day: 1
+        }).startOf('day'))
       },
       end_date: {
-        $gt:
-          new Date(moment({
-            year: _year,
-            month: _month - 1,
-            day: totalDays
-          }).endOf('day'))
+        [Op.gt]: new Date(moment({
+          year: _year,
+          month: _month - 1,
+          day: totalDays
+        }).endOf('day'))
       }
     },
     raw: true
@@ -598,11 +627,11 @@ exports.updateGeo = function *(hid, geo) {
 }
 
 /* eslint-disable camelcase */
-exports.search = function *(pattern, status, offset=0, limit=20) {
+exports.search = function* (pattern, status, offset = 0, limit = 20) {
   return yield Post.findAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
+    offset,
+    limit,
+    order: [['start_date', 'DESC']],
     attributes: [
       'id',
       'title',
@@ -624,30 +653,30 @@ exports.search = function *(pattern, status, offset=0, limit=20) {
       required: true
     }],
     where: {
-      status: status,
-      $or: [
+      status,
+      [Op.or]: [
         {
           title: {
-            $like: '%' + pattern + '%'
+            [Op.like]: `%${pattern}%`
           }
         },
         {
           content: {
-            $like: '%' + pattern + '%'
+            [Op.like]: `%${pattern}%`
           }
         }
       ]
     },
     raw: true
-  })
+  });
 }
 
 /* eslint-disable camelcase */
-exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
+exports.searchWithCount = function* (pattern, status, offset = 0, limit = 20) {
   return yield Post.findAndCountAll({
-    offset: offset,
-    limit: limit,
-    order: [[ 'start_date', 'DESC' ]],
+    offset,
+    limit,
+    order: [['start_date', 'DESC']],
     attributes: ['id', 'title', 'created_at', 'status', 'prop', 'type'],
     include: [{
       model: User,
@@ -655,27 +684,27 @@ exports.searchWithCount = function *(pattern, status, offset=0, limit=20) {
       required: true
     }],
     where: {
-      status: status,
-      $or: [
+      status,
+      [Op.or]: [
         {
           title: {
-            $like: '%' + pattern + '%'
+            [Op.like]: `%${pattern}%`
           }
         },
         {
           content: {
-            $like: '%' + pattern + '%'
+            [Op.like]: `%${pattern}%`
           }
         },
         {
-          '$user.email$': {
-            $like: '%' + pattern + '%'
+          '$User.email$': {
+            [Op.like]: `%${pattern}%`
           }
         }
       ]
     },
     raw: true
-  })
+  });
 }
 
 /* eslint-disable camelcase */
@@ -691,15 +720,15 @@ exports.loadAllPostId = function *() {
 }
 
 /* eslint-disable camelcase */
-exports.loadAllCid = function *() {
+exports.loadAllCid = function* () {
   return yield Post.aggregate('cid', 'DISTINCT', {
     plain: false,
     where: {
       status: 0,
       cid: {
-        $ne: null,
-        $gt: 0
+        [Op.ne]: null,
+        [Op.gt]: 0
       }
     }
-  })
+  });
 }
