@@ -247,7 +247,7 @@
     "webpack-hot-middleware": "^2.4.1"
   },
   "engines": {
-    "node": "^16.20.2"
+    "node": "^18.20.8"
   },
   "prettier": {
     "printWidth": 80,
