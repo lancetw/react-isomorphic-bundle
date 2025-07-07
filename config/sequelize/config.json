@@ -6,7 +6,7 @@
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,
-      "bigNumberStrings=true": true
+      "bigNumberStrings": true
     },
     "migrationStorage": "json",
     "migrationStoragePath": "storage/meta-development.json",
@@ -26,7 +26,7 @@
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,
-      "bigNumberStrings=true": true
+      "bigNumberStrings": true
     },
     "migrationStorage": "json",
     "migrationStoragePath": "storage/meta-test.json",
@@ -62,19 +62,18 @@
   },
   "production": {
     "timezone": "Asia/Taipei",
-    "storage": "storage/db.production.sqlite",
     "dialect": "postgres",
     "pool": {
       "max": 5,
-      "min": 0,
-      "idle": 5000,
-      "acquire": 20000,
-      "maxUses": 500
+      "min": 2,
+      "idle": 10000,
+      "acquire": 30000,
+      "maxUses": 200
     },
     "omitNull": true,
     "dialectOptions": {
       "supportBigNumbers": true,
-      "bigNumberStrings=true": true
+      "bigNumberStrings": true
     },
     "migrationStorage": "json",
     "migrationStoragePath": "storage/meta-production.json",
