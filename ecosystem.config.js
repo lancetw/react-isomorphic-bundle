@@ -5,12 +5,15 @@ module.exports = {
       script: './lib/server',
       args: '',
       interpreter: 'node',
-      node_args: '--max-old-space-size=3072',
+      node_args: '--max-old-space-size=3072 --expose-gc',
       max_memory_restart: '2560M',
-      pmx: false,
       env: {
         NODE_ENV: 'production'
-      }
+      },
+      exec_mode: 'cluster_mode',
+      wait_ready: true,
+      instances: 'max',
+      pmx: false
     }
   ]
 };

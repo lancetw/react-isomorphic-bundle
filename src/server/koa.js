@@ -52,7 +52,7 @@ if (env === 'production') {
   app.use(require('koa-compressor')())
 
   // Cache pages
-  const cache = require('lru-cache')({ maxAge: 3000 })
+  const cache = require('lru-cache')({ max: 100, maxAge: 3000 })
   app.use(require('koa-cash')({
     get: function* (key) {
       return cache.get(key)
