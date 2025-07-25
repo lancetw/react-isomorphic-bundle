@@ -11,7 +11,7 @@ import {
   isEmpty,
   isFinite
 } from 'lodash'
-const { Op } = require('sequelize')
+const { Op, where, col } = require('sequelize')
 
 const Post = models.posts
 const User = models.users
@@ -696,11 +696,9 @@ exports.searchWithCount = function* (pattern, status, offset = 0, limit = 20) {
             [Op.like]: `%${pattern}%`
           }
         },
-        {
-          '$User.email$': {
-            [Op.like]: `%${pattern}%`
-          }
-        }
+        where(col('user.email'), {
+          [Op.like]: `%${pattern}%`
+        })
       ]
     },
     raw: true
