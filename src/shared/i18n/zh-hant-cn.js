@@ -112,7 +112,7 @@ module.exports = {
       },
       msg: {
         upload: '您可以上传图片Word、Word 档或是 PDF（请拖拉至此或是点击选择档案）：',
-        limit: '每个档案大小上限 3 MB',
+        limit: '每个档案大小上限 5 MB',
         urltips: '网址必须以 http(s) 开头'
       }
     },

@@ -25,7 +25,7 @@ class ImageUpload extends Component {
   }
 
   handleDrop = (files) => {
-    const sizeLimit = 1024 * 1024 * 3
+    const sizeLimit = 1024 * 1024 * 5
     const { dispatch } = this.props
     const file = files[0]
     if (file.size > sizeLimit) {

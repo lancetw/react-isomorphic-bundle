@@ -24,7 +24,7 @@ const MulterMiddleware = multer({
     return filename + '_' + Date.now()
   },
   limits: {
-    fileSize: 1024 * 1024 * 3,
+    fileSize: 1024 * 1024 * 5,
     files: 1
   },
   onFileSizeLimit: (file) => {
